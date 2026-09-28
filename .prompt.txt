@@ -1,0 +1,40 @@
+=== 1st PROMPT: COPY & PASTE THIS TO THE IMPLEMENTING AGENT (WITH YOUR GITHUB ACCESS TOKEN) ===
+
+Target repository: https://github.com/daggerok/Themes
+GitHub Personal Access Token: <PASTE_YOUR_TOKEN_HERE>
+
+Read .worklog.txt in the repository root. It is the canonical, self-contained handoff file containing the complete mandatory recovery protocol, generic architecture rules, and verified Themes ETFs research (including direct daily holdings CSV downloads). Do not request or require any external files (such as 00-generic.txt).
+
+Instructions:
+1. Reconcile CURRENT STATE against Git and remote origin/main.
+2. Follow the MANDATORY WORKLOG AND RECOVERY PROTOCOL in .worklog.txt.
+3. Create feature branch `feat/themes-etfs`.
+4. Implement the ETF holdings-to-watchlist app according to the plan in .worklog.txt (Bun-only, zero runtime dependencies, sibling parity UI, offline fixture tests, isolated live acceptance).
+5. After each small completed step, update .worklog.txt, make a scoped Conventional Commit, and push to GitHub.
+6. When complete, open a Pull Request against main.
+
+================================================================================================
+=== 1st PROMPT (Alternative Russian wording matching protocol) ===
+
+Target repository: https://github.com/daggerok/Themes
+GitHub Personal Access Token: <PASTE_YOUR_TOKEN_HERE>
+
+Используй .worklog.txt в корне репозитория как основной, самодостаточный журнал работы и восстановления. Вся архитектура, правила и данные исследования Themes ETFs (включая прямые ежедневные CSV выгрузки) уже включены в .worklog.txt. Внешние файлы (00-generic.txt) не требуются.
+
+Инструкции:
+1. Перед изменениями полностью прочитай существующий .worklog.txt. Сверь CURRENT STATE с Git и remote origin/main.
+2. Создай feature-ветку `feat/themes-etfs`.
+3. Реализуй приложение согласно плану в .worklog.txt (Bun-only, zero runtime dependencies, sibling parity UI, offline tests, scoped live acceptance).
+4. После каждого небольшого законченного этапа обновляй .worklog.txt, делай scoped Conventional Commit и push.
+5. По завершении открой Pull Request в main.
+
+================================================================================================
+=== 2nd and all next PROMPT(s) after rate limit stop/restart ===
+
+Начни с полного чтения .worklog.txt, при необходимости по частям.
+Сверь CURRENT STATE с Git, remote и PR. Кратко сообщи, что завершено,
+что осталось и есть ли расхождения. Продолжи с первого незавершённого
+шага в рамках записанных разрешений. После каждого небольшого этапа
+обновляй .worklog.txt, делай commit и push.
+
+================================================================================================
