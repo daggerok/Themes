@@ -67,9 +67,9 @@ CURRENT STATE
 - Hard constraints: work only on `feat/themes-etfs`; never persist credentials; no force-push; Bun-only tooling; no runtime dependencies; copy the sibling UI verbatim except for the enumerated brand/source substitutions and required shared header presentation rule; retain previously published data when a provider fails.
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
-- Branch / PR: local `feat/themes-etfs`; no remote feature branch or PR exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: `origin/main` = `5c63f550343b` (`docs(prompt): add ready-to-use agent implementation prompt for Themes ETFs`). No feature commit has been pushed yet.
-- Status: Recovery and live endpoint verification complete; implementation scaffold has not been published. An invalid uncommitted scratch scaffold was discarded before any checkpoint.
+- Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
+- Remote baseline / last confirmed pushed SHA: feature branch = `5bf98316a204` (`docs(worklog): record Themes recovery checkpoint`); `origin/main` remains `5c63f550343b`.
+- Status: Recovery and live endpoint verification checkpoint is published; implementation scaffold has not been published. An invalid uncommitted scratch scaffold was discarded before any checkpoint.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -114,6 +114,11 @@ CHRONOLOGICAL JOURNAL
 - Installed Bun locally for validation only; it is not a repository dependency. The first scratch updater/test files were invalid and untracked, so they were removed rather than checkpointed. No user-authored repository content was removed.
 - Sanitized `origin` back to the credential-free canonical URL `https://github.com/daggerok/Themes.git`; credentials are not stored in Git configuration.
 - Next: publish this documentation-only recovery checkpoint, then create the clean scaffold from the pinned sibling.
+
+### 2026-09-29 — Feature-branch publication (completed)
+- Committed the recovery record as `5bf9831` with Conventional Commit message `docs(worklog): record Themes recovery checkpoint`.
+- Pushed `feat/themes-etfs` without force to `origin`; Git verified remote head `5bf98316a204` and established upstream tracking.
+- Next: create the clean Bun/project scaffold from pinned `daggerok/NEOS@17f348f` and adapt only the Themes data acquisition layer.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
