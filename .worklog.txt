@@ -67,9 +67,9 @@ CURRENT STATE
 - Hard constraints: work only on `feat/themes-etfs`; never persist credentials; no force-push; Bun-only tooling; no runtime dependencies; copy the sibling UI verbatim except for the enumerated brand/source substitutions and required shared header presentation rule; retain previously published data when a provider fails.
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
-- Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `586c26387396` (`chore(repo): add Themes automation and documentation`); `origin/main` remains `5c63f550343b`.
-- Status: All authorized implementation work is published and final validation is clean. No PR exists yet; an authorized non-draft PR to `main` is the only remaining action.
+- Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; PR [#1](https://github.com/daggerok/Themes/pull/1) is open, non-draft, and targets `main` (created 2026-09-29; not merged).
+- Remote baseline / last confirmed pushed SHA: feature branch = `0a1f0cdbb4d0` (`docs(worklog): record Themes final validation`); `origin/main` remains `5c63f550343b`.
+- Status: All authorized implementation work is published, final validation is clean, and the authorized PR is open. Merge is explicitly out of scope and must not be performed without new authorization.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -87,12 +87,13 @@ CURRENT STATE
   14. Served the static app locally and confirmed HTTP 200 delivery for shell, client script, index, metadata, and paginated holdings assets; index/manifests passed consistency assertions.
   15. Published the static seed as `e75957d`; prepared the standardized weekly/manual updater workflow, Dependabot configuration, sibling-parity README, README regression guard, and verified repository About metadata through the GitHub REST API.
   16. Published CI/docs as `586c263`; completed final reconciliation: feature and remote heads match, working tree is clean, feature is eight commits ahead of unchanged `origin/main`, no open feature PR exists, tests/builds/API-manifest checks pass, and metadata remains verified.
-- Active work: Record the final-validation checkpoint, then open the authorized non-draft PR.
+  17. Created and verified non-draft PR [#1](https://github.com/daggerok/Themes/pull/1): `feat/themes-etfs` → `main`, open, head `0a1f0cdbb4d0`, base `5c63f550343b`.
+- Active work: Publish this final PR-state worklog checkpoint, then await review.
 - Remaining work:
-  1. Commit/push this final validation worklog checkpoint.
-  2. Create and verify a PR from `feat/themes-etfs` to `main`; do not merge it.
+  1. Commit/push this PR-state worklog checkpoint.
+  2. Await review on PR #1; do not merge without explicit new authorization.
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit/push this worklog update; then POST the PR through the GitHub REST API and record the returned PR number/URL in a final checkpoint.
+- Exact next action: commit/push this worklog update, verify PR #1 still has `head=feat/themes-etfs`, `base=main`, `state=open`, and then stop.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -191,6 +192,12 @@ CHRONOLOGICAL JOURNAL
 - Reconfirmed remote About data: homepage, 313-character description, all 20 standard/brand topics, and default branch `main` are exactly as recorded in the preceding checkpoint.
 - Diff review against `origin/main`: 70 files, expected product implementation only (Bun scripts/tests/config, copied sibling static UI with allowed substitutions, full static API, evidence, README, CI/Dependabot, and worklog). No credentials, caches, dependencies, build output, force pushes, or unrelated changes are included.
 - Next: push this final worklog checkpoint, create a non-draft pull request from `feat/themes-etfs` to `main`, verify its head/base/state, record it below, and do not merge.
+
+### 2026-09-29 — Pull request creation (completed; PR-state worklog checkpoint pending push)
+- Created PR [#1 — feat: add Themes ETFs holdings watchlist](https://github.com/daggerok/Themes/pull/1) through the GitHub REST API under the user's explicit authorization.
+- Verified response: state `open`, `draft=false`, head `feat/themes-etfs` at `0a1f0cdbb4d00b1f71ff8147cf32a2d085ac0c20`, base `main` at `5c63f550343b9c04ba25b25264508d5da0eaf72f`.
+- PR body records the implementation scope, full validation set, isolated live acceptance/idempotency, full-seed idempotency, and current Pages-deployment caveat. No merge action was requested or performed.
+- Next: commit/push this final PR-state record, re-query PR #1 to verify the updated branch head and open/base state, then await review without merging.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
