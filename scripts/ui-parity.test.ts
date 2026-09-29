@@ -7,6 +7,8 @@ import { join } from 'node:path';
 const root = join(import.meta.dir, '..');
 const app = readFileSync(join(root, 'app.tsx'), 'utf8');
 const html = readFileSync(join(root, 'index.html'), 'utf8');
+const readme = readFileSync(join(root, 'README.md'), 'utf8');
+const updaterDefaults = JSON.parse(readFileSync(join(root, 'scripts', 'update-data.config.json'), 'utf8')) as Record<string, string>;
 
 describe('Themes sibling-parity source substitutions', () => {
   test('uses only the Themes static API paths and local-storage namespace', () => {
@@ -59,5 +61,34 @@ describe('shared header presentation regression guard', () => {
     expect(app).toContain('data-checkbox="${escapeHtml(fund.ticker)}"');
     expect(app).toContain("el.tableBody.querySelectorAll('input[data-checkbox]')");
     expect(app).not.toContain("tr.addEventListener('click', () => toggleFund");
+  });
+});
+
+describe('README sibling-structure regression guard', () => {
+  test('retains the pinned sibling heading order and truthful pending-deployment caveat', () => {
+    const headings = [...readme.matchAll(/^#{1,4} .+$/gm)].map((match) => match[0]);
+    expect(headings).toEqual([
+      '# Themes ETFs',
+      '## Using Bun',
+      '## Updating the static Themes ETFs data',
+      '### Data sources',
+      '#### The daily holdings CSV',
+      '#### Return arithmetic',
+      '### Known value limitations',
+      '### Update controls',
+      '### Examples',
+      '## TypeScript',
+      '## Brands table',
+      '## Sibling applications',
+      '## License',
+    ]);
+    expect(readme).toContain('GitHub Pages deployment must be enabled separately and is not claimed as live here.');
+    expect(readme).toContain('Themes ETF Trust **CIK 0001976322**');
+  });
+
+  test('documents every checked-in updater control and only Themes API paths', () => {
+    for (const key of Object.keys(updaterDefaults)) expect(readme).toContain(`\`${key}\``);
+    expect(readme).toContain('`./api/themes`');
+    expect(readme).not.toContain('`./api/neos`');
   });
 });

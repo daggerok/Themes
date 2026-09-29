@@ -68,8 +68,8 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `042eccb31e6e` (`feat(ui): add Themes ETF watchlist client`); `origin/main` remains `5c63f550343b`.
-- Status: Updater, offline suite, acceptance evidence, and sibling-parity UI are published. A full initial `api/themes` static seed plus served-app smoke evidence are locally validated and pending push.
+- Remote baseline / last confirmed pushed SHA: feature branch = `e75957d9f715` (`chore(data): seed Themes ETF static feed`); `origin/main` remains `5c63f550343b`.
+- Status: Updater, offline suite, live acceptance, sibling-parity UI, and full static seed are published. Standard workflow/dependabot/docs, documentation guards, and verified repository metadata are locally ready and pending push.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -85,13 +85,14 @@ CURRENT STATE
   12. Added `scripts/ui-parity.test.ts`; the combined offline suite passes 20/20 and browser-target transpilation of `app.tsx` succeeds.
   13. Published the UI checkpoint as `042eccb`; generated a deliberate full initial `api/themes` seed for all 13 active first-party catalog funds, then confirmed an immediate full rerun is byte-stable.
   14. Served the static app locally and confirmed HTTP 200 delivery for shell, client script, index, metadata, and paginated holdings assets; index/manifests passed consistency assertions.
-- Active work: Publish the static-data seed/evidence checkpoint, then add workflow/dependabot/docs/metadata.
+  15. Published the static seed as `e75957d`; prepared the standardized weekly/manual updater workflow, Dependabot configuration, sibling-parity README, README regression guard, and verified repository About metadata through the GitHub REST API.
+- Active work: Publish the CI/docs checkpoint, run final validation, then open the authorized pull request.
 - Remaining work:
-  1. Commit/push the 13-fund initial API seed and its evidence.
-  2. Add CI/dependabot, README, required metadata, and all remaining scoped checkpoints.
+  1. Commit/push CI, Dependabot, README, UI documentation guard, and this worklog record.
+  2. Run final clean-tree validation and reconcile remote state.
   3. Open a PR to `main` (no merge authorization).
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit/push `api/themes/**`, the seed evidence, and this worklog record; then add CI/dependabot and a sibling-parity README.
+- Exact next action: commit/push the CI/docs checkpoint; then use the GitHub API to create and verify a non-draft pull request from `feat/themes-etfs` to `main`.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -172,6 +173,16 @@ CHRONOLOGICAL JOURNAL
 - UI browser-path coverage is provided by the copied sibling behavior plus static regression tests and browser-target transpilation; no headless browser executable is present in the workspace. This limitation and the served-asset smoke are documented in `evidence/initial-static-seed-2026-09-29.md`.
 - Evidence: `evidence/initial-static-seed-2026-09-29.md`, both full-run logs, summary, and paired SHA-256 manifests.
 - Next: commit/push this initial data/evidence checkpoint; then add the standardized GitHub workflow, Dependabot configuration, and sibling-parity README.
+
+### 2026-09-29 — Workflow, documentation, and repository metadata (completed; checkpoint pending push)
+- Added `.github/workflows/update-data.yml`: Sunday 00:00 UTC schedule plus manual dispatch inputs for every updater environment control, Bun setup, frozen install, updater + UI parity tests, static `api/themes` generation, and an `api/themes`-only bot commit. It contains no push trigger and no TypeScript compiler step.
+- Added the standard identical `.github/dependabot.yml` for monthly Bun and GitHub Actions updates.
+- Replaced the placeholder README with the pinned `daggerok/NEOS@17f348f` heading/order/template structure, substituting only truthful Themes implementation facts. It documents direct catalog/CSV URLs, Yahoo/EDGAR ladder, current limitations, every environment control, initial data seed, Pages caveat, complete brands/siblings tables with Themes ETFs rows, and independent/non-affiliation notice.
+- Extended the offline UI guard to enforce the README heading sequence, the Pages-pending caveat, Themes CIK, all checked-in updater controls, and Themes API path. Validation now passes 22/22 tests (106 assertions); README headings match the pinned sibling's heading order after permitted brand substitution.
+- Workflow configuration parity check compared `scripts/update-data.config.json` to manual-dispatch inputs and job environment mappings: no missing or extra controls. Confirmed `actions/checkout@v7` and `oven-sh/setup-bun@v2`; no `bunx tsc` or push trigger is present.
+- Repository metadata authorization executed via runtime-only GitHub REST API authentication. Before: description `null`, homepage empty, topics empty. After verified GET: description is `Themes ETFs. A single-file client-side tool reading ./api/themes (official Themes ETFs catalog + daily holdings CSV, SEC EDGAR N-PORT-P holdings fallback, Yahoo Finance history/dividends) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist, CSV/TXT export. TailwindCSS, dark mode, Bun updater.`; homepage is `https://daggerok.github.io/Themes/`; topics are `css`, `csv`, `dark-mode`, `edgar`, `etf`, `finance`, `github-pages`, `holdings`, `html`, `json`, `nport`, `single-file`, `static-api`, `tailwindcss`, `themes`, `themes-etfs`, `txt`, `typescript`, `watchlist`, `yahoo-finance`.
+- Verified the repository's Pages API endpoint currently responds HTTP 404 despite `has_pages=true`; README deliberately does not claim a live deployment. Metadata update did not alter default branch (`main`). No credential was saved in metadata, source, logs, or Git configuration.
+- Next: commit/push this CI/docs checkpoint, perform final validation/reconciliation, create and verify the authorized PR to `main` without merging it.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
