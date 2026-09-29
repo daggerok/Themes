@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Themes ETFs holdings to Watchlist from the static api/themes JSON feed, generated from the official themesetfs.com catalog and daily holdings CSV downloads, plus Yahoo Finance price history and dividend events." />
+  <title>Themes ETFs</title>
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+  <!-- Inter font (same as Amplify / iShares apps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind (CDN, no build step for local Bun workflow) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+    }
+  </script>
+
+  <!-- Babel standalone: compile inline TypeScript in this single index.html, same no-build style as daggerok/Amplify -->
+  <script src="https://unpkg.com/@babel/standalone@7.24.0/babel.min.js"></script>
+
+  <!-- Synchronous theme init (prevents flash, same strategy as Amplify / iShares) -->
+  <script>
+    (function () {
+      var dark = localStorage.getItem('themes-theme') === 'dark';
+      document.documentElement.classList.toggle('dark', dark);
+      document.documentElement.style.backgroundColor = dark ? '#020617' : '#f8fafc';
+    })();
+  </script>
+
+  <style>
+    @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+    .animate-fade-in{animation:fadeIn .3s ease-out}
+
+    /* Themed scrollbars (same slate palette as Amplify / iShares) */
+    .themed-scroll::-webkit-scrollbar{width:10px;height:10px}
+    .themed-scroll::-webkit-scrollbar-track{background:transparent}
+    .themed-scroll::-webkit-scrollbar-thumb{background-color:#cbd5e1;border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+    .themed-scroll::-webkit-scrollbar-thumb:hover{background-color:#94a3b8}
+    .dark .themed-scroll::-webkit-scrollbar-thumb{background-color:#334155}
+    .dark .themed-scroll::-webkit-scrollbar-thumb:hover{background-color:#475569}
+    .themed-scroll::-webkit-scrollbar-corner{background:transparent}
+    .themed-scroll{scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent}
+    .dark .themed-scroll{scrollbar-color:#334155 transparent}
+
+    .selected-row{background:#eff6ff}
+    .dark .selected-row{background:rgba(30,64,175,.22)}
+
+    /* Drag-and-drop zone interaction states (same as daggerok/iShares) */
+    .dz-active {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+    .dark .dz-active {
+      background: #1e293b;
+    }
+    .dz-loaded {
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    .dz-loaded .dz-label {
+      color: #059669;
+    }
+    .dark .dz-loaded .dz-label {
+      color: #34d399;
+    }
+    .dz-error {
+      border-color: rgba(244, 63, 94, 0.6);
+    }
+    .dz-error .dz-label {
+      color: #e11d48;
+    }
+    .dark .dz-error .dz-label {
+      color: #fb7185;
+    }
+
+    /*
+     * Scroll fix (also applied to daggerok/iShares): only the table scrolls.
+     * The JS layer sizes #table-scroll to the real viewport rest; overscroll
+     * containment stops wheel momentum from chaining to the document, which
+     * used to produce a small up/down page shift when the table was full.
+     */
+    #table-scroll{overscroll-behavior:contain}
+
+    /*
+     * Horizontal pinning for the catalog table: the Use checkbox and the
+     * Ticker stay visible while the remaining columns (including the row
+     * number) move horizontally. `position:sticky` is applied directly to the
+     * `th`/`td` — NOT to a nested wrapper. A sticky element can never move
+     * past the bounds of its own containing block, so a sticky *child* inside
+     * a plain `position:static` cell stops being visible the moment that
+     * cell's own (unscrolled) position scrolls past the viewport edge: the pin
+     * silently stops working exactly when it matters most. The same direct-cell
+     * rule pins the Watchlist Ticker column at the left edge.
+     *
+     * The colors are this repo's own Tailwind tokens, pre-blended to solid
+     * values: a sticky cell repaints on top of whatever column has scrolled
+     * behind it, so a translucent fill (this repo's `.selected-row` uses
+     * rgba(30,64,175,.22) in dark mode) would let that column's text show
+     * through. Base #172033 = slate-800/50 over slate-900, hover #1f2a3d =
+     * slate-700/30 over that, selected #19274e = rgba(30,64,175,.22) over
+     * that; light-mode #f8fafc / #eff6ff are already opaque.
+     */
+    #table-scroll table{border-collapse:separate;border-spacing:0;isolation:isolate}
+    #table-scroll tbody{position:relative;z-index:0}
+    #table-scroll tbody tr{position:relative;z-index:0}
+    #table-scroll .catalog-sticky-col{position:sticky;background:#fff;background-clip:padding-box}
+    #table-scroll thead .catalog-sticky-col{top:0;z-index:30;background:#f8fafc}
+    #table-scroll tbody .catalog-sticky-col{z-index:20}
+    #table-scroll .catalog-sticky-use{left:0;width:5rem;min-width:5rem}
+    #table-scroll .catalog-sticky-ticker{left:5rem;width:6rem;min-width:6rem;box-shadow:4px 0 6px -6px rgba(15,23,42,.7)}
+    /*
+     * Watchlist Ticker: the first data column there holds an exchange ticker
+     * for equities but a CUSIP/ISIN (or, for a few private/crypto positions,
+     * a longer provider code) for bonds and cash, so the pin gets a fixed
+     * width with defensive truncation instead of a ticker-sized column.
+     */
+    #table-scroll .watchlist-sticky-col{position:sticky;background:#fff;background-clip:padding-box}
+    #table-scroll thead .watchlist-sticky-col{top:0;z-index:30;background:#f8fafc}
+    #table-scroll tbody .watchlist-sticky-col{z-index:20}
+    #table-scroll .watchlist-sticky-ticker{left:0;width:10rem;min-width:10rem;max-width:10rem;overflow:hidden;text-overflow:ellipsis;box-shadow:4px 0 6px -6px rgba(15,23,42,.7)}
+    .dark #table-scroll .catalog-sticky-col,.dark #table-scroll .watchlist-sticky-col{background:#172033}
+    .dark #table-scroll thead .catalog-sticky-col,.dark #table-scroll thead .watchlist-sticky-col{background:#0f172a}
+    #table-scroll tbody tr:hover .catalog-sticky-col,#table-scroll tbody tr:hover .watchlist-sticky-col{background:#f8fafc}
+    #table-scroll tbody tr.selected-row .catalog-sticky-col{background:#eff6ff}
+    .dark #table-scroll tbody tr:hover .catalog-sticky-col,.dark #table-scroll tbody tr:hover .watchlist-sticky-col{background:#1f2a3d}
+    .dark #table-scroll tbody tr.selected-row .catalog-sticky-col{background:#19274e}
+
+    /* Detail navigation expands into place after an ETF is selected. */
+    main.space-y-6 > #selected-tabs-panel{max-height:0;margin-top:0;overflow:hidden;opacity:0;transform:translateY(-10px);padding-top:0;padding-bottom:0;border-color:transparent;transition:max-height .32s ease,margin-top .32s ease,padding .32s ease,opacity .22s ease,transform .32s ease,border-color .22s ease}
+    main.space-y-6 > #selected-tabs-panel.is-visible{max-height:8rem;margin-top:1.5rem;padding-top:1rem;padding-bottom:1rem;opacity:1;transform:translateY(0);border-color:rgb(226 232 240)}
+    .dark main.space-y-6 > #selected-tabs-panel.is-visible{border-color:rgb(51 65 85)}
+
+    /*
+     * Blacklist manager: same smooth expand/collapse contract as the detail
+     * nav above. Its max-height is set inline by JS from scrollHeight, not by
+     * a fixed rem value, because the chip list (unlike the detail tabs) has no
+     * bounded height.
+     */
+    main.space-y-6 > #blacklist-panel{max-height:0;margin-top:0;overflow:hidden;opacity:0;transform:translateY(-10px);padding-top:0;padding-bottom:0;border-color:transparent;transition:max-height .32s ease,margin-top .32s ease,padding .32s ease,opacity .22s ease,transform .32s ease,border-color .22s ease}
+    main.space-y-6 > #blacklist-panel.is-visible{margin-top:1.5rem;padding-top:1rem;padding-bottom:1rem;opacity:1;transform:translateY(0);border-color:rgb(226 232 240)}
+    .dark main.space-y-6 > #blacklist-panel.is-visible{border-color:rgb(51 65 85)}
+
+    @keyframes tableRefresh{from{opacity:.32;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+    #table-body.table-content-enter{animation:tableRefresh .22s ease-out}
+    @media (prefers-reduced-motion:reduce){#table-body.table-content-enter{animation:none}main.space-y-6 > #selected-tabs-panel{transition:none}main.space-y-6 > #blacklist-panel{transition:none}}
+  </style>
+<style id="catalog-summary-styles">
+    #app-subtitle:empty { display: none; }
+    #ticker-count { cursor: help; font-family: inherit; }
+    #ticker-count:focus-visible { outline: 2px solid #3b82f6; outline-offset: 3px; }
+    #app-summary[hidden] { display: none; }
+    #app-summary {
+      box-sizing: border-box; position: fixed; z-index: 100; display: block;
+      width: min(42rem, calc(100vw - 2rem)); max-height: min(70vh, 32rem);
+      overflow: auto; overflow-wrap: anywhere; padding: 1rem;
+      border: 1px solid #cbd5e1; border-radius: .75rem;
+      background: #fff; color: #334155; font-size: .875rem; line-height: 1.5;
+      box-shadow: 0 12px 30px rgb(15 23 42 / .2);
+    }
+    .dark #app-summary { background: #0f172a; color: #cbd5e1; border-color: #475569; }
+  </style>
+</head>
+<body class="min-h-screen font-sans bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
+  <div class="min-h-screen flex flex-col animate-fade-in">
+
+    <!-- Header: intentionally mirrors daggerok/Amplify look and feel -->
+    <header class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-8 py-3 flex flex-wrap justify-between items-center gap-3 z-40 shadow-xs shrink-0">
+      <div class="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 min-w-0">
+        <div class="flex items-start gap-3 min-w-0">
+          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 7l-8.5 8.5-5-5L2 17" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7h6v6" />
+          </svg>
+          <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">Themes ETFs</h1>
+        </div>
+        <span id="app-subtitle" class="basis-full sm:basis-auto text-sm text-slate-500 dark:text-slate-400"></span>
+      </div>
+      <div class="flex items-center gap-3 shrink-0">
+        <button type="button" aria-controls="app-summary" aria-expanded="false" aria-label="ETF catalog information" id="ticker-count" class="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/30">
+          Loading…
+        </button>
+        <span id="app-summary" role="region" aria-label="ETF catalog information" hidden>
+          Search Themes ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab. Data comes from
+          <a href="./api/themes/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/themes/index.json</a> generated from
+          <a href="https://themesetfs.com/etfs" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">themesetfs.com catalog and daily holdings downloads</a> + Yahoo Finance
+        </span>
+        <button id="theme-toggle" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-base leading-none" title="Toggle Theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full max-w-full p-4 sm:p-8 space-y-6">
+
+      <!-- Search, Tabs & Action Bar -->
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-4 bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur">
+
+        <!-- Search is view-scoped: each tab keeps its own query. The ✕ button
+             clears only the active tab's filter (same glyph as the Use-column blacklist). -->
+        <div class="relative flex items-center w-full lg:w-96 shrink-0">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search ETFs, fund names, holdings, tickers, CUSIPs, ISINs..."
+            disabled
+            class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg pl-4 pr-8 py-2 w-full focus:outline-none focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          />
+          <button
+            type="button"
+            id="search-clear-btn"
+            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm leading-none focus:outline-none"
+            title="Clear search filter"
+            aria-label="Clear search filter"
+          >✕</button>
+        </div>
+
+        <!-- ETF catalogue tabs: All ETFs + Themes ETFs categories. -->
+        <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full flex-1 themed-scroll"></div>
+
+        <!-- Actions intentionally match Amplify / iShares naming and placement -->
+        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-end shrink-0">
+
+          <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
+          <div
+            id="dropzone"
+            class="flex items-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-500 bg-slate-50 dark:bg-slate-900/60 transition-all rounded-lg px-3.5 py-2 cursor-pointer text-sm text-slate-600 dark:text-slate-300"
+            title="Upload SEC Form N-PORT-P primary_doc.xml (Themes ETF Trust holdings from EDGAR, CIK 0001976322 — the fallback the feed uses when themesetfs.com publishes no daily holdings CSV for a fund). Parsed in your browser; uploads live for this session only."
+          >
+            <input type="file" id="file-input" accept=".xml" class="hidden" />
+            <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
+          </div>
+
+          <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
+          <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
+          <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
+          <button id="reset-btn" disabled class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-rose-200 dark:hover:bg-rose-800/60 disabled:hover:bg-rose-100 dark:disabled:hover:bg-rose-900/40">Clear</button>
+          <button id="blacklist-btn" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700" title="Manage the blacklist of ETFs hidden from All ETFs (kept in browser localStorage)" aria-expanded="false">Blacklist</button>
+        </div>
+
+      </div>
+
+      <!-- Blacklist manager: blacklisted ETFs are hidden from All ETFs and stored in localStorage. -->
+      <div id="blacklist-panel" class="bg-white dark:bg-slate-800/80 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2.5">
+          <input type="text" id="blacklist-input" placeholder="Add ETF tickers to blacklist (e.g. SPYI, QQQI)" class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 w-full sm:w-80 focus:outline-none focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 transition" />
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button id="blacklist-add-btn" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95">Add</button>
+            <button id="blacklist-clear-btn" class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-rose-200 dark:hover:bg-rose-800/60">Clear Blacklist</button>
+          </div>
+        </div>
+        <div id="blacklist-chips" class="flex flex-wrap gap-1.5 mt-3"></div>
+        <p id="blacklist-empty" class="text-xs text-slate-400 dark:text-slate-500 mt-3">The blacklist is empty. Blacklisted ETFs disappear from All ETFs (and from selection), and are kept in your browser localStorage.</p>
+      </div>
+
+      <!-- Selected ETF detail tabs appear immediately above the table. -->
+      <nav id="selected-tabs-panel" class="bg-white dark:bg-slate-800/80 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur" aria-label="Selected ETF detail views">
+        <div id="selected-tabs-bar" class="flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full themed-scroll"></div>
+      </nav>
+
+      <!-- Data Table Container -->
+      <div class="bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur overflow-hidden">
+        <div id="table-scroll" class="overflow-x-auto overflow-y-auto themed-scroll">
+          <table class="w-full text-left whitespace-nowrap">
+            <thead id="table-head" class="bg-slate-50 dark:bg-slate-900/95 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 backdrop-blur">
+              <tr>
+                <th class="py-3.5 px-4 w-12 text-center" title="Row index">#</th>
+                <th class="py-3.5 px-4" title="Column 1">Column 1</th>
+              </tr>
+            </thead>
+            <tbody id="table-body" class="divide-y divide-slate-100 dark:divide-slate-700/50 text-sm">
+              <tr>
+                <td colspan="10" class="py-12 text-center text-slate-400 dark:text-slate-500">Loading Themes ETFs catalog…</td>
+              </tr>
+            </tbody>
+          </table>
+          <div id="static-load-sentinel" class="hidden py-3 text-center text-xs text-slate-500 dark:text-slate-400 cursor-pointer" aria-live="polite">
+            <span id="static-load-status"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="text/babel" data-presets="typescript" src="./app.tsx"></script>
+<script id="catalog-summary-behavior">
+    (() => {
+      const trigger = document.getElementById('ticker-count');
+      const panel = document.getElementById('app-summary');
+      if (!trigger || !panel) return;
+      let pinned = false;
+      let closeTimer;
+      const position = () => {
+        const rect = trigger.getBoundingClientRect();
+        panel.style.left = `${Math.max(16, Math.min(rect.right - panel.offsetWidth, innerWidth - panel.offsetWidth - 16))}px`;
+        panel.style.top = `${Math.max(16, Math.min(rect.bottom + 8, innerHeight - panel.offsetHeight - 16))}px`;
+      };
+      const show = () => {
+        clearTimeout(closeTimer);
+        panel.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        position();
+      };
+      const hide = () => {
+        clearTimeout(closeTimer);
+        panel.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      };
+      const scheduleHide = () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => {
+          const focused = document.activeElement;
+          if (!pinned && !trigger.matches(':hover') && !panel.matches(':hover') &&
+              focused !== trigger && !panel.contains(focused)) hide();
+        }, 150);
+      };
+      trigger.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(); });
+      panel.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+      trigger.addEventListener('pointerleave', scheduleHide);
+      panel.addEventListener('pointerleave', scheduleHide);
+      trigger.addEventListener('focus', show);
+      panel.addEventListener('focusin', show);
+      trigger.addEventListener('blur', scheduleHide);
+      panel.addEventListener('focusout', scheduleHide);
+      trigger.addEventListener('click', () => { pinned = !pinned; if (pinned) show(); else hide(); });
+      document.addEventListener('keydown', event => {
+        if (event.key !== 'Escape') return;
+        pinned = false;
+        if (panel.contains(document.activeElement)) trigger.focus();
+        hide();
+      });
+      document.addEventListener('pointerdown', event => {
+        if (!trigger.contains(event.target) && !panel.contains(event.target)) { pinned = false; hide(); }
+      });
+      addEventListener('resize', () => { if (!panel.hidden) position(); });
+      addEventListener('scroll', () => { if (!panel.hidden) position(); }, { passive: true });
+      if (typeof ResizeObserver === 'function') new ResizeObserver(() => { if (!panel.hidden) position(); }).observe(panel);
+    })();
+  </script>
+</body>
+</html>

@@ -68,8 +68,8 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `243bf3562448` (`fix(updater): normalize Themes catalog status label`); `origin/main` remains `5c63f550343b`.
-- Status: The updater, offline suite, and mandatory isolated live acceptance are complete. Acceptance evidence is ready to publish; no production `api/themes` data has been written yet.
+- Remote baseline / last confirmed pushed SHA: feature branch = `65463e185bb4` (`test(acceptance): record Themes live updater smoke`); `origin/main` remains `5c63f550343b`.
+- Status: The updater, offline suite, and mandatory isolated live acceptance are published. Sibling-parity UI files and offline UI regression guards are locally validated and pending push; no production `api/themes` data has been written yet.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -81,14 +81,16 @@ CURRENT STATE
   8. Added literal offline fixtures in `scripts/update-data.test.ts`; 14 tests passed and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
   9. Published the one-line catalog-label correction as `243bf35`; its remote head was verified.
   10. Completed two evidence-backed isolated live runs at `243bf3562448` for BOTT, CLOD, and AUMI. Run 1 successfully fetched current official CSVs/Yahoo data; run 2 was byte-stable and reported all three unchanged. No requested ticker was skipped or failed.
-- Active work: Publish the tracked live-acceptance evidence, then copy the pinned NEOS UI and apply only the authorized Themes/header substitutions.
+  11. Copied `app.tsx` and `index.html` byte-for-byte from `daggerok/NEOS@17f348f` before applying only Themes API/path/local-storage/source string substitutions. Retained the sibling's shared hidden header panel, selection behavior, table layout, and interactions.
+  12. Added `scripts/ui-parity.test.ts`; the combined offline suite passes 20/20 and browser-target transpilation of `app.tsx` succeeds.
+- Active work: Publish the UI parity checkpoint, then deliberately seed the initial static API with a full bounded live run and perform a served-app browser/smoke check.
 - Remaining work:
-  1. Commit/push the acceptance evidence checkpoint.
-  2. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
-  3. Add CI/dependabot, README, initial static API seed if deliberately published, required metadata, and all remaining scoped checkpoints.
+  1. Commit/push the UI parity checkpoint.
+  2. Generate and publish an initial `api/themes` seed after a full direct-CSV availability check; verify the app loads it when served locally.
+  3. Add CI/dependabot, README, required metadata, and all remaining scoped checkpoints.
   4. Open a PR to `main` (no merge authorization).
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit and push `evidence/live-acceptance-2026-09-29.*` and this worklog record; then copy `app.tsx` and `index.html` from `daggerok/NEOS@17f348f` before making only the permitted Themes substitutions.
+- Exact next action: commit/push the UI parity files and tests; then run the updater for the 13 verified active catalog tickers to intentionally seed `api/themes` and inspect the served app.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -149,6 +151,15 @@ CHRONOLOGICAL JOURNAL
 - Run 2 used the exact same command (exit 0). All three funds reported `unchanged`, with zero updates/failures and three unchanged funds. Full SHA-256 manifests from runs 1 and 2 were compared with `cmp -s` and were byte-identical, confirming no timestamp-only churn under stable upstream input.
 - Tracked evidence: `evidence/live-acceptance-2026-09-29.md`, `*.log`, `*.sha256`, `*.summary`, `*.files`, and `*.fund-dirs`. These record revision, exact commands, effective config, logs, source/count checks, and idempotency result.
 - Next: commit/push this evidence checkpoint; then copy the pinned NEOS UI verbatim and make only the approved Themes/source/header substitutions.
+
+### 2026-09-29 — Sibling-parity UI and header regression guards (completed; checkpoint pending push)
+- Copied `app.tsx`, `index.html`, and `favicon.ico` directly from `daggerok/NEOS@17f348f904f65048a76dd39fa3dfdf38188abf2b` before changing strings. Source SHA-256s were `5399fb6cf15c5eae36d1a2e3f4196d2398d8441e621fa5889856c98cab416887` (`app.tsx`) and `7f44ea9979279c028a77b733d405b59a4530ca8fe4dff2fb15f5f43fe81582a4` (`index.html`).
+- Permitted substitutions only: file-header brand, `themes-*` localStorage keys, every `api/themes` path, export prefix, title/header/status/source copy, `themesetfs.com/etfs` official link, and Themes ETF Trust CIK `0001976322` attribution. Column-tooltip key set/order and fund-detail row structure are unchanged; only provider/provenance text was substituted. No new columns, rows, sections, colors, selection logic, or layout behavior was introduced.
+- Kept the copied shared header implementation: rich detail/source content is hidden in the count-badge panel; empty visible subtitle at zero selection; alphabetically sorted clickable bold ticker links and active highlighting when selected; hover/focus/click/touch interaction, Escape dismissal, and viewport-aware positioning are all preserved from the sibling.
+- Added `scripts/ui-parity.test.ts` and expanded `npm`-equivalent `bun test` script to run all script tests. The guard checks Themes paths/keys/source links, `00 - None`/`00 - Unknown` frequency output, selection-only checkbox behavior, and header hover/focus/touch/Escape/narrow-screen structure without external network calls.
+- Validation: `bun test scripts/update-data.test.ts scripts/ui-parity.test.ts` passed 20/20 (73 assertions); `bun build --target=browser app.tsx --outfile=/tmp/themes-app.js` succeeded. Diff hunk review against the pinned source showed substitutions confined to brand/source/path strings and the allowed dividend-source provenance text.
+- Live availability precheck for intentional seed: all 13 first-party catalog tickers (AGMI, AUMI, BOTT, CLOD, COPA, GSIB, LGCF, LIMI, NATO, SMCF, SPAM, URAN, WISE) returned HTTP 200 for their direct official daily holdings CSV URLs.
+- Next: commit/push the UI checkpoint, deliberately generate the initial full static API seed, then serve and inspect the app against that data.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "test": "bun test scripts/update-data.test.ts",
+    "test": "bun test scripts/*.test.ts",
     "update": "bun scripts/update-data.ts"
   },
   "dependencies": {},
