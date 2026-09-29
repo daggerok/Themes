@@ -63,28 +63,29 @@ GitHub Personal Access Token: <PASTE_YOUR_TOKEN_HERE>
 ================================================================
 CURRENT STATE
 =============
-- Goal: Implement Themes ETFs holdings-to-watchlist web application in daggerok/Themes matching sibling parity (Bun-only, zero runtime dependencies, static client app + update-data feed).
-- Status: Researched & Baseline Initialized. Repository cloned, clean baseline verified (LICENSE + placeholder README), official ETF brand site researched, data endpoints discovered and verified live, SEC EDGAR CIK confirmed, and self-contained plan embedded. Ready for implementation.
+- Goal: Implement the Themes ETFs holdings-to-watchlist web application in `daggerok/Themes` with sibling-parity UI, a Bun-only zero-runtime-dependency updater, static API data, offline fixture tests, and isolated live acceptance evidence.
+- Hard constraints: work only on `feat/themes-etfs`; never persist credentials; no force-push; Bun-only tooling; no runtime dependencies; copy the sibling UI verbatim except for the enumerated brand/source substitutions and required shared header presentation rule; retain previously published data when a provider fails.
+- Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
-- Branch: main (feature branch feat/themes-etfs to be created during implementation)
-- Pushed remote baseline: main branch with initialized .worklog.txt
+- Branch / PR: local `feat/themes-etfs`; no remote feature branch or PR exists yet (reconciled 2026-09-29).
+- Remote baseline / last confirmed pushed SHA: `origin/main` = `5c63f550343b` (`docs(prompt): add ready-to-use agent implementation prompt for Themes ETFs`). No feature commit has been pushed yet.
+- Status: Recovery and live endpoint verification complete; implementation scaffold has not been published. An invalid uncommitted scratch scaffold was discarded before any checkpoint.
 - Completed:
-  1. Cloned target repository and verified clean baseline state.
-  2. Conducted live research on official ETF issuer portal (https://themesetfs.com/ (catalog at https://themesetfs.com/etfs)).
-  3. Discovered and verified data acquisition pathways (endpoints, holdings formats, WAF characteristics).
-  4. Confirmed SEC EDGAR Trust registrant and CIK (CONFIRMED: 'Themes ETF Trust', CIK 0001976322 (76 tickers registered).).
-  5. Established closest sibling reference architecture (daggerok/Global-X or daggerok/NEOS (clean daily holdings CSV parser + standard sibling UI).).
-  6. Generated complete self-contained implementation plan (generic protocol + brand-specific specifications), eliminating any requirement for 00-generic.txt.
-  7. Committed initialized .worklog.txt into main branch.
-- Next action:
-  1. The next implementing agent starts here: read this .worklog.txt completely.
-  2. Create feature branch `feat/themes-etfs`.
-  3. Live-verify the site endpoints listed in PART 2 below.
-  4. Scaffold repo files from closest sibling (daggerok/Global-X or daggerok/NEOS (clean daily holdings CSV parser + standard sibling UI).): package.json, bun.lock, index.html, app.tsx, scripts/update-data.ts, scripts/update-data.test.ts, .github/workflows/update-data.yml, .github/dependabot.yml, and README.md.
-  5. Implement data updater matching verified endpoints and run offline tests (bun test scripts/update-data.test.ts).
-  6. Execute isolated acceptance runs (minimum 3 tickers), verify byte-stability across repeat runs.
-  7. Update .worklog.txt after each stage, commit with Conventional Commits, and push to feature branch.
-- Blockers: None. Ready for feature branch implementation.
+  1. Baseline research and self-contained plan from the prior checkpoint remain valid.
+  2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
+  3. Created local feature branch `feat/themes-etfs`.
+  4. Re-verified 2026-09-29 that `https://themesetfs.com/etfs` returns HTTP 200 and official daily CSV downloads for BOTT, CLOD, AUMI, and NATO return HTTP 200. BOTT's CSV header and records match the documented fields.
+  5. Selected `daggerok/NEOS` at `17f348f` as the concrete sibling reference for the UI/layout, API shape, workflow, and Bun pins. Its working patterns will be copied rather than redesigned; only Themes acquisition logic will differ.
+- Active work: Create and publish this recovery/live-verification checkpoint, then scaffold the updater and offline tests.
+- Remaining work:
+  1. Scaffold the Bun project from the pinned NEOS reference, with Themes paths and source text substitutions only.
+  2. Implement the official catalog/holdings CSV + Yahoo history/dividend acquisition path, cached-data retention, deterministic output, and SEC N-PORT fallback wiring.
+  3. Add offline literal-fixture tests; run `bun test` and Bun transpilation.
+  4. Run isolated live acceptance for at least BOTT, CLOD, and AUMI twice; record checksums, selection, counts, and source provenance.
+  5. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
+  6. Add CI/dependabot, README, required metadata, push all scoped checkpoints, and open a PR to `main`.
+- Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
+- Exact next action: commit and push this documentation-only recovery checkpoint, then copy the pinned NEOS project scaffold and replace the invalid scratch files with a tested Themes updater.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -103,6 +104,16 @@ CHRONOLOGICAL JOURNAL
 - Verified SEC EDGAR filing registrant CIK: CONFIRMED: 'Themes ETF Trust', CIK 0001976322 (76 tickers registered)..
 - Assembled self-contained plan integrating the full generic build requirements (PART 1) and brand-specific research (PART 2).
 - Committed initialized .worklog.txt to main branch. Repository is ready for implementing agent.
+
+### 2026-09-29 — Recovery reconciliation, branch creation, and endpoint re-verification (completed; feature checkpoint pending push)
+- Read the complete self-contained `.worklog.txt` before implementation work.
+- Reconciled Git state: local `main` was clean at `5c63f55`; `origin/main` resolved to `5c63f550343b`; no remote `feat/themes-etfs` head existed. No PR was present or created.
+- Created local branch `feat/themes-etfs` from the verified remote baseline.
+- Re-verified official endpoints with HTTP HEAD requests: `/etfs`, `/storage/holdings/Holdings-BOTT.csv`, `/storage/holdings/Holdings-CLOD.csv`, `/storage/holdings/Holdings-AUMI.csv`, and `/storage/holdings/Holdings-NATO.csv` each returned HTTP 200. A direct BOTT CSV read confirmed the documented daily CSV schema (`id,date,account,stock_ticker,cusip,security_name,shares,price,market_value,weightings,net_assets,...`) and live 2026-09-29 data.
+- Cloned one designated sibling reference only: `daggerok/NEOS` at commit `17f348f`. It supplies the exact UI/API/workflow/readme conventions; Themes will use a distinct official CSV parser and source URLs.
+- Installed Bun locally for validation only; it is not a repository dependency. The first scratch updater/test files were invalid and untracked, so they were removed rather than checkpointed. No user-authored repository content was removed.
+- Sanitized `origin` back to the credential-free canonical URL `https://github.com/daggerok/Themes.git`; credentials are not stored in Git configuration.
+- Next: publish this documentation-only recovery checkpoint, then create the clean scaffold from the pinned sibling.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
