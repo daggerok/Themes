@@ -1097,7 +1097,7 @@ export async function main(env: Record<string, string | undefined> = process.env
   } else {
     catalog = await fetchThemesCatalog(config, gate);
   }
-  console.log(`[ catalog  ] ${catalog.length} ${BRAND_LABEL} ETFs (official Themes ETFs catalog)`);
+  console.log(`[ catalog  ] ${catalog.length} ${BRAND_LABEL} (official Themes ETFs catalog)`);
 
   if (config.tickers.size) {
     const known = new Set(catalog.map((fund) => fund.ticker));

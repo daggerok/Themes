@@ -68,8 +68,8 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `4b0465e53973` (`docs(worklog): confirm feature branch publication`); `origin/main` remains `5c63f550343b`.
-- Status: Clean Bun scaffold, Themes updater, and offline fixture suite are implemented and locally validated but not yet published. No production API data has been written.
+- Remote baseline / last confirmed pushed SHA: feature branch = `b7e15b82b092` (`feat(data): add Themes ETF feed updater`); `origin/main` remains `5c63f550343b`.
+- Status: Clean Bun scaffold, Themes updater, and offline fixture suite are published. A catalog status-label correction is locally validated and pending push; no production API data has been written.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -79,14 +79,14 @@ CURRENT STATE
   6. Replaced the discarded scratch work with a clean Bun project skeleton: `.gitignore`, exact sibling pins in `package.json`/`bun.lock`, and tracked updater defaults in `scripts/update-data.config.json`.
   7. Implemented `scripts/update-data.ts`: official embedded catalog parser, direct daily CSV parser, independent request pacing lanes, Yahoo chart/dividend path, deterministic paginated feed writer, cached-data retention, SEC N-PORT candidate fallback, bounded cursor, and filter/config/output helpers.
   8. Added literal offline fixtures in `scripts/update-data.test.ts`; 14 tests passed and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
-- Active work: Publish the updater/offline-test checkpoint, then run the isolated live acceptance for BOTT, CLOD, and AUMI.
+- Active work: Publish the corrected catalog-status label, then run the isolated live acceptance for BOTT, CLOD, and AUMI.
 - Remaining work:
-  1. Commit/push the clean updater and offline-test checkpoint.
+  1. Commit/push the catalog-status label correction.
   2. Run isolated live acceptance for BOTT, CLOD, and AUMI twice; record checksums, selection, counts, and source provenance.
   3. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
   4. Add CI/dependabot, README, required metadata, push all scoped checkpoints, and open a PR to `main`.
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit and push the tested updater/offline-test checkpoint; then copy it to an isolated temporary worktree and execute the first real BOTT/CLOD/AUMI acceptance run.
+- Exact next action: commit and push the corrected catalog-status label; then create a fresh isolated worktree and execute the first real BOTT/CLOD/AUMI acceptance run with tracked evidence.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -130,6 +130,13 @@ CHRONOLOGICAL JOURNAL
 - Type-safety review: this repository intentionally has no `tsconfig.json`, `typescript` dependency, or `tsc` invocation. Reviewed numeric parsing, nullable history/dividend values, header-preserving paginated sheets, and request-lane reservation directly; Bun transpilation is recorded as syntax/transpilation validation only, not a substitute for semantic diagnostics.
 - No `api/themes` production data was generated in this checkpoint. The mandatory live smoke remains isolated.
 - Next: commit and push this scoped updater/test checkpoint, then run the actual bounded BOTT/CLOD/AUMI acceptance twice in an isolated working copy.
+
+### 2026-09-29 — Initial isolated live execution and status-label correction (correction validated; push pending)
+- Created a detached temporary worktree at updater commit `b7e15b8` and executed the real updater with `TICKERS='BOTT,CLOD,AUMI' VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0`. The live official catalog returned 13 first-party Themes ETFs; all three requested funds were selected and processed successfully: AUMI (35 holdings, 699 history rows), BOTT (41, 611), and CLOD (57, 697); zero provider failures.
+- The first run was intentionally isolated from `api/themes` in the feature checkout. The output evidence target directory had not yet been created, so `tee` could not save that run's log and the shell command ended nonzero after the updater itself completed. It is not being used as the recorded acceptance run; a fresh isolated worktree and tracked evidence will be used after the correction is pushed.
+- Observed and fixed a presentation-only updater issue: the catalog line printed `Themes ETFs ETFs`. It now prints the sibling-contract form `N Themes ETFs (official Themes ETFs catalog)`. No acquisition, parsing, filtering, or persisted data logic changed.
+- Re-ran the offline suite and Bun transpilation after this one-line correction: 14/14 tests passed, and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+- Next: commit/push the one-line correction and this worklog record; create `evidence/`, a fresh detached worktree, and record two verified isolated live runs.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
