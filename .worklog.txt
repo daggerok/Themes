@@ -68,8 +68,8 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `b7e15b82b092` (`feat(data): add Themes ETF feed updater`); `origin/main` remains `5c63f550343b`.
-- Status: Clean Bun scaffold, Themes updater, and offline fixture suite are published. A catalog status-label correction is locally validated and pending push; no production API data has been written.
+- Remote baseline / last confirmed pushed SHA: feature branch = `243bf3562448` (`fix(updater): normalize Themes catalog status label`); `origin/main` remains `5c63f550343b`.
+- Status: The updater, offline suite, and mandatory isolated live acceptance are complete. Acceptance evidence is ready to publish; no production `api/themes` data has been written yet.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -79,14 +79,16 @@ CURRENT STATE
   6. Replaced the discarded scratch work with a clean Bun project skeleton: `.gitignore`, exact sibling pins in `package.json`/`bun.lock`, and tracked updater defaults in `scripts/update-data.config.json`.
   7. Implemented `scripts/update-data.ts`: official embedded catalog parser, direct daily CSV parser, independent request pacing lanes, Yahoo chart/dividend path, deterministic paginated feed writer, cached-data retention, SEC N-PORT candidate fallback, bounded cursor, and filter/config/output helpers.
   8. Added literal offline fixtures in `scripts/update-data.test.ts`; 14 tests passed and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
-- Active work: Publish the corrected catalog-status label, then run the isolated live acceptance for BOTT, CLOD, and AUMI.
+  9. Published the one-line catalog-label correction as `243bf35`; its remote head was verified.
+  10. Completed two evidence-backed isolated live runs at `243bf3562448` for BOTT, CLOD, and AUMI. Run 1 successfully fetched current official CSVs/Yahoo data; run 2 was byte-stable and reported all three unchanged. No requested ticker was skipped or failed.
+- Active work: Publish the tracked live-acceptance evidence, then copy the pinned NEOS UI and apply only the authorized Themes/header substitutions.
 - Remaining work:
-  1. Commit/push the catalog-status label correction.
-  2. Run isolated live acceptance for BOTT, CLOD, and AUMI twice; record checksums, selection, counts, and source provenance.
-  3. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
-  4. Add CI/dependabot, README, required metadata, push all scoped checkpoints, and open a PR to `main`.
+  1. Commit/push the acceptance evidence checkpoint.
+  2. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
+  3. Add CI/dependabot, README, initial static API seed if deliberately published, required metadata, and all remaining scoped checkpoints.
+  4. Open a PR to `main` (no merge authorization).
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit and push the corrected catalog-status label; then create a fresh isolated worktree and execute the first real BOTT/CLOD/AUMI acceptance run with tracked evidence.
+- Exact next action: commit and push `evidence/live-acceptance-2026-09-29.*` and this worklog record; then copy `app.tsx` and `index.html` from `daggerok/NEOS@17f348f` before making only the permitted Themes substitutions.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -137,6 +139,16 @@ CHRONOLOGICAL JOURNAL
 - Observed and fixed a presentation-only updater issue: the catalog line printed `Themes ETFs ETFs`. It now prints the sibling-contract form `N Themes ETFs (official Themes ETFs catalog)`. No acquisition, parsing, filtering, or persisted data logic changed.
 - Re-ran the offline suite and Bun transpilation after this one-line correction: 14/14 tests passed, and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
 - Next: commit/push the one-line correction and this worklog record; create `evidence/`, a fresh detached worktree, and record two verified isolated live runs.
+
+### 2026-09-29 — Mandatory isolated live acceptance (completed; evidence checkpoint pending push)
+- Used a fresh detached worktree at `243bf3562448c8d381c5506d6e9623b499f30031`; its generated `api/themes` output did not touch the feature-branch working tree.
+- Run 1 command (exit 0): `TICKERS='BOTT,CLOD,AUMI' VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0 bun scripts/update-data.ts`. Effective config retained official Themes, Yahoo, and EDGAR-fallback paths with conservative one-second pacing and two workers.
+- The direct catalog returned 13 first-party Themes ETFs. All requested tickers were selected and processed: AUMI (35 holdings, 699 history, 2 dividend events), BOTT (41, 611, 2), CLOD (57, 697, 1). The run reported zero failures and zero skips; total generated counts were 13 funds, 133 holdings, and 2,007 history rows.
+- Source/provenance check: selected holding manifests point to their direct official `https://themesetfs.com/storage/holdings/Holdings-<TICKER>.csv` URLs; history manifests point to stable query-string-free Yahoo chart URLs. SEC EDGAR was not invoked because the direct CSV path succeeded.
+- Scope check: only AUMI, BOTT, and CLOD fund directories were generated. The other ten catalog entries were skeletons in `index.json`; no unrequested fund data files were written and no existing catalog item was dropped.
+- Run 2 used the exact same command (exit 0). All three funds reported `unchanged`, with zero updates/failures and three unchanged funds. Full SHA-256 manifests from runs 1 and 2 were compared with `cmp -s` and were byte-identical, confirming no timestamp-only churn under stable upstream input.
+- Tracked evidence: `evidence/live-acceptance-2026-09-29.md`, `*.log`, `*.sha256`, `*.summary`, `*.files`, and `*.fund-dirs`. These record revision, exact commands, effective config, logs, source/count checks, and idempotency result.
+- Next: commit/push this evidence checkpoint; then copy the pinned NEOS UI verbatim and make only the approved Themes/source/header substitutions.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
