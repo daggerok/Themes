@@ -1,0 +1,129 @@
+{
+  "asOfDate": "Sep 29, 2026",
+  "aum": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$27.68M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 27679546
+  },
+  "aumValue": 27679546,
+  "category": "Thematic",
+  "closePrice": "$35.75",
+  "closePriceValue": 35.75,
+  "dataFile": "./funds/WISE/meta.json",
+  "distributionFrequency": "00 - None",
+  "distributions": {
+    "frequency": "00 - None",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": null,
+    "rows": [
+      {
+        "Amount": "$1.6100",
+        "Ex-Date": "2025-12-18"
+      }
+    ]
+  },
+  "exchange": "NasdaqGM",
+  "fundPage": "https://themesetfs.com/etfs/wise",
+  "generatedAt": "2026-09-29T05:46:09Z",
+  "history": {
+    "asOf": "2026-09-28",
+    "asOfDate": "Sep 28, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 702
+  },
+  "holdings": {
+    "asOf": "2026-09-29",
+    "asOfDate": "Sep 29, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 47
+  },
+  "metrics": {
+    "cagr10y": 3.71,
+    "cagr3y": 12.89,
+    "cagr5y": 7.55,
+    "distributionYield": 4.51,
+    "distributionYieldText": "4.51%",
+    "dividendYield": 4.51,
+    "dividendYieldText": "4.51%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 43.88,
+    "tr1y": -16.37,
+    "tr3y": 43.88,
+    "tr5y": 43.88,
+    "yield12M": 4.51,
+    "yield12MText": "4.51%",
+    "ytd": -10.06
+  },
+  "name": "Generative Artificial Intelligence ETF",
+  "nav": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$35.69",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 35.69
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 35.69,
+  "providerCategory": "Thematic",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 28, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": -16.37,
+      "yr10": 43.88,
+      "yr3": 43.88,
+      "yr5": 43.88,
+      "ytd": -10.06
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "790,000",
+    "value": 790000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-WISE.pdf",
+    "fundPage": "https://themesetfs.com/etfs/wise",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Generative-Artificial-Intelligence-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "WISE",
+  "totalNetAssets": 27679546
+}

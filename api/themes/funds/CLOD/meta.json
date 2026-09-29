@@ -1,0 +1,129 @@
+{
+  "asOfDate": "Sep 29, 2026",
+  "aum": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$2.09M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 2089722
+  },
+  "aumValue": 2089722,
+  "category": "Thematic",
+  "closePrice": "$35.16",
+  "closePriceValue": 35.16,
+  "dataFile": "./funds/CLOD/meta.json",
+  "distributionFrequency": "00 - None",
+  "distributions": {
+    "frequency": "00 - None",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": null,
+    "rows": [
+      {
+        "Amount": "$0.4800",
+        "Ex-Date": "2025-12-18"
+      }
+    ]
+  },
+  "exchange": "NasdaqGM",
+  "fundPage": "https://themesetfs.com/etfs/clod",
+  "generatedAt": "2026-09-29T05:46:00Z",
+  "history": {
+    "asOf": "2026-09-28",
+    "asOfDate": "Sep 28, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 697
+  },
+  "holdings": {
+    "asOf": "2026-09-29",
+    "asOfDate": "Sep 29, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-CLOD.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 57
+  },
+  "metrics": {
+    "cagr10y": 3.42,
+    "cagr3y": 11.86,
+    "cagr5y": 6.95,
+    "distributionYield": 1.37,
+    "distributionYieldText": "1.37%",
+    "dividendYield": 1.37,
+    "dividendYieldText": "1.37%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 39.96,
+    "tr1y": -1.83,
+    "tr3y": 39.96,
+    "tr5y": 39.96,
+    "yield12M": 1.37,
+    "yield12MText": "1.37%",
+    "ytd": 7.1
+  },
+  "name": "Cloud Computing ETF",
+  "nav": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$35.16",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 35.16
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 35.16,
+  "providerCategory": "Thematic",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 28, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": -1.83,
+      "yr10": 39.96,
+      "yr3": 39.96,
+      "yr5": 39.96,
+      "ytd": 7.1
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "60,000",
+    "value": 60000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-CLOD.pdf",
+    "fundPage": "https://themesetfs.com/etfs/clod",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-CLOD.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Cloud-Computing-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "CLOD",
+  "totalNetAssets": 2089722
+}

@@ -68,8 +68,8 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `65463e185bb4` (`test(acceptance): record Themes live updater smoke`); `origin/main` remains `5c63f550343b`.
-- Status: The updater, offline suite, and mandatory isolated live acceptance are published. Sibling-parity UI files and offline UI regression guards are locally validated and pending push; no production `api/themes` data has been written yet.
+- Remote baseline / last confirmed pushed SHA: feature branch = `042eccb31e6e` (`feat(ui): add Themes ETF watchlist client`); `origin/main` remains `5c63f550343b`.
+- Status: Updater, offline suite, acceptance evidence, and sibling-parity UI are published. A full initial `api/themes` static seed plus served-app smoke evidence are locally validated and pending push.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
@@ -83,14 +83,15 @@ CURRENT STATE
   10. Completed two evidence-backed isolated live runs at `243bf3562448` for BOTT, CLOD, and AUMI. Run 1 successfully fetched current official CSVs/Yahoo data; run 2 was byte-stable and reported all three unchanged. No requested ticker was skipped or failed.
   11. Copied `app.tsx` and `index.html` byte-for-byte from `daggerok/NEOS@17f348f` before applying only Themes API/path/local-storage/source string substitutions. Retained the sibling's shared hidden header panel, selection behavior, table layout, and interactions.
   12. Added `scripts/ui-parity.test.ts`; the combined offline suite passes 20/20 and browser-target transpilation of `app.tsx` succeeds.
-- Active work: Publish the UI parity checkpoint, then deliberately seed the initial static API with a full bounded live run and perform a served-app browser/smoke check.
+  13. Published the UI checkpoint as `042eccb`; generated a deliberate full initial `api/themes` seed for all 13 active first-party catalog funds, then confirmed an immediate full rerun is byte-stable.
+  14. Served the static app locally and confirmed HTTP 200 delivery for shell, client script, index, metadata, and paginated holdings assets; index/manifests passed consistency assertions.
+- Active work: Publish the static-data seed/evidence checkpoint, then add workflow/dependabot/docs/metadata.
 - Remaining work:
-  1. Commit/push the UI parity checkpoint.
-  2. Generate and publish an initial `api/themes` seed after a full direct-CSV availability check; verify the app loads it when served locally.
-  3. Add CI/dependabot, README, required metadata, and all remaining scoped checkpoints.
-  4. Open a PR to `main` (no merge authorization).
+  1. Commit/push the 13-fund initial API seed and its evidence.
+  2. Add CI/dependabot, README, required metadata, and all remaining scoped checkpoints.
+  3. Open a PR to `main` (no merge authorization).
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit/push the UI parity files and tests; then run the updater for the 13 verified active catalog tickers to intentionally seed `api/themes` and inspect the served app.
+- Exact next action: commit/push `api/themes/**`, the seed evidence, and this worklog record; then add CI/dependabot and a sibling-parity README.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -160,6 +161,17 @@ CHRONOLOGICAL JOURNAL
 - Validation: `bun test scripts/update-data.test.ts scripts/ui-parity.test.ts` passed 20/20 (73 assertions); `bun build --target=browser app.tsx --outfile=/tmp/themes-app.js` succeeded. Diff hunk review against the pinned source showed substitutions confined to brand/source/path strings and the allowed dividend-source provenance text.
 - Live availability precheck for intentional seed: all 13 first-party catalog tickers (AGMI, AUMI, BOTT, CLOD, COPA, GSIB, LGCF, LIMI, NATO, SMCF, SPAM, URAN, WISE) returned HTTP 200 for their direct official daily holdings CSV URLs.
 - Next: commit/push the UI checkpoint, deliberately generate the initial full static API seed, then serve and inspect the app against that data.
+
+### 2026-09-29 — Full initial static API seed and served-app smoke (completed; data checkpoint pending push)
+- Deliberately published an initial static data seed (separate from the isolated acceptance evidence) so the copied browser app has a complete feed on first checkout. Before the full run, every first-party catalog ticker's direct official CSV returned HTTP 200.
+- First full command (exit 0): `VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0 bun scripts/update-data.ts`. It processed all 13 official catalog funds with zero failures: 727 holdings rows and 6,224 Yahoo history rows across 40 JSON files / 13 fund directories. The feed includes AGMI, AUMI, BOTT, CLOD, COPA, GSIB, LGCF, LIMI, NATO, SMCF, SPAM, URAN, and WISE.
+- Some newly listed funds (LGCF, LIMI, SMCF) currently have five Yahoo history rows. This is fresh provider output and was kept unchanged; no synthetic history was added.
+- Second identical full command (exit 0) reported all 13 funds unchanged with zero updates/failures. Full SHA-256 manifests compared byte-identically with `cmp -s`, confirming deterministic publication across the full catalog.
+- Ran a manifest assertion: index counts equal the sums of all fund entries, and every fund's index holdings/history count equals its metadata manifest. Result: confirmed.
+- Started a static HTTP server on port 4173 and checked HTTP 200 for `/`, `/app.tsx`, `/api/themes/index.json`, and BOTT metadata/holdings page 001; a served API read confirmed 13 catalog funds and BOTT/CLOD/AUMI presence. The server is a temporary live preview only, not a deployment.
+- UI browser-path coverage is provided by the copied sibling behavior plus static regression tests and browser-target transpilation; no headless browser executable is present in the workspace. This limitation and the served-asset smoke are documented in `evidence/initial-static-seed-2026-09-29.md`.
+- Evidence: `evidence/initial-static-seed-2026-09-29.md`, both full-run logs, summary, and paired SHA-256 manifests.
+- Next: commit/push this initial data/evidence checkpoint; then add the standardized GitHub workflow, Dependabot configuration, and sibling-parity README.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

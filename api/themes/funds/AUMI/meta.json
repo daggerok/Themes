@@ -1,0 +1,133 @@
+{
+  "asOfDate": "Sep 29, 2026",
+  "aum": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$24.03M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 24026028
+  },
+  "aumValue": 24026028,
+  "category": "Commodities",
+  "closePrice": "$97.14",
+  "closePriceValue": 97.14,
+  "dataFile": "./funds/AUMI/meta.json",
+  "distributionFrequency": "12 - Annually",
+  "distributions": {
+    "frequency": "12 - Annually",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": 1,
+    "rows": [
+      {
+        "Amount": "$0.8000",
+        "Ex-Date": "2025-12-18"
+      },
+      {
+        "Amount": "$0.6500",
+        "Ex-Date": "2024-12-24"
+      }
+    ]
+  },
+  "exchange": "NasdaqGM",
+  "fundPage": "https://themesetfs.com/etfs/aumi",
+  "generatedAt": "2026-09-29T05:45:58Z",
+  "history": {
+    "asOf": "2026-09-28",
+    "asOfDate": "Sep 28, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 699
+  },
+  "holdings": {
+    "asOf": "2026-09-29",
+    "asOfDate": "Sep 29, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 35
+  },
+  "metrics": {
+    "cagr10y": 13.64,
+    "cagr3y": 53.15,
+    "cagr5y": 29.14,
+    "distributionYield": 0.83,
+    "distributionYieldText": "0.83%",
+    "dividendYield": 0.83,
+    "dividendYieldText": "0.83%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 259.19,
+    "tr1y": 16.5,
+    "tr3y": 259.19,
+    "tr5y": 259.19,
+    "yield12M": 0.83,
+    "yield12MText": "0.83%",
+    "ytd": -0.15
+  },
+  "name": "Gold Miners ETF",
+  "nav": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$96.89",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 96.89
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 96.89,
+  "providerCategory": "Commodities",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 28, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": 16.5,
+      "yr10": 259.19,
+      "yr3": 259.19,
+      "yr5": 259.19,
+      "ytd": -0.15
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "260,000",
+    "value": 260000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-AUMI.pdf",
+    "fundPage": "https://themesetfs.com/etfs/aumi",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Gold-Miners-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "AUMI",
+  "totalNetAssets": 24026028
+}

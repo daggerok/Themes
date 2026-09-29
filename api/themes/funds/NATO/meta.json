@@ -1,0 +1,133 @@
+{
+  "asOfDate": "Sep 29, 2026",
+  "aum": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$93.09M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 93094500
+  },
+  "aumValue": 93094500,
+  "category": "Thematic",
+  "closePrice": "$37.84",
+  "closePriceValue": 37.84,
+  "dataFile": "./funds/NATO/meta.json",
+  "distributionFrequency": "12 - Annually",
+  "distributions": {
+    "frequency": "12 - Annually",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": 1,
+    "rows": [
+      {
+        "Amount": "$0.1700",
+        "Ex-Date": "2025-12-18"
+      },
+      {
+        "Amount": "$0.0200",
+        "Ex-Date": "2024-12-24"
+      }
+    ]
+  },
+  "exchange": "NasdaqGM",
+  "fundPage": "https://themesetfs.com/etfs/nato",
+  "generatedAt": "2026-09-29T05:46:05Z",
+  "history": {
+    "asOf": "2026-09-28",
+    "asOfDate": "Sep 28, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 491
+  },
+  "holdings": {
+    "asOf": "2026-09-29",
+    "asOfDate": "Sep 29, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 99
+  },
+  "metrics": {
+    "cagr10y": 3.94,
+    "cagr3y": 13.75,
+    "cagr5y": 8.03,
+    "distributionYield": 0.45,
+    "distributionYieldText": "0.45%",
+    "dividendYield": 0.45,
+    "dividendYieldText": "0.45%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 47.17,
+    "tr1y": -2.95,
+    "tr3y": 47.17,
+    "tr5y": 47.17,
+    "yield12M": 0.45,
+    "yield12MText": "0.45%",
+    "ytd": -2.85
+  },
+  "name": "Transatlantic Defense ETF",
+  "nav": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "$37.82",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 37.82
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 37.82,
+  "providerCategory": "Thematic",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 28, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": -2.95,
+      "yr10": 47.17,
+      "yr3": 47.17,
+      "yr5": 47.17,
+      "ytd": -2.85
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Sep 29, 2026",
+    "display": "2,500,000",
+    "value": 2500000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-NATO.pdf",
+    "fundPage": "https://themesetfs.com/etfs/nato",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Transatlantic-Defense-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "NATO",
+  "totalNetAssets": 93094500
+}

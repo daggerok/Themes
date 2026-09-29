@@ -1,0 +1,386 @@
+{
+  "headers": [
+    "Name",
+    "Ticker",
+    "Identifier",
+    "Weight",
+    "Market Value",
+    "Shares Held",
+    "Asset Category"
+  ],
+  "page": 1,
+  "pageSize": 250,
+  "rows": [
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BFCCQJ9",
+      "Market Value": "$1117198.74",
+      "Name": "Estun Automation Co Ltd",
+      "Shares Held": "263,600",
+      "Ticker": "002747 C2",
+      "Weight": "1.70%"
+    },
+    {
+      "Asset Category": "Consumer Cyclicals",
+      "Identifier": "6421876",
+      "Market Value": "$3336698.19",
+      "Name": "Yujin Robot Co Ltd",
+      "Shares Held": "385,585",
+      "Ticker": "056080 KS",
+      "Weight": "5.08%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "B1GHDM4",
+      "Market Value": "$2360703.24",
+      "Name": "Hyulim ROBOT Co Ltd",
+      "Shares Held": "523,865",
+      "Ticker": "090710 KS",
+      "Weight": "3.59%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BGSN8C0",
+      "Market Value": "$1528605.30",
+      "Name": "T-Robotics Co Ltd",
+      "Shares Held": "147,224",
+      "Ticker": "117730 KS",
+      "Weight": "2.33%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BYZFWD4",
+      "Market Value": "$3128046.75",
+      "Name": "Cymechs Inc/Korea",
+      "Shares Held": "162,939",
+      "Ticker": "160980 KS",
+      "Weight": "4.76%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BM9Q3J2",
+      "Market Value": "$3393310.50",
+      "Name": "Rainbow Robotics",
+      "Shares Held": "10,987",
+      "Ticker": "277810 KS",
+      "Weight": "5.16%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BD5C8Z2",
+      "Market Value": "$2577139.45",
+      "Name": "CSG Smart Science&Technology Co Ltd",
+      "Shares Held": "1,805,800",
+      "Ticker": "300222 C2",
+      "Weight": "3.92%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BHQPSL4",
+      "Market Value": "$462234.27",
+      "Name": "Guangdong Topstar Technology Co Ltd",
+      "Shares Held": "101,400",
+      "Ticker": "300607 C2",
+      "Weight": "0.70%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BPJGTG2",
+      "Market Value": "$443985.05",
+      "Name": "Yuil Robotics Co Ltd",
+      "Shares Held": "8,937",
+      "Ticker": "388720 KS",
+      "Weight": "0.68%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BFY2824",
+      "Market Value": "$1464405.91",
+      "Name": "Kudan Inc",
+      "Shares Held": "161,100",
+      "Ticker": "4425 JP",
+      "Weight": "2.23%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BT8R5C2",
+      "Market Value": "$766145.81",
+      "Name": "Clobot Co Ltd",
+      "Shares Held": "46,471",
+      "Ticker": "466100 KS",
+      "Weight": "1.17%"
+    },
+    {
+      "Asset Category": "Consumer Cyclicals",
+      "Identifier": "BDFWW61",
+      "Market Value": "$3199240.37",
+      "Name": "Ecovacs Robotics Co Ltd",
+      "Shares Held": "426,102",
+      "Ticker": "603486 C1",
+      "Weight": "4.87%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BFYX634",
+      "Market Value": "$3229231.75",
+      "Name": "Yijiahe Technology Co Ltd",
+      "Shares Held": "826,100",
+      "Ticker": "603666 C1",
+      "Weight": "4.91%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BMVB2T8",
+      "Market Value": "$1469561.88",
+      "Name": "Shanghai Kelai Mechatronics Engineering Co Ltd",
+      "Shares Held": "572,200",
+      "Ticker": "603960 C1",
+      "Weight": "2.24%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "B1GZ9S6",
+      "Market Value": "$1298332.54",
+      "Name": "Hirata Corp",
+      "Shares Held": "54,000",
+      "Ticker": "6258 JP",
+      "Weight": "1.98%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "6687571",
+      "Market Value": "$1421614.10",
+      "Name": "Nabtesco Corp",
+      "Shares Held": "46,800",
+      "Ticker": "6268 JP",
+      "Weight": "2.16%"
+    },
+    {
+      "Asset Category": "Consumer Cyclicals",
+      "Identifier": "BVN4D40",
+      "Market Value": "$1838474.30",
+      "Name": "OneRobotics Shenzhen Co Ltd",
+      "Shares Held": "332,336",
+      "Ticker": "6600 HK",
+      "Weight": "2.80%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BMGJQ17",
+      "Market Value": "$2233223.08",
+      "Name": "Leader Harmonious Drive Systems Co Ltd",
+      "Shares Held": "54,588",
+      "Ticker": "688017 C1",
+      "Weight": "3.40%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BPDWRF1",
+      "Market Value": "$159637.70",
+      "Name": "Kinco Automation Shanghai Co Ltd",
+      "Shares Held": "11,400",
+      "Ticker": "688160 C1",
+      "Weight": "0.24%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BPDWRG2",
+      "Market Value": "$2366809.71",
+      "Name": "EFORT Intelligent Robot Co Ltd",
+      "Shares Held": "1,092,688",
+      "Ticker": "688165 C1",
+      "Weight": "3.60%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BPDWRH3",
+      "Market Value": "$3444366.64",
+      "Name": "Ningbo PIA Automation Holding Corp",
+      "Shares Held": "2,344,929",
+      "Ticker": "688306 C1",
+      "Weight": "5.24%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BNDKPM4",
+      "Market Value": "$2576100.90",
+      "Name": "Zhejiang Hechuan Technology Corp Ltd",
+      "Shares Held": "490,570",
+      "Ticker": "688320 C1",
+      "Weight": "3.92%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BR4VSK3",
+      "Market Value": "$2618565.61",
+      "Name": "UBTech Robotics Corp Ltd",
+      "Shares Held": "278,744",
+      "Ticker": "9880 HK",
+      "Weight": "3.98%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCAD",
+      "Market Value": "$61.91",
+      "Name": "CANADIAN DOLLAR",
+      "Shares Held": "87.75",
+      "Ticker": "CAD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCHF",
+      "Market Value": "$5.00",
+      "Name": "SWISS FRANC",
+      "Shares Held": "4.16",
+      "Ticker": "CHF",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCNY",
+      "Market Value": "$2069.78",
+      "Name": "CHINESE YUAN",
+      "Shares Held": "13,893.83",
+      "Ticker": "CNY",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHEUR",
+      "Market Value": "$-19.86",
+      "Name": "EURO",
+      "Shares Held": "-17.47",
+      "Ticker": "EUR",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "31846V328",
+      "Market Value": "$147580.01",
+      "Name": "First American Treasury Obligations Fund 01/01/2040",
+      "Shares Held": "147,580.01",
+      "Ticker": "FXFXX",
+      "Weight": "0.22%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHGBP",
+      "Market Value": "$224.11",
+      "Name": "BRITISH POUNDS",
+      "Shares Held": "169.11",
+      "Ticker": "GBP",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHHKD",
+      "Market Value": "$470.21",
+      "Name": "HONG KONG DOLLAR",
+      "Shares Held": "3,688.94",
+      "Ticker": "HKD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHJPY",
+      "Market Value": "$451.33",
+      "Name": "JAPANESE YEN",
+      "Shares Held": "71,050",
+      "Ticker": "JPY",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHKRW",
+      "Market Value": "$67528.18",
+      "Name": "SOUTH KOREA WON",
+      "Shares Held": "92,159,088",
+      "Ticker": "KRW",
+      "Weight": "0.10%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BMZ0WL3",
+      "Market Value": "$1668569.92",
+      "Name": "MDA Space Ltd",
+      "Shares Held": "53,826",
+      "Ticker": "MDA CN",
+      "Weight": "2.54%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "67066G104",
+      "Market Value": "$3514374.16",
+      "Name": "NVIDIA Corp",
+      "Shares Held": "15,356",
+      "Ticker": "NVDA",
+      "Weight": "5.35%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "80359A205",
+      "Market Value": "$2919375.36",
+      "Name": "Palladyne AI Corp",
+      "Shares Held": "552,912",
+      "Ticker": "PDYN",
+      "Weight": "4.44%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "765504105",
+      "Market Value": "$2719337.34",
+      "Name": "Richtech Robotics Inc",
+      "Shares Held": "1,732,062",
+      "Ticker": "RR",
+      "Weight": "4.14%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHSEK",
+      "Market Value": "$5.12",
+      "Name": "SWEDISH KRONA",
+      "Shares Held": "51.03",
+      "Ticker": "SEK",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Consumer Cyclicals",
+      "Identifier": "81758H106",
+      "Market Value": "$1853175.32",
+      "Name": "Serve Robotics Inc",
+      "Shares Held": "418,324",
+      "Ticker": "SERV",
+      "Weight": "2.82%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "880770102",
+      "Market Value": "$3576385.60",
+      "Name": "Teradyne Inc",
+      "Shares Held": "8,912",
+      "Ticker": "TER",
+      "Weight": "5.44%"
+    },
+    {
+      "Asset Category": "Consumer Cyclicals",
+      "Identifier": "88160R101",
+      "Market Value": "$2842084.95",
+      "Name": "Tesla Inc",
+      "Shares Held": "7,951",
+      "Ticker": "TSLA",
+      "Weight": "4.32%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "Cash&Other",
+      "Market Value": "$-13501.23",
+      "Name": "Cash & Other",
+      "Shares Held": "-13,501.23",
+      "Ticker": "Cash&Other",
+      "Weight": "-0.02%"
+    }
+  ],
+  "ticker": "BOTT",
+  "totalRows": 41
+}
