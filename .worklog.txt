@@ -68,24 +68,25 @@ CURRENT STATE
 - Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
 - Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; no pull request exists yet (reconciled 2026-09-29).
-- Remote baseline / last confirmed pushed SHA: feature branch = `5bf98316a204` (`docs(worklog): record Themes recovery checkpoint`); `origin/main` remains `5c63f550343b`.
-- Status: Recovery and live endpoint verification checkpoint is published; implementation scaffold has not been published. An invalid uncommitted scratch scaffold was discarded before any checkpoint.
+- Remote baseline / last confirmed pushed SHA: feature branch = `4b0465e53973` (`docs(worklog): confirm feature branch publication`); `origin/main` remains `5c63f550343b`.
+- Status: Clean Bun scaffold, Themes updater, and offline fixture suite are implemented and locally validated but not yet published. No production API data has been written.
 - Completed:
   1. Baseline research and self-contained plan from the prior checkpoint remain valid.
   2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
   3. Created local feature branch `feat/themes-etfs`.
   4. Re-verified 2026-09-29 that `https://themesetfs.com/etfs` returns HTTP 200 and official daily CSV downloads for BOTT, CLOD, AUMI, and NATO return HTTP 200. BOTT's CSV header and records match the documented fields.
-  5. Selected `daggerok/NEOS` at `17f348f` as the concrete sibling reference for the UI/layout, API shape, workflow, and Bun pins. Its working patterns will be copied rather than redesigned; only Themes acquisition logic will differ.
-- Active work: Create and publish this recovery/live-verification checkpoint, then scaffold the updater and offline tests.
+  5. Selected `daggerok/NEOS` at `17f348f` as the concrete sibling reference for the UI/layout, API shape, workflow, README, and Bun pins. Its working patterns will be copied rather than redesigned; only Themes acquisition logic will differ.
+  6. Replaced the discarded scratch work with a clean Bun project skeleton: `.gitignore`, exact sibling pins in `package.json`/`bun.lock`, and tracked updater defaults in `scripts/update-data.config.json`.
+  7. Implemented `scripts/update-data.ts`: official embedded catalog parser, direct daily CSV parser, independent request pacing lanes, Yahoo chart/dividend path, deterministic paginated feed writer, cached-data retention, SEC N-PORT candidate fallback, bounded cursor, and filter/config/output helpers.
+  8. Added literal offline fixtures in `scripts/update-data.test.ts`; 14 tests passed and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+- Active work: Publish the updater/offline-test checkpoint, then run the isolated live acceptance for BOTT, CLOD, and AUMI.
 - Remaining work:
-  1. Scaffold the Bun project from the pinned NEOS reference, with Themes paths and source text substitutions only.
-  2. Implement the official catalog/holdings CSV + Yahoo history/dividend acquisition path, cached-data retention, deterministic output, and SEC N-PORT fallback wiring.
-  3. Add offline literal-fixture tests; run `bun test` and Bun transpilation.
-  4. Run isolated live acceptance for at least BOTT, CLOD, and AUMI twice; record checksums, selection, counts, and source provenance.
-  5. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
-  6. Add CI/dependabot, README, required metadata, push all scoped checkpoints, and open a PR to `main`.
+  1. Commit/push the clean updater and offline-test checkpoint.
+  2. Run isolated live acceptance for BOTT, CLOD, and AUMI twice; record checksums, selection, counts, and source provenance.
+  3. Copy the sibling `app.tsx`/`index.html` and apply only approved Themes and shared-header substitutions; add regression guards/browser checks.
+  4. Add CI/dependabot, README, required metadata, push all scoped checkpoints, and open a PR to `main`.
 - Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
-- Exact next action: commit and push this documentation-only recovery checkpoint, then copy the pinned NEOS project scaffold and replace the invalid scratch files with a tested Themes updater.
+- Exact next action: commit and push the tested updater/offline-test checkpoint; then copy it to an isolated temporary worktree and execute the first real BOTT/CLOD/AUMI acceptance run.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -119,6 +120,16 @@ CHRONOLOGICAL JOURNAL
 - Committed the recovery record as `5bf9831` with Conventional Commit message `docs(worklog): record Themes recovery checkpoint`.
 - Pushed `feat/themes-etfs` without force to `origin`; Git verified remote head `5bf98316a204` and established upstream tracking.
 - Next: create the clean Bun/project scaffold from pinned `daggerok/NEOS@17f348f` and adapt only the Themes data acquisition layer.
+
+### 2026-09-29 — Bun updater and offline fixture suite (completed; checkpoint pending push)
+- Created the clean scaffold with `.gitignore`, zero-runtime-dependency `package.json`, and the exact `@types/bun@1.4.2` / `@types/node@26.6.2` pins and `bun.lock` from `daggerok/NEOS@17f348f`. Added tracked defaults in `scripts/update-data.config.json`; default polite pacing is `REQUEST_SLEEP=1`, `CONCURRENCY=2`.
+- Implemented `scripts/update-data.ts` from the sibling feed contract rather than the discarded scratch implementation. It parses first-party entries from the catalog's server-rendered `window.productsData`, reads direct `Holdings-<TICKER>.csv` files, outputs the shared paginated holdings/history/meta/index shape, uses separate paced request lanes, rounds Yahoo adjusted close values to cents, preserves previous fund data after provider failures, and avoids timestamp-only rewrites.
+- Implemented the provider ladder: official Themes catalog/CSV → SEC EDGAR N-PORT-P candidate lookup for `Themes ETF Trust` CIK `0001976322` when official holdings are unavailable → Yahoo Finance public chart API for daily history and dividends → existing published files. Persisted Yahoo provenance is query-string-free.
+- Added 14 offline tests with literal catalog, CSV, Yahoo, N-PORT, configuration, deterministic-output, dividend-frequency, and request-pacing fixtures. The tests do not call the network.
+- Validation: `bun install --frozen-lockfile` completed; the first test run exposed an incomplete YTD fixture (it lacked the immediately preceding year-end close), then the fixture was corrected. Final `bun test scripts/update-data.test.ts` passed 14/14 (43 assertions). `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+- Type-safety review: this repository intentionally has no `tsconfig.json`, `typescript` dependency, or `tsc` invocation. Reviewed numeric parsing, nullable history/dividend values, header-preserving paginated sheets, and request-lane reservation directly; Bun transpilation is recorded as syntax/transpilation validation only, not a substitute for semantic diagnostics.
+- No `api/themes` production data was generated in this checkpoint. The mandatory live smoke remains isolated.
+- Next: commit and push this scoped updater/test checkpoint, then run the actual bounded BOTT/CLOD/AUMI acceptance twice in an isolated working copy.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN
