@@ -1,5 +1,0 @@
-counts= {'funds': 13, 'history': 2007, 'holdings': 133}
-funds= [('AGMI', 0, 0), ('AUMI', 35, 699), ('BOTT', 41, 611), ('CLOD', 57, 697), ('COPA', 0, 0), ('GSIB', 0, 0), ('LGCF', 0, 0), ('LIMI', 0, 0), ('NATO', 0, 0), ('SMCF', 0, 0), ('SPAM', 0, 0), ('URAN', 0, 0), ('WISE', 0, 0)]
-AUMI holdings= 35 history= 699 holding-source= https://themesetfs.com/storage/holdings/Holdings-AUMI.csv history-source= https://query1.finance.yahoo.com/v8/finance/chart/AUMI
-BOTT holdings= 41 history= 611 holding-source= https://themesetfs.com/storage/holdings/Holdings-BOTT.csv history-source= https://query1.finance.yahoo.com/v8/finance/chart/BOTT
-CLOD holdings= 57 history= 697 holding-source= https://themesetfs.com/storage/holdings/Holdings-CLOD.csv history-source= https://query1.finance.yahoo.com/v8/finance/chart/CLOD
