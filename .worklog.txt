@@ -63,28 +63,37 @@ GitHub Personal Access Token: <PASTE_YOUR_TOKEN_HERE>
 ================================================================
 CURRENT STATE
 =============
-- Goal: Implement Themes ETFs holdings-to-watchlist web application in daggerok/Themes matching sibling parity (Bun-only, zero runtime dependencies, static client app + update-data feed).
-- Status: Researched & Baseline Initialized. Repository cloned, clean baseline verified (LICENSE + placeholder README), official ETF brand site researched, data endpoints discovered and verified live, SEC EDGAR CIK confirmed, and self-contained plan embedded. Ready for implementation.
+- Goal: Implement the Themes ETFs holdings-to-watchlist web application in `daggerok/Themes` with sibling-parity UI, a Bun-only zero-runtime-dependency updater, static API data, offline fixture tests, and isolated live acceptance evidence.
+- Hard constraints: work only on `feat/themes-etfs`; never persist credentials; no force-push; Bun-only tooling; no runtime dependencies; copy the sibling UI verbatim except for the enumerated brand/source substitutions and required shared header presentation rule; retain previously published data when a provider fails.
+- Authorization: The user authorized implementation in this repository, scoped conventional commits and pushes on the feature branch, and opening (but not merging) a pull request to `main`. The plan also authorizes the documented repository metadata update when it is verified through the GitHub API.
 - Repository: https://github.com/daggerok/Themes
-- Branch: main (feature branch feat/themes-etfs to be created during implementation)
-- Pushed remote baseline: main branch with initialized .worklog.txt
+- Branch / PR: `feat/themes-etfs` tracks `origin/feat/themes-etfs`; PR [#1](https://github.com/daggerok/Themes/pull/1) is open, non-draft, and targets `main` (created 2026-09-29; not merged).
+- Remote baseline / last confirmed pushed SHA: feature branch = `0a1f0cdbb4d0` (`docs(worklog): record Themes final validation`); `origin/main` remains `5c63f550343b`.
+- Status: All authorized implementation work is published, final validation is clean, and the authorized PR is open. Merge is explicitly out of scope and must not be performed without new authorization.
 - Completed:
-  1. Cloned target repository and verified clean baseline state.
-  2. Conducted live research on official ETF issuer portal (https://themesetfs.com/ (catalog at https://themesetfs.com/etfs)).
-  3. Discovered and verified data acquisition pathways (endpoints, holdings formats, WAF characteristics).
-  4. Confirmed SEC EDGAR Trust registrant and CIK (CONFIRMED: 'Themes ETF Trust', CIK 0001976322 (76 tickers registered).).
-  5. Established closest sibling reference architecture (daggerok/Global-X or daggerok/NEOS (clean daily holdings CSV parser + standard sibling UI).).
-  6. Generated complete self-contained implementation plan (generic protocol + brand-specific specifications), eliminating any requirement for 00-generic.txt.
-  7. Committed initialized .worklog.txt into main branch.
-- Next action:
-  1. The next implementing agent starts here: read this .worklog.txt completely.
-  2. Create feature branch `feat/themes-etfs`.
-  3. Live-verify the site endpoints listed in PART 2 below.
-  4. Scaffold repo files from closest sibling (daggerok/Global-X or daggerok/NEOS (clean daily holdings CSV parser + standard sibling UI).): package.json, bun.lock, index.html, app.tsx, scripts/update-data.ts, scripts/update-data.test.ts, .github/workflows/update-data.yml, .github/dependabot.yml, and README.md.
-  5. Implement data updater matching verified endpoints and run offline tests (bun test scripts/update-data.test.ts).
-  6. Execute isolated acceptance runs (minimum 3 tickers), verify byte-stability across repeat runs.
-  7. Update .worklog.txt after each stage, commit with Conventional Commits, and push to feature branch.
-- Blockers: None. Ready for feature branch implementation.
+  1. Baseline research and self-contained plan from the prior checkpoint remain valid.
+  2. Reconciled local Git state with `origin/main`: working tree was clean at `5c63f55`; remote `main` matched; no remote `feat/themes-etfs` branch existed.
+  3. Created local feature branch `feat/themes-etfs`.
+  4. Re-verified 2026-09-29 that `https://themesetfs.com/etfs` returns HTTP 200 and official daily CSV downloads for BOTT, CLOD, AUMI, and NATO return HTTP 200. BOTT's CSV header and records match the documented fields.
+  5. Selected `daggerok/NEOS` at `17f348f` as the concrete sibling reference for the UI/layout, API shape, workflow, README, and Bun pins. Its working patterns will be copied rather than redesigned; only Themes acquisition logic will differ.
+  6. Replaced the discarded scratch work with a clean Bun project skeleton: `.gitignore`, exact sibling pins in `package.json`/`bun.lock`, and tracked updater defaults in `scripts/update-data.config.json`.
+  7. Implemented `scripts/update-data.ts`: official embedded catalog parser, direct daily CSV parser, independent request pacing lanes, Yahoo chart/dividend path, deterministic paginated feed writer, cached-data retention, SEC N-PORT candidate fallback, bounded cursor, and filter/config/output helpers.
+  8. Added literal offline fixtures in `scripts/update-data.test.ts`; 14 tests passed and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+  9. Published the one-line catalog-label correction as `243bf35`; its remote head was verified.
+  10. Completed two evidence-backed isolated live runs at `243bf3562448` for BOTT, CLOD, and AUMI. Run 1 successfully fetched current official CSVs/Yahoo data; run 2 was byte-stable and reported all three unchanged. No requested ticker was skipped or failed.
+  11. Copied `app.tsx` and `index.html` byte-for-byte from `daggerok/NEOS@17f348f` before applying only Themes API/path/local-storage/source string substitutions. Retained the sibling's shared hidden header panel, selection behavior, table layout, and interactions.
+  12. Added `scripts/ui-parity.test.ts`; the combined offline suite passes 20/20 and browser-target transpilation of `app.tsx` succeeds.
+  13. Published the UI checkpoint as `042eccb`; generated a deliberate full initial `api/themes` seed for all 13 active first-party catalog funds, then confirmed an immediate full rerun is byte-stable.
+  14. Served the static app locally and confirmed HTTP 200 delivery for shell, client script, index, metadata, and paginated holdings assets; index/manifests passed consistency assertions.
+  15. Published the static seed as `e75957d`; prepared the standardized weekly/manual updater workflow, Dependabot configuration, sibling-parity README, README regression guard, and verified repository About metadata through the GitHub REST API.
+  16. Published CI/docs as `586c263`; completed final reconciliation: feature and remote heads match, working tree is clean, feature is eight commits ahead of unchanged `origin/main`, no open feature PR exists, tests/builds/API-manifest checks pass, and metadata remains verified.
+  17. Created and verified non-draft PR [#1](https://github.com/daggerok/Themes/pull/1): `feat/themes-etfs` → `main`, open, head `0a1f0cdbb4d0`, base `5c63f550343b`.
+- Active work: Publish this final PR-state worklog checkpoint, then await review.
+- Remaining work:
+  1. Commit/push this PR-state worklog checkpoint.
+  2. Await review on PR #1; do not merge without explicit new authorization.
+- Blockers: None. Runtime-only GitHub authentication is available from the user-provided access method; it must not be written to the repository or Git configuration.
+- Exact next action: commit/push this worklog update, verify PR #1 still has `head=feat/themes-etfs`, `base=main`, `state=open`, and then stop.
 
 AUTHORITY / USER AMENDMENTS
 ==========================
@@ -103,6 +112,92 @@ CHRONOLOGICAL JOURNAL
 - Verified SEC EDGAR filing registrant CIK: CONFIRMED: 'Themes ETF Trust', CIK 0001976322 (76 tickers registered)..
 - Assembled self-contained plan integrating the full generic build requirements (PART 1) and brand-specific research (PART 2).
 - Committed initialized .worklog.txt to main branch. Repository is ready for implementing agent.
+
+### 2026-09-29 — Recovery reconciliation, branch creation, and endpoint re-verification (completed; feature checkpoint pending push)
+- Read the complete self-contained `.worklog.txt` before implementation work.
+- Reconciled Git state: local `main` was clean at `5c63f55`; `origin/main` resolved to `5c63f550343b`; no remote `feat/themes-etfs` head existed. No PR was present or created.
+- Created local branch `feat/themes-etfs` from the verified remote baseline.
+- Re-verified official endpoints with HTTP HEAD requests: `/etfs`, `/storage/holdings/Holdings-BOTT.csv`, `/storage/holdings/Holdings-CLOD.csv`, `/storage/holdings/Holdings-AUMI.csv`, and `/storage/holdings/Holdings-NATO.csv` each returned HTTP 200. A direct BOTT CSV read confirmed the documented daily CSV schema (`id,date,account,stock_ticker,cusip,security_name,shares,price,market_value,weightings,net_assets,...`) and live 2026-09-29 data.
+- Cloned one designated sibling reference only: `daggerok/NEOS` at commit `17f348f`. It supplies the exact UI/API/workflow/readme conventions; Themes will use a distinct official CSV parser and source URLs.
+- Installed Bun locally for validation only; it is not a repository dependency. The first scratch updater/test files were invalid and untracked, so they were removed rather than checkpointed. No user-authored repository content was removed.
+- Sanitized `origin` back to the credential-free canonical URL `https://github.com/daggerok/Themes.git`; credentials are not stored in Git configuration.
+- Next: publish this documentation-only recovery checkpoint, then create the clean scaffold from the pinned sibling.
+
+### 2026-09-29 — Feature-branch publication (completed)
+- Committed the recovery record as `5bf9831` with Conventional Commit message `docs(worklog): record Themes recovery checkpoint`.
+- Pushed `feat/themes-etfs` without force to `origin`; Git verified remote head `5bf98316a204` and established upstream tracking.
+- Next: create the clean Bun/project scaffold from pinned `daggerok/NEOS@17f348f` and adapt only the Themes data acquisition layer.
+
+### 2026-09-29 — Bun updater and offline fixture suite (completed; checkpoint pending push)
+- Created the clean scaffold with `.gitignore`, zero-runtime-dependency `package.json`, and the exact `@types/bun@1.4.2` / `@types/node@26.6.2` pins and `bun.lock` from `daggerok/NEOS@17f348f`. Added tracked defaults in `scripts/update-data.config.json`; default polite pacing is `REQUEST_SLEEP=1`, `CONCURRENCY=2`.
+- Implemented `scripts/update-data.ts` from the sibling feed contract rather than the discarded scratch implementation. It parses first-party entries from the catalog's server-rendered `window.productsData`, reads direct `Holdings-<TICKER>.csv` files, outputs the shared paginated holdings/history/meta/index shape, uses separate paced request lanes, rounds Yahoo adjusted close values to cents, preserves previous fund data after provider failures, and avoids timestamp-only rewrites.
+- Implemented the provider ladder: official Themes catalog/CSV → SEC EDGAR N-PORT-P candidate lookup for `Themes ETF Trust` CIK `0001976322` when official holdings are unavailable → Yahoo Finance public chart API for daily history and dividends → existing published files. Persisted Yahoo provenance is query-string-free.
+- Added 14 offline tests with literal catalog, CSV, Yahoo, N-PORT, configuration, deterministic-output, dividend-frequency, and request-pacing fixtures. The tests do not call the network.
+- Validation: `bun install --frozen-lockfile` completed; the first test run exposed an incomplete YTD fixture (it lacked the immediately preceding year-end close), then the fixture was corrected. Final `bun test scripts/update-data.test.ts` passed 14/14 (43 assertions). `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+- Type-safety review: this repository intentionally has no `tsconfig.json`, `typescript` dependency, or `tsc` invocation. Reviewed numeric parsing, nullable history/dividend values, header-preserving paginated sheets, and request-lane reservation directly; Bun transpilation is recorded as syntax/transpilation validation only, not a substitute for semantic diagnostics.
+- No `api/themes` production data was generated in this checkpoint. The mandatory live smoke remains isolated.
+- Next: commit and push this scoped updater/test checkpoint, then run the actual bounded BOTT/CLOD/AUMI acceptance twice in an isolated working copy.
+
+### 2026-09-29 — Initial isolated live execution and status-label correction (correction validated; push pending)
+- Created a detached temporary worktree at updater commit `b7e15b8` and executed the real updater with `TICKERS='BOTT,CLOD,AUMI' VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0`. The live official catalog returned 13 first-party Themes ETFs; all three requested funds were selected and processed successfully: AUMI (35 holdings, 699 history rows), BOTT (41, 611), and CLOD (57, 697); zero provider failures.
+- The first run was intentionally isolated from `api/themes` in the feature checkout. The output evidence target directory had not yet been created, so `tee` could not save that run's log and the shell command ended nonzero after the updater itself completed. It is not being used as the recorded acceptance run; a fresh isolated worktree and tracked evidence will be used after the correction is pushed.
+- Observed and fixed a presentation-only updater issue: the catalog line printed `Themes ETFs ETFs`. It now prints the sibling-contract form `N Themes ETFs (official Themes ETFs catalog)`. No acquisition, parsing, filtering, or persisted data logic changed.
+- Re-ran the offline suite and Bun transpilation after this one-line correction: 14/14 tests passed, and `bun build --target=bun scripts/update-data.ts --outfile=/dev/null` succeeded.
+- Next: commit/push the one-line correction and this worklog record; create `evidence/`, a fresh detached worktree, and record two verified isolated live runs.
+
+### 2026-09-29 — Mandatory isolated live acceptance (completed; evidence checkpoint pending push)
+- Used a fresh detached worktree at `243bf3562448c8d381c5506d6e9623b499f30031`; its generated `api/themes` output did not touch the feature-branch working tree.
+- Run 1 command (exit 0): `TICKERS='BOTT,CLOD,AUMI' VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0 bun scripts/update-data.ts`. Effective config retained official Themes, Yahoo, and EDGAR-fallback paths with conservative one-second pacing and two workers.
+- The direct catalog returned 13 first-party Themes ETFs. All requested tickers were selected and processed: AUMI (35 holdings, 699 history, 2 dividend events), BOTT (41, 611, 2), CLOD (57, 697, 1). The run reported zero failures and zero skips; total generated counts were 13 funds, 133 holdings, and 2,007 history rows.
+- Source/provenance check: selected holding manifests point to their direct official `https://themesetfs.com/storage/holdings/Holdings-<TICKER>.csv` URLs; history manifests point to stable query-string-free Yahoo chart URLs. SEC EDGAR was not invoked because the direct CSV path succeeded.
+- Scope check: only AUMI, BOTT, and CLOD fund directories were generated. The other ten catalog entries were skeletons in `index.json`; no unrequested fund data files were written and no existing catalog item was dropped.
+- Run 2 used the exact same command (exit 0). All three funds reported `unchanged`, with zero updates/failures and three unchanged funds. Full SHA-256 manifests from runs 1 and 2 were compared with `cmp -s` and were byte-identical, confirming no timestamp-only churn under stable upstream input.
+- Tracked evidence: `evidence/live-acceptance-2026-09-29.md`, `*.log`, `*.sha256`, `*.summary`, `*.files`, and `*.fund-dirs`. These record revision, exact commands, effective config, logs, source/count checks, and idempotency result.
+- Next: commit/push this evidence checkpoint; then copy the pinned NEOS UI verbatim and make only the approved Themes/source/header substitutions.
+
+### 2026-09-29 — Sibling-parity UI and header regression guards (completed; checkpoint pending push)
+- Copied `app.tsx`, `index.html`, and `favicon.ico` directly from `daggerok/NEOS@17f348f904f65048a76dd39fa3dfdf38188abf2b` before changing strings. Source SHA-256s were `5399fb6cf15c5eae36d1a2e3f4196d2398d8441e621fa5889856c98cab416887` (`app.tsx`) and `7f44ea9979279c028a77b733d405b59a4530ca8fe4dff2fb15f5f43fe81582a4` (`index.html`).
+- Permitted substitutions only: file-header brand, `themes-*` localStorage keys, every `api/themes` path, export prefix, title/header/status/source copy, `themesetfs.com/etfs` official link, and Themes ETF Trust CIK `0001976322` attribution. Column-tooltip key set/order and fund-detail row structure are unchanged; only provider/provenance text was substituted. No new columns, rows, sections, colors, selection logic, or layout behavior was introduced.
+- Kept the copied shared header implementation: rich detail/source content is hidden in the count-badge panel; empty visible subtitle at zero selection; alphabetically sorted clickable bold ticker links and active highlighting when selected; hover/focus/click/touch interaction, Escape dismissal, and viewport-aware positioning are all preserved from the sibling.
+- Added `scripts/ui-parity.test.ts` and expanded `npm`-equivalent `bun test` script to run all script tests. The guard checks Themes paths/keys/source links, `00 - None`/`00 - Unknown` frequency output, selection-only checkbox behavior, and header hover/focus/touch/Escape/narrow-screen structure without external network calls.
+- Validation: `bun test scripts/update-data.test.ts scripts/ui-parity.test.ts` passed 20/20 (73 assertions); `bun build --target=browser app.tsx --outfile=/tmp/themes-app.js` succeeded. Diff hunk review against the pinned source showed substitutions confined to brand/source/path strings and the allowed dividend-source provenance text.
+- Live availability precheck for intentional seed: all 13 first-party catalog tickers (AGMI, AUMI, BOTT, CLOD, COPA, GSIB, LGCF, LIMI, NATO, SMCF, SPAM, URAN, WISE) returned HTTP 200 for their direct official daily holdings CSV URLs.
+- Next: commit/push the UI checkpoint, deliberately generate the initial full static API seed, then serve and inspect the app against that data.
+
+### 2026-09-29 — Full initial static API seed and served-app smoke (completed; data checkpoint pending push)
+- Deliberately published an initial static data seed (separate from the isolated acceptance evidence) so the copied browser app has a complete feed on first checkout. Before the full run, every first-party catalog ticker's direct official CSV returned HTTP 200.
+- First full command (exit 0): `VERBOSE=1 REQUEST_SLEEP=1 CONCURRENCY=2 MAX_FETCHES=0 bun scripts/update-data.ts`. It processed all 13 official catalog funds with zero failures: 727 holdings rows and 6,224 Yahoo history rows across 40 JSON files / 13 fund directories. The feed includes AGMI, AUMI, BOTT, CLOD, COPA, GSIB, LGCF, LIMI, NATO, SMCF, SPAM, URAN, and WISE.
+- Some newly listed funds (LGCF, LIMI, SMCF) currently have five Yahoo history rows. This is fresh provider output and was kept unchanged; no synthetic history was added.
+- Second identical full command (exit 0) reported all 13 funds unchanged with zero updates/failures. Full SHA-256 manifests compared byte-identically with `cmp -s`, confirming deterministic publication across the full catalog.
+- Ran a manifest assertion: index counts equal the sums of all fund entries, and every fund's index holdings/history count equals its metadata manifest. Result: confirmed.
+- Started a static HTTP server on port 4173 and checked HTTP 200 for `/`, `/app.tsx`, `/api/themes/index.json`, and BOTT metadata/holdings page 001; a served API read confirmed 13 catalog funds and BOTT/CLOD/AUMI presence. The server is a temporary live preview only, not a deployment.
+- UI browser-path coverage is provided by the copied sibling behavior plus static regression tests and browser-target transpilation; no headless browser executable is present in the workspace. This limitation and the served-asset smoke are documented in `evidence/initial-static-seed-2026-09-29.md`.
+- Evidence: `evidence/initial-static-seed-2026-09-29.md`, both full-run logs, summary, and paired SHA-256 manifests.
+- Next: commit/push this initial data/evidence checkpoint; then add the standardized GitHub workflow, Dependabot configuration, and sibling-parity README.
+
+### 2026-09-29 — Workflow, documentation, and repository metadata (completed; checkpoint pending push)
+- Added `.github/workflows/update-data.yml`: Sunday 00:00 UTC schedule plus manual dispatch inputs for every updater environment control, Bun setup, frozen install, updater + UI parity tests, static `api/themes` generation, and an `api/themes`-only bot commit. It contains no push trigger and no TypeScript compiler step.
+- Added the standard identical `.github/dependabot.yml` for monthly Bun and GitHub Actions updates.
+- Replaced the placeholder README with the pinned `daggerok/NEOS@17f348f` heading/order/template structure, substituting only truthful Themes implementation facts. It documents direct catalog/CSV URLs, Yahoo/EDGAR ladder, current limitations, every environment control, initial data seed, Pages caveat, complete brands/siblings tables with Themes ETFs rows, and independent/non-affiliation notice.
+- Extended the offline UI guard to enforce the README heading sequence, the Pages-pending caveat, Themes CIK, all checked-in updater controls, and Themes API path. Validation now passes 22/22 tests (106 assertions); README headings match the pinned sibling's heading order after permitted brand substitution.
+- Workflow configuration parity check compared `scripts/update-data.config.json` to manual-dispatch inputs and job environment mappings: no missing or extra controls. Confirmed `actions/checkout@v7` and `oven-sh/setup-bun@v2`; no `bunx tsc` or push trigger is present.
+- Repository metadata authorization executed via runtime-only GitHub REST API authentication. Before: description `null`, homepage empty, topics empty. After verified GET: description is `Themes ETFs. A single-file client-side tool reading ./api/themes (official Themes ETFs catalog + daily holdings CSV, SEC EDGAR N-PORT-P holdings fallback, Yahoo Finance history/dividends) into a searchable ETF/asset-class catalog with per-fund tabs, watchlist, CSV/TXT export. TailwindCSS, dark mode, Bun updater.`; homepage is `https://daggerok.github.io/Themes/`; topics are `css`, `csv`, `dark-mode`, `edgar`, `etf`, `finance`, `github-pages`, `holdings`, `html`, `json`, `nport`, `single-file`, `static-api`, `tailwindcss`, `themes`, `themes-etfs`, `txt`, `typescript`, `watchlist`, `yahoo-finance`.
+- Verified the repository's Pages API endpoint currently responds HTTP 404 despite `has_pages=true`; README deliberately does not claim a live deployment. Metadata update did not alter default branch (`main`). No credential was saved in metadata, source, logs, or Git configuration.
+- Next: commit/push this CI/docs checkpoint, perform final validation/reconciliation, create and verify the authorized PR to `main` without merging it.
+
+### 2026-09-29 — Final validation and remote reconciliation (completed; final worklog checkpoint pending push)
+- Confirmed `feat/themes-etfs` local and remote heads match at `586c263873960f78242fa56233745b2c887633c9`; `origin/main` remains `5c63f550343b9c04ba25b25264508d5da0eaf72f`, which is the merge base. The feature contains eight scoped commits after `main`; working tree was clean before this final worklog update.
+- Confirmed no existing open PR for `daggerok:feat/themes-etfs` via the GitHub API.
+- Final validation passed: `bun install --frozen-lockfile`; `bun run test` (22/22 tests, 106 assertions); `bun build --target=bun scripts/update-data.ts --outfile=/dev/null`; `bun build --target=browser app.tsx`; `git diff --check`; and full static API manifest consistency (13 funds, counts equal per-fund totals).
+- Reconfirmed remote About data: homepage, 313-character description, all 20 standard/brand topics, and default branch `main` are exactly as recorded in the preceding checkpoint.
+- Diff review against `origin/main`: 70 files, expected product implementation only (Bun scripts/tests/config, copied sibling static UI with allowed substitutions, full static API, evidence, README, CI/Dependabot, and worklog). No credentials, caches, dependencies, build output, force pushes, or unrelated changes are included.
+- Next: push this final worklog checkpoint, create a non-draft pull request from `feat/themes-etfs` to `main`, verify its head/base/state, record it below, and do not merge.
+
+### 2026-09-29 — Pull request creation (completed; PR-state worklog checkpoint pending push)
+- Created PR [#1 — feat: add Themes ETFs holdings watchlist](https://github.com/daggerok/Themes/pull/1) through the GitHub REST API under the user's explicit authorization.
+- Verified response: state `open`, `draft=false`, head `feat/themes-etfs` at `0a1f0cdbb4d00b1f71ff8147cf32a2d085ac0c20`, base `main` at `5c63f550343b9c04ba25b25264508d5da0eaf72f`.
+- PR body records the implementation scope, full validation set, isolated live acceptance/idempotency, full-seed idempotency, and current Pages-deployment caveat. No merge action was requested or performed.
+- Next: commit/push this final PR-state record, re-query PR #1 to verify the updated branch head and open/base state, then await review without merging.
 
 =============================================================================
 FULL SELF-CONTAINED IMPLEMENTATION PLAN

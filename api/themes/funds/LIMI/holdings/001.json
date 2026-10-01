@@ -1,0 +1,476 @@
+{
+  "headers": [
+    "Name",
+    "Ticker",
+    "Identifier",
+    "Weight",
+    "Market Value",
+    "Shares Held",
+    "Asset Category"
+  ],
+  "page": 1,
+  "pageSize": 250,
+  "rows": [
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5CQT2",
+      "Market Value": "$36307.71",
+      "Name": "Youngy Co Ltd",
+      "Shares Held": "4,000",
+      "Ticker": "002192 C2",
+      "Weight": "1.81%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BD5CFW8",
+      "Market Value": "$57767.87",
+      "Name": "GEM Co Ltd",
+      "Shares Held": "62,100",
+      "Ticker": "002340 C2",
+      "Weight": "2.88%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5CB19",
+      "Market Value": "$66914.53",
+      "Name": "Ganfeng Lithium Group Co Ltd",
+      "Shares Held": "9,700",
+      "Ticker": "002460 C2",
+      "Weight": "3.33%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5CKH8",
+      "Market Value": "$93855.94",
+      "Name": "Tianqi Lithium Corp",
+      "Shares Held": "14,700",
+      "Ticker": "002466 C2",
+      "Weight": "4.67%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5LSZ9",
+      "Market Value": "$26041.48",
+      "Name": "Sichuan Yahua Industrial Group Co Ltd",
+      "Shares Held": "10,500",
+      "Ticker": "002497 C2",
+      "Weight": "1.30%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5LR63",
+      "Market Value": "$111160.15",
+      "Name": "Guangzhou Tinci Materials Technology Co Ltd",
+      "Shares Held": "22,316",
+      "Ticker": "002709 C2",
+      "Weight": "5.53%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5LRQ3",
+      "Market Value": "$64424.98",
+      "Name": "Shenzhen Capchem Technology Co Ltd",
+      "Shares Held": "5,900",
+      "Ticker": "300037 C2",
+      "Weight": "3.21%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BD760M3",
+      "Market Value": "$48803.08",
+      "Name": "Beijing Easpring Material Technology Co Ltd",
+      "Shares Held": "8,400",
+      "Ticker": "300073 C2",
+      "Weight": "2.43%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BLC7SM3",
+      "Market Value": "$14468.64",
+      "Name": "Ganzhou Teng Yuan Cobalt New Material Co Ltd",
+      "Shares Held": "2,340",
+      "Ticker": "301219 C2",
+      "Weight": "0.72%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BNHSQ32",
+      "Market Value": "$23149.97",
+      "Name": "Jiangsu Ruitai New Energy Materials Co Ltd",
+      "Shares Held": "9,600",
+      "Ticker": "301238 C2",
+      "Weight": "1.15%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R6F9",
+      "Market Value": "$49757.21",
+      "Name": "Xiamen Tungsten Co Ltd",
+      "Shares Held": "6,600",
+      "Ticker": "600549 C1",
+      "Weight": "2.48%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3RF63",
+      "Market Value": "$25708.06",
+      "Name": "Ningbo Shanshan Co Ltd",
+      "Shares Held": "15,400",
+      "Ticker": "600884 C1",
+      "Weight": "1.28%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BF2DZJ5",
+      "Market Value": "$35247.86",
+      "Name": "Shanghai Putailai New Energy Technology Group Co Ltd",
+      "Shares Held": "10,600",
+      "Ticker": "603659 C1",
+      "Weight": "1.75%"
+    },
+    {
+      "Asset Category": "Industrials",
+      "Identifier": "BFF5BV2",
+      "Market Value": "$96699.81",
+      "Name": "Zhejiang Huayou Cobalt Co Ltd",
+      "Shares Held": "18,100",
+      "Ticker": "603799 C1",
+      "Weight": "4.81%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "012653101",
+      "Market Value": "$147510.30",
+      "Name": "Albemarle Corp",
+      "Shares Held": "1,330",
+      "Ticker": "ALB",
+      "Weight": "7.34%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B1Z95S1",
+      "Market Value": "$20749.24",
+      "Name": "AMG Critical Materials NV",
+      "Shares Held": "619",
+      "Ticker": "AMG NA",
+      "Weight": "1.03%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "105861306",
+      "Market Value": "$15532.40",
+      "Name": "Atlas Lithium Corp",
+      "Shares Held": "5,356",
+      "Ticker": "ATLX",
+      "Weight": "0.77%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHAUD",
+      "Market Value": "$-2218.26",
+      "Name": "AUSTRALIAN DOLLAR",
+      "Shares Held": "-3,112.68",
+      "Ticker": "AUD",
+      "Weight": "-0.11%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCAD",
+      "Market Value": "$-631.75",
+      "Name": "CANADIAN DOLLAR",
+      "Shares Held": "-883.88",
+      "Ticker": "CAD",
+      "Weight": "-0.03%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B0ZGW28",
+      "Market Value": "$31148.73",
+      "Name": "Chalice Mining Ltd",
+      "Shares Held": "35,107",
+      "Ticker": "CHN AU",
+      "Weight": "1.55%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BLHTRV6",
+      "Market Value": "$17779.43",
+      "Name": "Canada Nickel Co Inc",
+      "Shares Held": "17,768",
+      "Ticker": "CNC CN",
+      "Weight": "0.88%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCNY",
+      "Market Value": "$528.72",
+      "Name": "CHINESE YUAN",
+      "Shares Held": "3,540.92",
+      "Ticker": "CNY",
+      "Weight": "0.03%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B4XFS83",
+      "Market Value": "$108525.35",
+      "Name": "Core Lithium Ltd",
+      "Shares Held": "411,578",
+      "Ticker": "CXO AU",
+      "Weight": "5.40%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BVBM1M0",
+      "Market Value": "$51356.53",
+      "Name": "Elevra Lithium Ltd",
+      "Shares Held": "11,260",
+      "Ticker": "ELV AU",
+      "Weight": "2.56%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "4017017",
+      "Market Value": "$57982.33",
+      "Name": "Eramet SA",
+      "Shares Held": "1,163",
+      "Ticker": "ERA FP",
+      "Weight": "2.89%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHEUR",
+      "Market Value": "$-9.96",
+      "Name": "EURO",
+      "Shares Held": "-8.67",
+      "Ticker": "EUR",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "31846V328",
+      "Market Value": "$9243.84",
+      "Name": "First American Treasury Obligations Fund 01/01/2040",
+      "Shares Held": "9,243.84",
+      "Ticker": "FXFXX",
+      "Weight": "0.46%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHGBP",
+      "Market Value": "$110.33",
+      "Name": "BRITISH POUNDS",
+      "Shares Held": "82.37",
+      "Ticker": "GBP",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHHKD",
+      "Market Value": "$40.66",
+      "Name": "HONG KONG DOLLAR",
+      "Shares Held": "318.99",
+      "Ticker": "HKD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6439567",
+      "Market Value": "$82699.64",
+      "Name": "IGO LTD",
+      "Shares Held": "16,867",
+      "Ticker": "IGO AU",
+      "Weight": "4.12%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BGYBHZ4",
+      "Market Value": "$15915.47",
+      "Name": "ioneer Ltd",
+      "Shares Held": "178,662",
+      "Ticker": "INR AU",
+      "Weight": "0.79%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHJPY",
+      "Market Value": "$17.62",
+      "Name": "JAPANESE YEN",
+      "Shares Held": "2,761",
+      "Ticker": "JPY",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BRBS357",
+      "Market Value": "$56570.65",
+      "Name": "Lithium Americas Corp",
+      "Shares Held": "19,787",
+      "Ticker": "LAC CN",
+      "Weight": "2.82%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BS891B2",
+      "Market Value": "$42703.85",
+      "Name": "Lithium Argentina AG",
+      "Shares Held": "7,358",
+      "Ticker": "LAR CN",
+      "Weight": "2.13%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6397267",
+      "Market Value": "$18369.05",
+      "Name": "Lake Resources NL",
+      "Shares Held": "628,674",
+      "Ticker": "LKE AU",
+      "Weight": "0.91%"
+    },
+    {
+      "Asset Category": "#N/A N/A",
+      "Identifier": "BPGN3K8",
+      "Market Value": "$0.00",
+      "Name": "Latin Resources Pty Ltd",
+      "Shares Held": "2,024",
+      "Ticker": "LRSXE AU",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BMD8PV0",
+      "Market Value": "$7147.29",
+      "Name": "Lithium Ionic Corp",
+      "Shares Held": "17,241",
+      "Ticker": "LTH CN",
+      "Weight": "0.36%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B1J89V5",
+      "Market Value": "$58212.71",
+      "Name": "Liontown Ltd",
+      "Shares Held": "80,083",
+      "Ticker": "LTR AU",
+      "Weight": "2.90%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BMT8S71",
+      "Market Value": "$30360.87",
+      "Name": "Minerals 260 Ltd",
+      "Shares Held": "45,322",
+      "Ticker": "MI6 AU",
+      "Weight": "1.51%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B17ZL56",
+      "Market Value": "$65434.64",
+      "Name": "Mineral Resources Ltd",
+      "Shares Held": "1,738",
+      "Ticker": "MIN AU",
+      "Weight": "3.26%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B2368L5",
+      "Market Value": "$186988.93",
+      "Name": "PLS Group Ltd",
+      "Shares Held": "62,922",
+      "Ticker": "PLS AU",
+      "Weight": "9.31%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BRJJYV5",
+      "Market Value": "$28859.05",
+      "Name": "PMET Resources Inc",
+      "Shares Held": "9,282",
+      "Ticker": "PMET CN",
+      "Weight": "1.44%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BPXZ1L4",
+      "Market Value": "$15142.85",
+      "Name": "Q2 Metals Corp",
+      "Shares Held": "9,054",
+      "Ticker": "QTWO CN",
+      "Weight": "0.75%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BNKJ1Y8",
+      "Market Value": "$18431.85",
+      "Name": "Sigma Lithium Corp",
+      "Shares Held": "1,842",
+      "Ticker": "SGML CN",
+      "Weight": "0.92%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B53ZW66",
+      "Market Value": "$17641.60",
+      "Name": "St George Mining Ltd",
+      "Shares Held": "353,641",
+      "Ticker": "SGQ AU",
+      "Weight": "0.88%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BDSFRL7",
+      "Market Value": "$11106.20",
+      "Name": "Standard Lithium Ltd",
+      "Shares Held": "5,078",
+      "Ticker": "SLI CN",
+      "Weight": "0.55%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "833635105",
+      "Market Value": "$29390.48",
+      "Name": "Sociedad Quimica y Minera de Chile SA",
+      "Shares Held": "434",
+      "Ticker": "SQM",
+      "Weight": "1.46%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B23HV20",
+      "Market Value": "$15290.31",
+      "Name": "Syrah Resources Ltd",
+      "Shares Held": "223,495",
+      "Ticker": "SYR AU",
+      "Weight": "0.76%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BTZRRJ6",
+      "Market Value": "$80669.80",
+      "Name": "Talon Metals Corp",
+      "Shares Held": "11,708",
+      "Ticker": "TLO CN",
+      "Weight": "4.01%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BKYBH63",
+      "Market Value": "$15918.96",
+      "Name": "Vulcan Energy Resources Ltd",
+      "Shares Held": "10,062",
+      "Ticker": "VUL AU",
+      "Weight": "0.79%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "Cash&Other",
+      "Market Value": "$4404.65",
+      "Name": "Cash & Other",
+      "Shares Held": "4,404.65",
+      "Ticker": "Cash&Other",
+      "Weight": "0.22%"
+    }
+  ],
+  "ticker": "LIMI",
+  "totalRows": 51
+}

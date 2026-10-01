@@ -1,0 +1,133 @@
+{
+  "asOfDate": "Oct 1, 2026",
+  "aum": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "$66.01M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 66012558
+  },
+  "aumValue": 66012558,
+  "category": "Thematic",
+  "closePrice": "$42.05",
+  "closePriceValue": 42.05,
+  "dataFile": "./funds/BOTT/meta.json",
+  "distributionFrequency": "12 - Annually",
+  "distributions": {
+    "frequency": "12 - Annually",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": 1,
+    "rows": [
+      {
+        "Amount": "$0.0600",
+        "Ex-Date": "2025-12-18"
+      },
+      {
+        "Amount": "$0.4800",
+        "Ex-Date": "2024-12-24"
+      }
+    ]
+  },
+  "exchange": "NasdaqGM",
+  "fundPage": "https://themesetfs.com/etfs/bott",
+  "generatedAt": "2026-10-01T04:59:21Z",
+  "history": {
+    "asOf": "2026-09-30",
+    "asOfDate": "Sep 30, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 613
+  },
+  "holdings": {
+    "asOf": "2026-10-01",
+    "asOfDate": "Oct 1, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 41
+  },
+  "metrics": {
+    "cagr10y": 5.36,
+    "cagr3y": 19.01,
+    "cagr5y": 11,
+    "distributionYield": 0.14,
+    "distributionYieldText": "0.14%",
+    "dividendYield": 0.14,
+    "dividendYieldText": "0.14%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 68.54,
+    "tr1y": 3.29,
+    "tr3y": 68.54,
+    "tr5y": 68.54,
+    "yield12M": 0.14,
+    "yield12MText": "0.14%",
+    "ytd": -2.18
+  },
+  "name": "Humanoid Robotics ETF",
+  "nav": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "$41.76",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 41.76
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 41.76,
+  "providerCategory": "Thematic",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 30, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": 3.29,
+      "yr10": 68.54,
+      "yr3": 68.54,
+      "yr5": 68.54,
+      "ytd": -2.18
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "1,580,000",
+    "value": 1580000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-BOTT.pdf",
+    "fundPage": "https://themesetfs.com/etfs/bott",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "BOTT",
+  "totalNetAssets": 66012558
+}

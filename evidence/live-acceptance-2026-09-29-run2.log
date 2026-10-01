@@ -1,0 +1,36 @@
+[ config   ] Themes ETFs updater:
+              MAX_FETCHES=0
+              REQUEST_SLEEP=1
+              CONCURRENCY=2
+              AUM=:
+              CATEGORY=
+              DIVIDEND_YIELD=:
+              EDGAR_FALLBACK=true
+              HISTORY_PAGE_SIZE=1000
+              HISTORY_RANGE=max
+              HOLDINGS_PAGE_SIZE=250
+              MAX_RETRIES=3
+              PERFORMANCE_10Y=:
+              PERFORMANCE_1Y=:
+              PERFORMANCE_3Y=:
+              PERFORMANCE_5Y=:
+              PERFORMANCE_YTD=:
+              SEC_UA=
+              SEC_YIELD=:
+              SKIP_THEMES=false
+              SKIP_YAHOO=false
+              TER=:
+              TICKERS=BOTT,CLOD,AUMI
+              TOTAL_RETURN_10Y=:
+              TOTAL_RETURN_1Y=:
+              TOTAL_RETURN_3Y=:
+              TOTAL_RETURN_5Y=:
+              TOTAL_RETURN_YTD=:
+              VERBOSE=true
+[ catalog  ] 13 Themes ETFs (official Themes ETFs catalog)
+[ filter   ] 3 of 13 funds pass filters
+[  1/3   ] AUMI  unchanged history=699 holdings=35 divs=2 netAssets=$24.0M div=0.83
+[  2/3   ] BOTT  unchanged history=611 holdings=41 divs=2 netAssets=$65.7M div=0.14
+[  3/3   ] CLOD  unchanged history=697 holdings=57 divs=1 netAssets=$2.1M div=1.37
+[ done     ] 0 funds updated, 0 failures
+[ done     ] counts: funds=13 holdings=133 history=2007 unchanged=3 skipped=0

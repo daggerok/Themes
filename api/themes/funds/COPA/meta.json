@@ -1,0 +1,133 @@
+{
+  "asOfDate": "Oct 1, 2026",
+  "aum": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "$12.62M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 12620880
+  },
+  "aumValue": 12620880,
+  "category": "Commodities",
+  "closePrice": "$53.19",
+  "closePriceValue": 53.19,
+  "dataFile": "./funds/COPA/meta.json",
+  "distributionFrequency": "12 - Annually",
+  "distributions": {
+    "frequency": "12 - Annually",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": 1,
+    "rows": [
+      {
+        "Amount": "$1.8400",
+        "Ex-Date": "2025-12-18"
+      },
+      {
+        "Amount": "$0.3000",
+        "Ex-Date": "2024-12-24"
+      }
+    ]
+  },
+  "exchange": "Cboe US",
+  "fundPage": "https://themesetfs.com/etfs/copa",
+  "generatedAt": "2026-10-01T04:59:21Z",
+  "history": {
+    "asOf": "2026-09-30",
+    "asOfDate": "Sep 30, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 506
+  },
+  "holdings": {
+    "asOf": "2026-10-01",
+    "asOfDate": "Oct 1, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
+    "sourceKind": "official Themes ETFs daily holdings CSV",
+    "totalRows": 58
+  },
+  "metrics": {
+    "cagr10y": 7.63,
+    "cagr3y": 27.78,
+    "cagr5y": 15.84,
+    "distributionYield": 3.47,
+    "distributionYieldText": "3.47%",
+    "dividendYield": 3.47,
+    "dividendYieldText": "3.47%",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": 108.62,
+    "tr1y": 46.77,
+    "tr3y": 108.62,
+    "tr5y": 108.62,
+    "yield12M": 3.47,
+    "yield12MText": "3.47%",
+    "ytd": 21.57
+  },
+  "name": "Copper Miners ETF",
+  "nav": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "$53.05",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 53.05
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 53.05,
+  "providerCategory": "Commodities",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Sep 30, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": 46.77,
+      "yr10": 108.62,
+      "yr3": 108.62,
+      "yr5": 108.62,
+      "ytd": 21.57
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Oct 1, 2026",
+    "display": "240,000",
+    "value": 240000
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-COPA.pdf",
+    "fundPage": "https://themesetfs.com/etfs/copa",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Copper-Miners-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.35%",
+  "terValue": 0.35,
+  "ticker": "COPA",
+  "totalNetAssets": 12620880
+}

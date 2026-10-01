@@ -1,0 +1,512 @@
+{
+  "headers": [
+    "Name",
+    "Ticker",
+    "Identifier",
+    "Weight",
+    "Market Value",
+    "Shares Held",
+    "Asset Category"
+  ],
+  "page": 1,
+  "pageSize": 250,
+  "rows": [
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BD5LTX4",
+      "Market Value": "$7516.33",
+      "Name": "Inner Mongolia Xingye Silver&Tin Mining Co Ltd",
+      "Shares Held": "1,600",
+      "Ticker": "000426 C2",
+      "Weight": "0.08%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6728793",
+      "Market Value": "$9823.41",
+      "Name": "MMG Ltd",
+      "Shares Held": "8,875",
+      "Ticker": "1208 HK",
+      "Weight": "0.10%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BFD2096",
+      "Market Value": "$5835.64",
+      "Name": "Shandong Gold Mining Co Ltd",
+      "Shares Held": "2,353",
+      "Ticker": "1787 HK",
+      "Weight": "0.06%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6725299",
+      "Market Value": "$409314.26",
+      "Name": "Zijin Mining Group Co Ltd",
+      "Shares Held": "99,618",
+      "Ticker": "2899 HK",
+      "Weight": "4.24%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6000305",
+      "Market Value": "$99953.62",
+      "Name": "Jiangxi Copper Co Ltd",
+      "Shares Held": "23,824",
+      "Ticker": "358 HK",
+      "Weight": "1.04%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R4R7",
+      "Market Value": "$17454.59",
+      "Name": "Jiangxi Copper Co Ltd",
+      "Shares Held": "2,800",
+      "Ticker": "600362 C1",
+      "Weight": "0.18%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R701",
+      "Market Value": "$935.37",
+      "Name": "Yunnan Chihong Zinc&Germanium Co Ltd",
+      "Shares Held": "700",
+      "Ticker": "600497 C1",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R5D0",
+      "Market Value": "$2035.67",
+      "Name": "Shandong Gold Mining Co Ltd",
+      "Shares Held": "500",
+      "Ticker": "600547 C1",
+      "Weight": "0.02%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BQWR1X0",
+      "Market Value": "$672.89",
+      "Name": "Zhuzhou Smelter Group Co Ltd",
+      "Shares Held": "200",
+      "Ticker": "600961 C1",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R7X4",
+      "Market Value": "$1581.56",
+      "Name": "Western Mining Co Ltd",
+      "Shares Held": "300",
+      "Ticker": "601168 C1",
+      "Weight": "0.02%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BFB4KH2",
+      "Market Value": "$842.60",
+      "Name": "Baiyin Nonferrous Group Co Ltd",
+      "Shares Held": "1,000",
+      "Ticker": "601212 C1",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BP3R400",
+      "Market Value": "$91519.37",
+      "Name": "Zijin Mining Group Co Ltd",
+      "Shares Held": "20,600",
+      "Ticker": "601899 C1",
+      "Weight": "0.95%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BR4XSQ5",
+      "Market Value": "$189874.23",
+      "Name": "AbraSilver Resource Corp",
+      "Shares Held": "22,131",
+      "Ticker": "ABRA CN",
+      "Weight": "1.97%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "2833583",
+      "Market Value": "$421698.43",
+      "Name": "First Majestic Silver Corp",
+      "Shares Held": "23,834",
+      "Ticker": "AG CN",
+      "Weight": "4.37%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BSFS736",
+      "Market Value": "$38544.46",
+      "Name": "Andean Silver Ltd",
+      "Shares Held": "29,367",
+      "Ticker": "ASL AU",
+      "Weight": "0.40%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "2474261",
+      "Market Value": "$14232.93",
+      "Name": "Avino Silver & Gold Mines Ltd",
+      "Shares Held": "2,564",
+      "Ticker": "ASM CN",
+      "Weight": "0.15%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "G0378L100",
+      "Market Value": "$95641.10",
+      "Name": "Anglogold Ashanti Plc",
+      "Shares Held": "1,018",
+      "Ticker": "AU",
+      "Weight": "0.99%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHAUD",
+      "Market Value": "$-23.60",
+      "Name": "AUSTRALIAN DOLLAR",
+      "Shares Held": "-33.99",
+      "Ticker": "AUD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BK94091",
+      "Market Value": "$454799.18",
+      "Name": "Aya Gold & Silver Inc",
+      "Shares Held": "16,895",
+      "Ticker": "AYA CN",
+      "Weight": "4.71%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCAD",
+      "Market Value": "$109.68",
+      "Name": "CANADIAN DOLLAR",
+      "Shares Held": "156.09",
+      "Ticker": "CAD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "192108504",
+      "Market Value": "$272800.00",
+      "Name": "COEUR MINING INC.",
+      "Shares Held": "15,500",
+      "Ticker": "CDE",
+      "Weight": "2.83%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHCNY",
+      "Market Value": "$1110.29",
+      "Name": "CHINESE YUAN",
+      "Shares Held": "7,444.97",
+      "Ticker": "CNY",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHEUR",
+      "Market Value": "$373.14",
+      "Name": "EURO",
+      "Shares Held": "329.5",
+      "Ticker": "EUR",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "29258Y103",
+      "Market Value": "$369017.22",
+      "Name": "Endeavour Silver Corp",
+      "Shares Held": "43,009",
+      "Ticker": "EXK",
+      "Weight": "3.82%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "35671D857",
+      "Market Value": "$237930.00",
+      "Name": "Freeport-McMoRan Inc",
+      "Shares Held": "3,399",
+      "Ticker": "FCX",
+      "Weight": "2.46%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B29NF31",
+      "Market Value": "$108795.00",
+      "Name": "Franco-Nevada Corp",
+      "Shares Held": "457",
+      "Ticker": "FNV CN",
+      "Weight": "1.13%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B2QPKJ1",
+      "Market Value": "$434466.09",
+      "Name": "Fresnillo PLC",
+      "Shares Held": "12,012",
+      "Ticker": "FRES LN",
+      "Weight": "4.50%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "31846V328",
+      "Market Value": "$8919.97",
+      "Name": "First American Treasury Obligations Fund 01/01/2040",
+      "Shares Held": "8,919.97",
+      "Ticker": "FXFXX",
+      "Weight": "0.09%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B60BNP0",
+      "Market Value": "$183138.60",
+      "Name": "GoGold Resources Inc",
+      "Shares Held": "62,955",
+      "Ticker": "GGD CN",
+      "Weight": "1.90%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHHKD",
+      "Market Value": "$-181.75",
+      "Name": "HONG KONG DOLLAR",
+      "Shares Held": "-1,426.1",
+      "Ticker": "HKD",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "422704106",
+      "Market Value": "$172224.39",
+      "Name": "Hecla Mining Co",
+      "Shares Held": "10,113",
+      "Ticker": "HL",
+      "Weight": "1.78%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B1FW502",
+      "Market Value": "$34106.23",
+      "Name": "Hochschild Mining PLC",
+      "Shares Held": "4,849",
+      "Ticker": "HOC LN",
+      "Weight": "0.35%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BRBR2F7",
+      "Market Value": "$108325.09",
+      "Name": "Highlander Silver Corp",
+      "Shares Held": "20,693",
+      "Ticker": "HSLV CN",
+      "Weight": "1.12%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "5263251",
+      "Market Value": "$272165.93",
+      "Name": "KGHM Polska Miedz SA",
+      "Shares Held": "3,182",
+      "Ticker": "KGH PW",
+      "Weight": "2.82%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BRCDGF2",
+      "Market Value": "$118795.83",
+      "Name": "LunR Royalties Corp",
+      "Shares Held": "8,778",
+      "Ticker": "LUNR CN",
+      "Weight": "1.23%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHMXN",
+      "Market Value": "$1186.49",
+      "Name": "MEXICAN PESO",
+      "Shares Held": "21,450.63",
+      "Ticker": "MXN",
+      "Weight": "0.01%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "651639106",
+      "Market Value": "$976929.80",
+      "Name": "Newmont Corp",
+      "Shares Held": "8,470",
+      "Ticker": "NEM",
+      "Weight": "10.12%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BMW5909",
+      "Market Value": "$92530.23",
+      "Name": "New Pacific Metals Corp",
+      "Shares Held": "14,796",
+      "Ticker": "NUAG CN",
+      "Weight": "0.96%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BPJJWP1",
+      "Market Value": "$96903.91",
+      "Name": "OR Royalties Inc",
+      "Shares Held": "2,826",
+      "Ticker": "OR CN",
+      "Weight": "1.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "697900108",
+      "Market Value": "$959760.39",
+      "Name": "Pan American Silver Corp",
+      "Shares Held": "21,089",
+      "Ticker": "PAAS",
+      "Weight": "9.94%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "2448200",
+      "Market Value": "$971389.08",
+      "Name": "Industrias Penoles SAB de CV",
+      "Shares Held": "20,172",
+      "Ticker": "PE&OLES* MM",
+      "Weight": "10.06%"
+    },
+    {
+      "Asset Category": "—",
+      "Identifier": "CASHPLN",
+      "Market Value": "$-42.58",
+      "Name": "POLISH ZLOTY",
+      "Shares Held": "-164.07",
+      "Ticker": "PLN",
+      "Weight": "0.00%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "84265V105",
+      "Market Value": "$481495.34",
+      "Name": "Southern Copper Corp",
+      "Shares Held": "2,376.112",
+      "Ticker": "SCCO",
+      "Weight": "4.99%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B89P443",
+      "Market Value": "$21362.20",
+      "Name": "Sotkamo Silver AB",
+      "Shares Held": "46,983",
+      "Ticker": "SOSI1 FH",
+      "Weight": "0.22%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BNQQTG1",
+      "Market Value": "$15154.77",
+      "Name": "Sun Silver Ltd",
+      "Shares Held": "22,732",
+      "Ticker": "SS1 AU",
+      "Weight": "0.16%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "784730103",
+      "Market Value": "$103691.84",
+      "Name": "SSR Mining Inc",
+      "Shares Held": "3,112",
+      "Ticker": "SSRM",
+      "Weight": "1.07%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "2784261",
+      "Market Value": "$342907.73",
+      "Name": "Silvercorp Metals Inc",
+      "Shares Held": "32,127",
+      "Ticker": "SVM CN",
+      "Weight": "3.55%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "2879327",
+      "Market Value": "$75254.96",
+      "Name": "Teck Resources Ltd",
+      "Shares Held": "1,143",
+      "Ticker": "TECK/B CN",
+      "Weight": "0.78%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BJ171P4",
+      "Market Value": "$230157.89",
+      "Name": "Triple Flag Precious Metals Corp",
+      "Shares Held": "7,480",
+      "Ticker": "TFPM CN",
+      "Weight": "2.38%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BVMJP62",
+      "Market Value": "$177551.60",
+      "Name": "Americas Gold & Silver Corp",
+      "Shares Held": "40,494",
+      "Ticker": "USA CN",
+      "Weight": "1.84%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BQXR4J6",
+      "Market Value": "$44889.23",
+      "Name": "Unico Silver Ltd",
+      "Shares Held": "88,548",
+      "Ticker": "USL AU",
+      "Weight": "0.47%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BS84LB7",
+      "Market Value": "$194819.66",
+      "Name": "Vizsla Silver Corp",
+      "Shares Held": "51,344",
+      "Ticker": "VZLA CN",
+      "Weight": "2.02%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B0Y90N5",
+      "Market Value": "$54945.61",
+      "Name": "Wesdome Gold Mines Ltd",
+      "Shares Held": "2,224",
+      "Ticker": "WDO CN",
+      "Weight": "0.57%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BF13KN5",
+      "Market Value": "$630584.34",
+      "Name": "Wheaton Precious Metals Corp",
+      "Shares Held": "4,722",
+      "Ticker": "WPM CN",
+      "Weight": "6.53%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "Cash&Other",
+      "Market Value": "$-2965.09",
+      "Name": "Cash & Other",
+      "Shares Held": "-2,965.09",
+      "Ticker": "Cash&Other",
+      "Weight": "-0.03%"
+    }
+  ],
+  "ticker": "AGMI",
+  "totalRows": 55
+}

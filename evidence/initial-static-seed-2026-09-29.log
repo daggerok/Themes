@@ -1,0 +1,46 @@
+[ config   ] Themes ETFs updater:
+              MAX_FETCHES=0
+              REQUEST_SLEEP=1
+              CONCURRENCY=2
+              AUM=:
+              CATEGORY=
+              DIVIDEND_YIELD=:
+              EDGAR_FALLBACK=true
+              HISTORY_PAGE_SIZE=1000
+              HISTORY_RANGE=max
+              HOLDINGS_PAGE_SIZE=250
+              MAX_RETRIES=3
+              PERFORMANCE_10Y=:
+              PERFORMANCE_1Y=:
+              PERFORMANCE_3Y=:
+              PERFORMANCE_5Y=:
+              PERFORMANCE_YTD=:
+              SEC_UA=
+              SEC_YIELD=:
+              SKIP_THEMES=false
+              SKIP_YAHOO=false
+              TER=:
+              TICKERS=all
+              TOTAL_RETURN_10Y=:
+              TOTAL_RETURN_1Y=:
+              TOTAL_RETURN_3Y=:
+              TOTAL_RETURN_5Y=:
+              TOTAL_RETURN_YTD=:
+              VERBOSE=true
+[ catalog  ] 13 Themes ETFs (official Themes ETFs catalog)
+[ filter   ] 13 of 13 funds pass filters
+[  1/13  ] AGMI  updated   history=602 holdings=53 divs=2 netAssets=$9.7M div=3.96
+[  2/13  ] AUMI  updated   history=699 holdings=35 divs=2 netAssets=$24.0M div=0.83
+[  3/13  ] BOTT  updated   history=611 holdings=41 divs=2 netAssets=$65.7M div=0.14
+[  4/13  ] CLOD  updated   history=697 holdings=57 divs=1 netAssets=$2.1M div=1.37
+[  5/13  ] COPA  updated   history=504 holdings=57 divs=2 netAssets=$12.7M div=3.41
+[  6/13  ] GSIB  updated   history=697 holdings=32 divs=2 netAssets=$43.0M div=1.57
+[  7/13  ] LGCF  updated   history=5 holdings=77 divs=1 netAssets=$2.3M div=1.65
+[  8/13  ] LIMI  updated   history=5 holdings=51 divs=1 netAssets=$2.0M div=0.82
+[  9/13  ] NATO  updated   history=491 holdings=99 divs=2 netAssets=$93.1M div=0.45
+[ 10/13  ] SMCF  updated   history=5 holdings=76 divs=1 netAssets=$3.5M div=3.31
+[ 11/13  ] SPAM  updated   history=702 holdings=45 divs=2 netAssets=$6.9M div=0.33
+[ 12/13  ] URAN  updated   history=504 holdings=57 divs=2 netAssets=$24.6M div=2.95
+[ 13/13  ] WISE  updated   history=702 holdings=47 divs=1 netAssets=$27.7M div=4.51
+[ done     ] 13 funds updated, 0 failures
+[ done     ] counts: funds=13 holdings=727 history=6224 unchanged=0 skipped=0
