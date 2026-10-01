@@ -9,6 +9,18 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "35.25",
+      "Close": "35.25",
+      "Date": "2026-09-30",
+      "Volume": "100"
+    },
+    {
+      "Adj Close": "34.87",
+      "Close": "34.87",
+      "Date": "2026-09-29",
+      "Volume": "100"
+    },
+    {
       "Adj Close": "34.85",
       "Close": "34.85",
       "Date": "2026-09-28",
@@ -4192,5 +4204,5 @@
     }
   ],
   "ticker": "CLOD",
-  "totalRows": 697
+  "totalRows": 699
 }

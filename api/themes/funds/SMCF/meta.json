@@ -19,16 +19,11 @@
       "Amount"
     ],
     "paymentsPerYear": null,
-    "rows": [
-      {
-        "Amount": "$1.2800",
-        "Ex-Date": "2025-12-18"
-      }
-    ]
+    "rows": []
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/smcf",
-  "generatedAt": "2026-09-29T05:46:06Z",
+  "generatedAt": "2026-10-01T04:59:20Z",
   "history": {
     "asOf": "2026-09-25",
     "asOfDate": "Sep 25, 2026",
@@ -55,10 +50,10 @@
     "cagr10y": 0,
     "cagr3y": 0,
     "cagr5y": 0,
-    "distributionYield": 3.31,
-    "distributionYieldText": "3.31%",
-    "dividendYield": 3.31,
-    "dividendYieldText": "3.31%",
+    "distributionYield": 0,
+    "distributionYieldText": "0.00%",
+    "dividendYield": 0,
+    "dividendYieldText": "0.00%",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
     "secYield": null,
     "secYieldText": "—",
@@ -67,8 +62,8 @@
     "tr1y": 0,
     "tr3y": 0,
     "tr5y": 0,
-    "yield12M": 3.31,
-    "yield12MText": "3.31%",
+    "yield12M": 0,
+    "yield12MText": "0.00%",
     "ytd": 0
   },
   "name": "US Small Cap Cash Flow Champions ETF",

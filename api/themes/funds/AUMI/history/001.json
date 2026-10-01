@@ -9,6 +9,18 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "92.38",
+      "Close": "92.38",
+      "Date": "2026-09-30",
+      "Volume": "700"
+    },
+    {
+      "Adj Close": "93.63",
+      "Close": "93.63",
+      "Date": "2026-09-29",
+      "Volume": "4800"
+    },
+    {
       "Adj Close": "91.81",
       "Close": "91.81",
       "Date": "2026-09-28",
@@ -4204,5 +4216,5 @@
     }
   ],
   "ticker": "AUMI",
-  "totalRows": 699
+  "totalRows": 701
 }

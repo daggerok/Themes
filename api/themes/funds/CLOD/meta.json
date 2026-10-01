@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Sep 29, 2026",
+  "asOfDate": "Oct 1, 2026",
   "aum": {
-    "asOfDate": "Sep 29, 2026",
-    "display": "$2.09M",
+    "asOfDate": "Oct 1, 2026",
+    "display": "$2.11M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 2089722
+    "value": 2113476
   },
-  "aumValue": 2089722,
+  "aumValue": 2113476,
   "category": "Thematic",
-  "closePrice": "$35.16",
-  "closePriceValue": 35.16,
+  "closePrice": "$34.87",
+  "closePriceValue": 34.87,
   "dataFile": "./funds/CLOD/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,21 +28,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/clod",
-  "generatedAt": "2026-09-29T05:46:00Z",
+  "generatedAt": "2026-10-01T04:59:21Z",
   "history": {
-    "asOf": "2026-09-28",
-    "asOfDate": "Sep 28, 2026",
+    "asOf": "2026-09-30",
+    "asOfDate": "Sep 30, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 697
+    "totalRows": 699
   },
   "holdings": {
-    "asOf": "2026-09-29",
-    "asOfDate": "Sep 29, 2026",
+    "asOf": "2026-10-01",
+    "asOfDate": "Oct 1, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -52,45 +52,45 @@
     "totalRows": 57
   },
   "metrics": {
-    "cagr10y": 3.42,
-    "cagr3y": 11.86,
-    "cagr5y": 6.95,
-    "distributionYield": 1.37,
-    "distributionYieldText": "1.37%",
-    "dividendYield": 1.37,
-    "dividendYieldText": "1.37%",
+    "cagr10y": 3.54,
+    "cagr3y": 12.29,
+    "cagr5y": 7.2,
+    "distributionYield": 1.38,
+    "distributionYieldText": "1.38%",
+    "dividendYield": 1.38,
+    "dividendYieldText": "1.38%",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 39.96,
-    "tr1y": -1.83,
-    "tr3y": 39.96,
-    "tr5y": 39.96,
-    "yield12M": 1.37,
-    "yield12MText": "1.37%",
-    "ytd": 7.1
+    "tr10y": 41.57,
+    "tr1y": 0,
+    "tr3y": 41.57,
+    "tr5y": 41.57,
+    "yield12M": 1.38,
+    "yield12MText": "1.38%",
+    "ytd": 8.33
   },
   "name": "Cloud Computing ETF",
   "nav": {
-    "asOfDate": "Sep 29, 2026",
-    "display": "$35.16",
+    "asOfDate": "Oct 1, 2026",
+    "display": "$34.86",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.16
+    "value": 34.86
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.16,
+  "navValue": 34.86,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 28, 2026",
+      "asOfDate": "Sep 30, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -1.83,
-      "yr10": 39.96,
-      "yr3": 39.96,
-      "yr5": 39.96,
-      "ytd": 7.1
+      "yr1": 0,
+      "yr10": 41.57,
+      "yr3": 41.57,
+      "yr5": 41.57,
+      "ytd": 8.33
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -104,7 +104,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Sep 29, 2026",
+    "asOfDate": "Oct 1, 2026",
     "display": "60,000",
     "value": 60000
   },
@@ -125,5 +125,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "CLOD",
-  "totalNetAssets": 2089722
+  "totalNetAssets": 2113476
 }

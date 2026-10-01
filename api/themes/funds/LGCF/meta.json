@@ -19,16 +19,11 @@
       "Amount"
     ],
     "paymentsPerYear": null,
-    "rows": [
-      {
-        "Amount": "$0.6300",
-        "Ex-Date": "2025-12-18"
-      }
-    ]
+    "rows": []
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/lgcf",
-  "generatedAt": "2026-09-29T05:46:03Z",
+  "generatedAt": "2026-10-01T04:59:21Z",
   "history": {
     "asOf": "2026-09-25",
     "asOfDate": "Sep 25, 2026",
@@ -55,10 +50,10 @@
     "cagr10y": 0,
     "cagr3y": 0,
     "cagr5y": 0,
-    "distributionYield": 1.65,
-    "distributionYieldText": "1.65%",
-    "dividendYield": 1.65,
-    "dividendYieldText": "1.65%",
+    "distributionYield": 0,
+    "distributionYieldText": "0.00%",
+    "dividendYield": 0,
+    "dividendYieldText": "0.00%",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes",
     "secYield": null,
     "secYieldText": "—",
@@ -67,8 +62,8 @@
     "tr1y": 0,
     "tr3y": 0,
     "tr5y": 0,
-    "yield12M": 1.65,
-    "yield12MText": "1.65%",
+    "yield12M": 0,
+    "yield12MText": "0.00%",
     "ytd": 0
   },
   "name": "US Cash Flow Champions ETF",
