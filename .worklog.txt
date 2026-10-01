@@ -917,3 +917,5 @@ REQUEST PACING & CONCURRENCY:
 REPORT BACK WHEN DONE:
   Verify full list of active tickers on themesetfs.com vs SEC EDGAR.
 
+
+2026-10-01: standardized update controls (resolveControls/runtimeControls/CONTROL_NAMES, config-docs test) and workflow (24 inputs + advanced, was 28 inputs); README sections renamed.
