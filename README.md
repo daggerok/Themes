@@ -75,11 +75,11 @@ Keys of `scripts/update-data.config.json`; also accepted as environment variable
 | `PERFORMANCE_YTD`, `PERFORMANCE_1Y`, `PERFORMANCE_3Y`, `PERFORMANCE_5Y`, `PERFORMANCE_10Y` / `TOTAL_RETURN_YTD`, `TOTAL_RETURN_1Y`, `TOTAL_RETURN_3Y`, `TOTAL_RETURN_5Y`, `TOTAL_RETURN_10Y` | `:` | `min:max` filters on the derived adjusted-market-price return metrics. |
 | `CONCURRENCY` / `REQUEST_SLEEP` | `2` / `1` | Parallel workers and seconds between starts within each worker lane. Keep requests polite. |
 | `HOLDINGS_PAGE_SIZE` / `HISTORY_PAGE_SIZE` | `250` / `1000` | Rows per generated JSON page. |
-| `MAX_RETRIES` | `3` | Retries after the initial request for network errors and HTTP 408 / 425 / 429 / 5xx. |
-| `HISTORY_RANGE` | `max` | Recorded control for the Yahoo history path; the persisted feed requests the stable all-history chart endpoint. |
+| `MAX_RETRIES` | `3` | Integer >= 1: retries after the initial request for network errors and HTTP 408 / 425 / 429 / 5xx. |
+| `HISTORY_RANGE` | `max` | `max` or `Ny` (for example `5y`): limits the Yahoo history request window, so published history and derived returns cover only that window. |
 | `EDGAR_FALLBACK` | `true` | Try matched SEC N-PORT-P holdings when an official CSV cannot be obtained. |
 | `SKIP_YAHOO` / `SKIP_THEMES` | `false` | Retain prior history or catalog/holdings data while skipping the corresponding provider stage. |
-| `SEC_UA` | `""` | Optional declared User-Agent contact string for SEC requests. |
+| `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | User-Agent declared to SEC requests; the repository Actions variable `SEC_UA` overrides it when set. |
 | `VERBOSE` | `false` | Print retry and fallback notices. |
 
 `TICKERS` combines with category/AUM/TER/yield/return filters using AND logic; it does not override them. Funds not selected for a successful update retain their previously published metadata and data files, so a bounded or partly failed run cannot empty the site.
@@ -97,7 +97,7 @@ CATEGORY="Commodities" bun ./scripts/update-data.ts
 
 The browser app is intentionally build-free: `index.html` carries the markup, styles, and bootstrap, and `app.tsx` is TypeScript compiled in the browser with Babel standalone - no build step, bundler, `tsconfig.json`, or `typescript` dependency is needed. Bun runs TypeScript out of the box.
 
-Verification before every publish: `bun install --frozen-lockfile`, `bun test` (includes the config, README and workflow parity checks in `scripts/config-docs.test.ts`), `bun build --target=bun scripts/update-data.ts --outfile=/dev/null`, and `git diff --check`.
+Verification before every publish: `bun install --frozen-lockfile`, `bun test`, `bun build --target=bun scripts/update-data.ts --outfile=/dev/null`, and `git diff --check`.
 
 ## Brands table
 
@@ -122,7 +122,7 @@ Verification before every publish: `bun install --frozen-lockfile`, `bun test` (
 | **ProShares** | [proshares.com](https://www.proshares.com/our-etfs/find-proshares-etfs) \| [ProShares](https://daggerok.github.io/ProShares/) |
 | **Schwab** | [schwabassetmanagement.com](https://www.schwabassetmanagement.com/products) \| [Schwab](https://daggerok.github.io/Schwab/) |
 | **SPDR** | [ssga.com](https://www.ssga.com/us/en/intermediary/etfs/fund-finder) \| [SPDR](https://daggerok.github.io/SPDR/) |
-| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) (deployment pending) |
+| **Sprott ETFs** | [sprottetfs.com](https://sprottetfs.com/) \| [Sprott](https://daggerok.github.io/Sprott/) |
 | **Tema ETFs** | [temaetfs.com](https://temaetfs.com/funds) \| [Tema](https://daggerok.github.io/Tema/) |
 | **Themes ETFs** | [themesetfs.com/etfs](https://themesetfs.com/etfs) \| [Themes](https://daggerok.github.io/Themes/) |
 | **VanEck** | [vaneck.com](https://www.vaneck.com/us/en/etf-mutual-fund-finder/) \| [VanEck](https://daggerok.github.io/VanEck/) |
