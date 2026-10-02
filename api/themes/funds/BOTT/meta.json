@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$66.01M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 66012558
   },
   "aumValue": 66012558,
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-01T04:59:21Z",
+  "generatedAt": "2026-10-02T03:29:58Z",
   "history": {
-    "asOf": "2026-09-30",
-    "asOfDate": "Sep 30, 2026",
+    "asOf": "2026-10-01",
+    "asOfDate": "Oct 1, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 613
+    "totalRows": 614
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -56,9 +56,9 @@
     "totalRows": 41
   },
   "metrics": {
-    "cagr10y": 5.36,
-    "cagr3y": 19.01,
-    "cagr5y": 11,
+    "cagr10y": 5.59,
+    "cagr3y": 19.88,
+    "cagr5y": 11.49,
     "distributionYield": 0.14,
     "distributionYieldText": "0.14%",
     "dividendYield": 0.14,
@@ -67,13 +67,13 @@
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 68.54,
-    "tr1y": 3.29,
-    "tr3y": 68.54,
-    "tr5y": 68.54,
+    "tr10y": 72.29,
+    "tr1y": 4.05,
+    "tr3y": 72.29,
+    "tr5y": 72.29,
     "yield12M": 0.14,
     "yield12MText": "0.14%",
-    "ytd": -2.18
+    "ytd": 0
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
@@ -87,14 +87,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 30, 2026",
+      "asOfDate": "Oct 1, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 3.29,
-      "yr10": 68.54,
-      "yr3": 68.54,
-      "yr5": 68.54,
-      "ytd": -2.18
+      "yr1": 4.05,
+      "yr10": 72.29,
+      "yr3": 72.29,
+      "yr5": 72.29,
+      "ytd": 0
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -108,7 +108,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 1, 2026",
+    "asOfDate": null,
     "display": "1,580,000",
     "value": 1580000
   },
@@ -119,11 +119,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

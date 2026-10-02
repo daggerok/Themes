@@ -9,6 +9,12 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "42.66",
+      "Close": "42.66",
+      "Date": "2026-10-01",
+      "Volume": "3900"
+    },
+    {
       "Adj Close": "41.73",
       "Close": "41.73",
       "Date": "2026-09-30",
@@ -3688,5 +3694,5 @@
     }
   ],
   "ticker": "BOTT",
-  "totalRows": 613
+  "totalRows": 614
 }

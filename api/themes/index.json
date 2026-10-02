@@ -1,7 +1,7 @@
 {
   "counts": {
-    "funds": 13,
-    "history": 6244,
+    "funds": 14,
+    "history": 6245,
     "holdings": 730
   },
   "funds": [
@@ -164,13 +164,13 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/bott",
-      "history": 613,
+      "history": 614,
       "holdings": 41,
       "inceptionDate": null,
       "metrics": {
-        "cagr10y": 5.36,
-        "cagr3y": 19.01,
-        "cagr5y": 11,
+        "cagr10y": 5.59,
+        "cagr3y": 19.88,
+        "cagr5y": 11.49,
         "distributionYield": 0.14,
         "distributionYieldText": "0.14%",
         "dividendYield": 0.14,
@@ -179,13 +179,13 @@
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
-        "tr10y": 68.54,
-        "tr1y": 3.29,
-        "tr3y": 68.54,
-        "tr5y": 68.54,
+        "tr10y": 72.29,
+        "tr1y": 4.05,
+        "tr3y": 72.29,
+        "tr5y": 72.29,
         "yield12M": 0.14,
         "yield12MText": "0.14%",
-        "ytd": -2.18
+        "ytd": 0
       },
       "name": "Humanoid Robotics ETF",
       "nav": "$41.76",
@@ -194,14 +194,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Sep 30, 2026",
+          "asOfDate": "Oct 1, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 3.29,
-          "yr10": 68.54,
-          "yr3": 68.54,
-          "yr5": 68.54,
-          "ytd": -2.18
+          "yr1": 4.05,
+          "yr10": 72.29,
+          "yr3": 72.29,
+          "yr5": 72.29,
+          "ytd": 0
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -359,6 +359,42 @@
       "ter": "0.35%",
       "terValue": 0.35,
       "ticker": "COPA"
+    },
+    {
+      "aum": "—",
+      "aumValue": null,
+      "category": "Thematic",
+      "closePrice": "$32.45",
+      "closePriceValue": 32.45,
+      "dataFile": "./funds/DRGN/meta.json",
+      "distributions": {
+        "dividend": null,
+        "exDate": null,
+        "frequency": "00 - None",
+        "paymentsPerYear": null
+      },
+      "fundPage": "https://themesetfs.com/etfs/drgn",
+      "history": 0,
+      "holdings": 0,
+      "metrics": {
+        "cagr10y": null,
+        "cagr3y": null,
+        "cagr5y": null,
+        "dividendYield": null,
+        "secYield": null,
+        "siAnn": null,
+        "tr10y": null,
+        "tr1y": null,
+        "tr3y": null,
+        "tr5y": null,
+        "ytd": null
+      },
+      "name": "China Generative Artificial Intelligence ETF",
+      "nav": "$32.43",
+      "navValue": 32.43,
+      "ter": "0.39%",
+      "terValue": 0.39,
+      "ticker": "DRGN"
     },
     {
       "asOfDate": "Oct 1, 2026",
@@ -929,7 +965,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-01T04:59:21Z",
+  "generatedAt": "2026-10-02T03:29:58Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
