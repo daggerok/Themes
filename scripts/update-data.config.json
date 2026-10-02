@@ -26,5 +26,6 @@
   "SKIP_YAHOO": "false",
   "SKIP_THEMES": "false",
   "SEC_UA": "daggerok ETF feed daggerok@gmail.com",
-  "VERBOSE": "false"
+  "VERBOSE": "false",
+  "USE_SYSTEM_CA": "auto"
 }
