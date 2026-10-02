@@ -1,6 +1,6 @@
 /// <reference types="bun" />
 
-import { describe, expect, test } from 'bun:test';
+import { afterEach, describe, expect, test } from 'bun:test';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -18,6 +18,8 @@ import {
   stripProxyPreamble,
   calculateReturn,
   createRequestGate,
+  installSystemCa,
+  isCertError,
   deriveReturns,
   formatDividendFrequency,
   inferDistributionFrequency,
@@ -375,7 +377,7 @@ test('scheduled path (empty inputs and advanced) equals config defaults', () => 
 });
 
 test('resolver rejects invalid JSON shapes, unknown keys, non-scalars and newlines', () => {
-  for (const value of [{ UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 }, { HISTORY_RANGE: '0y' }, { HISTORY_RANGE: 'forever' }, { MAX_FETCHES: 1.5 }, { REQUEST_SLEEP: '-1' }, { VERBOSE: 'maybe' }, { AUM: '1:2:3' }, { TER: '5:1' }, { TICKERS: ['BOTT'] }, { TICKERS: {} }, null, []]) {
+  for (const value of [{ UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 }, { HISTORY_RANGE: '0y' }, { HISTORY_RANGE: 'forever' }, { MAX_FETCHES: 1.5 }, { REQUEST_SLEEP: '-1' }, { VERBOSE: 'maybe' }, { USE_SYSTEM_CA: 'maybe' }, { AUM: '1:2:3' }, { TER: '5:1' }, { TICKERS: ['BOTT'] }, { TICKERS: {} }, null, []]) {
     expect(() => resolveControls(value)).toThrow();
   }
   expect(() => resolveControls({}, { SEC_UA: 'x\rfoo' })).toThrow();
@@ -444,7 +446,7 @@ test('every control stays reachable: individual input or advanced JSON', () => {
   const individual = new Set([...yml.matchAll(/^      (\w+):$/gm)].map((m) => m[1].toUpperCase()));
   const viaAdvanced = CONTROL_NAMES.filter((name) => !individual.has(name));
   for (const name of viaAdvanced) expect(() => resolveControls(file(), { [name]: file()[name] })).not.toThrow();
-  expect(viaAdvanced.sort()).toEqual(['HISTORY_RANGE', 'SEC_UA', 'SEC_YIELD', 'VERBOSE']);
+  expect(viaAdvanced.sort()).toEqual(['HISTORY_RANGE', 'SEC_UA', 'SEC_YIELD', 'USE_SYSTEM_CA', 'VERBOSE']);
 });
 
 test('workflow lets only the protected SEC_UA variable override and writes only api/themes', () => {
@@ -473,4 +475,58 @@ test('README: section order, Themes-only API paths, no work-log leftovers', () =
   expect(readme).not.toContain('`./api/neos`');
   expect(readme).not.toMatch(/worklog|config-docs|ui-parity|evidence|fixtures/i);
   expect(readme).toContain('Themes ETF Trust **CIK 0001976322**');
+});
+
+describe('system CA support', () => {
+  const realFetch = globalThis.fetch;
+  afterEach(() => { globalThis.fetch = realFetch; });
+  const certError = () => Object.assign(new Error('unable to get local issuer certificate'), { code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' });
+  const neverReexec = (): never => { throw new Error('unexpected reexec'); };
+
+  test('USE_SYSTEM_CA resolves auto by default and accepts true/false case-insensitively', () => {
+    expect(resolveControls(file()).USE_SYSTEM_CA).toBe('auto');
+    for (const value of ['auto', 'TRUE', 'False']) expect(resolveControls(file(), {}, {}, { USE_SYSTEM_CA: value }).USE_SYSTEM_CA).toBe(value);
+    expect(() => resolveControls(file(), {}, {}, { USE_SYSTEM_CA: 'maybe' })).toThrow(/USE_SYSTEM_CA/);
+  });
+
+  test('isCertError matches certificate failures, also through cause', () => {
+    expect(isCertError({ code: 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' })).toBe(true);
+    expect(isCertError(new Error('unable to get local issuer certificate'))).toBe(true);
+    expect(isCertError(new Error('fetch failed', { cause: certError() }))).toBe(true);
+    expect(isCertError(Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' }))).toBe(false);
+    expect(isCertError(new HttpError(403))).toBe(false);
+  });
+
+  test('installSystemCa leaves fetch alone for false or an already active store', () => {
+    installSystemCa('false', neverReexec, false);
+    expect(globalThis.fetch).toBe(realFetch);
+    installSystemCa('auto', neverReexec, true);
+    expect(globalThis.fetch).toBe(realFetch);
+  });
+
+  test('mode true restarts immediately', () => {
+    let calls = 0;
+    const reexec = (): never => { calls += 1; throw new Error('reexec'); };
+    expect(() => installSystemCa('true', reexec, false)).toThrow('reexec');
+    expect(calls).toBe(1);
+  });
+
+  test('mode auto restarts once on a cert error, rethrows others and passes responses through', async () => {
+    let calls = 0;
+    const reexec = (): never => { calls += 1; throw new Error('reexec'); };
+    globalThis.fetch = (async () => { throw certError(); }) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    await expect(fetch('https://example.invalid/')).rejects.toThrow('reexec');
+    expect(calls).toBe(1);
+
+    globalThis.fetch = (async () => { throw Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' }); }) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    await expect(fetch('https://example.invalid/')).rejects.toThrow('ECONNRESET');
+    expect(calls).toBe(1);
+
+    globalThis.fetch = (async () => new Response('ok')) as unknown as typeof fetch;
+    installSystemCa('auto', reexec, false);
+    expect(await (await fetch('https://example.invalid/')).text()).toBe('ok');
+    expect(calls).toBe(1);
+  });
 });

@@ -66,7 +66,7 @@ The Themes site catalog supplies current NAV/market price, while the current sou
 
 ### Update controls
 
-Keys of `scripts/update-data.config.json`; also accepted as environment variables and, for the ones without a dedicated workflow input (`SEC_YIELD`, `HISTORY_RANGE`, `SEC_UA`, `VERBOSE`), through `advanced`.
+Keys of `scripts/update-data.config.json`; also accepted as environment variables and, for the ones without a dedicated workflow input (`SEC_YIELD`, `HISTORY_RANGE`, `SEC_UA`, `VERBOSE`, `USE_SYSTEM_CA`), through `advanced`.
 
 | Control | Default | Meaning |
 | --- | --: | --- |
@@ -84,6 +84,7 @@ Keys of `scripts/update-data.config.json`; also accepted as environment variable
 | `SKIP_YAHOO` / `SKIP_THEMES` | `false` | Retain prior history or catalog/holdings data while skipping the corresponding provider stage. |
 | `SEC_UA` | `daggerok ETF feed daggerok@gmail.com` | User-Agent declared to SEC requests; the repository Actions variable `SEC_UA` overrides it when set. |
 | `VERBOSE` | `false` | Print retry and fallback notices. |
+| `USE_SYSTEM_CA` | `auto` | TLS trust store: `auto` restarts the updater once with Bun's `--use-system-ca` when a request fails with an untrusted-certificate error; `true` always uses the system CA store; `false` never restarts. Not an individual workflow input: use `advanced`, the config file or the CLI environment. |
 
 `TICKERS` combines with category/AUM/TER/yield/return filters using AND logic; it does not override them. Funds not selected for a successful update retain their previously published metadata and data files, so a bounded or partly failed run cannot empty the site.
 
