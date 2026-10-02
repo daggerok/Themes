@@ -56,6 +56,8 @@ The Themes site catalog supplies current NAV/market price, while the current sou
 | Metric | Status | Reason |
 | --- | --- | --- |
 | **YTD / 1 Yr / 3 Yr / 5 Yr / 10 Yr returns** | derived market-price return or `—` | The current static feed uses Yahoo adjusted closes for history; it does not claim an official Themes NAV performance series. |
+| **`returnsBasis`** | always present, non-empty text | Says how returns are computed: here `derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)`. Never empty or `-`. |
+| **`performanceAsOf`** | `YYYY-MM-DD` or `null` | Date the returns are as of: the last Yahoo close in the published history (not the NAV date). Kept from the previous publication when Yahoo is unavailable; `null` when the fund has no history yet. |
 | **Dividend yield / frequency** | derived from Yahoo events or `00 - None` | The source path is Yahoo dividend events, not an official Themes distribution-history table. `00 - None` only means no usable events were returned for the feed. |
 | **30-Day SEC Yield** | `—` | The current Themes catalog/CSV pipeline does not publish a matching SEC-yield field. |
 | **CUSIP / ISIN at fund level, inception date, premium / discount, bid-ask spread, documents** | `—` unless a future common schema supplies it | They are not claimed from the catalog/CSV source currently used by this feed. |

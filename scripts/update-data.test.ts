@@ -36,6 +36,9 @@ import {
   yahooChartUrl,
   samePublishedContent,
   stableStringify,
+  RETURNS_BASIS,
+  performanceFields,
+  withPerformanceFields,
 } from './update-data.ts';
 
 describe('Themes catalog parser', () => {
@@ -161,6 +164,22 @@ describe('Yahoo parser and derived metrics', () => {
     const returns = deriveReturns(history, new Date('2025-01-03T00:00:00Z'));
     expect(returns.ytd).toBe(10);
     expect(returns.yr1).toBe(-8.33);
+  });
+});
+
+describe('metrics returnsBasis and performanceAsOf (STANDARD 9a)', () => {
+  test('performanceFields gives a non-empty basis and an ISO date or null', () => {
+    expect(performanceFields('2026-09-30')).toEqual({ returnsBasis: RETURNS_BASIS, performanceAsOf: '2026-09-30' });
+    for (const bad of [null, undefined, '', 'Sep 30, 2026', '2026-9-30', 5]) expect(performanceFields(bad).performanceAsOf).toBeNull();
+    expect(RETURNS_BASIS.trim().length).toBeGreaterThan(3);
+    expect(RETURNS_BASIS).not.toMatch(/^-$|<[^>]*>/);
+  });
+
+  test('withPerformanceFields keeps the two fields last and replaces stale values', () => {
+    const metrics = withPerformanceFields({ ytd: 1, returnsBasis: 'old', performanceAsOf: 'x', secYield: null }, '2026-09-30');
+    expect(Object.keys(metrics)).toEqual(['ytd', 'secYield', 'returnsBasis', 'performanceAsOf']);
+    expect(metrics.performanceAsOf).toBe('2026-09-30');
+    expect(Object.keys(withPerformanceFields(undefined, null))).toEqual(['returnsBasis', 'performanceAsOf']);
   });
 });
 
@@ -338,6 +357,33 @@ Markdown Content:
       expect(meta.source.holdingsSource).toContain('retained');
       expect(meta.source.retained.holdings).toBe(true);
       expect(readJsonFile(result.root, 'api/themes/index.json').funds[0].ticker).toBe('BOTT');
+      expect(meta.metrics.returnsBasis).toBe(RETURNS_BASIS);
+      expect(meta.metrics.performanceAsOf).toBeNull();
+      expect(readJsonFile(result.root, 'api/themes/index.json').funds[0].metrics).toEqual(meta.metrics);
+    } finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('retained history keeps the last Yahoo close date as performanceAsOf', async () => {
+    const seed = (api: string) => {
+      mkdirSync(path.join(api, 'funds/BOTT'), { recursive: true });
+      const holdings = { pages: ['001.json'], pageSize: 250, totalRows: 31, asOfDate: '09/30/2026', asOf: '2026-09-30' };
+      const history = { pages: ['001.json'], pageSize: 1000, totalRows: 3, asOfDate: 'Sep 29, 2026', asOf: '2026-09-29' };
+      writeFileSync(path.join(api, 'funds/BOTT/meta.json'), JSON.stringify({ ticker: 'BOTT', navValue: 40, aumValue: 123, holdings, history, source: { holdingsSource: 'official Themes ETFs daily holdings CSV' } }));
+      writeFileSync(path.join(api, 'index.json'), JSON.stringify({ generatedAt: '2026-09-30T00:00:00Z', funds: [
+        { ticker: 'BOTT', name: 'Humanoid Robotics ETF', category: 'Thematic', navValue: 40, terValue: 0.35, fundPage: 'https://themesetfs.com/etfs/bott', holdings: 31, history: 3 },
+        { ticker: 'CLOD', name: 'Cloud', category: 'Thematic', metrics: { ytd: 1 }, holdings: 1, history: 1 },
+      ] }));
+    };
+    const result = await inTempRepo(seed, () => blocked(), { TICKERS: 'BOTT' });
+    try {
+      expect(result.error).toBeNull();
+      const meta = readJsonFile(result.root, 'api/themes/funds/BOTT/meta.json');
+      expect(meta.metrics.performanceAsOf).toBe('2026-09-29');
+      const funds = readJsonFile(result.root, 'api/themes/index.json').funds;
+      expect(funds[0].metrics.performanceAsOf).toBe('2026-09-29');
+      expect(funds[1].metrics.ytd).toBe(1);
+      expect(funds[1].metrics.returnsBasis).toBe(RETURNS_BASIS);
+      expect(funds[1].metrics.performanceAsOf).toBeNull();
     } finally { rmSync(result.root, { recursive: true, force: true }); }
   }, 30_000);
 
@@ -475,6 +521,8 @@ test('README: section order, Themes-only API paths, no work-log leftovers', () =
   expect(readme).not.toContain('`./api/neos`');
   expect(readme).not.toMatch(/worklog|config-docs|ui-parity|evidence|fixtures/i);
   expect(readme).toContain('Themes ETF Trust **CIK 0001976322**');
+  expect(readme).toContain('`returnsBasis`');
+  expect(readme).toContain('`performanceAsOf`');
 });
 
 describe('system CA support', () => {
