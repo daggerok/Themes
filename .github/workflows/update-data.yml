@@ -1,217 +1,196 @@
 name: Update Themes ETFs data
 
 on:
-  # Weekly refresh every Sunday at 00:00 UTC, plus manual runs.
   schedule:
     - cron: '0 0 * * 0'
   workflow_dispatch:
     inputs:
       max_fetches:
-        description: "Batch size; empty or 0 processes the full catalog, otherwise resumes after the saved cursor"
+        description: "Batch size; empty or 0 processes the full catalog, otherwise resumes after the saved cursor; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       request_sleep:
-        description: "Seconds between outgoing request starts in each worker lane"
+        description: "Seconds between outgoing request starts in each worker lane; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       concurrency:
-        description: "Parallel fund workers; keep low and polite"
+        description: "Parallel fund workers; keep low and polite; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       max_retries:
-        description: "Retries after the initial request for retryable failures"
+        description: "Retries after the initial request for retryable failures; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       tickers:
-        description: "Only update these tickers, separated by spaces or commas"
+        description: "Only update these tickers, separated by spaces or commas; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       category:
-        description: "Only funds whose official Themes catalog category contains this text"
+        description: "Only funds whose official Themes catalog category contains this text; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       aum:
-        description: "AUM min:max; amounts may use K/M/B/T suffixes or nano/micro/small/mid/large presets"
+        description: "AUM min:max; amounts may use K/M/B/T suffixes or nano/micro/small/mid/large presets; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       ter:
-        description: "Expense-ratio percentage range: min:max"
+        description: "Expense-ratio percentage range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       dividend_yield:
-        description: "Derived Yahoo dividend-yield percentage range: min:max"
-        required: false
-        default: ""
-        type: string
-      sec_yield:
-        description: "SEC-yield percentage range: min:max (currently no provider values)"
+        description: "Derived Yahoo dividend-yield percentage range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_ytd:
-        description: "Derived YTD performance range: min:max"
+        description: "Derived YTD performance range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_1y:
-        description: "Derived 1-year performance range: min:max"
+        description: "Derived 1-year performance range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_3y:
-        description: "Derived 3-year performance range: min:max"
+        description: "Derived 3-year performance range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_5y:
-        description: "Derived 5-year performance range: min:max"
+        description: "Derived 5-year performance range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       performance_10y:
-        description: "Derived 10-year performance range: min:max"
+        description: "Derived 10-year performance range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_ytd:
-        description: "Derived YTD total-return range: min:max"
+        description: "Derived YTD total-return range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_1y:
-        description: "Derived 1-year total-return range: min:max"
+        description: "Derived 1-year total-return range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_3y:
-        description: "Derived 3-year total-return range: min:max"
+        description: "Derived 3-year total-return range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_5y:
-        description: "Derived 5-year total-return range: min:max"
+        description: "Derived 5-year total-return range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       total_return_10y:
-        description: "Derived 10-year total-return range: min:max"
+        description: "Derived 10-year total-return range: min:max; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       holdings_page_size:
-        description: "Rows in each generated holdings JSON page"
+        description: "Rows in each generated holdings JSON page; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       history_page_size:
-        description: "Rows in each generated history JSON page"
-        required: false
-        default: ""
-        type: string
-      history_range:
-        description: "Yahoo history range control (the feed uses its stable all-history chart endpoint)"
+        description: "Rows in each generated history JSON page; blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       edgar_fallback:
-        description: "Use matched SEC N-PORT-P holdings when an official CSV is unavailable"
+        description: "Use matched SEC N-PORT-P holdings when an official CSV is unavailable (true/false); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       skip_yahoo:
-        description: "Retain existing Yahoo history/dividend data while refreshing official sources"
+        description: "Retain existing Yahoo history/dividend data while refreshing official sources (true/false); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
       skip_themes:
-        description: "Retain existing Themes catalog/holdings data while skipping the official source"
+        description: "Retain existing Themes catalog/holdings data while skipping the official source (true/false); blank inherits scripts/update-data.config.json"
         required: false
         default: ""
         type: string
-      sec_ua:
-        description: "Optional declared SEC User-Agent contact string; never store credentials here"
+      advanced:
+        description: 'JSON object of supported control overrides not exposed above (keys are UPPER_CASE control names, values are scalars); nonblank individual inputs win'
         required: false
-        default: ""
+        default: '{}'
         type: string
-      verbose:
-        description: "Print retry and fallback notices (true/false)"
-        required: false
-        default: ""
-        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    env:
-      MAX_FETCHES: ${{ inputs.max_fetches || '' }}
-      REQUEST_SLEEP: ${{ inputs.request_sleep || '' }}
-      CONCURRENCY: ${{ inputs.concurrency || '' }}
-      MAX_RETRIES: ${{ inputs.max_retries || '' }}
-      TICKERS: ${{ inputs.tickers || '' }}
-      CATEGORY: ${{ inputs.category || '' }}
-      AUM: ${{ inputs.aum || '' }}
-      TER: ${{ inputs.ter || '' }}
-      DIVIDEND_YIELD: ${{ inputs.dividend_yield || '' }}
-      SEC_YIELD: ${{ inputs.sec_yield || '' }}
-      PERFORMANCE_YTD: ${{ inputs.performance_ytd || '' }}
-      PERFORMANCE_1Y: ${{ inputs.performance_1y || '' }}
-      PERFORMANCE_3Y: ${{ inputs.performance_3y || '' }}
-      PERFORMANCE_5Y: ${{ inputs.performance_5y || '' }}
-      PERFORMANCE_10Y: ${{ inputs.performance_10y || '' }}
-      TOTAL_RETURN_YTD: ${{ inputs.total_return_ytd || '' }}
-      TOTAL_RETURN_1Y: ${{ inputs.total_return_1y || '' }}
-      TOTAL_RETURN_3Y: ${{ inputs.total_return_3y || '' }}
-      TOTAL_RETURN_5Y: ${{ inputs.total_return_5y || '' }}
-      TOTAL_RETURN_10Y: ${{ inputs.total_return_10y || '' }}
-      HOLDINGS_PAGE_SIZE: ${{ inputs.holdings_page_size || '' }}
-      HISTORY_PAGE_SIZE: ${{ inputs.history_page_size || '' }}
-      HISTORY_RANGE: ${{ inputs.history_range || '' }}
-      EDGAR_FALLBACK: ${{ inputs.edgar_fallback || '' }}
-      SKIP_YAHOO: ${{ inputs.skip_yahoo || '' }}
-      SKIP_THEMES: ${{ inputs.skip_themes || '' }}
-      SEC_UA: ${{ inputs.sec_ua || '' }}
-      VERBOSE: ${{ inputs.verbose || '' }}
-
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-
-      - name: Setup Bun
+        with:
+          persist-credentials: false
+      - name: Setup bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
-
       - name: Run updater unit tests
-        run: bun test scripts/update-data.test.ts
-
-      - name: Run client parity tests
-        run: bun test scripts/ui-parity.test.ts
-
+        run: bun test
+      - name: Resolve file defaults and manual overrides
+        env:
+          DISPATCH_INPUTS: ${{ toJSON(inputs) }}
+          PROTECTED_SEC_UA: ${{ vars.SEC_UA }}
+        run: |
+          bun --eval '
+            import { resolveControls } from "./scripts/update-data.ts";
+            import { appendFile } from "node:fs/promises";
+            // schedule runs have no dispatch inputs: file defaults apply as-is
+            const inputs = JSON.parse(process.env.DISPATCH_INPUTS || "{}");
+            const advanced = JSON.parse(inputs.advanced || "{}");
+            const individual = Object.fromEntries(Object.entries(inputs)
+              .filter(([key]) => key !== "advanced")
+              .map(([key, value]) => [key.toUpperCase(), value]));
+            const file = await Bun.file("scripts/update-data.config.json").json();
+            // Protected repository Actions variables: highest precedence, applied only when nonblank (never printed).
+            const protectedVars = {};
+            if ((process.env.PROTECTED_SEC_UA ?? "").trim()) protectedVars.SEC_UA = process.env.PROTECTED_SEC_UA.trim();
+            const controls = resolveControls(file, advanced, individual, protectedVars);
+            await appendFile(process.env.GITHUB_ENV,
+              Object.entries(controls).map(([key, value]) => `${key}=${value}\n`).join(""));
+          '
       - name: Generate api/themes static data
         run: bun ./scripts/update-data.ts
-
-      # A data refresh may commit only the generated static feed.
       - name: Commit updated data
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
-          if git diff --quiet -- api/themes; then
+          git add api/themes
+          if git diff --cached --quiet -- api/themes; then
             echo "api/themes is already up to date"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add api/themes
           git commit -m "chore(data): update Themes ETF data"
-          git push
+          # Runtime-only auth; no token/header stored in URL, file or Git config.
+          git -c credential.helper= -c credential.helper='!f() { if test "$1" = get; then printf "username=x-access-token\npassword=%s\n" "$GITHUB_TOKEN"; fi; }; f' push

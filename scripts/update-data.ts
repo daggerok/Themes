@@ -23,8 +23,14 @@ export const THEMES_HOLDINGS_URL = (ticker: string): string =>
 export const THEMES_FUND_URL = (ticker: string): string =>
   `${THEMES_SITE}/etfs/${sanitizeTicker(ticker).toLowerCase()}`;
 export const YAHOO_CHART_URL = 'https://query1.finance.yahoo.com/v8/finance/chart';
-export const yahooChartUrl = (ticker: string): string =>
-  `${YAHOO_CHART_URL}/${sanitizeTicker(ticker)}?period1=0&period2=9999999999&interval=1d&events=div%7Csplit&includeAdjustedClose=true`;
+export const yahooChartUrl = (ticker: string, historyRange = 'max', now = new Date()): string => {
+  const years = /^(\d+)y$/i.exec(historyRange.trim());
+  const start = new Date(now);
+  if (years) start.setUTCFullYear(start.getUTCFullYear() - Number(years[1]));
+  const period1 = years ? Math.max(0, Math.floor(start.getTime() / 1000)) : 0;
+  const period2 = years ? Math.floor(now.getTime() / 1000) : 9999999999;
+  return `${YAHOO_CHART_URL}/${sanitizeTicker(ticker)}?period1=${period1}&period2=${period2}&interval=1d&events=div%7Csplit&includeAdjustedClose=true`;
+};
 export const yahooChartProvenanceUrl = (ticker: string): string =>
   `${YAHOO_CHART_URL}/${sanitizeTicker(ticker)}`;
 export const THEMES_ETF_TRUST_CIK = '0001976322';
@@ -85,6 +91,8 @@ export type UpdaterConfig = {
   verbose: boolean;
 };
 
+const SEC_UA_DEFAULT = 'daggerok ETF feed daggerok@gmail.com';
+
 const DEFAULTS = {
   MAX_FETCHES: '0',
   REQUEST_SLEEP: '1',
@@ -112,7 +120,7 @@ const DEFAULTS = {
   EDGAR_FALLBACK: 'true',
   SKIP_YAHOO: 'false',
   SKIP_THEMES: 'false',
-  SEC_UA: '',
+  SEC_UA: SEC_UA_DEFAULT,
   VERBOSE: 'false',
 } as const;
 
@@ -608,7 +616,7 @@ export function readConfig(env: Record<string, string | undefined> = process.env
     maxFetches: positiveInt(value('MAX_FETCHES'), 0, 0),
     requestSleepMs: Math.max(0, Number(value('REQUEST_SLEEP')) || 0) * 1000,
     concurrency: positiveInt(value('CONCURRENCY'), 2, 1),
-    maxRetries: positiveInt(value('MAX_RETRIES'), 3, 0),
+    maxRetries: positiveInt(value('MAX_RETRIES'), 3, 1),
     tickers,
     category: value('CATEGORY').toLowerCase(),
     aumRange: parseAumRange(value('AUM')),
@@ -619,13 +627,72 @@ export function readConfig(env: Record<string, string | undefined> = process.env
     totalReturnRanges,
     holdingsPageSize: positiveInt(value('HOLDINGS_PAGE_SIZE'), 250, 1),
     historyPageSize: positiveInt(value('HISTORY_PAGE_SIZE'), 1000, 1),
-    historyRange: value('HISTORY_RANGE'),
+    historyRange: value('HISTORY_RANGE').toLowerCase(),
     edgarFallback: bool(value('EDGAR_FALLBACK'), true),
     skipYahoo: bool(value('SKIP_YAHOO'), false),
     skipThemes: bool(value('SKIP_THEMES'), false),
     secUserAgent: value('SEC_UA'),
     verbose: bool(value('VERBOSE'), false),
   };
+}
+
+// File defaults and explicit overrides: allowlisted scalar controls only, so GitHub Actions
+// can resolve them without interpolating user input into bash. Precedence: config file <
+// advanced JSON < nonblank named inputs < environment.
+export const CONTROL_NAMES = [
+  'MAX_FETCHES', 'REQUEST_SLEEP', 'CONCURRENCY', 'MAX_RETRIES', 'TICKERS', 'CATEGORY',
+  'AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD',
+  ...['PERFORMANCE', 'TOTAL_RETURN'].flatMap((prefix) => ['YTD', '1Y', '3Y', '5Y', '10Y'].map((period) => `${prefix}_${period}`)),
+  'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'HISTORY_RANGE', 'EDGAR_FALLBACK', 'SKIP_YAHOO', 'SKIP_THEMES', 'SEC_UA', 'VERBOSE',
+] as const;
+export type ControlName = (typeof CONTROL_NAMES)[number];
+export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
+
+export function resolveControls(
+  file: unknown = {},
+  advanced: unknown = {},
+  inputs: unknown = {},
+  env: Record<string, string | undefined> = {},
+): Record<string, string> {
+  const result: Record<string, string> = {};
+  const known = new Set<string>(CONTROL_NAMES);
+  const apply = (value: unknown, skipEmpty = false): void => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Configuration must be a JSON object');
+    for (const [key, raw] of Object.entries(value)) {
+      if (!known.has(key)) throw new Error(`Unknown updater control: ${key}`);
+      if (skipEmpty && (raw === '' || raw === undefined || raw === null)) continue;
+      if (!['string', 'number', 'boolean'].includes(typeof raw)) throw new Error(`${key}: expected string, number or boolean`);
+      const text = String(raw);
+      if (/[\r\n\0]/.test(text)) throw new Error(`${key}: multiline/control characters are not allowed`);
+      result[key] = text;
+    }
+  };
+  apply(file);
+  apply(advanced);
+  apply(inputs, true);
+  for (const key of CONTROL_NAMES) {
+    const value = env[key];
+    if (value !== undefined) apply({ [key]: value });
+  }
+  for (const key of ['MAX_FETCHES', 'CONCURRENCY', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'MAX_RETRIES']) {
+    const v = result[key];
+    if (v === undefined || v === '') continue;
+    const min = key === 'MAX_FETCHES' ? 0 : 1;
+    if (!/^\d+$/.test(v) || !Number.isSafeInteger(Number(v)) || Number(v) < min) throw new Error(`${key}: expected integer >= ${min}`);
+  }
+  if (result.REQUEST_SLEEP && (!Number.isFinite(Number(result.REQUEST_SLEEP)) || Number(result.REQUEST_SLEEP) < 0)) throw new Error('REQUEST_SLEEP: expected nonnegative seconds');
+  for (const key of ['SKIP_YAHOO', 'SKIP_THEMES', 'EDGAR_FALLBACK', 'VERBOSE']) {
+    if (result[key] && !/^(0|1|true|false|yes|no|y|n|on|off)$/i.test(result[key])) throw new Error(`${key}: expected boolean`);
+  }
+  if (result.HISTORY_RANGE && !/^(max|[1-9]\d*y)$/i.test(result.HISTORY_RANGE)) throw new Error('HISTORY_RANGE: expected max or Ny');
+  readConfig(result); // validate every min:max filter before any request or write
+  return result;
+}
+
+/** Resolves file defaults plus environment overrides; a missing config file is an error. */
+export async function runtimeControls(env: Record<string, string | undefined> = process.env): Promise<Record<string, string>> {
+  const file: unknown = JSON.parse(await readFile(CONFIG_FILE_URL, 'utf8'));
+  return resolveControls(file, {}, {}, env);
 }
 
 function inRange(value: number | null | undefined, range?: Range): boolean {
@@ -727,7 +794,7 @@ async function fetchThemesCatalog(config: UpdaterConfig, gate: () => Promise<voi
 }
 
 async function fetchEdgarFallback(fund: CatalogFund, config: UpdaterConfig, gate: () => Promise<void>): Promise<ParsedHoldings | null> {
-  const secHeaders = { 'User-Agent': config.secUserAgent || 'Themes ETFs static feed updater (no contact supplied)' };
+  const secHeaders = { 'User-Agent': config.secUserAgent || SEC_UA_DEFAULT };
   const submissions = await fetchJson(`https://data.sec.gov/submissions/CIK${THEMES_ETF_TRUST_CIK}.json`, config, gate, secHeaders) as any;
   const recent = submissions?.filings?.recent ?? {};
   const forms: unknown[] = Array.isArray(recent.form) ? recent.form : [];
@@ -945,7 +1012,7 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
 
   let yahoo: ParsedYahooChart | null = null;
   if (!config.skipYahoo) {
-    try { yahoo = parseYahooChart(await fetchJson(yahooChartUrl(fund.ticker), config, gate)); }
+    try { yahoo = parseYahooChart(await fetchJson(yahooChartUrl(fund.ticker, config.historyRange), config, gate)); }
     catch (error) { outputNote(config, `${fund.ticker}: Yahoo history unavailable: ${error instanceof Error ? error.message : String(error)}`); }
   }
 
@@ -1076,12 +1143,12 @@ async function readCursor(): Promise<string | null> {
 }
 
 function usage(): string {
-  return `Usage: bun scripts/update-data.ts\n\nThe updater reads the environment controls documented in README.md and scripts/update-data.config.json.\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.`;
+  return `Usage: bun scripts/update-data.ts\n\nThe updater reads scripts/update-data.config.json (file defaults) and the environment controls documented in README.md; explicit environment values win.\nControls: ${CONTROL_NAMES.join(', ')}\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.\nMAX_RETRIES: integer >= 1 (retries after the first request). HISTORY_RANGE: max or Ny, limits the Yahoo history request window.\nSEC_UA: User-Agent for SEC requests (default is the daggerok feed descriptor).`;
 }
 
 export async function main(env: Record<string, string | undefined> = process.env): Promise<void> {
   if (process.argv.slice(2).some((argument) => argument === '-h' || argument === '--help')) { console.log(usage()); return; }
-  const config = readConfig(env);
+  const config = readConfig(await runtimeControls(env));
   outputPrintConfig(config);
   const gate = createRequestGate(config.concurrency, config.requestSleepMs);
   const indexFile = path.join(API_ROOT, 'index.json');
