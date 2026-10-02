@@ -1095,6 +1095,20 @@ function asNumber(value: unknown): number | null {
   return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
 
+export const RETURNS_BASIS = 'derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)';
+
+/** Mandatory metrics tail: returnsBasis, then performanceAsOf (last Yahoo close date the returns are computed to, not the NAV date; null when unknown). */
+export function performanceFields(asOf: unknown): { returnsBasis: string; performanceAsOf: string | null } {
+  const date = typeof asOf === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(asOf) ? asOf : null;
+  return { returnsBasis: RETURNS_BASIS, performanceAsOf: date };
+}
+
+/** Rewrites metrics so returnsBasis and performanceAsOf are always present and last. */
+export function withPerformanceFields(metrics: Record<string, unknown> | null | undefined, asOf: unknown): Record<string, unknown> {
+  const { returnsBasis: _basis, performanceAsOf: _asOf, ...rest } = metrics ?? {};
+  return { ...rest, ...performanceFields(asOf) };
+}
+
 function buildCatalogEntry(meta: Record<string, any>): Record<string, unknown> {
   return {
     ticker: meta.ticker,
@@ -1145,7 +1159,7 @@ function skeletonEntry(fund: CatalogFund): Record<string, unknown> {
     closePrice: formatMoney(fund.closePriceValue),
     closePriceValue: fund.closePriceValue,
     distributions: { frequency: '00 - None', paymentsPerYear: null, exDate: null, dividend: null },
-    metrics: { ytd: null, tr1y: null, tr3y: null, tr5y: null, tr10y: null, cagr3y: null, cagr5y: null, cagr10y: null, siAnn: null, dividendYield: null, secYield: null },
+    metrics: { ytd: null, tr1y: null, tr3y: null, tr5y: null, tr10y: null, cagr3y: null, cagr5y: null, cagr10y: null, siAnn: null, dividendYield: null, secYield: null, ...performanceFields(null) },
     holdings: 0,
     history: 0,
   };
@@ -1284,7 +1298,7 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
       yield12MText: formatPercent(dividendYield),
       secYield: null,
       secYieldText: '—',
-      returnsBasis: 'derived from Yahoo Finance adjusted market-price closes',
+      ...performanceFields(historyManifest?.asOf),
     },
     distributionFrequency: dividendData.frequency,
     providerCategory: fund.category,
@@ -1405,6 +1419,11 @@ export async function main(env: Record<string, string | undefined> = process.env
 
   const allEntries = new Map<string, Record<string, unknown>>(previousEntries);
   for (const fund of catalog) if (!allEntries.has(fund.ticker)) allEntries.set(fund.ticker, skeletonEntry(fund));
+  for (const [ticker, entry] of allEntries) {
+    if (updates.has(ticker)) continue;
+    const stored = await readJson<Record<string, any>>(path.join(API_ROOT, 'funds', ticker, 'meta.json'));
+    allEntries.set(ticker, { ...entry, metrics: withPerformanceFields(entry.metrics as Record<string, unknown> | undefined, stored?.history?.asOf) });
+  }
   for (const [ticker, entry] of updates) allEntries.set(ticker, entry);
   const funds = [...allEntries.values()].sort((left, right) => String(left.ticker).localeCompare(String(right.ticker)));
   const counts = {
