@@ -389,6 +389,44 @@ export function parseThemesCatalog(html: string): CatalogFund[] {
   return [...new Map(results.map((fund) => [fund.ticker, fund])).values()].sort((a, b) => a.ticker.localeCompare(b.ticker));
 }
 
+/** Strips the r.jina.ai preamble ("Title:", "URL Source:", "Markdown Content:"). */
+export function stripProxyPreamble(text: string): string {
+  const source = String(text ?? '');
+  const marker = /^Markdown Content:\s*\n/m.exec(source);
+  return marker ? source.slice(marker.index + marker[0].length) : source;
+}
+
+/** Parses the catalog table of the r.jina.ai markdown rendering of themesetfs.com/etfs (first-party rows only). */
+export function parseThemesCatalogMarkdown(markdown: string): CatalogFund[] {
+  const link = (cell: string): { text: string; url: string } | null => {
+    const match = /\[([^\]]*)\]\((https?:[^)\s]+)\)/.exec(cell);
+    return match ? { text: cleanText(match[1]), url: match[2] } : null;
+  };
+  const results: CatalogFund[] = [];
+  for (const line of String(markdown ?? '').replace(/\r/g, '').split('\n')) {
+    if (!line.trim().startsWith('|')) continue;
+    const cells = line.trim().replace(/^\|/, '').replace(/\|$/, '').split(/\s\|\s/).map((cell) => cell.trim());
+    if (cells.length < 6) continue;
+    const tickerLink = link(cells[0]);
+    const nameLink = link(cells[1]);
+    if (!tickerLink || !tickerLink.url.startsWith(`${THEMES_SITE}/etfs/`)) continue;
+    const ticker = sanitizeTicker(tickerLink.text);
+    if (!ticker) continue;
+    results.push({
+      ticker,
+      name: nameLink?.text || ticker,
+      category: cleanText(cells[2]) || 'Other',
+      navValue: numberOrNull(cells[3]),
+      closePriceValue: numberOrNull(cells[4]),
+      terValue: numberOrNull(cells[5]),
+      fundPage: tickerLink.url,
+      factsheet: (cells[6] && link(cells[6])?.url) || undefined,
+      prospectus: (cells[7] && link(cells[7])?.url) || undefined,
+    });
+  }
+  return [...new Map(results.map((fund) => [fund.ticker, fund])).values()].sort((a, b) => a.ticker.localeCompare(b.ticker));
+}
+
 export function parseThemesHoldingsCsv(text: string): ParsedHoldings {
   const csv = parseCsv(text);
   if (csv.length < 2) return { asOf: null, netAssets: null, sharesOutstanding: null, rows: [] };
@@ -744,6 +782,15 @@ export function createRequestGate(concurrency: number, requestSleepMs: number): 
   };
 }
 
+export class HttpError extends Error {
+  status: number;
+  constructor(status: number, message = `HTTP ${status}`) {
+    super(message);
+    this.name = 'HttpError';
+    this.status = status;
+  }
+}
+
 export async function fetchWithRetry(url: string, options: RequestInit, config: Pick<UpdaterConfig, 'maxRetries' | 'requestSleepMs' | 'verbose'>, gate?: () => Promise<void>): Promise<Response> {
   let lastError: unknown;
   for (let attempt = 0; attempt <= config.maxRetries; attempt += 1) {
@@ -751,10 +798,11 @@ export async function fetchWithRetry(url: string, options: RequestInit, config: 
       if (gate) await gate();
       const response = await fetch(url, options);
       if (response.ok) return response;
-      if (![408, 425, 429].includes(response.status) && response.status < 500) throw new Error(`HTTP ${response.status}`);
-      lastError = new Error(`HTTP ${response.status}`);
+      lastError = new HttpError(response.status);
+      if (![408, 425, 429].includes(response.status) && response.status < 500) throw lastError;
     } catch (error) {
       lastError = error;
+      if (error instanceof HttpError && ![408, 425, 429].includes(error.status) && error.status < 500) throw error;
     }
     if (attempt < config.maxRetries) {
       outputNote(config, `retry ${attempt + 1}/${config.maxRetries}: ${url}`);
@@ -786,11 +834,91 @@ async function fetchJson(url: string, config: UpdaterConfig, gate?: () => Promis
   return response.json();
 }
 
-async function fetchThemesCatalog(config: UpdaterConfig, gate: () => Promise<void>): Promise<CatalogFund[]> {
-  const html = await fetchText(THEMES_CATALOG_URL, config, gate);
-  const catalog = parseThemesCatalog(html);
-  if (!catalog.length) throw new Error('catalog: window.productsData was not found on themesetfs.com/etfs');
-  return catalog;
+// ---------------------------------------------------------------------------
+// Official-site access: direct first, read-only r.jina.ai rendering proxy when
+// the issuer WAF blocks this network (themesetfs.com answers GitHub-hosted
+// runner IPs with HTTP 403 while working from residential networks)
+// ---------------------------------------------------------------------------
+
+export const PROXY_PREFIX = 'https://r.jina.ai/';
+export const PROXY_SLEEP_MS = 3200; // r.jina.ai anonymous tier is ~20 requests per minute
+const DIRECT_DENIAL_LIMIT = 2;
+
+export const proxyUrl = (url: string): string => `${PROXY_PREFIX}${url}`;
+
+/** One global gate for every worker: proxy request starts are at least minMs apart. */
+export function createProxyGate(minMs: number): () => Promise<void> {
+  let next = 0;
+  return async (): Promise<void> => {
+    const now = Date.now();
+    const scheduled = Math.max(now, next);
+    next = scheduled + minMs;
+    if (scheduled > now) await sleep(scheduled - now);
+  };
+}
+
+const issuerState = { directDenials: 0, proxyRejectsFile: false };
+
+export function resetIssuerState(): void {
+  issuerState.directDenials = 0;
+  issuerState.proxyRejectsFile = false;
+}
+
+/** Statuses (and network errors) after which the proxy is worth trying; 404 and friends are final. */
+export function proxyEligible(error: unknown): boolean {
+  if (error instanceof HttpError) return error.status === 403 || error.status === 429 || error.status >= 500;
+  return true;
+}
+
+/**
+ * One direct request on the caller's lane first; on HTTP 403 / 429 / 5xx, a
+ * network error or an unusable body, the same public URL through the proxy
+ * (global gate, retried at most once). After two direct 403 answers the direct
+ * attempt is skipped for the rest of the run.
+ */
+export async function fetchOfficialText(
+  url: string,
+  config: UpdaterConfig,
+  gate: () => Promise<void>,
+  proxyGate: () => Promise<void>,
+  validate: (text: string, via: 'direct' | 'proxy') => boolean,
+  headers: HeadersInit = {},
+): Promise<{ text: string; via: 'direct' | 'proxy' }> {
+  let directError = 'direct request skipped (official site denies this network)';
+  if (issuerState.directDenials < DIRECT_DENIAL_LIMIT) {
+    try {
+      const text = await fetchText(url, config, gate, headers);
+      if (validate(text, 'direct')) { issuerState.directDenials = 0; return { text, via: 'direct' }; }
+      directError = 'direct response did not contain the expected content';
+    } catch (error) {
+      if (!proxyEligible(error)) throw error;
+      directError = error instanceof Error ? error.message : String(error);
+      if (error instanceof HttpError && error.status === 403) {
+        issuerState.directDenials += 1;
+        if (issuerState.directDenials === DIRECT_DENIAL_LIMIT) console.warn('[ official  ] direct requests are denied from this network; using the read-only rendering proxy for the rest of the run');
+      }
+    }
+  }
+  if (issuerState.proxyRejectsFile && /\.csv(?:$|\?)/i.test(url)) throw new Error(`${directError}; proxy skipped (it cannot render CSV downloads)`);
+  try {
+    const raw = await fetchText(proxyUrl(url), { ...config, maxRetries: Math.min(1, config.maxRetries) }, proxyGate, {
+      'User-Agent': config.secUserAgent || SEC_UA_DEFAULT,
+      Accept: 'text/plain,text/markdown;q=0.9,*/*;q=0.8',
+    });
+    const text = stripProxyPreamble(raw);
+    if (validate(text, 'proxy')) return { text, via: 'proxy' };
+    throw new Error('proxy response did not contain the expected content');
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (error instanceof HttpError && error.status === 422) issuerState.proxyRejectsFile = true;
+    throw new Error(`${directError}; proxy: ${message}`);
+  }
+}
+
+async function fetchThemesCatalog(config: UpdaterConfig, gate: () => Promise<void>, proxyGate: () => Promise<void>): Promise<{ funds: CatalogFund[]; via: 'direct' | 'proxy' }> {
+  const parsedByVia = (text: string, via: 'direct' | 'proxy'): CatalogFund[] => via === 'direct' ? parseThemesCatalog(text) : parseThemesCatalogMarkdown(text);
+  const fetched = await fetchOfficialText(THEMES_CATALOG_URL, config, gate, proxyGate, (text, via) => parsedByVia(text, via).length > 0);
+  return { funds: parsedByVia(fetched.text, fetched.via), via: fetched.via };
 }
 
 async function fetchEdgarFallback(fund: CatalogFund, config: UpdaterConfig, gate: () => Promise<void>): Promise<ParsedHoldings | null> {
@@ -914,6 +1042,12 @@ function trailingDividendYield(dividends: YahooDistribution[], nav: number | nul
   return round((amount / nav) * 100);
 }
 
+/** Labels data kept from an earlier publication; idempotent across repeated retained runs. */
+export function retainedLabel(previous: unknown): string {
+  const base = String(previous ?? '').replace(/\s*\(retained[^)]*\)\s*$/, '').trim() || 'previously published data';
+  return `${base} (retained: official source unavailable in the latest run)`;
+}
+
 function existingManifest(meta: any, key: 'holdings' | 'history'): Record<string, unknown> | null {
   const value = meta?.[key];
   return value && typeof value === 'object' && Array.isArray(value.pages) ? value : null;
@@ -979,7 +1113,7 @@ function skeletonEntry(fund: CatalogFund): Record<string, unknown> {
   };
 }
 
-async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => Promise<void>): Promise<{ entry: Record<string, unknown>; reason?: string }> {
+async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => Promise<void>, proxyGate: () => Promise<void>): Promise<{ entry: Record<string, unknown>; reason?: string }> {
   const fundDir = path.join(API_ROOT, 'funds', fund.ticker);
   const prior = await readJson<Record<string, any>>(path.join(fundDir, 'meta.json'));
   let holdings: ParsedHoldings | null = null;
@@ -988,10 +1122,9 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
 
   if (!config.skipThemes) {
     try {
-      const csv = await fetchText(THEMES_HOLDINGS_URL(fund.ticker), config, gate, { Accept: 'text/csv,*/*;q=0.8' });
-      holdings = parseThemesHoldingsCsv(csv);
-      if (!holdings.rows.length) throw new Error('official CSV contained no holdings rows');
-      holdingsSource = 'official Themes ETFs daily holdings CSV';
+      const csv = await fetchOfficialText(THEMES_HOLDINGS_URL(fund.ticker), config, gate, proxyGate, (text) => parseThemesHoldingsCsv(text).rows.length > 0, { Accept: 'text/csv,*/*;q=0.8' });
+      holdings = parseThemesHoldingsCsv(csv.text);
+      holdingsSource = `official Themes ETFs daily holdings CSV${csv.via === 'proxy' ? ' (via read-only rendering proxy)' : ''}`;
     } catch (error) {
       fallbackReason = `official holdings unavailable: ${error instanceof Error ? error.message : String(error)}`;
       outputNote(config, `${fund.ticker}: ${fallbackReason}`);
@@ -1017,6 +1150,9 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
   }
 
   const priorHoldings = existingManifest(prior, 'holdings');
+  const retainedHoldings = !holdings && Boolean(priorHoldings);
+  const retainedSource = (previous: unknown): string => fallbackReason ? retainedLabel(previous) : (String(previous ?? '') || 'previously published data');
+  if (retainedHoldings) outputNote(config, `${fund.ticker}: keeping previously published holdings (${fallbackReason || 'no refresh attempted'})`);
   const priorHistory = existingManifest(prior, 'history');
   if (!holdings && !priorHoldings) throw new Error(fallbackReason || 'no current or previously published holdings data');
 
@@ -1070,7 +1206,7 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
     terValue: ter,
     nav: { display: formatMoney(navValue), value: navValue, asOfDate: isoDisplayDate(asOf), kind: 'official Themes ETFs catalog NAV' },
     navValue,
-    aum: { display: formatAum(netAssets), value: netAssets, asOfDate: isoDisplayDate(holdings?.asOf ?? (prior?.holdings?.asOf ?? null)), source: holdingsSource || prior?.aum?.source || 'previously published data' },
+    aum: { display: formatAum(netAssets), value: netAssets, asOfDate: isoDisplayDate(holdings?.asOf ?? (prior?.holdings?.asOf ?? null)), source: holdingsSource || retainedSource(prior?.aum?.source) },
     aumValue: netAssets,
     asOfDate: isoDisplayDate(asOf),
     exchange: yahoo?.exchange ?? prior?.exchange ?? null,
@@ -1123,7 +1259,8 @@ async function updateFund(fund: CatalogFund, config: UpdaterConfig, gate: () => 
       catalog: THEMES_CATALOG_URL,
       fundPage: fund.fundPage,
       holdingsDownload: THEMES_HOLDINGS_URL(fund.ticker),
-      holdingsSource: holdingsSource || prior?.source?.holdingsSource || 'previously published data',
+      holdingsSource: holdingsSource || retainedSource(prior?.source?.holdingsSource),
+      ...(retainedHoldings && fallbackReason ? { retained: { holdings: true, reason: fallbackReason || 'official source not refreshed' } } : {}),
       historySource: 'Yahoo Finance public chart API (daily Close / Adj Close / Volume)',
       historyUrl: yahooChartProvenanceUrl(fund.ticker),
       nportDoc: edgarFilingsUrl(),
@@ -1143,28 +1280,41 @@ async function readCursor(): Promise<string | null> {
 }
 
 function usage(): string {
-  return `Usage: bun scripts/update-data.ts\n\nThe updater reads scripts/update-data.config.json (file defaults) and the environment controls documented in README.md; explicit environment values win.\nControls: ${CONTROL_NAMES.join(', ')}\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.\nMAX_RETRIES: integer >= 1 (retries after the first request). HISTORY_RANGE: max or Ny, limits the Yahoo history request window.\nSEC_UA: User-Agent for SEC requests (default is the daggerok feed descriptor).`;
+  return `Usage: bun scripts/update-data.ts\n\nThe updater reads scripts/update-data.config.json (file defaults) and the environment controls documented in README.md; explicit environment values win.\nControls: ${CONTROL_NAMES.join(', ')}\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.\nMAX_RETRIES: integer >= 1 (retries after the first request). HISTORY_RANGE: max or Ny, limits the Yahoo history request window.\nSEC_UA: User-Agent for SEC requests (default is the daggerok feed descriptor).\nCONCURRENCY / REQUEST_SLEEP: direct requests use one paced lane per worker; themesetfs.com 403/429/5xx falls back to the r.jina.ai proxy (global gate, >= 3.2s between starts), and unavailable sources keep the previously published data.`;
 }
 
 export async function main(env: Record<string, string | undefined> = process.env): Promise<void> {
   if (process.argv.slice(2).some((argument) => argument === '-h' || argument === '--help')) { console.log(usage()); return; }
   const config = readConfig(await runtimeControls(env));
   outputPrintConfig(config);
+  resetIssuerState();
   const gate = createRequestGate(config.concurrency, config.requestSleepMs);
+  const proxyGate = createProxyGate(Math.max(PROXY_SLEEP_MS, config.requestSleepMs));
   const indexFile = path.join(API_ROOT, 'index.json');
   const previousIndex = await readJson<{ generatedAt?: string; funds?: Array<Record<string, unknown>> }>(indexFile);
   const previousEntries = new Map((previousIndex?.funds ?? []).map((entry) => [sanitizeTicker(entry.ticker), entry]));
+  const publishedCatalog = (): CatalogFund[] => (previousIndex?.funds ?? []).map((entry) => ({
+    ticker: sanitizeTicker(entry.ticker), name: cleanText(entry.name), category: cleanText(entry.category),
+    navValue: asNumber(entry.navValue), closePriceValue: asNumber(entry.closePriceValue), terValue: asNumber(entry.terValue),
+    fundPage: cleanText(entry.fundPage) || THEMES_FUND_URL(sanitizeTicker(entry.ticker)),
+  })).filter((fund) => fund.ticker);
   let catalog: CatalogFund[];
+  let catalogLabel = 'official Themes ETFs catalog';
   if (config.skipThemes) {
-    catalog = (previousIndex?.funds ?? []).map((entry) => ({
-      ticker: sanitizeTicker(entry.ticker), name: cleanText(entry.name), category: cleanText(entry.category),
-      navValue: asNumber(entry.navValue), closePriceValue: asNumber(entry.closePriceValue), terValue: asNumber(entry.terValue),
-      fundPage: cleanText(entry.fundPage) || THEMES_FUND_URL(sanitizeTicker(entry.ticker)),
-    })).filter((fund) => fund.ticker);
+    catalog = publishedCatalog();
   } else {
-    catalog = await fetchThemesCatalog(config, gate);
+    try {
+      const fetched = await fetchThemesCatalog(config, gate, proxyGate);
+      catalog = fetched.funds;
+      if (fetched.via === 'proxy') catalogLabel = 'official Themes ETFs catalog via read-only rendering proxy';
+    } catch (error) {
+      catalog = publishedCatalog();
+      if (!catalog.length) throw new Error(`official catalog unavailable and nothing published to retain: ${error instanceof Error ? error.message : String(error)}`);
+      catalogLabel = 'previously published catalog (retained: official catalog unavailable)';
+      console.warn(`[ catalog  ] official catalog unavailable (${outputClean(error instanceof Error ? error.message : String(error))}); keeping the previously published catalog and fund data`);
+    }
   }
-  console.log(`[ catalog  ] ${catalog.length} ${BRAND_LABEL} (official Themes ETFs catalog)`);
+  console.log(`[ catalog  ] ${catalog.length} ${BRAND_LABEL} (${catalogLabel})`);
 
   if (config.tickers.size) {
     const known = new Set(catalog.map((fund) => fund.ticker));
@@ -1195,7 +1345,7 @@ export async function main(env: Record<string, string | undefined> = process.env
       if (!fund) return;
       const before = await reporter.before(fund.ticker);
       try {
-        const result = await updateFund(fund, config, gate);
+        const result = await updateFund(fund, config, gate, proxyGate);
         if (!fundPassesDeferredFilters(result.entry as Record<string, any>, config)) {
           stats.skipped += 1;
           await reporter.result(fund.ticker, before, 'skipped', 'data filter');
@@ -1253,6 +1403,9 @@ export async function main(env: Record<string, string | undefined> = process.env
   }
 
   console.log(`[ done     ] ${stats.updated} funds updated, ${stats.failed} failures`);
+  if (stats.failed > 0 && stats.failed === candidates.length && config.tickers.size) {
+    throw new Error(`nothing could be refreshed for the requested ticker(s) and no published fallback exists: ${candidates.map((fund) => fund.ticker).join(', ')}`);
+  }
   console.log(`[ done     ] counts: funds=${counts.funds} holdings=${counts.holdings} history=${counts.history} unchanged=${stats.unchanged} skipped=${stats.skipped}`);
 }
 

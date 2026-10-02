@@ -1,9 +1,21 @@
 /// <reference types="bun" />
 
 import { describe, expect, test } from 'bun:test';
-import { readFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import {
   CONTROL_NAMES,
+  HttpError,
+  PROXY_PREFIX,
+  PROXY_SLEEP_MS,
+  createProxyGate,
+  main,
+  parseThemesCatalogMarkdown,
+  proxyEligible,
+  resetIssuerState,
+  retainedLabel,
+  stripProxyPreamble,
   calculateReturn,
   createRequestGate,
   deriveReturns,
@@ -230,6 +242,113 @@ describe('independent paced request lanes', () => {
     await Promise.all([gate(), gate(), gate()]);
     expect(Date.now() - began).toBeGreaterThanOrEqual(15);
   });
+});
+
+describe('403 -> read-only proxy and retained data', () => {
+  const catalogMarkdown = `Title: Our ETFs
+
+URL Source: https://themesetfs.com/etfs
+
+Markdown Content:
+| Ticker | Fund Name | Category | NAV | Market Price* | Expense Ratio | Factsheet | Prospectus |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| [AALG](https://leverageshares.com/us/etfs/x/)[AALG](https://leverageshares.com/us/etfs/x/) | [2x Long AAL](https://leverageshares.com/us/etfs/x/) | Leveraged | $1.00 | $1.00 | 1.15% | [](https://leverageshares.com/f.pdf) | [](https://leverageshares.com/p.pdf) |
+| [BOTT](https://themesetfs.com/etfs/bott)[BOTT](https://themesetfs.com/etfs/bott) | [Humanoid Robotics ETF](https://themesetfs.com/etfs/bott) | Thematic | $41.76 | $42.05 | 0.35% | [](https://themesetfs.com/documents/BOTT.pdf) | [](https://themesetfs.com/documents/BOTT-P.pdf) |
+`;
+  const csv = 'date,stock_ticker,cusip,security_name,shares,market_value,weightings,net_assets,shares_outstanding,sector\n2026-10-01,AAA,111,Alpha Corp,10,500,50,1000,100,Tech\n2026-10-01,BBB,222,Beta Corp,10,500,50,1000,100,Tech\n';
+
+  test('parses the proxied markdown catalog table and keeps first-party rows only', () => {
+    const funds = parseThemesCatalogMarkdown(stripProxyPreamble(catalogMarkdown));
+    expect(funds).toEqual([{
+      ticker: 'BOTT', name: 'Humanoid Robotics ETF', category: 'Thematic', navValue: 41.76, closePriceValue: 42.05, terValue: 0.35,
+      fundPage: 'https://themesetfs.com/etfs/bott', factsheet: 'https://themesetfs.com/documents/BOTT.pdf', prospectus: 'https://themesetfs.com/documents/BOTT-P.pdf',
+    }]);
+    expect(parseThemesCatalogMarkdown('no table here')).toEqual([]);
+  });
+
+  test('proxy gate serializes starts; eligibility covers 403 / 429 / 5xx only', async () => {
+    expect(PROXY_SLEEP_MS).toBe(3200);
+    const gate = createProxyGate(40);
+    const starts: number[] = [];
+    await Promise.all([1, 2, 3].map(async () => { await gate(); starts.push(Date.now()); }));
+    expect(starts[1] - starts[0]).toBeGreaterThanOrEqual(35);
+    expect(starts[2] - starts[1]).toBeGreaterThanOrEqual(35);
+    for (const status of [403, 429, 500, 503]) expect(proxyEligible(new HttpError(status))).toBe(true);
+    for (const status of [400, 404]) expect(proxyEligible(new HttpError(status))).toBe(false);
+    expect(retainedLabel('official CSV')).toBe(retainedLabel(retainedLabel('official CSV')));
+  });
+
+  async function inTempRepo(seed: (apiRoot: string) => void, handler: (url: string) => Response, env: Record<string, string>): Promise<{ calls: Array<{ url: string; at: number }>; root: string; error: unknown }> {
+    const root = mkdtempSync(path.join(tmpdir(), 'themes-403-'));
+    const cwd = process.cwd();
+    const realFetch = globalThis.fetch;
+    const calls: Array<{ url: string; at: number }> = [];
+    let error: unknown = null;
+    mkdirSync(path.join(root, 'api/themes'), { recursive: true });
+    seed(path.join(root, 'api/themes'));
+    globalThis.fetch = (async (input: RequestInfo | URL) => { const url = String(input); calls.push({ url, at: Date.now() }); return handler(url); }) as typeof fetch;
+    const log = console.log; const warn = console.warn; const err = console.error;
+    console.log = () => {}; console.warn = () => {}; console.error = () => {};
+    try {
+      process.chdir(root);
+      resetIssuerState();
+      await main({ REQUEST_SLEEP: '0', SKIP_YAHOO: 'true', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...env });
+    } catch (caught) { error = caught; }
+    finally { process.chdir(cwd); globalThis.fetch = realFetch; console.log = log; console.warn = warn; console.error = err; }
+    return { calls, root, error };
+  }
+  const blocked = (): Response => new Response('Access Denied', { status: 403 });
+  const readJsonFile = (root: string, rel: string) => JSON.parse(readFileSync(path.join(root, rel), 'utf8'));
+
+  test('direct 403 on the catalog and the CSV falls back to the proxy and publishes fresh data', async () => {
+    const result = await inTempRepo(() => {}, (url) => {
+      if (url === `${PROXY_PREFIX}https://themesetfs.com/etfs`) return new Response(catalogMarkdown);
+      if (url === `${PROXY_PREFIX}https://themesetfs.com/storage/holdings/Holdings-BOTT.csv`) return new Response(`Title: x\n\nMarkdown Content:\n${csv}`);
+      return blocked();
+    }, { TICKERS: 'BOTT' });
+    try {
+      expect(result.error).toBeNull();
+      const proxied = result.calls.filter((call) => call.url.startsWith(PROXY_PREFIX));
+      expect(proxied.length).toBe(2);
+      expect(proxied[1].at - proxied[0].at).toBeGreaterThanOrEqual(PROXY_SLEEP_MS - 50);
+      expect(result.calls.filter((call) => !call.url.startsWith(PROXY_PREFIX)).length).toBe(2);
+      const meta = readJsonFile(result.root, 'api/themes/funds/BOTT/meta.json');
+      expect(meta.holdings.totalRows).toBe(2);
+      expect(meta.source.holdingsSource).toContain('via read-only rendering proxy');
+      expect(meta.navValue).toBe(41.76);
+      expect(meta.source.retained).toBeUndefined();
+    } finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('official source completely unavailable keeps the published fund data, labeled as retained', async () => {
+    const seed = (api: string) => {
+      mkdirSync(path.join(api, 'funds/BOTT'), { recursive: true });
+      const holdings = { pages: ['001.json'], pageSize: 250, totalRows: 31, asOfDate: '09/30/2026', asOf: '2026-09-30' };
+      writeFileSync(path.join(api, 'funds/BOTT/meta.json'), JSON.stringify({ ticker: 'BOTT', navValue: 40, aumValue: 123, holdings, source: { holdingsSource: 'official Themes ETFs daily holdings CSV' } }));
+      writeFileSync(path.join(api, 'index.json'), JSON.stringify({ generatedAt: '2026-09-30T00:00:00Z', funds: [{ ticker: 'BOTT', name: 'Humanoid Robotics ETF', category: 'Thematic', navValue: 40, terValue: 0.35, fundPage: 'https://themesetfs.com/etfs/bott', holdings: 31, history: 0 }] }));
+    };
+    const result = await inTempRepo(seed, () => blocked(), { TICKERS: 'BOTT' });
+    try {
+      expect(result.error).toBeNull();
+      const meta = readJsonFile(result.root, 'api/themes/funds/BOTT/meta.json');
+      expect(meta.holdings.totalRows).toBe(31);
+      expect(meta.aumValue).toBe(123);
+      expect(meta.source.holdingsSource).toContain('retained');
+      expect(meta.source.retained.holdings).toBe(true);
+      expect(readJsonFile(result.root, 'api/themes/index.json').funds[0].ticker).toBe('BOTT');
+    } finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('fails loudly when nothing is reachable and nothing was published', async () => {
+    const result = await inTempRepo(() => {}, () => blocked(), { TICKERS: 'BOTT' });
+    try { expect(String(result.error)).toContain('nothing published to retain'); }
+    finally { rmSync(result.root, { recursive: true, force: true }); }
+    const noMeta = await inTempRepo((api) => {
+      writeFileSync(path.join(api, 'index.json'), JSON.stringify({ funds: [{ ticker: 'BOTT', name: 'B', category: 'Thematic', fundPage: 'https://themesetfs.com/etfs/bott' }] }));
+    }, () => blocked(), { TICKERS: 'BOTT' });
+    try { expect(String(noMeta.error)).toContain('nothing could be refreshed'); }
+    finally { rmSync(noMeta.root, { recursive: true, force: true }); }
+  }, 30_000);
 });
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
