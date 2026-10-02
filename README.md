@@ -37,7 +37,9 @@ The **Update Themes ETFs data** GitHub Actions workflow (`.github/workflows/upda
 | Dividend history and frequency | Yahoo Finance chart dividend events | Distribution rows contain ex-date and amount. Frequency is inferred from observed dates; `00 - None` is a requested display placeholder for no returned events, not proof that a fund never distributes. |
 | Holdings fallback | SEC EDGAR Form **N-PORT-P**, Themes ETF Trust **CIK 0001976322** | Used only when the direct official holdings CSV is unavailable and a filing can be matched to the requested series. |
 
-The direct Themes paths answered normal browser-style requests during the 2026-09-29 acceptance and initial-seed runs. Requests are politely paced at `REQUEST_SLEEP=1` second per independently reserved worker lane with bounded retries.
+The direct Themes paths answered normal browser-style requests during the 2026-09-29 acceptance and initial-seed runs, but themesetfs.com answers some datacenter networks, including GitHub-hosted runners, with HTTP 403. On HTTP 403 / 429 / 5xx (or an unusable body) for the catalog or a holdings CSV, the updater reads the same public URL through the read-only `r.jina.ai` rendering proxy: the catalog is parsed from the proxied markdown table, and a CSV is parsed if the proxy returns it. The proxy is retried at most once, sits behind one global gate (at least 3.2 seconds between proxy request starts, raised to `REQUEST_SLEEP` when that is larger) and is skipped after the first rejected CSV, because `r.jina.ai` cannot render `application/octet-stream` downloads; after two direct 403 answers the direct attempt is skipped for the rest of the run. Direct requests stay on independent per-worker lanes paced by `REQUEST_SLEEP`, with bounded retries for network errors and HTTP 408 / 425 / 429 / 5xx.
+
+When the official source is completely unavailable the previously published data is kept instead of aborting: an unreachable catalog reuses the published `index.json` fund list, and a fund whose holdings cannot be refreshed (CSV, proxy, and SEC fallback all failed) keeps its published holdings, labeled `retained` in `holdingsSource` and `source.retained`. The run fails loudly only when there is nothing published to fall back on (no previous catalog, or every requested ticker has neither fresh nor published holdings). The 403 path cannot be reproduced from a residential network; it is covered by offline tests that force 403 on every direct URL.
 
 #### The daily holdings CSV
 
@@ -58,6 +60,7 @@ The Themes site catalog supplies current NAV/market price, while the current sou
 | **30-Day SEC Yield** | `—` | The current Themes catalog/CSV pipeline does not publish a matching SEC-yield field. |
 | **CUSIP / ISIN at fund level, inception date, premium / discount, bid-ask spread, documents** | `—` unless a future common schema supplies it | They are not claimed from the catalog/CSV source currently used by this feed. |
 | **Recent price history** | short but published as returned | LGCF, LIMI, and SMCF had five Yahoo daily rows in the 2026-09-29 initial seed; the feed keeps that real coverage rather than fabricating a longer series. |
+| **Retained data** | previous publication kept, labeled | When the catalog or a fund's holdings cannot be refreshed from any source, the published values stay and `holdingsSource` / `source.retained` say so; nothing is zeroed. |
 | **SEC N-PORT-P fallback** | wired; not exercised in the successful direct-CSV smoke | All requested acceptance and initial-seed CSV downloads succeeded, so fallback provenance is documented but no fallback data was substituted. |
 | **SEDOL / FIGI / coupon / maturity** | always `—` | The direct Themes holdings CSV fields currently parsed by this feed do not provide these values. |
 
@@ -73,7 +76,7 @@ Keys of `scripts/update-data.config.json`; also accepted as environment variable
 | `AUM` | `:` | `min:max` net-assets range; accepts `K` / `M` / `B` / `T` suffixes and `nano` / `micro` / `small` / `mid` / `large` presets. |
 | `TER` / `DIVIDEND_YIELD` / `SEC_YIELD` | `:` | Numeric `min:max` ranges in percent. Dividend data is derived from Yahoo events; SEC Yield is currently absent. |
 | `PERFORMANCE_YTD`, `PERFORMANCE_1Y`, `PERFORMANCE_3Y`, `PERFORMANCE_5Y`, `PERFORMANCE_10Y` / `TOTAL_RETURN_YTD`, `TOTAL_RETURN_1Y`, `TOTAL_RETURN_3Y`, `TOTAL_RETURN_5Y`, `TOTAL_RETURN_10Y` | `:` | `min:max` filters on the derived adjusted-market-price return metrics. |
-| `CONCURRENCY` / `REQUEST_SLEEP` | `2` / `1` | Parallel workers and seconds between starts within each worker lane. Keep requests polite. |
+| `CONCURRENCY` / `REQUEST_SLEEP` | `2` / `1` | Parallel workers and seconds between request starts within each worker lane for direct requests; `r.jina.ai` proxy fallback requests share one global gate of at least 3.2 seconds between starts. Keep requests polite. |
 | `HOLDINGS_PAGE_SIZE` / `HISTORY_PAGE_SIZE` | `250` / `1000` | Rows per generated JSON page. |
 | `MAX_RETRIES` | `3` | Integer >= 1: retries after the initial request for network errors and HTTP 408 / 425 / 429 / 5xx. |
 | `HISTORY_RANGE` | `max` | `max` or `Ny` (for example `5y`): limits the Yahoo history request window, so published history and derived returns cover only that window. |
