@@ -49,7 +49,7 @@ The download is a real daily CSV, not a browser-only export. `scripts/update-dat
 
 #### Return arithmetic
 
-The Themes site catalog supplies current NAV/market price, while the current source path does not provide a matching historical NAV-performance table. The app's YTD / 1-year / 3-year / 5-year / 10-year fields are therefore derived from Yahoo adjusted **market-price** closes, not represented as official NAV total returns. Missing or too-short history remains `null` and renders as `—`; it is never extrapolated.
+The Themes site catalog supplies current NAV/market price, while the current source path does not provide a matching historical NAV-performance table. The app's YTD / 1-year / 3-year / 5-year / 10-year fields are therefore derived from Yahoo adjusted **market-price** closes, not represented as official NAV total returns. A horizon is published only when the history reaches back to it (the oldest row may start at most 5 days after the window start); a younger fund, a shortened `HISTORY_RANGE`, or a flat placeholder history (every close identical) gives `null` for that horizon and for its CAGR, never the since-inception return under a 3Y/5Y/10Y label. The returns block travels as one unit: when Yahoo fails, the previous returns, CAGRs, dividends and `performanceAsOf` are kept together.
 
 ### Metrics and caveats
 
@@ -61,8 +61,11 @@ The Themes site catalog supplies current NAV/market price, while the current sou
 | **Dividend yield / frequency** | derived from Yahoo events or `00 - None` | The source path is Yahoo dividend events, not an official Themes distribution-history table. `00 - None` only means no usable events were returned for the feed. |
 | **30-Day SEC Yield** | `—` | The current Themes catalog/CSV pipeline does not publish a matching SEC-yield field. |
 | **CUSIP / ISIN at fund level, inception date, premium / discount, bid-ask spread, documents** | `—` unless a future common schema supplies it | They are not claimed from the catalog/CSV source currently used by this feed. |
-| **Recent price history** | short but published as returned | LGCF, LIMI, and SMCF had five Yahoo daily rows in the 2026-09-29 initial seed; the feed keeps that real coverage rather than fabricating a longer series. |
-| **Retained data** | previous publication kept, labeled | When the catalog or a fund's holdings cannot be refreshed from any source, the published values stay and `holdingsSource` / `source.retained` say so; nothing is zeroed. |
+| **Recent price history** | short but published as returned, returns `null` | LGCF, LIMI, and SMCF had five flat Yahoo daily rows in the 2026-09-29 initial seed; the rows are published as returned, but their returns, CAGRs and yield are `null` (a flat placeholder carries no return information). |
+| **Dividend yield** | `null` without a distribution in the last 12 months | A fund with no Yahoo distribution event in the trailing 12 months has an unknown yield (`null`, text `—`), not a published `0.00%`. |
+| **Catalog-only funds** | `dataFile: null`, all metrics `null` | A catalog fund whose holdings could never be fetched (for example DRGN) has an index row without `funds/<T>/` data: `dataFile` is `null` and `metrics` carries the full key set with every value `null`. |
+| **Funds leaving the catalog** | removed from the feed | When the official catalog is read successfully and no longer lists a published fund, its row and `funds/<T>/` folder are removed (`DROPPED FUNDS` in the run output), unless the catalog has fewer than half of the published funds (then it is treated as truncated and nothing is removed). New catalog tickers are announced as `NEW FUNDS: A, B` in the run output and in `$GITHUB_STEP_SUMMARY`. |
+| **Retained data** | previous publication kept, labeled | When the catalog or a fund's holdings cannot be refreshed from any source, the published values stay and `holdingsSource` / `source.retained` say so; nothing is zeroed. A fund is written only after all of its sources were read: pages first, then `meta.json`, stale pages last; a fund rejected by a data filter (`AUM`, yields, return ranges) is left exactly as published. Every request has a 45 s timeout (headers and body), retried like any other failure, and a run stops taking new funds after 25 minutes and still writes the index. The `r.jina.ai` proxy receives a generic User-Agent, never the SEC contact. |
 | **SEC N-PORT-P fallback** | wired; not exercised in the successful direct-CSV smoke | All requested acceptance and initial-seed CSV downloads succeeded, so fallback provenance is documented but no fallback data was substituted. |
 | **SEDOL / FIGI / coupon / maturity** | always `—` | The direct Themes holdings CSV fields currently parsed by this feed do not provide these values. |
 
@@ -72,7 +75,7 @@ Keys of `scripts/update-data.config.json`; also accepted as environment variable
 
 | Control | Default | Meaning |
 | --- | --: | --- |
-| `MAX_FETCHES` | `0` | Funds to process; `0` = full pass. A positive value resumes after the cursor in `api/themes/update-state.json`. |
+| `MAX_FETCHES` | `0` | Funds to process; `0` = full pass. A positive value resumes after the cursor in `api/themes/update-state.json` and wraps around to the first fund of the filtered set; a `TICKERS` run never reads, writes or deletes the cursor. |
 | `TICKERS` | `""` | Space/comma-separated ticker allowlist; it is ANDed with every other filter. |
 | `CATEGORY` | `""` | Case-insensitive substring match on the official Themes catalog category. |
 | `AUM` | `:` | `min:max` net-assets range; accepts `K` / `M` / `B` / `T` suffixes and `nano` / `micro` / `small` / `mid` / `large` presets. |
