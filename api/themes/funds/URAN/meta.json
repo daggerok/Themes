@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 1, 2026",
+  "asOfDate": "Oct 2, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$24.25M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 24245620
   },
   "aumValue": 24245620,
   "category": "Commodities",
-  "closePrice": "$35.18",
-  "closePriceValue": 35.18,
+  "closePrice": "$34.29",
+  "closePriceValue": 34.29,
   "dataFile": "./funds/URAN/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-10-01T04:59:20Z",
+  "generatedAt": "2026-10-03T05:22:10Z",
   "history": {
-    "asOf": "2026-09-30",
-    "asOfDate": "Sep 30, 2026",
+    "asOf": "2026-10-02",
+    "asOfDate": "Oct 2, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 506
+    "totalRows": 508
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -56,46 +56,46 @@
     "totalRows": 57
   },
   "metrics": {
-    "cagr10y": 2.67,
-    "cagr3y": 9.19,
-    "cagr5y": 5.42,
-    "distributionYield": 3.01,
-    "distributionYieldText": "3.01%",
-    "dividendYield": 3.01,
-    "dividendYieldText": "3.01%",
-    "performanceAsOf": "2026-09-30",
+    "cagr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "distributionYield": 3.08,
+    "distributionYieldText": "3.08%",
+    "dividendYield": 3.08,
+    "dividendYieldText": "3.08%",
+    "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 30.18,
-    "tr1y": -21.95,
-    "tr3y": 30.18,
-    "tr5y": 30.18,
-    "yield12M": 3.01,
-    "yield12MText": "3.01%",
-    "ytd": -16.08
+    "tr10y": null,
+    "tr1y": -24.7,
+    "tr3y": null,
+    "tr5y": null,
+    "yield12M": 3.08,
+    "yield12MText": "3.08%",
+    "ytd": -17.12
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$35.23",
+    "asOfDate": "Oct 2, 2026",
+    "display": "$34.39",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.23
+    "value": 34.39
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.23,
+  "navValue": 34.39,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 30, 2026",
+      "asOfDate": "Oct 2, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -21.95,
-      "yr10": 30.18,
-      "yr3": 30.18,
-      "yr5": 30.18,
-      "ytd": -16.08
+      "yr1": -24.7,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": -17.12
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -109,7 +109,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 1, 2026",
+    "asOfDate": null,
     "display": "700,000",
     "value": 700000
   },
@@ -120,11 +120,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-URAN.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Uranium-Nuclear-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

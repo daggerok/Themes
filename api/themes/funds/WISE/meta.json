@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 1, 2026",
+  "asOfDate": "Oct 2, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$27.94M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 27937876
   },
   "aumValue": 27937876,
   "category": "Thematic",
-  "closePrice": "$35.17",
-  "closePriceValue": 35.17,
+  "closePrice": "$35.13",
+  "closePriceValue": 35.13,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,17 +28,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-10-01T04:59:21Z",
+  "generatedAt": "2026-10-03T05:22:14Z",
   "history": {
-    "asOf": "2026-09-30",
-    "asOfDate": "Sep 30, 2026",
+    "asOf": "2026-10-02",
+    "asOfDate": "Oct 2, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 704
+    "totalRows": 706
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -52,46 +52,46 @@
     "totalRows": 47
   },
   "metrics": {
-    "cagr10y": 3.8,
-    "cagr3y": 13.25,
-    "cagr5y": 7.75,
-    "distributionYield": 4.57,
-    "distributionYieldText": "4.57%",
-    "dividendYield": 4.57,
-    "dividendYieldText": "4.57%",
-    "performanceAsOf": "2026-09-30",
+    "cagr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "distributionYield": 4.58,
+    "distributionYieldText": "4.58%",
+    "dividendYield": 4.58,
+    "dividendYieldText": "4.58%",
+    "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 45.24,
-    "tr1y": -16.64,
-    "tr3y": 45.24,
-    "tr5y": 45.24,
-    "yield12M": 4.57,
-    "yield12MText": "4.57%",
-    "ytd": -9.21
+    "tr10y": null,
+    "tr1y": -19.46,
+    "tr3y": null,
+    "tr5y": null,
+    "yield12M": 4.58,
+    "yield12MText": "4.58%",
+    "ytd": -9.49
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$35.20",
+    "asOfDate": "Oct 2, 2026",
+    "display": "$35.15",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.2
+    "value": 35.15
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.2,
+  "navValue": 35.15,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 30, 2026",
+      "asOfDate": "Oct 2, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -16.64,
-      "yr10": 45.24,
-      "yr3": 45.24,
-      "yr5": 45.24,
-      "ytd": -9.21
+      "yr1": -19.46,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": -9.49
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -105,7 +105,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 1, 2026",
+    "asOfDate": null,
     "display": "790,000",
     "value": 790000
   },
@@ -116,11 +116,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

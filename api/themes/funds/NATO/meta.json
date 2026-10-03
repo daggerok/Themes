@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 1, 2026",
+  "asOfDate": "Oct 2, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$91.38M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 91375848
   },
   "aumValue": 91375848,
   "category": "Thematic",
-  "closePrice": "$37.16",
-  "closePriceValue": 37.16,
+  "closePrice": "$36.74",
+  "closePriceValue": 36.74,
   "dataFile": "./funds/NATO/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-10-01T04:59:21Z",
+  "generatedAt": "2026-10-03T05:22:00Z",
   "history": {
-    "asOf": "2026-09-30",
-    "asOfDate": "Sep 30, 2026",
+    "asOf": "2026-10-02",
+    "asOfDate": "Oct 2, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 493
+    "totalRows": 495
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -56,46 +56,46 @@
     "totalRows": 99
   },
   "metrics": {
-    "cagr10y": 3.84,
-    "cagr3y": 13.37,
-    "cagr5y": 7.82,
+    "cagr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
     "distributionYield": 0.46,
     "distributionYieldText": "0.46%",
     "dividendYield": 0.46,
     "dividendYieldText": "0.46%",
-    "performanceAsOf": "2026-09-30",
+    "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 45.7,
-    "tr1y": -5.5,
-    "tr3y": 45.7,
-    "tr5y": 45.7,
+    "tr10y": null,
+    "tr1y": -5.58,
+    "tr3y": null,
+    "tr5y": null,
     "yield12M": 0.46,
     "yield12MText": "0.46%",
-    "ytd": -3.82
+    "ytd": -3.56
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$37.11",
+    "asOfDate": "Oct 2, 2026",
+    "display": "$36.79",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 37.11
+    "value": 36.79
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 37.11,
+  "navValue": 36.79,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 30, 2026",
+      "asOfDate": "Oct 2, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -5.5,
-      "yr10": 45.7,
-      "yr3": 45.7,
-      "yr5": 45.7,
-      "ytd": -3.82
+      "yr1": -5.58,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": -3.56
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -109,7 +109,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 1, 2026",
+    "asOfDate": null,
     "display": "2,480,000",
     "value": 2480000
   },
@@ -120,11 +120,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Transatlantic-Defense-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

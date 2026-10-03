@@ -9,6 +9,18 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "47.77",
+      "Close": "47.77",
+      "Date": "2026-10-02",
+      "Volume": "1500"
+    },
+    {
+      "Adj Close": "47.47",
+      "Close": "47.47",
+      "Date": "2026-10-01",
+      "Volume": "2000"
+    },
+    {
       "Adj Close": "47.12",
       "Close": "47.12",
       "Date": "2026-09-30",
@@ -4234,5 +4246,5 @@
     }
   ],
   "ticker": "SPAM",
-  "totalRows": 704
+  "totalRows": 706
 }

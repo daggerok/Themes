@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 1, 2026",
+  "asOfDate": "Oct 2, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$12.62M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 12620880
   },
   "aumValue": 12620880,
   "category": "Commodities",
-  "closePrice": "$53.19",
-  "closePriceValue": 53.19,
+  "closePrice": "$51.77",
+  "closePriceValue": 51.77,
   "dataFile": "./funds/COPA/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-01T04:59:21Z",
+  "generatedAt": "2026-10-03T05:21:48Z",
   "history": {
-    "asOf": "2026-09-30",
-    "asOfDate": "Sep 30, 2026",
+    "asOf": "2026-10-02",
+    "asOfDate": "Oct 2, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 506
+    "totalRows": 508
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -56,46 +56,46 @@
     "totalRows": 58
   },
   "metrics": {
-    "cagr10y": 7.63,
-    "cagr3y": 27.78,
-    "cagr5y": 15.84,
-    "distributionYield": 3.47,
-    "distributionYieldText": "3.47%",
-    "dividendYield": 3.47,
-    "dividendYieldText": "3.47%",
-    "performanceAsOf": "2026-09-30",
+    "cagr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "distributionYield": 3.55,
+    "distributionYieldText": "3.55%",
+    "dividendYield": 3.55,
+    "dividendYieldText": "3.55%",
+    "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
-    "tr10y": 108.62,
-    "tr1y": 46.77,
-    "tr3y": 108.62,
-    "tr5y": 108.62,
-    "yield12M": 3.47,
-    "yield12MText": "3.47%",
-    "ytd": 21.57
+    "tr10y": null,
+    "tr1y": 45.81,
+    "tr3y": null,
+    "tr5y": null,
+    "yield12M": 3.55,
+    "yield12MText": "3.55%",
+    "ytd": 22.8
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$53.05",
+    "asOfDate": "Oct 2, 2026",
+    "display": "$51.79",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 53.05
+    "value": 51.79
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 53.05,
+  "navValue": 51.79,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Sep 30, 2026",
+      "asOfDate": "Oct 2, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 46.77,
-      "yr10": 108.62,
-      "yr3": 108.62,
-      "yr5": 108.62,
-      "ytd": 21.57
+      "yr1": 45.81,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": 22.8
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -109,7 +109,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 1, 2026",
+    "asOfDate": null,
     "display": "240,000",
     "value": 240000
   },
@@ -120,11 +120,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Copper-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
