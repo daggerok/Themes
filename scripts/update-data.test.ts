@@ -1,7 +1,7 @@
 /// <reference types="bun" />
 
 import { afterEach, describe, expect, test } from 'bun:test';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
@@ -39,6 +39,13 @@ import {
   RETURNS_BASIS,
   performanceFields,
   withPerformanceFields,
+  emptyMetrics,
+  fetchOfficialText,
+  fetchWithRetry,
+  isFlatHistory,
+  rotateFromCursor,
+  skeletonEntry,
+  trailingDividendYield,
 } from './update-data.ts';
 
 describe('Themes catalog parser', () => {
@@ -164,6 +171,123 @@ describe('Yahoo parser and derived metrics', () => {
     const returns = deriveReturns(history, new Date('2025-01-03T00:00:00Z'));
     expect(returns.ytd).toBe(10);
     expect(returns.yr1).toBe(-8.33);
+  });
+});
+
+describe('returns never fall back to since-inception numbers', () => {
+  const NOW = new Date('2026-10-02T00:00:00Z');
+  const daily = (days: number, step = 0.01): Array<{ date: string; close: number; adjClose: number; volume: number }> =>
+    Array.from({ length: days }, (_, i) => {
+      const date = new Date(NOW.getTime() - i * 86_400_000).toISOString().slice(0, 10);
+      const price = Math.round((100 + (days - i) * step) * 100) / 100;
+      return { date, close: price, adjClose: price, volume: 1000 };
+    });
+
+  test('a 200-day fund has 1Y/3Y/5Y/10Y and CAGR as null, not since-inception values', () => {
+    const returns = deriveReturns(daily(200), NOW);
+    for (const key of ['ytd', 'yr1', 'yr3', 'yr5', 'yr10', 'cagr3', 'cagr5', 'cagr10']) expect(returns[key]).toBeNull();
+  });
+
+  test('a 4-year history fills 1Y and 3Y but leaves 5Y and 10Y null; a long history fills all', () => {
+    const four = deriveReturns(daily(365 * 4 + 5), NOW);
+    expect(four.yr1).not.toBeNull();
+    expect(four.yr3).not.toBeNull();
+    expect(four.cagr3).not.toBeNull();
+    expect(four.yr5).toBeNull();
+    expect(four.yr10).toBeNull();
+    expect(four.cagr10).toBeNull();
+    const long = deriveReturns(daily(365 * 11), NOW);
+    for (const key of ['ytd', 'yr1', 'yr3', 'yr5', 'yr10', 'cagr3', 'cagr5', 'cagr10']) expect(long[key]).not.toBeNull();
+    expect(long.yr10).not.toBe(long.yr5);
+  });
+
+  test('the oldest row may start a few days after the window, not weeks', () => {
+    const history = daily(40);
+    expect(calculateReturn(history, new Date(NOW.getTime() - 43 * 86_400_000))).not.toBeNull();
+    expect(calculateReturn(history, new Date(NOW.getTime() - 60 * 86_400_000))).toBeNull();
+  });
+
+  test('flat placeholder history gives null returns and a null yield', () => {
+    const flat = Array.from({ length: 5 }, (_, i) => ({ date: `2026-09-${String(28 - i).padStart(2, '0')}`, close: 38.34, adjClose: 38.34, volume: 0 }));
+    expect(isFlatHistory(flat)).toBe(true);
+    const returns = deriveReturns(flat, NOW);
+    for (const value of Object.values(returns)) expect(value).toBeNull();
+    expect(isFlatHistory(daily(5))).toBe(false);
+    expect(trailingDividendYield([], 20, NOW)).toBeNull();
+    expect(trailingDividendYield([{ date: '2020-01-01', amount: 1 }], 20, NOW)).toBeNull();
+    expect(trailingDividendYield([{ date: '2026-09-01', amount: 1 }], 20, NOW)).toBe(5);
+  });
+
+  test('HISTORY_RANGE=1y leaves 3Y/5Y/10Y null instead of repeating the 1Y return', () => {
+    const returns = deriveReturns(daily(366), NOW);
+    expect(returns.yr1).not.toBeNull();
+    expect(returns.yr3).toBeNull();
+    expect(returns.yr5).toBeNull();
+    expect(returns.yr10).toBeNull();
+  });
+});
+
+describe('skeleton rows and cursor', () => {
+  test('a catalog-only row has dataFile null and the full metrics key set', () => {
+    const row = skeletonEntry({ ticker: 'DRGN', name: 'Dragon', category: 'Thematic', navValue: 20, closePriceValue: 20.1, terValue: 0.5, fundPage: 'https://themesetfs.com/etfs/drgn' }) as any;
+    expect(row.dataFile).toBeNull();
+    expect(Object.keys(row.metrics).sort()).toEqual(Object.keys(emptyMetrics()).sort());
+    for (const key of ['distributionYield', 'distributionYieldText', 'dividendYield', 'dividendYieldText', 'yield12M', 'yield12MText', 'secYieldText', 'returnsBasis', 'performanceAsOf']) expect(key in row.metrics).toBe(true);
+    expect(row.metrics.returnsBasis).toBe(RETURNS_BASIS);
+    expect(Object.values(row.metrics).filter((value) => value === 0)).toEqual([]);
+  });
+
+  test('the cursor wraps inside the filtered set and survives a stale cursor', () => {
+    const set = ['A', 'B', 'C', 'D'].map((ticker) => ({ ticker }));
+    expect(rotateFromCursor(set, null).map((f) => f.ticker)).toEqual(['A', 'B', 'C', 'D']);
+    expect(rotateFromCursor(set, 'B').map((f) => f.ticker)).toEqual(['C', 'D', 'A', 'B']);
+    expect(rotateFromCursor(set, 'D').map((f) => f.ticker)).toEqual(['A', 'B', 'C', 'D']);
+    expect(rotateFromCursor(set, 'BB').map((f) => f.ticker)).toEqual(['C', 'D', 'A', 'B']);
+    expect(rotateFromCursor(set, 'Z').map((f) => f.ticker)).toEqual(['A', 'B', 'C', 'D']);
+    expect(rotateFromCursor([], 'A')).toEqual([]);
+  });
+});
+
+describe('fetch timeout and proxy identity', () => {
+  const quiet = { maxRetries: 1, requestSleepMs: 0, verbose: false, fetchTimeoutMs: 40 };
+
+  test('a request that never answers times out and is retried, body stalls included', async () => {
+    const realFetch = globalThis.fetch;
+    let calls = 0;
+    globalThis.fetch = ((_url: any, init?: RequestInit) => {
+      calls += 1;
+      return new Promise((_, reject) => init?.signal?.addEventListener('abort', () => reject(init.signal!.reason)));
+    }) as typeof fetch;
+    try {
+      await expect(fetchWithRetry('https://x.test/a', {}, quiet)).rejects.toBeDefined();
+      expect(calls).toBe(2);
+      calls = 0;
+      globalThis.fetch = ((_url: any, init?: RequestInit) => {
+        calls += 1;
+        const body = new ReadableStream({ start(controller) { init?.signal?.addEventListener('abort', () => controller.error(init.signal!.reason)); } });
+        return Promise.resolve(new Response(body));
+      }) as typeof fetch;
+      await expect(fetchWithRetry('https://x.test/b', {}, quiet, undefined, (response) => response.text())).rejects.toBeDefined();
+      expect(calls).toBe(2);
+    } finally { globalThis.fetch = realFetch; }
+  }, 10_000);
+
+  test('the proxy never receives the SEC contact', async () => {
+    const realFetch = globalThis.fetch;
+    const seen: Array<{ url: string; ua: string }> = [];
+    globalThis.fetch = (async (url: any, init?: RequestInit) => {
+      seen.push({ url: String(url), ua: String((init?.headers as Record<string, string>)['User-Agent']) });
+      return String(url).startsWith(PROXY_PREFIX) ? new Response('Markdown Content:\nok') : new Response('no', { status: 403 });
+    }) as typeof fetch;
+    resetIssuerState();
+    try {
+      const config = { ...readConfig({}), maxRetries: 1, requestSleepMs: 0, secUserAgent: 'daggerok ETF feed daggerok@gmail.com' };
+      const result = await fetchOfficialText('https://themesetfs.com/etfs', config, async () => {}, async () => {}, () => true);
+      expect(result.via).toBe('proxy');
+      const proxied = seen.filter((call) => call.url.startsWith(PROXY_PREFIX));
+      expect(proxied.length).toBe(1);
+      for (const call of seen) expect(call.ua).not.toContain('@');
+    } finally { globalThis.fetch = realFetch; resetIssuerState(); }
   });
 });
 
@@ -369,6 +493,8 @@ Markdown Content:
       const holdings = { pages: ['001.json'], pageSize: 250, totalRows: 31, asOfDate: '09/30/2026', asOf: '2026-09-30' };
       const history = { pages: ['001.json'], pageSize: 1000, totalRows: 3, asOfDate: 'Sep 29, 2026', asOf: '2026-09-29' };
       writeFileSync(path.join(api, 'funds/BOTT/meta.json'), JSON.stringify({ ticker: 'BOTT', navValue: 40, aumValue: 123, holdings, history, source: { holdingsSource: 'official Themes ETFs daily holdings CSV' } }));
+      mkdirSync(path.join(api, 'funds/CLOD'), { recursive: true });
+      writeFileSync(path.join(api, 'funds/CLOD/meta.json'), JSON.stringify({ ticker: 'CLOD', metrics: { ytd: 1 } }));
       writeFileSync(path.join(api, 'index.json'), JSON.stringify({ generatedAt: '2026-09-30T00:00:00Z', funds: [
         { ticker: 'BOTT', name: 'Humanoid Robotics ETF', category: 'Thematic', navValue: 40, terValue: 0.35, fundPage: 'https://themesetfs.com/etfs/bott', holdings: 31, history: 3 },
         { ticker: 'CLOD', name: 'Cloud', category: 'Thematic', metrics: { ytd: 1 }, holdings: 1, history: 1 },
@@ -385,6 +511,166 @@ Markdown Content:
       expect(funds[1].metrics.returnsBasis).toBe(RETURNS_BASIS);
       expect(funds[1].metrics.performanceAsOf).toBeNull();
     } finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  const htmlCatalog = (rows: Array<{ t: string; nav?: string }>): string => `<script>window.productsData = [\n${rows.map((r) => `{\n ticker: '${r.t}',\n externalLink: false,\n fund: "${r.t} ETF",\n category: "Thematic",\n nav: '${r.nav ?? '20.00'}',\n price: '20.10',\n expense: '0.35',\n product_url: 'https://themesetfs.com/etfs/${r.t.toLowerCase()}'\n}`).join(',\n')}\n];</script>`;
+  const holdingsCsv = 'date,stock_ticker,cusip,security_name,shares,market_value,weightings,net_assets,shares_outstanding,sector\n2026-10-01,AAA,111,Alpha,10,500,50,1000,100,Tech\n';
+  const chartJson = (days: number, flat = false): string => {
+    const last = Math.floor(Date.now() / 86_400_000) * 86_400;
+    const timestamp = Array.from({ length: days }, (_, i) => last - (days - 1 - i) * 86_400);
+    const close = timestamp.map((_, i) => flat ? 38.34 : 20 + i * 0.01);
+    const events = Object.fromEntries(timestamp.filter((_, i) => i % 30 === 0 && !flat).map((t) => [String(t), { amount: 0.1 }]));
+    return JSON.stringify({ chart: { result: [{ timestamp, indicators: { quote: [{ close, volume: close.map(() => (flat ? 0 : 5)) }], adjclose: [{ adjclose: close }] }, events: { dividends: events }, meta: { fullExchangeName: 'NYSEArca' } }] } });
+  };
+  const feed = (rows: Array<{ t: string; days: number; flat?: boolean; nav?: string }>, extra?: (url: string) => Response | null) => (url: string): Response => {
+    const extraResponse = extra?.(url); if (extraResponse) return extraResponse;
+    if (url === 'https://themesetfs.com/etfs') return new Response(htmlCatalog(rows));
+    const csvMatch = /Holdings-(\w+)\.csv/.exec(url);
+    if (csvMatch) return rows.find((r) => r.t === csvMatch[1] && r.days >= 0) && csvMatch[1] !== 'NOHOLD' ? new Response(holdingsCsv) : new Response('gone', { status: 404 });
+    const chartMatch = /chart\/(\w+)\?/.exec(url);
+    const row = rows.find((r) => r.t === chartMatch?.[1]);
+    return row && row.days > 0 ? new Response(chartJson(row.days, row.flat)) : new Response('{}', { status: 404 });
+  };
+  const live = { SKIP_YAHOO: 'false' };
+
+  test('young and flat funds publish null long-horizon returns, long funds keep them; a catalog-only fund has no dataFile', async () => {
+    const rows = [{ t: 'FLT', days: 5, flat: true }, { t: 'NOHOLD', days: 0 }, { t: 'OLD', days: 4300 }, { t: 'YNG', days: 200 }];
+    const result = await inTempRepo(() => {}, feed(rows), live);
+    try {
+      expect(result.error).toBeNull();
+      const funds = readJsonFile(result.root, 'api/themes/index.json').funds;
+      const by = Object.fromEntries(funds.map((f: any) => [f.ticker, f]));
+      for (const key of ['ytd', 'tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y', 'dividendYield', 'yield12M']) {
+        expect(by.FLT.metrics[key]).toBeNull();
+      }
+      for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y']) expect(by.YNG.metrics[key]).toBeNull();
+      expect(by.YNG.metrics.dividendYield).not.toBeNull();
+      for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr10y']) expect(by.OLD.metrics[key]).not.toBeNull();
+      expect(by.OLD.metrics.tr10y).not.toBe(by.OLD.metrics.tr5y);
+      expect(by.NOHOLD.dataFile).toBeNull();
+      expect(Object.keys(by.NOHOLD.metrics).sort()).toEqual(Object.keys(emptyMetrics()).sort());
+      expect(by.OLD.dataFile).toBe('./funds/OLD/meta.json');
+    } finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('a rerun with identical upstream data writes nothing, and a new fund is announced', async () => {
+    const root = mkdtempSync(path.join(tmpdir(), 'themes-rerun-'));
+    const summary = path.join(root, 'summary.md');
+    const seedRows = [{ t: 'OLD', days: 400 }];
+    const first = await inTempRepo(() => {}, feed(seedRows), live);
+    try {
+      const mtimes = (dir: string): Record<string, number> => Object.fromEntries(
+        (readdirSync(dir, { recursive: true }) as string[]).filter((f) => f.endsWith('.json')).map((f) => [f, statSync(path.join(dir, f)).mtimeMs]));
+      const before = mtimes(path.join(first.root, 'api/themes'));
+      await new Promise((resolve) => setTimeout(resolve, 20));
+      const cwd = process.cwd();
+      const realFetch = globalThis.fetch; const log = console.log; const lines: string[] = [];
+      globalThis.fetch = (async (input: any) => feed(seedRows)(String(input))) as typeof fetch;
+      console.log = (...args: unknown[]) => { lines.push(args.join(' ')); };
+      process.env.GITHUB_STEP_SUMMARY = summary;
+      try {
+        process.chdir(first.root);
+        await main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...live });
+        expect(Object.entries(mtimes(path.join(first.root, 'api/themes'))).filter(([f, t]) => before[f] !== t)).toEqual([]);
+        expect(lines.join('\n')).not.toContain('NEW FUNDS');
+        const grown = [...seedRows, { t: 'NEWB', days: 400 }];
+        globalThis.fetch = (async (input: any) => feed(grown)(String(input))) as typeof fetch;
+        await main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...live });
+        expect(lines.join('\n')).toContain('NEW FUNDS: NEWB');
+        expect(readFileSync(summary, 'utf8')).toContain('NEW FUNDS: NEWB');
+      } finally { delete process.env.GITHUB_STEP_SUMMARY; process.chdir(cwd); globalThis.fetch = realFetch; console.log = log; }
+    } finally { rmSync(first.root, { recursive: true, force: true }); rmSync(root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('a fund that fails the data filter is left untouched: files and index row stay consistent', async () => {
+    const rows = [{ t: 'OLD', days: 400 }];
+    const seeded = await inTempRepo(() => {}, feed(rows), { ...live, TICKERS: 'OLD' });
+    try {
+      const metaBefore = readFileSync(path.join(seeded.root, 'api/themes/funds/OLD/meta.json'), 'utf8');
+      const indexBefore = readFileSync(path.join(seeded.root, 'api/themes/index.json'), 'utf8');
+      const cwd = process.cwd(); const realFetch = globalThis.fetch; const log = console.log;
+      globalThis.fetch = (async (input: any) => feed([{ t: 'OLD', days: 400, nav: '25.00' }])(String(input))) as typeof fetch;
+      console.log = () => {};
+      try {
+        process.chdir(seeded.root);
+        await main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...live, TICKERS: 'OLD', TOTAL_RETURN_1Y: '900:1000' });
+      } finally { process.chdir(cwd); globalThis.fetch = realFetch; console.log = log; }
+      expect(readFileSync(path.join(seeded.root, 'api/themes/funds/OLD/meta.json'), 'utf8')).toBe(metaBefore);
+      expect(readFileSync(path.join(seeded.root, 'api/themes/index.json'), 'utf8')).toBe(indexBefore);
+    } finally { rmSync(seeded.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('MAX_FETCHES cursor wraps, and a TICKERS run leaves the cursor state alone', async () => {
+    const rows = ['AAA', 'BBB', 'CCC'].map((t) => ({ t, days: 400 }));
+    const cursorOf = (root: string): string | null => { try { return readJsonFile(root, 'api/themes/update-state.json').cursor; } catch { return null; } };
+    const first = await inTempRepo(() => {}, feed(rows), { ...live, MAX_FETCHES: '2' });
+    try {
+      expect(cursorOf(first.root)).toBe('BBB');
+      const cwd = process.cwd(); const realFetch = globalThis.fetch; const log = console.log;
+      globalThis.fetch = (async (input: any) => feed(rows)(String(input))) as typeof fetch;
+      console.log = () => {};
+      try {
+        process.chdir(first.root);
+        const run = (env: Record<string, string>) => main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...live, ...env });
+        await run({ MAX_FETCHES: '2' });
+        expect(cursorOf(first.root)).toBe('AAA');
+        await run({ MAX_FETCHES: '2', TICKERS: 'CCC' });
+        expect(cursorOf(first.root)).toBe('AAA');
+        await run({ MAX_FETCHES: '0', TICKERS: 'CCC' });
+        expect(cursorOf(first.root)).toBe('AAA');
+      } finally { process.chdir(cwd); globalThis.fetch = realFetch; console.log = log; }
+    } finally { rmSync(first.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('every selected fund failing is a non-zero exit', async () => {
+    const result = await inTempRepo(() => {}, feed([{ t: 'NOHOLD', days: 0 }]), live);
+    try { expect(String(result.error)).toContain('every selected fund failed'); }
+    finally { rmSync(result.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('a fund dropped from the official catalog leaves the feed; a much smaller catalog is not trusted', async () => {
+    const rows = [{ t: 'AAA', days: 400 }, { t: 'BBB', days: 400 }, { t: 'CCC', days: 400 }];
+    const first = await inTempRepo(() => {}, feed(rows), live);
+    try {
+      const cwd = process.cwd(); const realFetch = globalThis.fetch; const log = console.log; const warn = console.warn;
+      console.log = () => {}; console.warn = () => {};
+      const run = async (visible: typeof rows) => {
+        globalThis.fetch = (async (input: any) => feed(visible)(String(input))) as typeof fetch;
+        process.chdir(first.root);
+        try { await main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', ...live }); } finally { process.chdir(cwd); }
+      };
+      try {
+        await run(rows.slice(0, 1));
+        expect(readJsonFile(first.root, 'api/themes/index.json').funds.map((f: any) => f.ticker)).toEqual(['AAA', 'BBB', 'CCC']);
+        await run(rows.slice(0, 2));
+        expect(readJsonFile(first.root, 'api/themes/index.json').funds.map((f: any) => f.ticker)).toEqual(['AAA', 'BBB']);
+        expect(existsSync(path.join(first.root, 'api/themes/funds/CCC'))).toBe(false);
+      } finally { globalThis.fetch = realFetch; console.log = log; console.warn = warn; }
+    } finally { rmSync(first.root, { recursive: true, force: true }); }
+  }, 30_000);
+
+  test('workers really run in parallel: in-flight peak is 1 at CONCURRENCY=1 and N at N', async () => {
+    const rows = ['AAA', 'BBB', 'CCC', 'DDD'].map((t) => ({ t, days: 30 }));
+    const peakFor = async (concurrency: number): Promise<number> => {
+      let inFlight = 0; let peak = 0;
+      const root = mkdtempSync(path.join(tmpdir(), 'themes-peak-'));
+      mkdirSync(path.join(root, 'api/themes'), { recursive: true });
+      const cwd = process.cwd(); const realFetch = globalThis.fetch; const log = console.log;
+      globalThis.fetch = (async (input: any) => {
+        const url = String(input);
+        if (!/Holdings-/.test(url)) return feed(rows)(url);
+        inFlight += 1; peak = Math.max(peak, inFlight);
+        await new Promise((resolve) => setTimeout(resolve, 60));
+        inFlight -= 1;
+        return feed(rows)(url);
+      }) as typeof fetch;
+      console.log = () => {};
+      try { process.chdir(root); resetIssuerState(); await main({ REQUEST_SLEEP: '0', EDGAR_FALLBACK: 'false', MAX_RETRIES: '1', SKIP_YAHOO: 'true', CONCURRENCY: String(concurrency) }); }
+      finally { process.chdir(cwd); globalThis.fetch = realFetch; console.log = log; rmSync(root, { recursive: true, force: true }); }
+      return peak;
+    };
+    expect(await peakFor(1)).toBe(1);
+    expect(await peakFor(4)).toBe(4);
   }, 30_000);
 
   test('fails loudly when nothing is reachable and nothing was published', async () => {
