@@ -8,8 +8,8 @@
   },
   "aumValue": 91375848,
   "category": "Thematic",
-  "closePrice": "$36.74",
-  "closePriceValue": 36.74,
+  "closePrice": "$36.89",
+  "closePriceValue": 36.89,
   "dataFile": "./funds/NATO/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-10-03T05:22:00Z",
+  "generatedAt": "2026-10-04T03:29:15Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -62,6 +62,7 @@
     "distributionYield": 0.46,
     "distributionYieldText": "0.46%",
     "dividendYield": 0.46,
+    "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.46%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
@@ -79,12 +80,12 @@
   "name": "Transatlantic Defense ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$36.79",
+    "display": "$36.89",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 36.79
+    "value": 36.89
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 36.79,
+  "navValue": 36.89,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {

@@ -8,8 +8,8 @@
   },
   "aumValue": 7039380,
   "category": "Thematic",
-  "closePrice": "$47.47",
-  "closePriceValue": 47.47,
+  "closePrice": "$47.77",
+  "closePriceValue": 47.77,
   "dataFile": "./funds/SPAM/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-10-03T05:22:08Z",
+  "generatedAt": "2026-10-04T03:29:19Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -59,10 +59,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.32,
-    "distributionYieldText": "0.32%",
-    "dividendYield": 0.32,
-    "dividendYieldText": "0.32%",
+    "distributionYield": 0.31,
+    "distributionYieldText": "0.31%",
+    "dividendYield": 0.31,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "0.31%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -72,19 +73,19 @@
     "tr1y": 33.73,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.32,
-    "yield12MText": "0.32%",
+    "yield12M": 0.31,
+    "yield12MText": "0.31%",
     "ytd": 55.86
   },
   "name": "Cybersecurity ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$47.30",
+    "display": "$47.64",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 47.3
+    "value": 47.64
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 47.3,
+  "navValue": 47.64,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {

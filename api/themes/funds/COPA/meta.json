@@ -8,8 +8,8 @@
   },
   "aumValue": 12620880,
   "category": "Commodities",
-  "closePrice": "$51.77",
-  "closePriceValue": 51.77,
+  "closePrice": "$53.06",
+  "closePriceValue": 53.06,
   "dataFile": "./funds/COPA/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-03T05:21:48Z",
+  "generatedAt": "2026-10-04T03:28:59Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -59,10 +59,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 3.55,
-    "distributionYieldText": "3.55%",
-    "dividendYield": 3.55,
-    "dividendYieldText": "3.55%",
+    "distributionYield": 3.47,
+    "distributionYieldText": "3.47%",
+    "dividendYield": 3.47,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "3.47%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -72,19 +73,19 @@
     "tr1y": 45.81,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 3.55,
-    "yield12MText": "3.55%",
+    "yield12M": 3.47,
+    "yield12MText": "3.47%",
     "ytd": 22.8
   },
   "name": "Copper Miners ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$51.79",
+    "display": "$52.95",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 51.79
+    "value": 52.95
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 51.79,
+  "navValue": 52.95,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {

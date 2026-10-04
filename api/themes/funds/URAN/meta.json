@@ -8,8 +8,8 @@
   },
   "aumValue": 24245620,
   "category": "Commodities",
-  "closePrice": "$34.29",
-  "closePriceValue": 34.29,
+  "closePrice": "$34.42",
+  "closePriceValue": 34.42,
   "dataFile": "./funds/URAN/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-10-03T05:22:10Z",
+  "generatedAt": "2026-10-04T03:29:25Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -62,6 +62,7 @@
     "distributionYield": 3.08,
     "distributionYieldText": "3.08%",
     "dividendYield": 3.08,
+    "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "3.08%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
@@ -79,12 +80,12 @@
   "name": "Uranium & Nuclear ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$34.39",
+    "display": "$34.47",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 34.39
+    "value": 34.47
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 34.39,
+  "navValue": 34.47,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {

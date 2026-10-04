@@ -8,8 +8,8 @@
   },
   "aumValue": 24138790,
   "category": "Commodities",
-  "closePrice": "$90.99",
-  "closePriceValue": 90.99,
+  "closePrice": "$91.42",
+  "closePriceValue": 91.42,
   "dataFile": "./funds/AUMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-03T05:21:30Z",
+  "generatedAt": "2026-10-04T03:28:39Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -59,10 +59,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.88,
-    "distributionYieldText": "0.88%",
-    "dividendYield": 0.88,
-    "dividendYieldText": "0.88%",
+    "distributionYield": 0.87,
+    "distributionYieldText": "0.87%",
+    "dividendYield": 0.87,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "0.87%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -72,19 +73,19 @@
     "tr1y": 13.45,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.88,
-    "yield12MText": "0.88%",
+    "yield12M": 0.87,
+    "yield12MText": "0.87%",
     "ytd": -0.58
   },
   "name": "Gold Miners ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$91.02",
+    "display": "$91.77",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 91.02
+    "value": 91.77
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 91.02,
+  "navValue": 91.77,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {

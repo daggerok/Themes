@@ -8,8 +8,8 @@
   },
   "aumValue": 9652944,
   "category": "Commodities",
-  "closePrice": "$68.62",
-  "closePriceValue": 68.62,
+  "closePrice": "$69.24",
+  "closePriceValue": 69.24,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-10-03T05:21:29Z",
+  "generatedAt": "2026-10-04T03:28:45Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -59,10 +59,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.19,
-    "distributionYieldText": "4.19%",
-    "dividendYield": 4.19,
-    "dividendYieldText": "4.19%",
+    "distributionYield": 4.15,
+    "distributionYieldText": "4.15%",
+    "dividendYield": 4.15,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "4.15%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -72,19 +73,19 @@
     "tr1y": 33.44,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.19,
-    "yield12MText": "4.19%",
+    "yield12M": 4.15,
+    "yield12MText": "4.15%",
     "ytd": 7.02
   },
   "name": "Silver Miners ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$68.46",
+    "display": "$69.08",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 68.46
+    "value": 69.08
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 68.46,
+  "navValue": 69.08,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {

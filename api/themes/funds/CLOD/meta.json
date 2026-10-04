@@ -8,8 +8,8 @@
   },
   "aumValue": 2113476,
   "category": "Thematic",
-  "closePrice": "$35.67",
-  "closePriceValue": 35.67,
+  "closePrice": "$35.72",
+  "closePriceValue": 35.72,
   "dataFile": "./funds/CLOD/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/clod",
-  "generatedAt": "2026-10-03T05:21:40Z",
+  "generatedAt": "2026-10-04T03:28:55Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -55,10 +55,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 1.35,
-    "distributionYieldText": "1.35%",
-    "dividendYield": 1.35,
-    "dividendYieldText": "1.35%",
+    "distributionYield": 1.34,
+    "distributionYieldText": "1.34%",
+    "dividendYield": 1.34,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "1.34%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -68,19 +69,19 @@
     "tr1y": 1.39,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 1.35,
-    "yield12MText": "1.35%",
+    "yield12M": 1.34,
+    "yield12MText": "1.34%",
     "ytd": 9.77
   },
   "name": "Cloud Computing ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$35.64",
+    "display": "$35.70",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.64
+    "value": 35.7
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.64,
+  "navValue": 35.7,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {

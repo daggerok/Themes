@@ -8,8 +8,8 @@
   },
   "aumValue": 27937876,
   "category": "Thematic",
-  "closePrice": "$35.13",
-  "closePriceValue": 35.13,
+  "closePrice": "$35.27",
+  "closePriceValue": 35.27,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-10-03T05:22:14Z",
+  "generatedAt": "2026-10-04T03:29:27Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -55,10 +55,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.58,
-    "distributionYieldText": "4.58%",
-    "dividendYield": 4.58,
-    "dividendYieldText": "4.58%",
+    "distributionYield": 4.56,
+    "distributionYieldText": "4.56%",
+    "dividendYield": 4.56,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "4.56%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -68,19 +69,19 @@
     "tr1y": -19.46,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.58,
-    "yield12MText": "4.58%",
+    "yield12M": 4.56,
+    "yield12MText": "4.56%",
     "ytd": -9.49
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$35.15",
+    "display": "$35.30",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.15
+    "value": 35.3
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.15,
+  "navValue": 35.3,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {

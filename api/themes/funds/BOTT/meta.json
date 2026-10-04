@@ -8,8 +8,8 @@
   },
   "aumValue": 66012558,
   "category": "Thematic",
-  "closePrice": "$42.66",
-  "closePriceValue": 42.66,
+  "closePrice": "$43.20",
+  "closePriceValue": 43.2,
   "dataFile": "./funds/BOTT/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-03T05:21:38Z",
+  "generatedAt": "2026-10-04T03:28:49Z",
   "history": {
     "asOf": "2026-10-02",
     "asOfDate": "Oct 2, 2026",
@@ -62,6 +62,7 @@
     "distributionYield": 0.14,
     "distributionYieldText": "0.14%",
     "dividendYield": 0.14,
+    "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.14%",
     "performanceAsOf": "2026-10-02",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
@@ -79,12 +80,12 @@
   "name": "Humanoid Robotics ETF",
   "nav": {
     "asOfDate": "Oct 2, 2026",
-    "display": "$42.64",
+    "display": "$43.00",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 42.64
+    "value": 43
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 42.64,
+  "navValue": 43,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
