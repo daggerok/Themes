@@ -324,7 +324,7 @@
     <main class="flex-1 w-full max-w-full p-4 sm:p-8 space-y-6">
 
       <!-- Search, Tabs & Action Bar -->
-      <div class="flex flex-col lg:flex-row lg:flex-wrap justify-between items-center gap-4 bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur">
+      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:justify-start justify-between items-center gap-4 bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur">
 
         <!-- Search is view-scoped: each tab keeps its own query. The ✕ button
              clears only the active tab's filter (same glyph as the Use-column blacklist). -->
@@ -346,10 +346,14 @@
         </div>
 
         <!-- ETF catalogue tabs: All ETFs + Themes ETFs categories. -->
-        <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full flex-1 themed-scroll"></div>
+        <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full lg:w-auto lg:flex-none themed-scroll"></div>
+          <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
+          <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
 
         <!-- Actions intentionally match Amplify / iShares naming and placement -->
-        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto justify-end shrink-0">
+        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto lg:ml-auto justify-end shrink-0">
+
+          <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
 
           <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
           <div
@@ -364,9 +368,6 @@
             <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
           </div>
 
-          <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
-          <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
-          <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
           <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
           <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
           <button id="reset-btn" disabled class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-rose-200 dark:hover:bg-rose-800/60 disabled:hover:bg-rose-100 dark:disabled:hover:bg-rose-900/40">Clear</button>
