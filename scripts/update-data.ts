@@ -1193,6 +1193,13 @@ function buildCatalogEntry(meta: Record<string, any>): Record<string, unknown> {
   };
 }
 
+export type DividendYieldBasis = 'computed-trailing-12m';
+
+/** Themes publishes no yield: every non-null dividendYield is the updater's trailing-12-month sum over catalog NAV; null yield -> null basis. */
+export function dividendYieldBasisFor(dividendYield: unknown): DividendYieldBasis | null {
+  return typeof dividendYield === 'number' && Number.isFinite(dividendYield) ? 'computed-trailing-12m' : null;
+}
+
 /** Full metrics key set with every value unavailable (null, never 0). */
 export function emptyMetrics(asOf: unknown = null): Record<string, unknown> {
   return {
@@ -1201,6 +1208,7 @@ export function emptyMetrics(asOf: unknown = null): Record<string, unknown> {
     dividendYield: null, dividendYieldText: '—',
     distributionYield: null, distributionYieldText: '—',
     yield12M: null, yield12MText: '—',
+    dividendYieldBasis: null,
     secYield: null, secYieldText: '—',
     ...performanceFields(asOf),
   };
@@ -1383,6 +1391,7 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
       distributionYieldText: formatPercent(dividendYield),
       yield12M: dividendYield,
       yield12MText: formatPercent(dividendYield),
+      dividendYieldBasis: dividendYieldBasisFor(dividendYield),
       secYield: null,
       secYieldText: '—',
       ...performanceFields(historyManifest?.asOf),
@@ -1536,7 +1545,9 @@ export async function main(env: Record<string, string | undefined> = process.env
   for (const [ticker, entry] of allEntries) {
     if (updates.has(ticker)) continue;
     const stored = await readJson<Record<string, any>>(path.join(API_ROOT, 'funds', ticker, 'meta.json'));
-    const metrics = withPerformanceFields({ ...emptyMetrics(), ...((entry.metrics as Record<string, unknown> | undefined) ?? {}) }, stored?.history?.asOf);
+    const merged: Record<string, unknown> = { ...emptyMetrics(), ...((entry.metrics as Record<string, unknown> | undefined) ?? {}) };
+    merged.dividendYieldBasis = dividendYieldBasisFor(merged.dividendYield);
+    const metrics = withPerformanceFields(merged, stored?.history?.asOf);
     // a row without a published meta.json has no data file (the hub tolerates null) and no returns to show
     allEntries.set(ticker, stored ? { ...entry, metrics } : { ...entry, dataFile: null, metrics: emptyMetrics() });
   }
