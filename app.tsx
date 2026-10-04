@@ -2191,7 +2191,8 @@ function detailTabKey(tab: ActiveTab): string {
 // 6. Table rendering, sorting & tooltips
 // =========================================================================
 
-function render(): void {
+function render(keepRows = true): void {
+  const anchor = captureViewAnchor();
   setCatalogColumnStyle(false);
   ensureValidTab();
   updateSearchClearBtn();
@@ -2205,6 +2206,8 @@ function render(): void {
   renderStaticLoadSentinel();
   renderFilterControls();
   syncHeadHeight();
+  restoreViewAnchor(anchor, keepRows);
+  lastRenderedTab = state.activeTab;
 }
 
 function animateTableUpdate(): void {
@@ -2212,6 +2215,58 @@ function animateTableUpdate(): void {
   el.tableBody.classList.remove('table-content-enter');
   void el.tableBody.offsetWidth; // reflow to restart the animation
   el.tableBody.classList.add('table-content-enter');
+}
+
+// ---- keep the view where it was across re-renders (filter or search removed, columns changed) ----
+
+type ViewAnchor = { tab: string; top: number; left: number; cols: number; col: number; colOffset: number; rows: { key: string; offset: number }[] };
+let lastRenderedTab = '';
+
+/** Right edge of the sticky leading columns: the first horizontally scrolling column starts here. */
+function stickyEdge(): number {
+  let edge = el.tableScroll.getBoundingClientRect().left;
+  el.tableHead.querySelectorAll('tr:first-child th[class*="sticky-col"]').forEach((th: any) => { edge = Math.max(edge, th.getBoundingClientRect().right); });
+  return edge;
+}
+
+/** Remembers the rows visible under the sticky header (with their offsets) and the first visible scrolling column. */
+function captureViewAnchor(): ViewAnchor {
+  const box = el.tableScroll;
+  const boxRect = box.getBoundingClientRect();
+  const headBottom = el.tableHead.getBoundingClientRect().bottom;
+  const anchor: ViewAnchor = { tab: lastRenderedTab, top: box.scrollTop, left: box.scrollLeft, cols: 0, col: -1, colOffset: 0, rows: [] };
+  for (const tr of Array.from(el.tableBody.rows) as any[]) {
+    const rect = tr.getBoundingClientRect();
+    if (rect.bottom <= headBottom) continue;
+    if (rect.top >= boxRect.bottom || anchor.rows.length >= 40) break;
+    const key = tr.dataset.key || tr.dataset.ticker;
+    if (key) anchor.rows.push({ key, offset: rect.top - headBottom });
+  }
+  const cells = Array.from(el.tableHead.querySelectorAll('tr:first-child th')) as any[];
+  const edge = stickyEdge();
+  anchor.cols = cells.length;
+  anchor.col = cells.findIndex(th => !/sticky-col/.test(th.className) && th.getBoundingClientRect().right > edge + 1);
+  if (anchor.col >= 0) anchor.colOffset = cells[anchor.col].getBoundingClientRect().left - edge;
+  return anchor;
+}
+
+/** Puts the first remembered row that still exists back at its old offset and the same column at its old place; falls back to the top when none of the visible rows survived. */
+function restoreViewAnchor(anchor: ViewAnchor, keepRows: boolean): void {
+  if (anchor.tab !== state.activeTab) return;
+  const box = el.tableScroll;
+  const headBottom = el.tableHead.getBoundingClientRect().bottom;
+  if (keepRows && anchor.rows.length) {
+    const byKey = new Map<string, any>();
+    for (const tr of Array.from(el.tableBody.rows) as any[]) {
+      const key = tr.dataset.key || tr.dataset.ticker;
+      if (key) byKey.set(key, tr);
+    }
+    const hit = anchor.rows.find(row => byKey.has(row.key));
+    box.scrollTop = hit ? box.scrollTop + byKey.get(hit.key).getBoundingClientRect().top - headBottom - hit.offset : 0;
+  } else if (!keepRows) box.scrollTop = anchor.top;
+  const cells = Array.from(el.tableHead.querySelectorAll('tr:first-child th')) as any[];
+  if (anchor.col >= 0 && cells.length === anchor.cols) box.scrollLeft += cells[anchor.col].getBoundingClientRect().left - stickyEdge() - anchor.colOffset;
+  else box.scrollLeft = anchor.left;
 }
 
 function currentQuery(): string {
@@ -2330,7 +2385,7 @@ function bindSortHeaders(): void {
         state.sortDir = ['ticker', 'name', 'category', 'symbol', 'section', 'metric', 'identifier', 'label'].includes(key) ? 'asc' : 'desc';
       }
       rememberSortForCurrentTab();
-      render();
+      render(false);
     });
   });
 }
