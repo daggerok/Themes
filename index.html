@@ -148,6 +148,27 @@
     @keyframes tableRefresh{from{opacity:.32;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
     #table-body.table-content-enter{animation:tableRefresh .22s ease-out}
     @media (prefers-reduced-motion:reduce){#table-body.table-content-enter{animation:none}main.space-y-6 > #selected-tabs-panel{transition:none}main.space-y-6 > #blacklist-panel{transition:none}}
+
+    /* Column filters: the type badge in a header and a row of filter inputs under the headers */
+    .type-badge{flex:none;padding:0 .35rem;border-radius:.3rem;font-size:.6rem;line-height:1rem;font-weight:700;letter-spacing:.03em;border:1px solid transparent;cursor:pointer;opacity:.75;transition:opacity .12s,border-color .12s}
+    .type-badge:hover,.type-badge.is-override{opacity:1;border-color:#94a3b8}
+    .dark .type-badge:hover,.dark .type-badge.is-override{border-color:#64748b}
+    .filter-row th{padding:.3rem .5rem;background:#f8fafc;font-weight:400;text-transform:none;letter-spacing:normal;border-top:1px solid #e2e8f0}
+    .dark .filter-row th{background:#0f172a;border-top-color:#1e293b}
+    #table-scroll .filter-row .catalog-sticky-col,#table-scroll .filter-row .watchlist-sticky-col{top:var(--head-h,2.75rem)}
+    .filter-wrap{position:relative;display:flex;align-items:center}
+    .filter-input{width:100%;min-width:6.5rem;box-sizing:border-box;padding:.2rem 1.4rem .2rem .45rem;border-radius:.4rem;border:1px solid #e2e8f0;background:#fff;color:#334155;font-size:.72rem;line-height:1.1rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .filter-input::placeholder{color:#94a3b8}
+    .filter-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.18)}
+    .filter-input.is-active{border-color:#93c5fd;background:#eff6ff;color:#1d4ed8}
+    .filter-input.is-invalid{border-color:#fda4af;background:#fff1f2;color:#be123c}
+    .filter-clear{position:absolute;right:.3rem;width:1rem;height:1rem;display:flex;align-items:center;justify-content:center;border-radius:9999px;color:#94a3b8;font-size:.65rem;line-height:1;cursor:pointer}
+    .filter-clear:hover{color:#334155;background:#e2e8f0}
+    .dark .filter-input{background:#020617;border-color:#334155;color:#e2e8f0}
+    .dark .filter-input::placeholder{color:#64748b}
+    .dark .filter-input.is-active{background:rgba(30,64,175,.28);border-color:rgba(59,130,246,.5);color:#93c5fd}
+    .dark .filter-input.is-invalid{background:rgba(190,18,60,.18);border-color:rgba(244,63,94,.5);color:#fda4af}
+    .dark .filter-clear:hover{color:#e2e8f0;background:#1e293b}
   </style>
 <style id="catalog-summary-styles">
     #app-subtitle:empty { display: none; }
@@ -236,6 +257,8 @@
             <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
           </div>
 
+          <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
+          <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
           <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
           <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
           <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
