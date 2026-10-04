@@ -94,6 +94,24 @@ describe('controls', () => {
     expect(resolveControls({ SKIP_YAHOO: true }, {}, {}, { SKIP_YAHOO: 'false' }).SKIP_YAHOO).toBe('false');
   });
 
+  test('brand env aliases: THEMES_<NAME> for every control and HISTORICAL_PAGE_SIZE, plain name wins, same validation', () => {
+    const sample: Record<string, string> = { CONCURRENCY: '7', TICKERS: 'BOTT', MAX_RETRIES: '4', HISTORY_RANGE: '5y', SKIP_YAHOO: 'true', TER: '0:1', SEC_UA: 'me me@x.io' };
+    for (const key of CONTROL_NAMES) {
+      const value = sample[key] ?? file[key];
+      expect([key, resolveControls(file, {}, {}, { [`THEMES_${key}`]: value })[key]]).toEqual([key, value]);
+    }
+    expect(resolveControls(file, {}, {}, { HISTORICAL_PAGE_SIZE: '123' }).HISTORY_PAGE_SIZE).toBe('123');
+    expect(resolveControls(file, {}, { CONCURRENCY: '4' }, { THEMES_CONCURRENCY: '7' }).CONCURRENCY).toBe('7');
+    expect(resolveControls(file, {}, {}, { THEMES_CONCURRENCY: '7', CONCURRENCY: '5' }).CONCURRENCY).toBe('5');
+    expect(resolveControls(file, {}, {}, { THEMES_TICKERS: '' }).TICKERS).toBe('');
+    expect(resolveControls(file, {}, {}, { THEMES_TICKERS: 'A', TICKERS: '' }).TICKERS).toBe('');
+    expect(resolveControls(file, {}, {}, { THEMES_HISTORY_PAGE_SIZE: '9', HISTORICAL_PAGE_SIZE: '8' }).HISTORY_PAGE_SIZE).toBe('9');
+    for (const env of [{ THEMES_MAX_RETRIES: '0' }, { THEMES_CONCURRENCY: 'x' }, { HISTORICAL_PAGE_SIZE: '0' }, { THEMES_HISTORY_RANGE: 'forever' }, { THEMES_SEC_UA: 'a\nb' }, { THEMES_TICKERS: 'a\0b' }, { THEMES_VERBOSE: 'maybe' }]) {
+      expect(() => resolveControls(file, {}, {}, env)).toThrow();
+    }
+    expect(readConfig(resolveControls(file, {}, {}, { THEMES_CONCURRENCY: '7', HISTORICAL_PAGE_SIZE: '123' })).concurrency).toBe(7);
+  });
+
   test('strict validation: bad ranges, HISTORY_RANGE, MAX_RETRIES < 1, unknown keys, non-scalars, CR/LF/NUL', () => {
     for (const value of [
       { UNKNOWN: 1 }, { SEC_UA: 'x\nEVIL=yes' }, { SEC_UA: 'x\rfoo' }, { SEC_UA: 'x\0bad' }, { CONCURRENCY: 0 }, { MAX_RETRIES: 0 }, { MAX_RETRIES: -1 },
@@ -170,6 +188,8 @@ describe('controls', () => {
     await child.exited;
     for (const name of CONTROL_NAMES) expect(help).toContain(name);
     expect(help).toContain('HISTORY_RANGE: max or Ny');
+    expect(help).toContain('THEMES_<NAME>');
+    expect(help).toContain('HISTORICAL_PAGE_SIZE');
     expect(file.SEC_UA).toBe('daggerok ETF feed daggerok@gmail.com');
     expect(readConfig({}).secUserAgent).toBe(file.SEC_UA);
     expect(resolveControls(file, { SEC_UA: 'adv' }, { SEC_UA: 'in' }, { SEC_UA: 'protected' }).SEC_UA).toBe('protected');

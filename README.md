@@ -71,7 +71,7 @@ The Themes site catalog supplies current NAV/market price, while the current sou
 
 ### Update controls
 
-Keys of `scripts/update-data.config.json`; also accepted as environment variables and, for the ones without a dedicated workflow input (`SEC_YIELD`, `HISTORY_RANGE`, `SEC_UA`, `VERBOSE`, `USE_SYSTEM_CA`), through `advanced`.
+Keys of `scripts/update-data.config.json`; also accepted as environment variables and, for the ones without a dedicated workflow input (`SEC_YIELD`, `HISTORY_RANGE`, `SEC_UA`, `VERBOSE`, `USE_SYSTEM_CA`), through `advanced`. Every control also reads `THEMES_<NAME>` from the environment (for example `THEMES_CONCURRENCY=7`, `THEMES_TICKERS="BOTT CLOD"`), and `HISTORICAL_PAGE_SIZE` is an alias of `HISTORY_PAGE_SIZE`. Aliases sit in the environment layer: the plain name wins when both are set, an explicitly empty alias counts as set, and validation is the same.
 
 | Control | Default | Meaning |
 | --- | --: | --- |
