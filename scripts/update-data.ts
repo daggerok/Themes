@@ -193,7 +193,7 @@ function outputConfigEntries(config: UpdaterConfig): Array<[string, string]> {
     ['TER', ranges(config.terRange)],
     ['DIVIDEND_YIELD', ranges(config.dividendYieldRange)],
     ['SEC_YIELD', ranges(config.secYieldRange)],
-    ...rangePeriods.flatMap((period) => [
+    ...rangePeriods.flatMap((period): Array<[string, string]> => [
       [`PERFORMANCE_${period}`, ranges(config.performanceRanges[period])],
       [`TOTAL_RETURN_${period}`, ranges(config.totalReturnRanges[period])],
     ]),
