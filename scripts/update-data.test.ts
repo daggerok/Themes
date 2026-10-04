@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
   CONTROL_NAMES, HttpError, PROXY_PREFIX, PROXY_SLEEP_MS, RETURNS_BASIS,
-  calculateReturn, createProxyGate, createRequestGate, deriveReturns, emptyMetrics, fetchOfficialText, fetchWithRetry,
+  calculateReturn, createProxyGate, createRequestGate, deriveReturns, dividendYieldBasisFor, emptyMetrics, fetchOfficialText, fetchWithRetry,
   formatDividendFrequency, inferDistributionFrequency, installSystemCa, isCertError, isFlatHistory, main, parseAumRange,
   parseCsv, parseNportXml, parseRange, parseThemesCatalog, parseThemesCatalogMarkdown, parseThemesHoldingsCsv,
   parseYahooChart, performanceFields, proxyEligible, readConfig, resetIssuerState, resolveControls, retainedLabel,
@@ -307,6 +307,13 @@ describe('metrics', () => {
     for (const key of ['distributionYield', 'dividendYield', 'yield12M', 'secYieldText', 'returnsBasis', 'performanceAsOf']) expect(key in row.metrics).toBe(true);
     expect(row.metrics.returnsBasis).toBe(RETURNS_BASIS);
     expect(Object.values(row.metrics).filter((value) => value === 0)).toEqual([]);
+    expect(row.metrics.dividendYieldBasis).toBeNull();
+  });
+
+  test('dividendYieldBasis is computed-trailing-12m exactly when dividendYield is a number', () => {
+    expect([dividendYieldBasisFor(5), dividendYieldBasisFor(0.12)]).toEqual(['computed-trailing-12m', 'computed-trailing-12m']);
+    expect([dividendYieldBasisFor(null), dividendYieldBasisFor(undefined), dividendYieldBasisFor('5')]).toEqual([null, null, null]);
+    expect(emptyMetrics().dividendYieldBasis).toBeNull();
   });
 
   test('distribution frequency: None fallback, explicit Unknown kept, quarterly cadence inferred', () => {
@@ -400,6 +407,8 @@ describe('pipeline', () => {
     for (const key of ['ytd', 'tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y', 'dividendYield', 'yield12M']) expect(by.FLT.metrics[key]).toBeNull();
     for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr3y', 'cagr5y', 'cagr10y']) expect(by.YNG.metrics[key]).toBeNull();
     expect(by.YNG.metrics.dividendYield).not.toBeNull();
+    expect(by.YNG.metrics.dividendYieldBasis).toBe('computed-trailing-12m');
+    for (const row of Object.values(by) as any[]) expect(row.metrics.dividendYieldBasis === null).toBe(row.metrics.dividendYield === null);
     for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr10y']) expect(by.OLD.metrics[key]).not.toBeNull();
     expect(by.OLD.metrics.tr10y).not.toBe(by.OLD.metrics.tr5y);
     expect([by.NOHOLD.dataFile, by.OLD.dataFile]).toEqual([null, './funds/OLD/meta.json']);
