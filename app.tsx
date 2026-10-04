@@ -295,6 +295,775 @@ const fundMetaCache: Map<string, any> = new Map();
 const sheetState: Map<string, SheetEntry> = new Map();
 let sheetGeneration = 0;
 
+// =========================================================================
+// 3b. Column types, auto-detection and the column filter engine (pure, no DOM)
+// =========================================================================
+
+/**
+ * Every column of a table has a type that decides how its cells are compared:
+ * text, number, percentage, money, date, date and time, or time of day. The type
+ * is detected from a sample of the cell texts (80% of the filled cells must
+ * agree) and can be overridden per column with the badge in the header.
+ *
+ * Filter expressions (one input under every column header):
+ *   - the same grammar in every mode: space = AND, comma = OR, a leading ! = NOT,
+ *     ? = the value is empty or unavailable, !? = it has a value
+ *   - text: word (contains), "two words", =exact, ^starts, ends$, /regex/
+ *   - number, percentage, money: >10 >=10 <50 <=50 =22 !=22, ranges 10..50 / ..50 / 10..,
+ *     K M B T suffixes (>10B), an optional $ or %
+ *   - date, date and time: the same operators and ranges over dates written as 2024,
+ *     2024-06, 2024-06-15 or 2024-06-15T14:30; a partial date is the whole period
+ *     (=2024 is the whole year), keywords today, yesterday, tomorrow, now and relative
+ *     offsets -7d, +2w, -3m, -1y
+ *   - time: >09:30, 09:30..16:00, =12:00
+ *   Values that are unavailable match only ? and negated conditions.
+ */
+type ColType = 'string' | 'number' | 'percent' | 'currency' | 'date' | 'datetime' | 'time';
+
+const ALL_COL_TYPES: ColType[] = ['string', 'number', 'percent', 'currency', 'date', 'datetime', 'time'];
+
+const COL_TYPE_LABELS: Record<ColType, string> = { string: 'ABC', number: '123', percent: '%', currency: '$', date: 'D', datetime: 'DT', time: 'T' };
+
+const COL_TYPE_NAMES: Record<ColType, string> = { string: 'text', number: 'number', percent: 'percentage', currency: 'money', date: 'date', datetime: 'date and time', time: 'time of day' };
+
+const COL_TYPE_CLASSES: Record<ColType, string> = {
+  string: 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300',
+  number: 'bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300',
+  percent: 'bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300',
+  currency: 'bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300',
+  date: 'bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300',
+  datetime: 'bg-fuchsia-100 dark:bg-fuchsia-900/50 text-fuchsia-700 dark:text-fuchsia-300',
+  time: 'bg-sky-100 dark:bg-sky-900/50 text-sky-700 dark:text-sky-300',
+};
+
+const COL_TYPE_PLACEHOLDERS: Record<ColType, string> = {
+  string: 'text, !not, "a b"', number: '>10 <50, =22', percent: '>5 <20, 10..15', currency: '>1B, ..500M', date: '>2024-01, -30d..', datetime: '>2024-06-01T09:30', time: '>09:30 <16:00',
+};
+
+const COL_TYPE_HELP: Record<ColType, string> = {
+  string: 'Text filter: space = AND, comma = OR, !word = NOT, "two words" = phrase, =exact, ^starts, ends$, /regex/, ? = empty, !? = has a value.',
+  number: 'Number filter: >10 >=10 <50 <=50 =22 !=22, ranges 10..50 / ..50 / 10.., suffixes K M B T, space = AND, comma = OR, ! = NOT, ? = unavailable, !? = available.',
+  percent: 'Percentage filter: >5 <20, 10..15, =12.5 (rounds like the shown value), space = AND, comma = OR, ! = NOT, ? = unavailable, !? = available.',
+  currency: 'Money filter: >1B, ..500M, 10..20, suffixes K M B T, an optional $, space = AND, comma = OR, ! = NOT, ? = unavailable, !? = available.',
+  date: 'Date filter: >2024-06-01, 2024 (the whole year), 2024-06 (the whole month), 2024-01..2024-06, today, yesterday, -7d, +2w, -3m, -1y, space = AND, comma = OR, ! = NOT, ? = empty.',
+  datetime: 'Date and time filter: >2024-06-01T09:30, 2024-06-01 (the whole day), 2024-01..2024-06, today, -7d.., space = AND, comma = OR, ! = NOT, ? = empty.',
+  time: 'Time filter: >09:30, 09:30..16:00, =12:00 (the whole minute), space = AND, comma = OR, ! = NOT, ? = empty.',
+};
+
+const FILTER_DAY_MS = 86400000;
+const EMPTY_CELLS = new Set(['', '-', '--', '–', '—', 'n/a', 'na', 'null', 'none', 'nan']);
+const TYPE_SAMPLE_SIZE = 60;
+const TYPE_AGREEMENT = 0.8;
+const MONTH_ABBR = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+const MONTH_FULL = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+const MAGNITUDES: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9, t: 1e12 };
+
+function isEmptyCell(value: string): boolean {
+  return EMPTY_CELLS.has(value.trim().toLowerCase());
+}
+
+function monthFromName(name: string): number {
+  const lower = name.toLowerCase().replace(/\.$/, '');
+  const abbr = MONTH_ABBR.indexOf(lower === 'sept' ? 'sep' : lower);
+  return abbr >= 0 ? abbr : MONTH_FULL.indexOf(lower);
+}
+
+/** UTC milliseconds of a calendar date; NaN when the date does not exist (2024-02-30). */
+function utcMs(year: number, month: number, day: number): number {
+  const time = Date.UTC(year, month - 1, day);
+  const date = new Date(time);
+  return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day ? time : NaN;
+}
+
+/** Date in one of the common written forms, as UTC midnight milliseconds; NaN when the text is not a date. */
+function parseDatePart(text: string): number {
+  const value = text.trim();
+  let m = /^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/.exec(value);
+  if (m) return utcMs(Number(m[1]), Number(m[2]), Number(m[3]));
+  m = /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/.exec(value); // US month/day/year unless the first number cannot be a month
+  if (m) {
+    const first = Number(m[1]);
+    const second = Number(m[2]);
+    const year = m[3].length === 2 ? (Number(m[3]) < 70 ? 2000 : 1900) + Number(m[3]) : Number(m[3]);
+    return first > 12 ? utcMs(year, second, first) : utcMs(year, first, second);
+  }
+  m = /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.exec(value);
+  if (m) return utcMs(Number(m[3]), Number(m[2]), Number(m[1]));
+  m = /^(\d{1,2})[-\s]([A-Za-z]{3,9})\.?[-\s,]*(\d{4})$/.exec(value);
+  if (m && monthFromName(m[2]) >= 0) return utcMs(Number(m[3]), monthFromName(m[2]) + 1, Number(m[1]));
+  m = /^([A-Za-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})$/.exec(value);
+  if (m && monthFromName(m[1]) >= 0) return utcMs(Number(m[3]), monthFromName(m[1]) + 1, Number(m[2]));
+  return NaN;
+}
+
+/** Time of day in seconds since midnight (24-hour or AM/PM); NaN when the text is not a time. */
+function parseTimePart(text: string): number {
+  const m = /^(\d{1,2}):(\d{2})(?::(\d{2})(?:[.,](\d+))?)?\s*([AaPp][Mm])?$/.exec(text.trim());
+  if (!m) return NaN;
+  let hours = Number(m[1]);
+  const minutes = Number(m[2]);
+  const seconds = m[3] === undefined ? 0 : Number(m[3]);
+  if (m[5]) {
+    if (hours < 1 || hours > 12) return NaN;
+    hours = (hours % 12) + (m[5].toLowerCase() === 'pm' ? 12 : 0);
+  }
+  if (hours > 23 || minutes > 59 || seconds > 59) return NaN;
+  return hours * 3600 + minutes * 60 + seconds + (m[4] ? Number(`0.${m[4]}`) : 0);
+}
+
+type Temporal = { kind: 'date' | 'datetime' | 'time'; value: number };
+
+/** A date (UTC midnight ms), a date with a time (UTC ms, an offset such as Z or +02:00 is honored) or a time of day (seconds). */
+function parseTemporal(raw: string): Temporal | null {
+  const text = raw.trim();
+  if (!text) return null;
+  const time = parseTimePart(text);
+  if (Number.isFinite(time)) return { kind: 'time', value: time };
+  const date = parseDatePart(text);
+  if (Number.isFinite(date)) return { kind: 'date', value: date };
+  const m = /^(.+?)(?:T|\s+)(\d{1,2}:\d{2}(?::\d{2}(?:[.,]\d+)?)?(?:\s*[AaPp][Mm])?)\s*(Z|[+-]\d{2}:?\d{2})?$/.exec(text);
+  if (!m) return null;
+  const day = parseDatePart(m[1]);
+  const clock = parseTimePart(m[2]);
+  if (!Number.isFinite(day) || !Number.isFinite(clock)) return null;
+  let ms = day + clock * 1000;
+  if (m[3] && m[3] !== 'Z') {
+    const digits = m[3].slice(1).replace(':', '');
+    ms -= (m[3][0] === '-' ? -1 : 1) * (Number(digits.slice(0, 2)) * 60 + Number(digits.slice(2))) * 60000;
+  }
+  return { kind: 'datetime', value: ms };
+}
+
+type Magnitude = { value: number; decimals: number; scale: number; percent: boolean; currency: boolean };
+
+/** $1,234.50, (12.5), -3.2%, 5B, +1.2 pp, 12x: the number with the precision and the unit it was written with. */
+function parseMagnitude(raw: string): Magnitude | null {
+  let text = raw.trim();
+  let negative = false;
+  const paren = /^\((.*)\)$/.exec(text);
+  if (paren) { negative = true; text = paren[1].trim(); }
+  const m = /^([+-]?)\s*([$€£¥]?)\s*([+-]?)\s*(\d[\d,]*(?:\.\d*)?|\.\d+)\s*([kmbtKMBT])?\s*(%|pp|bp|x)?$/.exec(text);
+  if (!m) return null;
+  if (m[1] === '-' || m[3] === '-') negative = !negative;
+  const digits = m[4].replace(/,/g, '');
+  const scale = m[5] ? MAGNITUDES[m[5].toLowerCase()] : 1;
+  const value = Number(digits) * scale;
+  if (!Number.isFinite(value)) return null;
+  return { value: negative ? -value : value, decimals: digits.includes('.') ? digits.length - digits.indexOf('.') - 1 : 0, scale, percent: m[6] === '%', currency: m[2] !== '' };
+}
+
+/** The sortable and filterable number behind a cell text for its column type; NaN when there is none. */
+function parseCellValue(text: string, type: ColType): number {
+  if (type === 'string') return NaN;
+  if (type === 'number' || type === 'percent' || type === 'currency') {
+    const magnitude = parseMagnitude(text);
+    return magnitude ? magnitude.value : NaN;
+  }
+  const temporal = parseTemporal(text);
+  if (!temporal) return NaN;
+  if (type === 'time') return temporal.kind === 'time' ? temporal.value : NaN;
+  if (temporal.kind === 'time') return NaN;
+  if (type === 'date') return Math.floor(temporal.value / 86400000) * 86400000;
+  return temporal.value;
+}
+
+/** Detects the type of a column from sample cell texts: 80% of the filled cells must agree, otherwise text. */
+function detectColType(samples: string[]): ColType {
+  const values = samples.map(sample => String(sample ?? '').trim()).filter(value => !isEmptyCell(value)).slice(0, TYPE_SAMPLE_SIZE);
+  if (!values.length) return 'string';
+  const need = Math.ceil(values.length * TYPE_AGREEMENT);
+  const count = { date: 0, datetime: 0, time: 0, percent: 0, currency: 0, number: 0 };
+  values.forEach(value => {
+    const temporal = parseTemporal(value);
+    if (temporal) { count[temporal.kind] += 1; return; }
+    const magnitude = parseMagnitude(value);
+    if (!magnitude) return;
+    if (magnitude.percent) count.percent += 1;
+    else if (magnitude.currency) count.currency += 1;
+    else count.number += 1;
+  });
+  if (count.date + count.datetime >= need) return count.datetime > 0 ? 'datetime' : 'date';
+  if (count.time >= need) return 'time';
+  if (count.percent >= need) return 'percent';
+  if (count.currency >= need || count.currency + count.number >= need && count.currency > 0) return 'currency';
+  if (count.number >= need) return 'number';
+  return 'string';
+}
+
+// ---- filter expressions ---------------------------------------------------------
+
+type FilterToken = { op: string; text: string; neg: boolean; quoted: boolean; regex: boolean; flags: string };
+
+/** Splits an expression into AND tokens grouped by commas (OR groups); quotes keep spaces, !/>= prefixes may precede a quote. */
+function tokenizeFilter(input: string): FilterToken[][] {
+  const groups: FilterToken[][] = [[]];
+  let i = 0;
+  const length = input.length;
+  while (i < length) {
+    const char = input[i];
+    if (char === ' ' || char === '\t') { i += 1; continue; }
+    if (char === ',') { groups.push([]); i += 1; continue; }
+    let neg = false;
+    if (char === '!') { neg = true; i += 1; }
+    let prefix = '';
+    const op = /^(>=|<=|!=|==|=|>|<|\^)/.exec(input.slice(i));
+    if (op) { prefix = op[1]; i += prefix.length; }
+    let text = '';
+    let quoted = false;
+    let regex = false;
+    let flags = '';
+    if (input[i] === '"' || input[i] === "'") {
+      const quote = input[i];
+      quoted = true;
+      i += 1;
+      while (i < length && input[i] !== quote) { text += input[i]; i += 1; }
+      if (i < length) i += 1;
+    } else if (input[i] === '/' && prefix === '') {
+      const end = input.indexOf('/', i + 1);
+      if (end > i) {
+        regex = true;
+        text = input.slice(i + 1, end);
+        i = end + 1;
+        while (i < length && /[a-z]/i.test(input[i])) { flags += input[i]; i += 1; }
+      }
+    }
+    if (!quoted && !regex) {
+      while (i < length && input[i] !== ' ' && input[i] !== '\t' && input[i] !== ',') { text += input[i]; i += 1; }
+    }
+    const token = { op: prefix, text, neg, quoted, regex, flags };
+    if (token.text !== '' || token.op !== '' || token.neg || token.quoted || token.regex) groups[groups.length - 1].push(token);
+  }
+  return groups.filter(group => group.length > 0);
+}
+
+type Interval = { lo: number; hi: number };
+type Condition =
+  | { kind: 'empty'; neg: boolean }
+  | { kind: 'text'; mode: 'contains' | 'exact' | 'starts' | 'ends' | 'regex'; value: string; re: RegExp | null; neg: boolean }
+  | { kind: 'cmp'; op: '=' | '>' | '>=' | '<' | '<=' | 'range'; a: Interval | null; b: Interval | null; temporal: boolean; neg: boolean };
+
+type CompiledFilter = { ok: true; test: (num: number, text: string) => boolean } | { ok: false; error: string };
+
+function startOfUtcDay(ms: number): number {
+  return Math.floor(ms / FILTER_DAY_MS) * FILTER_DAY_MS;
+}
+
+/** A written date or time as the half-open interval [lo, hi) it denotes (2024 is the whole year); null when it is not valid for the column type. */
+function temporalInterval(text: string, type: ColType, now: number): Interval | null {
+  const word = text.trim().toLowerCase();
+  if (type === 'time') {
+    if (word === 'now') { const t = (now % FILTER_DAY_MS) / 1000; return { lo: t, hi: t + 1 }; }
+    const t = parseTimePart(word);
+    if (!Number.isFinite(t)) return null;
+    return { lo: t, hi: t + (/^\d{1,2}:\d{2}(?:\s*[ap]m)?$/.test(word) ? 60 : 1) };
+  }
+  const today = startOfUtcDay(now);
+  if (word === 'now') return { lo: now, hi: now + 1 };
+  if (word === 'today') return { lo: today, hi: today + FILTER_DAY_MS };
+  if (word === 'yesterday') return { lo: today - FILTER_DAY_MS, hi: today };
+  if (word === 'tomorrow') return { lo: today + FILTER_DAY_MS, hi: today + 2 * FILTER_DAY_MS };
+  const relative = /^([+-]?)(\d+)\s*([dwmy])$/.exec(word);
+  if (relative) {
+    const amount = (relative[1] === '-' ? -1 : 1) * Number(relative[2]);
+    const base = new Date(today);
+    if (relative[3] === 'd') base.setUTCDate(base.getUTCDate() + amount);
+    else if (relative[3] === 'w') base.setUTCDate(base.getUTCDate() + amount * 7);
+    else if (relative[3] === 'm') base.setUTCMonth(base.getUTCMonth() + amount);
+    else base.setUTCFullYear(base.getUTCFullYear() + amount);
+    const lo = base.getTime();
+    return { lo, hi: lo + FILTER_DAY_MS };
+  }
+  let m = /^(\d{4})$/.exec(word);
+  if (m) return { lo: utcMs(Number(m[1]), 1, 1), hi: utcMs(Number(m[1]) + 1, 1, 1) };
+  m = /^(\d{4})[-/.](\d{1,2})$/.exec(word);
+  if (m) {
+    const year = Number(m[1]);
+    const month = Number(m[2]);
+    if (month < 1 || month > 12) return null;
+    return { lo: utcMs(year, month, 1), hi: month === 12 ? utcMs(year + 1, 1, 1) : utcMs(year, month + 1, 1) };
+  }
+  const temporal = parseTemporal(text);
+  if (!temporal || temporal.kind === 'time') return null;
+  if (temporal.kind === 'date') return { lo: temporal.value, hi: temporal.value + FILTER_DAY_MS };
+  if (type === 'date') { const day = startOfUtcDay(temporal.value); return { lo: day, hi: day + FILTER_DAY_MS }; }
+  return { lo: temporal.value, hi: temporal.value + (/\d{1,2}:\d{2}:\d{2}/.test(text) ? 1000 : 60000) };
+}
+
+/** A written number as an interval: [value - half, value + half) for equality (matches the precision it was written with), the exact point otherwise. */
+function numericInterval(text: string): Interval | null {
+  const magnitude = parseMagnitude(text);
+  if (!magnitude) return null;
+  const half = 0.5 * 10 ** -magnitude.decimals * magnitude.scale;
+  return { lo: magnitude.value - half, hi: magnitude.value + half };
+}
+
+function pointOf(interval: Interval): number {
+  return (interval.lo + interval.hi) / 2;
+}
+
+function compileCondition(token: FilterToken, type: ColType, now: number): Condition | string {
+  const text = token.text;
+  if (!token.quoted && !token.regex && token.op === '' && text === '?') return { kind: 'empty', neg: token.neg };
+  if (type === 'string') {
+    if (token.regex) {
+      try { return { kind: 'text', mode: 'regex', value: text, re: new RegExp(text, token.flags === '' ? 'i' : token.flags), neg: token.neg }; } catch { return `invalid regular expression /${text}/`; }
+    }
+    const lower = text.toLowerCase();
+    if (token.op === '=' || token.op === '==') return { kind: 'text', mode: 'exact', value: lower, re: null, neg: token.neg };
+    if (token.op === '^') return { kind: 'text', mode: 'starts', value: lower, re: null, neg: token.neg };
+    if (token.op === '' && !token.quoted && lower.length > 1 && lower.endsWith('$')) return { kind: 'text', mode: 'ends', value: lower.slice(0, -1), re: null, neg: token.neg };
+    return { kind: 'text', mode: 'contains', value: token.op + lower, re: null, neg: token.neg };
+  }
+  const temporal = type === 'date' || type === 'datetime' || type === 'time';
+  const literal = (value: string): Interval | null => (temporal ? temporalInterval(value, type, now) : numericInterval(value));
+  const range = token.op === '' ? /^(.*?)\.\.(.*)$/.exec(text) : null;
+  if (range && (range[1] !== '' || range[2] !== '')) {
+    const a = range[1] === '' ? null : literal(range[1]);
+    const b = range[2] === '' ? null : literal(range[2]);
+    if (range[1] !== '' && !a) return `cannot read "${range[1]}" as ${COL_TYPE_NAMES[type]}`;
+    if (range[2] !== '' && !b) return `cannot read "${range[2]}" as ${COL_TYPE_NAMES[type]}`;
+    return { kind: 'cmp', op: 'range', a, b, temporal, neg: token.neg };
+  }
+  const interval = literal(text);
+  if (!interval) return `cannot read "${text}" as ${COL_TYPE_NAMES[type]}`;
+  const op = token.op === '' || token.op === '==' ? '=' : token.op;
+  if (op === '=' || op === '>' || op === '>=' || op === '<' || op === '<=') return { kind: 'cmp', op, a: interval, b: null, temporal, neg: token.neg };
+  return `unknown operator "${token.op}"`;
+}
+
+function evalCondition(condition: Condition, type: ColType, num: number, text: string): boolean {
+  if (condition.kind === 'empty') {
+    const empty = type === 'string' ? isEmptyCell(text) : Number.isNaN(num);
+    return condition.neg ? !empty : empty;
+  }
+  if (condition.kind === 'text') {
+    let hit: boolean;
+    if (condition.mode === 'exact') hit = text === condition.value;
+    else if (condition.mode === 'starts') hit = text.startsWith(condition.value);
+    else if (condition.mode === 'ends') hit = text.endsWith(condition.value);
+    else if (condition.mode === 'regex' && condition.re) hit = condition.re.test(text);
+    else hit = text.includes(condition.value);
+    return condition.neg ? !hit : hit;
+  }
+  if (Number.isNaN(num)) return condition.neg;
+  const a = condition.a;
+  const b = condition.b;
+  let hit = false;
+  if (condition.op === 'range') {
+    hit = (a === null || num >= (condition.temporal ? a.lo : pointOf(a))) && (b === null || (condition.temporal ? num < b.hi : num <= pointOf(b)));
+  } else if (a) {
+    if (condition.op === '=') hit = num >= a.lo && num < a.hi;
+    else if (condition.temporal) hit = condition.op === '>' ? num >= a.hi : condition.op === '>=' ? num >= a.lo : condition.op === '<' ? num < a.lo : num < a.hi;
+    else hit = condition.op === '>' ? num > pointOf(a) : condition.op === '>=' ? num >= pointOf(a) : condition.op === '<' ? num < pointOf(a) : num <= pointOf(a);
+  }
+  return condition.neg ? !hit : hit;
+}
+
+/** Compiles a filter expression for a column type. `text` passed to test() must be lower-case; `num` is NaN when unavailable. Null for an empty expression. */
+function compileFilter(input: string, type: ColType, now: number = Date.now()): CompiledFilter | null {
+  if (input.trim() === '') return null;
+  const groups = tokenizeFilter(input);
+  if (!groups.length) return null;
+  const compiled: Condition[][] = [];
+  for (const group of groups) {
+    const conditions: Condition[] = [];
+    for (const token of group) {
+      const condition = compileCondition(token, type, now);
+      if (typeof condition === 'string') return { ok: false, error: condition };
+      conditions.push(condition);
+    }
+    compiled.push(conditions);
+  }
+  return { ok: true, test: (num: number, text: string) => compiled.some(group => group.every(condition => evalCondition(condition, type, num, text))) };
+}
+
+
+// =========================================================================
+// 3c. Column filters: state, header badges, the filter row and its events
+//     (the expression grammar and the type detection are in 3b above)
+// =========================================================================
+
+/**
+ * One filterable column of a table. `key` is the sort key of the column header (the key passed to
+ * sortHeader), `text` the cell text as the table shows it (also the sample for the type detection),
+ * `value` the exact number behind a numeric cell (so a filter compares full precision, not the
+ * rounded text) and `extraClass` the classes of a horizontally pinned column.
+ */
+type FilterColumn = {
+  key: string;
+  label: string;
+  numeric: boolean;
+  text: (row: any) => string;
+  value?: (row: any) => number | null | undefined;
+  extraClass?: string;
+};
+
+const FILTER_STORAGE_PREFIX = 'themes'; // the app's localStorage prefix: the same words that start THEME_KEY
+const COLUMN_FILTERS_KEY = `${FILTER_STORAGE_PREFIX}-column-filters`;
+const COLUMN_TYPES_KEY = `${FILTER_STORAGE_PREFIX}-column-types`;
+const SHOW_FILTERS_KEY = `${FILTER_STORAGE_PREFIX}-show-filters`;
+const FILTER_DEBOUNCE_MS = 250;
+
+/** scope (catalog, watchlist, holdings, history, distributions) -> column key -> expression / type chosen with the header badge */
+const columnFilterState: { filters: Record<string, Record<string, string>>; typeOverrides: Record<string, Record<string, ColType>>; show: boolean } = { filters: {}, typeOverrides: {}, show: true };
+
+/** What the last render of a scope computed: the columns, the types in use and the detected types (header badges read it). */
+const filterInfo: Record<string, { columns: FilterColumn[]; types: ColType[]; detected: ColType[] }> = {};
+
+const filterTimers: Map<string, any> = new Map();
+let suppressTableAnimation = false;
+
+function filterStorageGet(key: string): string | null {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+
+function filterStorageSet(key: string, value: string): void {
+  try { localStorage.setItem(key, value); } catch { /* quota or private mode */ }
+}
+
+function filterStorageRemove(key: string): void {
+  try { localStorage.removeItem(key); } catch { /* blocked storage */ }
+}
+
+/** Which set of filters belongs to the shown table; none for the overview and the empty states. */
+function currentFilterScope(): string {
+  if (state.activeTab === 'watchlist') return 'watchlist';
+  if (isEtfCatalogTab(state.activeTab)) return 'catalog';
+  const key = detailTabKey(state.activeTab);
+  return isDetailTab(state.activeTab) && (key === 'holdings' || key === 'history' || key === 'distributions') ? key : '';
+}
+
+function filterExpressionFor(scope: string, key: string): string {
+  const map = columnFilterState.filters[scope];
+  return map && typeof map[key] === 'string' ? map[key] : '';
+}
+
+function typeOverrideFor(scope: string, key: string): ColType | undefined {
+  const map = columnFilterState.typeOverrides[scope];
+  return map ? map[key] : undefined;
+}
+
+/** Signature of a scope's filters and type overrides, for the memoized views. */
+function columnFilterSig(scope: string): string {
+  return JSON.stringify([columnFilterState.filters[scope] || {}, columnFilterState.typeOverrides[scope] || {}, Math.floor(Date.now() / 86400000)]);
+}
+
+/**
+ * Applies the column filters of a scope to rows and records the column types for the header. The
+ * types are detected from `sample` (the rows before any search or filter), so a filter never changes
+ * the type of its own column. A filter whose expression does not parse is ignored (the input shows why).
+ */
+function applyColumnFilters(scope: string, rows: any[], columns: FilterColumn[], sample: any[] = rows): any[] {
+  const detected = columns.map(col => {
+    const texts: string[] = [];
+    for (let i = 0; i < sample.length && texts.length < TYPE_SAMPLE_SIZE; i++) {
+      const text = col.text(sample[i]);
+      if (!isEmptyCell(text)) texts.push(text);
+    }
+    return detectColType(texts);
+  });
+  const types = columns.map((col, i) => typeOverrideFor(scope, col.key) || detected[i]);
+  filterInfo[scope] = { columns, types, detected };
+  const active: Array<{ col: FilterColumn; type: ColType; test: (num: number, text: string) => boolean }> = [];
+  columns.forEach((col, i) => {
+    const expression = filterExpressionFor(scope, col.key);
+    if (!expression.trim()) return;
+    const compiled = compileFilter(expression, types[i]);
+    if (compiled && compiled.ok) active.push({ col, type: types[i], test: compiled.test });
+  });
+  if (!active.length) return rows;
+  return rows.filter(row => active.every(filter => {
+    if (filter.type === 'string') return filter.test(NaN, filter.col.text(row).toLowerCase());
+    const numeric = filter.type === 'number' || filter.type === 'percent' || filter.type === 'currency';
+    if (numeric && filter.col.value) {
+      const raw = filter.col.value(row);
+      return filter.test(typeof raw === 'number' && Number.isFinite(raw) ? raw : NaN, '');
+    }
+    return filter.test(parseCellValue(filter.col.text(row), filter.type), '');
+  }));
+}
+
+/** Columns of a header-driven sheet (holdings, history, distributions): the cells are the row's `col0..colN` strings. */
+function sheetFilterColumns(headers: string[], numericHeaders: string[]): FilterColumn[] {
+  return headers.map((header, index) => ({
+    key: `col${index}`,
+    label: header || `Col ${index + 1}`,
+    numeric: numericHeaders.includes(header),
+    text: (row: any) => String(row[`col${index}`] ?? ''),
+  }));
+}
+
+function activeFilterCount(scope: string): number {
+  const info = filterInfo[scope];
+  const keys = info ? info.columns.map(col => col.key) : Object.keys(columnFilterState.filters[scope] || {});
+  return keys.filter(key => filterExpressionFor(scope, key).trim() !== '').length;
+}
+
+/** Header badge with the column type (auto-detected or set by the user); click cycles the type, Shift+click returns to auto-detection. */
+function typeBadgeHtml(scope: string, key: string, type: ColType, detected: ColType): string {
+  const overridden = type !== detected;
+  const title = `Column type: ${COL_TYPE_NAMES[type]} (${overridden ? 'set by you, detected: ' + COL_TYPE_NAMES[detected] : 'auto-detected'}). Click to cycle the type, Shift+click to return to auto-detection.`;
+  return `<button type="button" data-type-col="${escapeHtml(key)}" data-filter-scope="${escapeHtml(scope)}" title="${escapeHtml(title)}" class="type-badge ${COL_TYPE_CLASSES[type]}${overridden ? ' is-override' : ''}">${COL_TYPE_LABELS[type]}</button>`;
+}
+
+/** The type badge of a column of the table being rendered (empty for tables without filters). */
+function filterBadgeFor(key: string): string {
+  const scope = currentFilterScope();
+  const info = filterInfo[scope];
+  if (!info) return '';
+  const index = info.columns.findIndex(col => col.key === key);
+  return index < 0 ? '' : typeBadgeHtml(scope, key, info.types[index], info.detected[index]);
+}
+
+/** The row of filter inputs under the column headers; a column whose expression does not parse shows the reason in red. */
+function filterRowHtml(scope: string, info: { columns: FilterColumn[]; types: ColType[] }, leading: string): string {
+  return `<tr class="filter-row">${leading}${info.columns.map((col, i) => {
+    const expression = filterExpressionFor(scope, col.key);
+    const active = expression.trim() !== '';
+    const compiled = active ? compileFilter(expression, info.types[i]) : null;
+    const error = compiled && !compiled.ok ? compiled.error : '';
+    const help = `${error ? 'Cannot apply this filter: ' + error + '. ' : ''}${COL_TYPE_HELP[info.types[i]]}`;
+    return `<th class="filter-cell${col.extraClass ? ' ' + col.extraClass : ''}"><div class="filter-wrap"><input type="text" data-filter-col="${escapeHtml(col.key)}" data-filter-scope="${escapeHtml(scope)}" value="${escapeHtml(expression)}" placeholder="${escapeHtml(COL_TYPE_PLACEHOLDERS[info.types[i]])}" spellcheck="false" autocomplete="off" aria-label="Filter ${escapeHtml(col.label)}" title="${escapeHtml(help)}" class="filter-input${active ? ' is-active' : ''}${error ? ' is-invalid' : ''}" />${active ? `<button type="button" data-clear-filter="${escapeHtml(col.key)}" data-filter-scope="${escapeHtml(scope)}" class="filter-clear" title="Clear this filter" aria-label="Clear the ${escapeHtml(col.label)} filter">✕</button>` : ''}</div></th>`;
+  }).join('')}</tr>`;
+}
+
+/** Called after a table head is written: adds the filter row for the shown scope (the catalog has the # and Use cells in front). */
+function appendFilterRow(): void {
+  const scope = currentFilterScope();
+  const info = filterInfo[scope];
+  if (!info || !columnFilterState.show) return;
+  const leading = scope === 'catalog'
+    ? '<th class="filter-cell"></th><th class="filter-cell catalog-sticky-col catalog-sticky-use"><div class="flex items-center justify-center gap-1 text-slate-400 dark:text-slate-500 text-[0.65rem] uppercase tracking-wider"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>filter</div></th>'
+    : '<th class="filter-cell"></th>';
+  el.tableHead.insertAdjacentHTML('beforeend', filterRowHtml(scope, info, leading));
+}
+
+function renderFilterControls(): void {
+  const button: any = document.getElementById('filters-btn');
+  const clear: any = document.getElementById('clear-filters-btn');
+  const badge: any = document.getElementById('filters-badge');
+  const summary: any = document.getElementById('filters-summary');
+  if (!button || !clear || !badge || !summary) return;
+  const scope = currentFilterScope();
+  const count = scope ? activeFilterCount(scope) : 0;
+  button.disabled = !scope;
+  button.setAttribute('aria-pressed', String(columnFilterState.show));
+  summary.textContent = columnFilterState.show ? 'on' : 'off';
+  badge.hidden = count === 0;
+  badge.textContent = String(count);
+  clear.hidden = count === 0;
+}
+
+/** The filter row sticks right below the header row: tell the CSS how tall the first row is. */
+function syncHeadHeight(): void {
+  const first = el.tableHead.querySelector('tr');
+  if (first) el.tableScroll.style.setProperty('--head-h', `${first.getBoundingClientRect().height}px`);
+}
+
+/** Re-renders after a filter change and puts the caret back into the filter input that was being edited. */
+function rerenderKeepingFilterFocus(): void {
+  const active: any = document.activeElement;
+  const key = active && active.dataset ? active.dataset.filterCol : undefined;
+  const scope = active && active.dataset ? active.dataset.filterScope : undefined;
+  const caret = key !== undefined && typeof active.selectionStart === 'number' ? active.selectionStart : 0;
+  suppressTableAnimation = true;
+  render();
+  suppressTableAnimation = false;
+  if (key === undefined) return;
+  const next: any = [...el.tableHead.querySelectorAll('input[data-filter-col]')].find((node: any) => node.dataset.filterCol === key && node.dataset.filterScope === scope);
+  if (next) { next.focus(); try { next.setSelectionRange(caret, caret); } catch { /* not a text input */ } }
+}
+
+function persistColumnFilters(): void {
+  const clean: Record<string, Record<string, string>> = {};
+  Object.keys(columnFilterState.filters).forEach(scope => {
+    const map = columnFilterState.filters[scope] || {};
+    const keys = Object.keys(map).filter(key => typeof map[key] === 'string' && map[key].trim() !== '');
+    if (keys.length) clean[scope] = Object.fromEntries(keys.map(key => [key, map[key]]));
+  });
+  if (Object.keys(clean).length) filterStorageSet(COLUMN_FILTERS_KEY, JSON.stringify(clean));
+  else filterStorageRemove(COLUMN_FILTERS_KEY);
+}
+
+function persistColumnTypes(): void {
+  const clean: Record<string, Record<string, ColType>> = {};
+  Object.keys(columnFilterState.typeOverrides).forEach(scope => { if (Object.keys(columnFilterState.typeOverrides[scope] || {}).length) clean[scope] = columnFilterState.typeOverrides[scope]; });
+  if (Object.keys(clean).length) filterStorageSet(COLUMN_TYPES_KEY, JSON.stringify(clean));
+  else filterStorageRemove(COLUMN_TYPES_KEY);
+}
+
+function restoreColumnFilters(): void {
+  const parse = (key: string): any => { try { return JSON.parse(filterStorageGet(key) || '{}') || {}; } catch { return {}; } };
+  const saved = parse(COLUMN_FILTERS_KEY);
+  const filters: Record<string, Record<string, string>> = {};
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+    Object.keys(saved).forEach(scope => {
+      const map = saved[scope];
+      if (!map || typeof map !== 'object' || Array.isArray(map)) return;
+      const clean: Record<string, string> = {};
+      Object.keys(map).forEach(key => { if (typeof map[key] === 'string' && map[key].trim() !== '') clean[key] = map[key]; });
+      if (Object.keys(clean).length) filters[scope] = clean;
+    });
+  }
+  columnFilterState.filters = filters;
+  const savedTypes = parse(COLUMN_TYPES_KEY);
+  const overrides: Record<string, Record<string, ColType>> = {};
+  if (savedTypes && typeof savedTypes === 'object' && !Array.isArray(savedTypes)) {
+    Object.keys(savedTypes).forEach(scope => {
+      const map = savedTypes[scope];
+      if (!map || typeof map !== 'object' || Array.isArray(map)) return;
+      const clean: Record<string, ColType> = {};
+      Object.keys(map).forEach(key => { if (ALL_COL_TYPES.includes(map[key])) clean[key] = map[key]; });
+      if (Object.keys(clean).length) overrides[scope] = clean;
+    });
+  }
+  columnFilterState.typeOverrides = overrides;
+  columnFilterState.show = filterStorageGet(SHOW_FILTERS_KEY) !== 'false';
+}
+
+function setFilter(scope: string, key: string, value: string): void {
+  const next = { ...(columnFilterState.filters[scope] || {}) };
+  if (value.trim() === '') delete next[key];
+  else next[key] = value;
+  columnFilterState.filters[scope] = next;
+  persistColumnFilters();
+  rerenderKeepingFilterFocus();
+}
+
+/** Typing applies the filter after a short pause (FILTER_DEBOUNCE_MS), also when the input loses focus meanwhile; Enter applies it at once (a re-render on blur would swallow the click on a header). */
+function scheduleFilter(scope: string, key: string, value: string): void {
+  const id = `${scope}:${key}`;
+  const pending = filterTimers.get(id);
+  if (pending !== undefined) clearTimeout(pending);
+  filterTimers.set(id, setTimeout(() => { filterTimers.delete(id); if (filterExpressionFor(scope, key) !== value) setFilter(scope, key, value); }, FILTER_DEBOUNCE_MS));
+}
+
+function flushFilter(scope: string, key: string, value: string): void {
+  const id = `${scope}:${key}`;
+  const pending = filterTimers.get(id);
+  if (pending !== undefined) { clearTimeout(pending); filterTimers.delete(id); }
+  if (filterExpressionFor(scope, key) !== value) setFilter(scope, key, value);
+}
+
+function clearAllFilters(scope: string): void {
+  filterTimers.forEach(timer => clearTimeout(timer));
+  filterTimers.clear();
+  columnFilterState.filters[scope] = {};
+  persistColumnFilters();
+  render();
+}
+
+/** Header badge click: next type in the cycle; Shift+click returns to auto-detection. */
+function cycleColumnType(scope: string, key: string, reset: boolean): void {
+  const info = filterInfo[scope];
+  const index = info ? info.columns.findIndex(col => col.key === key) : -1;
+  const detected: ColType = info && index >= 0 ? info.detected[index] : 'string';
+  const current = typeOverrideFor(scope, key) || detected;
+  const next = reset ? detected : ALL_COL_TYPES[(ALL_COL_TYPES.indexOf(current) + 1) % ALL_COL_TYPES.length];
+  const map = { ...(columnFilterState.typeOverrides[scope] || {}) };
+  if (next === detected) delete map[key];
+  else map[key] = next;
+  columnFilterState.typeOverrides[scope] = map;
+  persistColumnTypes();
+  render();
+}
+
+/** Filter inputs and type badges live in the table header (delegated: the header is rebuilt on every render). */
+function bindColumnFilterEvents(): void {
+  const filtersBtn: any = document.getElementById('filters-btn');
+  const clearBtn: any = document.getElementById('clear-filters-btn');
+  if (filtersBtn) {
+    filtersBtn.addEventListener('click', () => {
+      columnFilterState.show = !columnFilterState.show;
+      filterStorageSet(SHOW_FILTERS_KEY, String(columnFilterState.show));
+      render();
+    });
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      const scope = currentFilterScope();
+      if (scope) clearAllFilters(scope);
+    });
+  }
+  el.tableHead.addEventListener('input', (event: any) => {
+    const target = event.target;
+    if (target && target.dataset && target.dataset.filterCol !== undefined) scheduleFilter(target.dataset.filterScope, target.dataset.filterCol, target.value);
+  });
+  el.tableHead.addEventListener('keydown', (event: any) => {
+    const target = event.target;
+    if (!target || !target.dataset || target.dataset.filterCol === undefined) return;
+    if (event.key === 'Enter') { event.preventDefault(); flushFilter(target.dataset.filterScope, target.dataset.filterCol, target.value); }
+    else if (event.key === 'Escape' && target.value !== '') { event.preventDefault(); event.stopPropagation(); flushFilter(target.dataset.filterScope, target.dataset.filterCol, ''); }
+  });
+  el.tableHead.addEventListener('click', (event: any) => {
+    const target = event.target;
+    if (!target || typeof target.closest !== 'function') return;
+    const clear = target.closest('button[data-clear-filter]');
+    if (clear) { event.stopPropagation(); flushFilter(clear.dataset.filterScope, clear.dataset.clearFilter, ''); return; }
+    const badge = target.closest('button[data-type-col]');
+    if (badge) { event.stopPropagation(); cycleColumnType(badge.dataset.filterScope, badge.dataset.typeCol, Boolean(event.shiftKey)); }
+  });
+}
+
+
+// =========================================================================
+// 3d. Column filters of this app's tables (the keys are the sort keys of the column headers)
+// =========================================================================
+
+const FUND_FILTER_COLUMNS: FilterColumn[] = [
+  { key: 'ticker', label: 'Ticker', numeric: false, text: (fund: any) => String((fund.ticker) ?? ''), extraClass: 'catalog-sticky-col catalog-sticky-ticker' },
+  { key: 'name', label: 'Fund Name', numeric: false, text: (fund: any) => String((fund.name) ?? '') },
+  { key: 'category', label: 'Type', numeric: false, text: (fund: any) => String((categoryLabel(fund.category)) ?? '') },
+  { key: 'navValue', label: 'NAV', numeric: true, text: (fund: any) => String((fund.nav || '—') ?? ''), value: (fund: any) => fund.navValue },
+  { key: 'aumValue', label: 'Net Assets', numeric: true, text: (fund: any) => String((formatMoney(fund.aumValue)) ?? ''), value: (fund: any) => fund.aumValue },
+  { key: 'terValue', label: 'Expense', numeric: true, text: (fund: any) => String((fund.ter || '—') ?? ''), value: (fund: any) => fund.terValue },
+  { key: 'dividendYield', label: 'Dividend Yield', numeric: true, text: (fund: any) => String((formatPercent(fund.dividendYield)) ?? ''), value: (fund: any) => fund.dividendYield },
+  { key: 'secYield', label: 'SEC Yield', numeric: true, text: (fund: any) => String((formatPercent(fund.secYield)) ?? ''), value: (fund: any) => fund.secYield },
+  { key: 'dividendFrequency', label: 'Frequency', numeric: false, text: (fund: any) => String((fund.dividendFrequency || '—') ?? '') },
+  { key: 'ytd', label: 'YTD Return', numeric: true, text: (fund: any) => String((formatPercent(fund.ytd)) ?? ''), value: (fund: any) => fund.ytd },
+  { key: 'yr1', label: 'TR 1Y', numeric: true, text: (fund: any) => String((formatPercent(fund.yr1)) ?? ''), value: (fund: any) => fund.yr1 },
+  { key: 'tr3y', label: 'TR 3Y', numeric: true, text: (fund: any) => String((formatPercent(fund.tr3y)) ?? ''), value: (fund: any) => fund.tr3y },
+  { key: 'tr5y', label: 'TR 5Y', numeric: true, text: (fund: any) => String((formatPercent(fund.tr5y)) ?? ''), value: (fund: any) => fund.tr5y },
+  { key: 'tr10y', label: 'TR 10Y', numeric: true, text: (fund: any) => String((formatPercent(fund.tr10y)) ?? ''), value: (fund: any) => fund.tr10y },
+  { key: 'cagr3y', label: 'CAGR 3Y', numeric: true, text: (fund: any) => String((formatPercent(fund.cagr3y)) ?? ''), value: (fund: any) => fund.cagr3y },
+  { key: 'cagr5y', label: 'CAGR 5Y', numeric: true, text: (fund: any) => String((formatPercent(fund.cagr5y)) ?? ''), value: (fund: any) => fund.cagr5y },
+  { key: 'cagr10y', label: 'CAGR 10Y', numeric: true, text: (fund: any) => String((formatPercent(fund.cagr10y)) ?? ''), value: (fund: any) => fund.cagr10y },
+  { key: 'si', label: 'SI Ann.', numeric: true, text: (fund: any) => String((formatPercent(fund.si)) ?? ''), value: (fund: any) => fund.si },
+  { key: 'returnAsOf', label: 'Return As Of', numeric: false, text: (fund: any) => String((fund.returnAsOf || '—') ?? '') },
+  { key: 'inceptionDate', label: 'Inception', numeric: false, text: (fund: any) => String((fund.inceptionDate || '—') ?? '') },
+  { key: 'holdings', label: 'Holdings', numeric: true, text: (fund: any) => String((formatInteger(fund.holdings)) ?? ''), value: (fund: any) => fund.holdings },
+  { key: 'history', label: 'History', numeric: true, text: (fund: any) => String((formatInteger(fund.history)) ?? ''), value: (fund: any) => fund.history },
+  { key: 'asOfDate', label: 'As Of', numeric: false, text: (fund: any) => String((fund.asOfDate || '—') ?? '') },
+];
+
+const WATCHLIST_FILTER_COLUMNS: FilterColumn[] = [
+  { key: 'symbol', label: 'Ticker', numeric: false, text: (row: any) => String(row.symbol ?? ''), extraClass: 'watchlist-sticky-col watchlist-sticky-ticker' },
+  { key: 'name', label: 'Name', numeric: false, text: (row: any) => String(row.name ?? '') },
+  { key: 'funds', label: 'ETFs', numeric: false, text: (row: any) => (Array.isArray(row.funds) ? row.funds.join(' ') : '') },
+  { key: 'fundCount', label: '# ETFs', numeric: true, text: (row: any) => String(row.fundCount ?? ''), value: (row: any) => row.fundCount },
+  { key: 'weightSum', label: 'Weight Sum', numeric: true, text: (row: any) => (typeof row.weightSum === 'number' ? `${row.weightSum.toFixed(3)}%` : ''), value: (row: any) => row.weightSum },
+  { key: 'maxWeight', label: 'Max Weight', numeric: true, text: (row: any) => (typeof row.maxWeight === 'number' ? `${row.maxWeight.toFixed(3)}%` : ''), value: (row: any) => row.maxWeight },
+  { key: 'identifier', label: 'Identifier', numeric: false, text: (row: any) => String(row.identifier ?? '') },
+];
+
+/** Catalog rows after the tab, the blacklist, the search and the column filters (no sorting). */
+function filteredCatalogFunds(): FundRow[] {
+  const base = visibleFunds();
+  return applyColumnFilters('catalog', filterRows(base), FUND_FILTER_COLUMNS, base);
+}
+
+/** Sheet rows (holdings, history, distributions) as objects with the cells in col0..colN, after the search and the column filters (no sorting). */
+function sheetView(scope: string, headers: string[], sourceRows: string[][], numericHeaders: string[]): any[] {
+  // Themes distribution rows are objects keyed by header ({ 'Ex-Date': ..., Amount: ... }); the other sheets are arrays
+  const all = sourceRows.map((rawRow: any, sourceIndex) => {
+    const row: string[] = Array.isArray(rawRow) ? rawRow : headers.map(header => String((rawRow && rawRow[header]) ?? ''));
+    const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase(), rank: sourceIndex };
+    headers.forEach((header, index) => { cells[`col${index}`] = row[index] ?? ''; });
+    return cells;
+  });
+  return applyColumnFilters(scope, filterRows(all), sheetFilterColumns(headers, numericHeaders), all);
+}
+
 init();
 
 // =========================================================================
@@ -940,9 +1709,12 @@ function render(): void {
   else renderFundsTable();
   fitTableHeight();
   renderStaticLoadSentinel();
+  renderFilterControls();
+  syncHeadHeight();
 }
 
 function animateTableUpdate(): void {
+  if (suppressTableAnimation) return;
   el.tableBody.classList.remove('table-content-enter');
   void el.tableBody.offsetWidth; // reflow to restart the animation
   el.tableBody.classList.add('table-content-enter');
@@ -1023,7 +1795,7 @@ function sortHeader(label: string, key: string, numeric = false, extraClass = ''
   const arrow = active ? (state.sortDir === 'asc' ? ' ↑' : ' ↓') : '';
   const align = numeric ? ' text-right' : '';
   const tooltip = getHeaderTooltip(label);
-  return `<th class="py-3.5 px-4${align}${extraClass ? ' ' + extraClass : ''}" title="${escapeHtml(tooltip)}"><button data-sort="${escapeHtml(key)}" title="${escapeHtml(tooltip)}" class="uppercase tracking-wider hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:text-blue-600 dark:focus:text-blue-400">${escapeHtml(label)}${arrow}</button></th>`;
+  return `<th class="py-3.5 px-4${align}${extraClass ? ' ' + extraClass : ''}" title="${escapeHtml(tooltip)}"><div class="flex items-center gap-1.5${numeric ? ' justify-end' : ''}"><button data-sort="${escapeHtml(key)}" title="${escapeHtml(tooltip)}" class="uppercase tracking-wider hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:text-blue-600 dark:focus:text-blue-400">${escapeHtml(label)}${arrow}</button>${filterBadgeFor(key)}</div></th>`;
 }
 
 function indexHeader(): string {
@@ -1037,7 +1809,7 @@ function indexHeader(): string {
  * selection-size comparison).
  */
 function visibleCatalogRows(): FundRow[] {
-  return filterRows(visibleFunds());
+  return filteredCatalogFunds();
 }
 
 // Only the All ETFs catalog uses this header (single call site), so the
@@ -1054,6 +1826,7 @@ function useHeader(): string {
 }
 
 function bindSortHeaders(): void {
+  appendFilterRow();
   el.tableHead.querySelectorAll('button[data-sort]').forEach((button: any) => {
     button.addEventListener('click', () => {
       const key = button.dataset.sort || 'rank';
@@ -1080,7 +1853,7 @@ function bindSelectAllCheckbox(): void {
 }
 
 function renderFundsTable(): void {
-  const rows = sortRows(filterRows(visibleFunds()));
+  const rows = sortRows(filteredCatalogFunds());
   el.tableHead.innerHTML = `
     <tr>
       ${indexHeader()}
@@ -1309,11 +2082,12 @@ function getDedupedWatchlistRows(): WatchlistRow[] {
 }
 
 function getVisibleWatchlistRows(): WatchlistRow[] {
-  return sortRows(filterRows(getDedupedWatchlistRows()));
+  const base = getDedupedWatchlistRows();
+  return sortRows(applyColumnFilters('watchlist', filterRows(base), WATCHLIST_FILTER_COLUMNS, base));
 }
 
 function watchlistChunkSignature(rows: WatchlistRow[]): string {
-  return [state.sortKey, state.sortDir, currentQuery(), rows.length, rows.length ? rows[0].key : ''].join('|');
+  return [state.sortKey, state.sortDir, currentQuery(), columnFilterSig('watchlist'), rows.length, rows.length ? rows[0].key : ''].join('|');
 }
 
 /** Scroll/click extension of the rendered Watchlist chunk (bounded DOM). */
@@ -1454,12 +2228,7 @@ function renderSheetTable(fund: FundRow, sheet: 'holdings' | 'history'): void {
   }
 
   const headers = entry.headers;
-  const rows = sortRows(filterRows(entry.rows.map((row, sourceIndex) => {
-    const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase() };
-    headers.forEach((header, index) => { cells[`col${index}`] = row[index] ?? ''; });
-    cells.rank = sourceIndex;
-    return cells;
-  })));
+  const rows = sortRows(sheetView(sheet, headers, entry.rows, NUMERIC_SHEET_HEADERS));
 
   el.tableHead.innerHTML = `
     <tr>
@@ -1602,11 +2371,7 @@ function renderDistributionsTable(fund: FundRow): void {
   const worksheet = meta && meta.distributions ? meta.distributions : { headers: [], rows: [] };
   const headers: string[] = Array.isArray(worksheet.headers) ? worksheet.headers : [];
   const sourceRows: string[][] = Array.isArray(worksheet.rows) ? worksheet.rows : [];
-  const rows = sortRows(filterRows(sourceRows.map((row, sourceIndex) => {
-    const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase(), rank: sourceIndex };
-    headers.forEach((header, index) => { cells[`col${index}`] = row[index] ?? ''; });
-    return cells;
-  })));
+  const rows = sortRows(sheetView('distributions', headers, sourceRows, []));
 
   el.tableHead.innerHTML = `
     <tr>
@@ -1929,7 +2694,7 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
     const worksheet = meta && meta.distributions ? meta.distributions : { headers: [], rows: [] };
     return {
       headers: worksheet.headers || [],
-      rows: worksheet.rows || [],
+      rows: sheetView('distributions', worksheet.headers || [], worksheet.rows || [], []).map((row: any) => row.values),
       scope: fund ? `${fund.ticker}-distributions` : 'distributions',
     };
   }
@@ -1941,7 +2706,7 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
     if (entry) {
       return {
         headers: entry.headers,
-        rows: filterRows(entry.rows.map(row => ({ values: row, searchIndex: row.join(' ').toLowerCase() }))).map((row: any) => row.values),
+        rows: sheetView(sheet, entry.headers, entry.rows, NUMERIC_SHEET_HEADERS).map((row: any) => row.values),
         scope: fund ? `${fund.ticker}-${sheet}` : sheet,
       };
     }
@@ -1950,7 +2715,7 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
 
   return {
     headers: ['Selected', 'Ticker', 'Fund Name', 'Type', 'NAV', 'Net Assets ($)', 'Expense (%)', 'Dividend Yield (%)', 'SEC Yield (%)', 'Frequency', 'YTD Return (%)', 'TR 1Y (%)', 'TR 3Y (%)', 'TR 5Y (%)', 'TR 10Y (%)', 'CAGR 3Y (%)', 'CAGR 5Y (%)', 'CAGR 10Y (%)', 'SI Ann. (%)', 'Return As Of', 'Inception', 'Holdings', 'History', 'As Of'],
-    rows: filterRows(visibleFunds()).map(fund => [
+    rows: filteredCatalogFunds().map(fund => [
       state.selected.has(fund.ticker) ? 'yes' : 'no',
       fund.ticker,
       fund.name,
@@ -1984,7 +2749,7 @@ function copyTickers(): void {
   let values: string[] = [];
   if (state.activeTab === 'watchlist') values = getVisibleWatchlistRows().map(row => row.symbol);
   else if (isDetailTab(state.activeTab)) values = currentExportRows().rows.map(row => String(row[0] ?? '')).filter(Boolean);
-  else values = filterRows(visibleFunds()).map(fund => fund.ticker);
+  else values = filteredCatalogFunds().map(fund => fund.ticker);
   values = values.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
   if (!values.length) return;
   void copyText(values.join(', ')).then(() => {
@@ -2365,6 +3130,7 @@ function bindEvents(): void {
     });
   }
 
+  bindColumnFilterEvents();
   el.copyBtn.addEventListener('click', copyTickers);
   el.exportCsvBtn.addEventListener('click', exportCsv);
   el.exportTxtBtn.addEventListener('click', exportTxt);
@@ -2420,6 +3186,7 @@ function bindEvents(): void {
 function init(): void {
   restoreSelectedEtfs();
   restoreBlacklist();
+  restoreColumnFilters();
   const siteState = restoreSiteState();
   if (siteState.activeTab) state.activeTab = siteState.activeTab;
   restoreSearches(siteState.sheetFilter);
