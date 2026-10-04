@@ -1599,7 +1599,7 @@ function formatDividendFrequency(value: unknown): string {
   if (!normalized || normalized === '-') return '00 - None';
   if (normalized === 'monthly') return '01 - Monthly';
   if (normalized === 'quarterly') return '04 - Quarterly';
-  if (normalized === 'semi-annual' || normalized === 'semi-annually' || normalized === 'semiannual') return '06 - Semi-annually';
+  if (normalized === 'semi-annual' || normalized === 'semi-annually' || normalized === 'semiannual' || normalized === 'semiannually') return '06 - Semi-annually';
   if (normalized === 'annual' || normalized === 'annually') return '12 - Annually';
   if (normalized === 'none') return '00 - None';
   if (normalized === 'unknown') return '00 - Unknown';
@@ -1931,7 +1931,7 @@ async function ensureHoldingsForSelection(): Promise<void> {
   await Promise.all(workers);
   if (state.selected.size > 0) {
     if (state.activeTab === 'watchlist') renderWatchlistTable();
-    else renderTabs();
+    renderTabs();
   }
 }
 
@@ -1941,7 +1941,7 @@ function scheduleWatchlistRefresh(): void {
   if (watchlistRefreshTimer !== null) return;
   watchlistRefreshTimer = setTimeout(() => {
     watchlistRefreshTimer = null;
-    if (state.activeTab === 'watchlist') renderWatchlistTable();
+    if (state.activeTab === 'watchlist') { renderWatchlistTable(); renderTabs(); }
   }, 150);
 }
 
