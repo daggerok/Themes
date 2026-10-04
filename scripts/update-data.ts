@@ -748,6 +748,10 @@ export const CONTROL_NAMES = [
   'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'HISTORY_RANGE', 'EDGAR_FALLBACK', 'SKIP_YAHOO', 'SKIP_THEMES', 'SEC_UA', 'VERBOSE', 'USE_SYSTEM_CA',
 ] as const;
 export type ControlName = (typeof CONTROL_NAMES)[number];
+// Environment aliases of every control: THEMES_<NAME> plus the legacy HISTORICAL_PAGE_SIZE. They sit in the
+// environment layer; the plain name wins when both are set, and an explicitly empty alias counts as set.
+export const ENV_ALIASES: Record<string, string[]> = { HISTORY_PAGE_SIZE: ['HISTORICAL_PAGE_SIZE'] };
+export const envNames = (key: string): string[] => [key, `THEMES_${key}`, ...(ENV_ALIASES[key] ?? [])];
 export const CONFIG_FILE_URL = new URL('./update-data.config.json', import.meta.url);
 
 export function resolveControls(
@@ -773,7 +777,7 @@ export function resolveControls(
   apply(advanced);
   apply(inputs, true);
   for (const key of CONTROL_NAMES) {
-    const value = env[key];
+    const value = envNames(key).map((name) => env[name]).find((candidate) => candidate !== undefined);
     if (value !== undefined) apply({ [key]: value });
   }
   for (const key of ['MAX_FETCHES', 'CONCURRENCY', 'HOLDINGS_PAGE_SIZE', 'HISTORY_PAGE_SIZE', 'MAX_RETRIES']) {
@@ -1426,7 +1430,7 @@ async function readCursor(): Promise<string | null> {
 }
 
 function usage(): string {
-  return `Usage: bun scripts/update-data.ts\n\nThe updater reads scripts/update-data.config.json (file defaults) and the environment controls documented in README.md; explicit environment values win.\nControls: ${CONTROL_NAMES.join(', ')}\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.\nMAX_RETRIES: integer >= 1 (retries after the first request). HISTORY_RANGE: max or Ny, limits the Yahoo history request window.\nUSE_SYSTEM_CA: auto (default) restarts once with Bun's --use-system-ca on an untrusted-certificate error, true always uses the system CA store, false never restarts.\nSEC_UA: User-Agent for SEC requests (default is the daggerok feed descriptor).\nCONCURRENCY / REQUEST_SLEEP: direct requests use one paced lane per worker; themesetfs.com 403/429/5xx falls back to the r.jina.ai proxy (global gate, >= 3.2s between starts), and unavailable sources keep the previously published data.`;
+  return `Usage: bun scripts/update-data.ts\n\nThe updater reads scripts/update-data.config.json (file defaults) and the environment controls documented in README.md; explicit environment values win.\nEvery control also reads THEMES_<NAME> from the environment (the plain name wins when both are set); HISTORICAL_PAGE_SIZE is an alias of HISTORY_PAGE_SIZE.\nControls: ${CONTROL_NAMES.join(', ')}\nUse TICKERS="BOTT,CLOD,AUMI" for an isolated update; use MAX_FETCHES=N for a cursor-based bounded batch.\nMAX_RETRIES: integer >= 1 (retries after the first request). HISTORY_RANGE: max or Ny, limits the Yahoo history request window.\nUSE_SYSTEM_CA: auto (default) restarts once with Bun's --use-system-ca on an untrusted-certificate error, true always uses the system CA store, false never restarts.\nSEC_UA: User-Agent for SEC requests (default is the daggerok feed descriptor).\nCONCURRENCY / REQUEST_SLEEP: direct requests use one paced lane per worker; themesetfs.com 403/429/5xx falls back to the r.jina.ai proxy (global gate, >= 3.2s between starts), and unavailable sources keep the previously published data.`;
 }
 
 export async function main(env: Record<string, string | undefined> = process.env): Promise<void> {
