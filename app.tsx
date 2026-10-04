@@ -3235,22 +3235,44 @@ function activateFund(ticker: string): void {
   }
 }
 
+/**
+ * Everything the Clear button resets: the confirm text names each label, the saved keys are removed (a reload shows the
+ * first-visit view) and reset() puts the state back to its default. Not listed, so kept: the blacklist and the theme.
+ */
+const RESET_ITEMS: { label: string; keys: string[]; reset(): void }[] = [
+  { label: 'selected ETFs', keys: [SELECTED_KEY, ACTIVE_FUND_KEY], reset: () => { state.selected = new Set(DEFAULT_SELECTED_TICKERS); state.activeFundTicker = [...state.selected][0] || null; } },
+  { label: 'searches', keys: [FILTERS_KEY, LEGACY_FILTERS_KEY], reset: () => { state.queryByTab = {}; } },
+  { label: 'sort order', keys: [SORTS_KEY], reset: () => { state.sortByTab = {}; } },
+  { label: 'open tab', keys: [SITE_STATE_KEY], reset: () => { state.activeTab = 'All'; } },
+  { label: 'shown asset classes', keys: [HIDDEN_CATEGORIES_KEY], reset: () => { hiddenCategories = new Set(); } },
+  { label: 'shown columns', keys: [COLUMN_VISIBILITY_KEY], reset: () => { hiddenColumns = new Set(); } },
+  { label: 'column filters and types', keys: [COLUMN_FILTERS_KEY, COLUMN_TYPES_KEY], reset: () => { columnFilterState.filters = {}; columnFilterState.typeOverrides = {}; } },
+  { label: 'Filters on/off', keys: [SHOW_FILTERS_KEY], reset: () => { columnFilterState.show = true; } },
+  { label: 'Sticky #', keys: [STICKY_RANK_KEY], reset: () => { columnFilterState.sticky = false; } },
+  { label: 'remembered table views', keys: [VIEW_KEY], reset: () => { savedViews = {}; settledViewTabs.clear(); restoringViewTabs.clear(); clearTimeout(saveViewTimer); } },
+];
+const RESET_KEPT = ['blacklist', 'theme'];
+
+/** The Clear button: after one confirm, everything but the blacklist and the theme goes back to the first-visit view. */
 function clearSelectionAndSearch(): void {
-  state.selected.clear();
-  state.activeFundTicker = null;
-  state.queryByTab = {};
-  state.activeTab = 'All';
-  // Sort preferences survive Clear: a sort configured in the past is always
-  // kept (per tab, in browser localStorage) and reused. Clear only resets
-  // the selection and the searches — never the sort order.
-  applySortForTab('All');
-  persistSelection();
-  localStorage.removeItem(ACTIVE_FUND_KEY);
+  const message = `Reset to the default view?\n\nWill be reset: ${RESET_ITEMS.map(item => item.label).join(', ')}\nWill be kept: ${RESET_KEPT.join(', ')}`;
+  if (!confirm(message)) return;
+  RESET_ITEMS.forEach(item => { item.keys.forEach(filterStorageRemove); item.reset(); });
+  [columnsDd, categoriesDd].forEach(dd => dd?.close());
+  renderColumnsButton();
+  filterTimers.forEach(timer => clearTimeout(timer));
+  filterTimers.clear();
+  // caches keyed by the state that was just reset: rebuilt on the next render
+  baselineCache = null;
+  watchlistCache = null;
+  watchlistChunkSig = '';
+  applySortForTab(state.activeTab);
+  resetSheetPaging();
   el.searchInput.value = '';
-  updateSearchClearBtn();
-  persistSearches();
-  persistSiteState();
-  render();
+  syncSearchInput();
+  el.tableScroll.scrollTop = 0;
+  el.tableScroll.scrollLeft = 0;
+  render(false);
 }
 
 function blacklistTickers(rawTickers: string[]): void {
