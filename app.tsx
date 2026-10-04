@@ -2207,6 +2207,7 @@ function render(keepRows = true): void {
   renderFilterControls();
   syncHeadHeight();
   restoreViewAnchor(anchor, keepRows);
+  applySavedView();
   lastRenderedTab = state.activeTab;
 }
 
@@ -2223,9 +2224,20 @@ type ViewAnchor = { tab: string; top: number; left: number; cols: number; col: n
 let lastRenderedTab = '';
 
 /** Right edge of the sticky leading columns: the first horizontally scrolling column starts here. */
+/** The refresh animation of the table body moves every row by a few px for a moment: measure without it. */
+function tbodyShift(): number {
+  try { return new DOMMatrix(getComputedStyle(el.tableBody).transform).m42; } catch { return 0; }
+}
+
 function stickyEdge(): number {
-  let edge = el.tableScroll.getBoundingClientRect().left;
-  el.tableHead.querySelectorAll('tr:first-child th[class*="sticky-col"]').forEach((th: any) => { edge = Math.max(edge, th.getBoundingClientRect().right); });
+  const box = el.tableScroll;
+  const origin = box.getBoundingClientRect().left + box.clientLeft;
+  let edge = origin;
+  // from the CSS offset and width, not from the rect: a cell that has not stuck yet sits further right
+  el.tableHead.querySelectorAll('tr:first-child th[class*="sticky-col"]').forEach((th: any) => {
+    const left = parseFloat(getComputedStyle(th).left);
+    if (Number.isFinite(left)) edge = Math.max(edge, origin + left + th.offsetWidth);
+  });
   return edge;
 }
 
@@ -2240,7 +2252,7 @@ function captureViewAnchor(): ViewAnchor {
     if (rect.bottom <= headBottom) continue;
     if (rect.top >= boxRect.bottom || anchor.rows.length >= 40) break;
     const key = tr.dataset.key || tr.dataset.ticker;
-    if (key) anchor.rows.push({ key, offset: rect.top - headBottom });
+    if (key) anchor.rows.push({ key, offset: rect.top - tbodyShift() - headBottom });
   }
   const cells = Array.from(el.tableHead.querySelectorAll('tr:first-child th')) as any[];
   const edge = stickyEdge();
@@ -2262,12 +2274,69 @@ function restoreViewAnchor(anchor: ViewAnchor, keepRows: boolean): void {
       if (key) byKey.set(key, tr);
     }
     const hit = anchor.rows.find(row => byKey.has(row.key));
-    box.scrollTop = hit ? box.scrollTop + byKey.get(hit.key).getBoundingClientRect().top - headBottom - hit.offset : 0;
+    box.scrollTop = hit ? box.scrollTop + byKey.get(hit.key).getBoundingClientRect().top - tbodyShift() - headBottom - hit.offset : 0;
   } else if (!keepRows) box.scrollTop = anchor.top;
   const cells = Array.from(el.tableHead.querySelectorAll('tr:first-child th')) as any[];
   if (anchor.col >= 0 && cells.length === anchor.cols) box.scrollLeft += cells[anchor.col].getBoundingClientRect().left - stickyEdge() - anchor.colOffset;
   else box.scrollLeft = anchor.left;
 }
+
+// ---- remember the view per tab across page loads and tab switches ----
+
+const VIEW_KEY = THEME_KEY.replace(/-theme$/, '') + '-view';
+type SavedView = Pick<ViewAnchor, 'rows' | 'col' | 'colOffset' | 'cols'>;
+let savedViews: Record<string, SavedView> = {};
+try {
+  const stored = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
+  if (stored && typeof stored === 'object') savedViews = stored;
+} catch { /* unreadable storage: start from the top */ }
+const settledViewTabs = new Set<string>();
+let saveViewTimer: any = 0;
+
+/**
+ * A tab is restored once its rows exist (in the hub: once every feed is loaded, otherwise rows keep arriving above the saved one)
+ * and their height has stopped changing for a few frames: right after the first render the CDN styles are not applied yet,
+ * so positions measured then would be wrong.
+ */
+const restoringViewTabs = new Set<string>();
+
+function applySavedView(): void {
+  const tab = state.activeTab;
+  if (!el.tableBody.querySelector('tr[data-key], tr[data-ticker]')) return;
+  const first = !settledViewTabs.has(tab);
+  if (!first && lastRenderedTab === tab) return;
+  if (restoringViewTabs.has(tab)) return;
+  const saved = savedViews[tab];
+  if (!saved || !Array.isArray(saved.rows)) { settledViewTabs.add(tab); return; }
+  restoringViewTabs.add(tab);
+  let lastHeight = -1;
+  let stable = 0;
+  let frames = 0;
+  const step = (): void => {
+    if (state.activeTab !== tab) { restoringViewTabs.delete(tab); return; }
+    const row: any = el.tableBody.querySelector('tr[data-key], tr[data-ticker]');
+    const height = row ? row.getBoundingClientRect().height : -1;
+    stable = height === lastHeight ? stable + 1 : 0;
+    lastHeight = height;
+    if (stable < 3 && ++frames < 120) { requestAnimationFrame(step); return; }
+    restoringViewTabs.delete(tab);
+    settledViewTabs.add(tab);
+    restoreViewAnchor({ tab, top: 0, left: 0, cols: saved.cols, col: saved.col, colOffset: saved.colOffset, rows: saved.rows }, true);
+  };
+  requestAnimationFrame(step);
+}
+
+function saveView(): void {
+  const tab = state.activeTab;
+  if (!settledViewTabs.has(tab)) return;
+  const anchor = captureViewAnchor();
+  if (!anchor.rows.length) return;
+  savedViews[tab] = { cols: anchor.cols, col: anchor.col, colOffset: anchor.colOffset, rows: anchor.rows.slice(0, 5) };
+  try { localStorage.setItem(VIEW_KEY, JSON.stringify(savedViews)); } catch { /* quota or private mode */ }
+}
+
+el.tableScroll.addEventListener('scroll', () => { clearTimeout(saveViewTimer); saveViewTimer = setTimeout(saveView, 250); }, { passive: true });
+window.addEventListener('pagehide', saveView);
 
 function currentQuery(): string {
   return state.queryByTab[state.activeTab] || '';
