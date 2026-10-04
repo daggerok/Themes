@@ -27,6 +27,8 @@ Inside one filter: a space means AND, a comma means OR, a leading `!` means NOT,
 | Date, date and time | `>2024-06-01`, `2024` (the whole year), `2024-06` (the whole month), `2024-01..2024-06`, `today`, `yesterday`, `-7d..` (the last 7 days), `+2w`, `-3m`, `-1y` |
 | Time | `>09:30`, `09:30..16:00`, `=12:00` (the whole minute) |
 
+The `Columns` menu next to `Filters` lists every column of the ETF table from the first to the last, all of them shown by default, with a search box and the `All`, `Clear`, `Toggle` and `Reset` buttons. `Use` and `Ticker` are listed but locked. Hiding a column only removes it from the table: the filters, the sorting, the exports and Copy Tickers still use it. The choice is remembered in the browser (localStorage, never the data) and the menu is shown on the ETF catalog only
+
 ## Updating the static Themes ETFs data
 
 Run the updater with Bun:
