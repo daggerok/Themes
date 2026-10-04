@@ -134,7 +134,7 @@ const NUMERIC_SHEET_HEADERS = ['Weight', 'Shares Held', 'Shares Outstanding', 'T
 
 // Hover explanations for table headers. Native `title` tooltips, same pattern as daggerok/iShares.
 const COLUMN_TOOLTIPS: Record<string, string> = {
-  '#': 'Row index in current table view.',
+  '#': 'Row number in the current table view (1, 2, 3...). Turn on Sticky # to keep each row\'s rank in the sorted table when column filters hide rows.',
   Use: 'Use / Multi-ETF Selection — Check this box to include this ETF\'s underlying holdings in the combined Watchlist tab.',
   Ticker: 'Ticker Symbol — Unique stock market identifier. For holdings: the StockTicker column exactly as published in the Themes ETFs daily holdings CSV, which carries the option contract code for option positions (SPXW 261001P07075000, RUT 261016C03050000), the CUSIP for Treasury bills and bonds, and the literal label Cash&Other for cash balances. "—" when the position has no exchange ticker — option, Treasury and cash rows key on the CUSIP instead.',
   'Fund Name': 'Fund Name — Official fund name as published in the Themes ETFs catalog on themesetfs.com and in the fund page heading.',
@@ -262,8 +262,8 @@ const state: AppState = {
   activeTab: 'All',
   activeFundTicker: null,
   queryByTab: {},
-  sortKey: 'rank',
-  sortDir: 'asc',
+  sortKey: 'aumValue',
+  sortDir: 'desc',
   sortByTab: {},
   generatedAt: null,
   counts: null,
@@ -702,10 +702,11 @@ const FILTER_STORAGE_PREFIX = 'themes'; // the app's localStorage prefix: the sa
 const COLUMN_FILTERS_KEY = `${FILTER_STORAGE_PREFIX}-column-filters`;
 const COLUMN_TYPES_KEY = `${FILTER_STORAGE_PREFIX}-column-types`;
 const SHOW_FILTERS_KEY = `${FILTER_STORAGE_PREFIX}-show-filters`;
+const STICKY_RANK_KEY = `${FILTER_STORAGE_PREFIX}-sticky-rank`;
 const FILTER_DEBOUNCE_MS = 250;
 
 /** scope (catalog, watchlist, holdings, history, distributions) -> column key -> expression / type chosen with the header badge */
-const columnFilterState: { filters: Record<string, Record<string, string>>; typeOverrides: Record<string, Record<string, ColType>>; show: boolean } = { filters: {}, typeOverrides: {}, show: true };
+const columnFilterState: { filters: Record<string, Record<string, string>>; typeOverrides: Record<string, Record<string, ColType>>; show: boolean; sticky: boolean } = { filters: {}, typeOverrides: {}, show: true, sticky: false }; // sticky: # = rank before the column filters
 
 /** What the last render of a scope computed: the columns, the types in use and the detected types (header badges read it). */
 const filterInfo: Record<string, { columns: FilterColumn[]; types: ColType[]; detected: ColType[] }> = {};
@@ -852,6 +853,12 @@ function renderFilterControls(): void {
   badge.hidden = count === 0;
   badge.textContent = String(count);
   clear.hidden = count === 0;
+  const rank: any = document.getElementById('rank-btn');
+  const rankSummary: any = document.getElementById('rank-summary');
+  if (!rank || !rankSummary) return;
+  rank.disabled = !scope; // the overview has no column filters: its # is always 1..N
+  rank.setAttribute('aria-pressed', String(columnFilterState.sticky));
+  rankSummary.textContent = columnFilterState.sticky ? 'on' : 'off';
 }
 
 /** The filter row sticks right below the header row: tell the CSS how tall the first row is. */
@@ -919,6 +926,7 @@ function restoreColumnFilters(): void {
   }
   columnFilterState.typeOverrides = overrides;
   columnFilterState.show = filterStorageGet(SHOW_FILTERS_KEY) !== 'false';
+  columnFilterState.sticky = filterStorageGet(STICKY_RANK_KEY) === 'true'; // off unless chosen: anything else stored reads as off
 }
 
 function setFilter(scope: string, key: string, value: string): void {
@@ -976,6 +984,14 @@ function bindColumnFilterEvents(): void {
     filtersBtn.addEventListener('click', () => {
       columnFilterState.show = !columnFilterState.show;
       filterStorageSet(SHOW_FILTERS_KEY, String(columnFilterState.show));
+      render();
+    });
+  }
+  const rankBtn: any = document.getElementById('rank-btn');
+  if (rankBtn) {
+    rankBtn.addEventListener('click', () => {
+      columnFilterState.sticky = !columnFilterState.sticky;
+      filterStorageSet(STICKY_RANK_KEY, String(columnFilterState.sticky));
       render();
     });
   }
@@ -1046,22 +1062,51 @@ const WATCHLIST_FILTER_COLUMNS: FilterColumn[] = [
   { key: 'identifier', label: 'Identifier', numeric: false, text: (row: any) => String(row.identifier ?? '') },
 ];
 
-/** Catalog rows after the tab, the blacklist, the search and the column filters (no sorting). */
-function filteredCatalogFunds(): FundRow[] {
-  const base = visibleFunds();
-  return applyColumnFilters('catalog', filterRows(base), FUND_FILTER_COLUMNS, base);
+/**
+ * ONE cached baseline of the shown table for the sticky rank: its rows after the top panel and the search, sorted,
+ * before the column filters, with the rank of each row. Rebuilt only when the data, the search or the sort change.
+ */
+let baselineCache: { sig: string; source: unknown[]; all: any[]; rows: any[]; rank: Map<any, number> } | null = null;
+
+/** Rows of a table as shown: the column filters only drop rows from the sorted baseline (order kept, no re-sort). */
+function tableView(scope: string, columns: FilterColumn[], source: unknown[], extraSig: string, build: () => any[]): any[] {
+  const sig = [scope, extraSig, state.sortKey, state.sortDir, currentQuery(), source.length].join('|');
+  let cache = baselineCache;
+  if (!cache || cache.sig !== sig || cache.source !== source) {
+    const all = build();
+    const rows = sortRows(filterRows(all));
+    const rank = new Map<any, number>();
+    rows.forEach((row, index) => rank.set(row, index + 1));
+    cache = baselineCache = { sig, source, all, rows, rank };
+  }
+  return applyColumnFilters(scope, cache.rows, columns, cache.all);
 }
 
-/** Sheet rows (holdings, history, distributions) as objects with the cells in col0..colN, after the search and the column filters (no sorting). */
+/** Status suffix while the sticky rank is on. */
+function rankHint(shown: number): string {
+  return columnFilterState.sticky && shown && baselineCache ? ` # = rank among ${baselineCache.rows.length.toLocaleString('en-US')} before the column filters.` : '';
+}
+
+/** Number shown in the # column: the sticky rank, or the row number of the shown rows. */
+function rowNumber(row: any, index: number): number {
+  const rank = columnFilterState.sticky && baselineCache ? baselineCache.rank.get(row) : undefined;
+  return rank === undefined ? index + 1 : rank;
+}
+
+/** Catalog rows as shown: the tab, the blacklist, the search, the sort and the column filters. */
+function filteredCatalogFunds(): FundRow[] {
+  return tableView('catalog', FUND_FILTER_COLUMNS, state.funds, `${[...hiddenCategories].join(',')}#${[...state.blacklist].join(',')}`, visibleFunds);
+}
+
+/** Sheet rows (holdings, history, distributions) as objects with the cells in col0..colN, as shown (search, sort, column filters). */
 function sheetView(scope: string, headers: string[], sourceRows: string[][], numericHeaders: string[]): any[] {
   // Themes distribution rows are objects keyed by header ({ 'Ex-Date': ..., Amount: ... }); the other sheets are arrays
-  const all = sourceRows.map((rawRow: any, sourceIndex) => {
+  return tableView(scope, sheetFilterColumns(headers, numericHeaders), sourceRows, '', () => sourceRows.map((rawRow: any, sourceIndex) => {
     const row: string[] = Array.isArray(rawRow) ? rawRow : headers.map(header => String((rawRow && rawRow[header]) ?? ''));
     const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase(), rank: sourceIndex };
     headers.forEach((header, index) => { cells[`col${index}`] = row[index] ?? ''; });
     return cells;
-  });
-  return applyColumnFilters(scope, filterRows(all), sheetFilterColumns(headers, numericHeaders), all);
+  }));
 }
 
 // =========================================================================
@@ -2136,6 +2181,10 @@ function applyDefaultSortForTab(tab: ActiveTab): void {
   } else if (tab === 'detail:overview') {
     state.sortKey = 'section';
     state.sortDir = 'asc';
+  } else if (isEtfCatalogTab(tab)) {
+    // Load order means nothing in the catalog: largest funds first.
+    state.sortKey = 'aumValue';
+    state.sortDir = 'desc';
   } else {
     // Holdings, History and Distributions arrive already ordered by the
     // source workbook (weight / date); keep the source order by default.
@@ -2151,7 +2200,8 @@ function applyDefaultSortForTab(tab: ActiveTab): void {
  */
 function applySortForTab(tab: ActiveTab): void {
   const remembered = state.sortByTab[tab];
-  if (remembered) {
+  // a stored catalog sort on a column that no longer exists falls back to the default
+  if (remembered && (!isEtfCatalogTab(tab) || FUND_FILTER_COLUMNS.some(col => col.key === remembered.key))) {
     state.sortKey = remembered.key;
     state.sortDir = remembered.dir;
     return;
@@ -2401,7 +2451,18 @@ function sortRows(rows: any[]): any[] {
   if (state.sortKey === 'rank') return rows;
   const direction = state.sortDir === 'asc' ? 1 : -1;
   const key = state.sortKey;
-  return [...rows].sort((a, b) => compareValues(sortValue(a, key), sortValue(b, key)) * direction);
+  return [...rows].sort((a, b) => {
+    const av = sortValue(a, key);
+    const bv = sortValue(b, key);
+    const ae = isEmptySortValue(av);
+    const be = isEmptySortValue(bv);
+    if (ae || be) return ae && be ? 0 : ae ? 1 : -1;
+    return compareValues(av, bv) * direction;
+  });
+}
+
+function isEmptySortValue(value: unknown): boolean {
+  return value === null || value === undefined || value === '' || value === '—' || value === '-' || (typeof value === 'number' && !Number.isFinite(value));
 }
 
 // `extraClass` is opt-in and only used by the All ETFs catalog for its
@@ -2416,8 +2477,10 @@ function sortHeader(label: string, key: string, numeric = false, extraClass = ''
   return `<th class="py-3.5 px-4${align}${extraClass ? ' ' + extraClass : ''}" title="${escapeHtml(tooltip)}"><div class="flex items-center gap-1.5${numeric ? ' justify-end' : ''}"><button data-sort="${escapeHtml(key)}" title="${escapeHtml(tooltip)}" class="uppercase tracking-wider hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:text-blue-600 dark:focus:text-blue-400">${escapeHtml(label)}${arrow}</button>${filterBadgeFor(key)}</div></th>`;
 }
 
+const STICKY_RANK_TIP = 'Sticky rank: the position of the row in the table sorted by the current column, before the column filters. Column filters only hide rows, so the numbers keep gaps (1, 4, 7...); the sort, the search and the top panel (categories, blacklist) rank again. Sticky # off: 1..N of the shown rows.';
+
 function indexHeader(): string {
-  return `<th class="py-3.5 px-4 w-12 text-center" title="${escapeHtml(getHeaderTooltip('#'))}">#</th>`;
+  return `<th class="py-3.5 px-4 w-12 text-center" title="${escapeHtml(columnFilterState.sticky && currentFilterScope() ? STICKY_RANK_TIP : getHeaderTooltip('#'))}">#</th>`;
 }
 
 /**
@@ -2472,7 +2535,7 @@ function bindSelectAllCheckbox(): void {
 
 function renderFundsTable(): void {
   setCatalogColumnStyle(true);
-  const rows = sortRows(filteredCatalogFunds());
+  const rows = filteredCatalogFunds();
   el.tableHead.innerHTML = `
     <tr>
       ${indexHeader()}
@@ -2512,7 +2575,7 @@ function renderFundsTable(): void {
       const selected = state.selected.has(fund.ticker);
       return `
         <tr data-ticker="${escapeHtml(fund.ticker)}" class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30 ${selected ? 'selected-row' : ''}">
-          <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${index + 1}</td>
+          <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(fund, index)}</td>
           <td class="catalog-sticky-col catalog-sticky-use py-2.5 px-4 text-center">
             <div class="inline-flex items-center justify-center gap-1.5">
               <input data-checkbox="${escapeHtml(fund.ticker)}" type="checkbox" ${selected ? 'checked' : ''} class="w-4 h-4 accent-blue-600 cursor-pointer" aria-label="Use ${escapeHtml(fund.ticker)}" />
@@ -2566,7 +2629,7 @@ function renderFundsTable(): void {
   const selected = state.selected.size;
   const queryText = currentQuery() ? ` matching “${currentQuery()}”` : '';
   const activeText = state.activeFundTicker ? ` Active ETF detail tabs are for ${state.activeFundTicker}.` : '';
-  setStatus(`Showing ${rows.length} ETF${rows.length === 1 ? '' : 's'}${queryText}. Use the checkboxes in the “Use” column to select ETFs.${selected ? ` ${selected} selected.` : ' No ETFs selected yet.'}${activeText}`, selected ? 'success' : 'info');
+  setStatus(`Showing ${rows.length} ETF${rows.length === 1 ? '' : 's'}${queryText}. Use the checkboxes in the “Use” column to select ETFs.${selected ? ` ${selected} selected.` : ' No ETFs selected yet.'}${activeText}${rankHint(rows.length)}`, selected ? 'success' : 'info');
   el.tickerCount.textContent = `${rows.length} ETFs`;
   renderSubtitle();
 }
@@ -2702,7 +2765,7 @@ function getDedupedWatchlistRows(): WatchlistRow[] {
 
 function getVisibleWatchlistRows(): WatchlistRow[] {
   const base = getDedupedWatchlistRows();
-  return sortRows(applyColumnFilters('watchlist', filterRows(base), WATCHLIST_FILTER_COLUMNS, base));
+  return tableView('watchlist', WATCHLIST_FILTER_COLUMNS, base, '', () => base);
 }
 
 function watchlistChunkSignature(rows: WatchlistRow[]): string {
@@ -2755,7 +2818,7 @@ function renderWatchlistTable(): void {
   } else {
     let html = visibleRows.map((row, index) => `
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
-        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${index + 1}</td>
+        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
         <td class="watchlist-sticky-col watchlist-sticky-ticker py-2.5 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">${escapeHtml(row.symbol)}</td>
         <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(row.name)}">${escapeHtml(row.name || '—')}</td>
         <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300">
@@ -2788,7 +2851,7 @@ function renderWatchlistTable(): void {
   if (moreRow) moreRow.addEventListener('click', () => growWatchlistChunk());
 
   const queryText = currentQuery() ? ` matching “${currentQuery()}”` : '';
-  setStatus(`Watchlist built from ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}: ${rows.length} ticker${rows.length === 1 ? '' : 's'}${queryText}. Deduplicated by ticker, or by identifier for bond rows.`, 'success');
+  setStatus(`Watchlist built from ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}: ${rows.length} ticker${rows.length === 1 ? '' : 's'}${queryText}. Deduplicated by ticker, or by identifier for bond rows.${rankHint(rows.length)}`, 'success');
   el.tickerCount.textContent = `${rows.length} tickers`;
   renderSubtitle();
 }
@@ -2847,7 +2910,7 @@ function renderSheetTable(fund: FundRow, sheet: 'holdings' | 'history'): void {
   }
 
   const headers = entry.headers;
-  const rows = sortRows(sheetView(sheet, headers, entry.rows, NUMERIC_SHEET_HEADERS));
+  const rows = sheetView(sheet, headers, entry.rows, NUMERIC_SHEET_HEADERS);
 
   el.tableHead.innerHTML = `
     <tr>
@@ -2864,7 +2927,7 @@ function renderSheetTable(fund: FundRow, sheet: 'holdings' | 'history'): void {
       const values: string[] = row.values || [];
       return `
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
-        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${index + 1}</td>
+        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
         ${values.map((cell, columnIndex) => `
           <td class="py-2.5 px-4 ${NUMERIC_SHEET_HEADERS.includes(headers[columnIndex]) ? 'text-right font-mono text-slate-700 dark:text-slate-300' : 'text-slate-700 dark:text-slate-300'}">${escapeHtml(cell === '' ? '—' : cell)}</td>
         `).join('')}
@@ -2990,7 +3053,7 @@ function renderDistributionsTable(fund: FundRow): void {
   const worksheet = meta && meta.distributions ? meta.distributions : { headers: [], rows: [] };
   const headers: string[] = Array.isArray(worksheet.headers) ? worksheet.headers : [];
   const sourceRows: string[][] = Array.isArray(worksheet.rows) ? worksheet.rows : [];
-  const rows = sortRows(sheetView('distributions', headers, sourceRows, []));
+  const rows = sheetView('distributions', headers, sourceRows, []);
 
   el.tableHead.innerHTML = `
     <tr>
@@ -3007,7 +3070,7 @@ function renderDistributionsTable(fund: FundRow): void {
       const values: string[] = row.values || [];
       return `
       <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
-        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${index + 1}</td>
+        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
         ${values.map(cell => `<td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-mono">${escapeHtml(cell || '—')}</td>`).join('')}
       </tr>
     `;}).join('');
@@ -3263,14 +3326,15 @@ function syncBlacklistPanelHeight(): void {
 function currentExportRows(): { headers: string[]; rows: string[][]; scope: string } {
   if (state.activeTab === 'watchlist') {
     return {
-      headers: ['Ticker', 'Name', 'ETFs', '# ETFs', 'Weight Sum (%)', 'Max Weight (%)', 'Identifiers'],
-      rows: getVisibleWatchlistRows().map(row => [
+      headers: ['#', 'Ticker', 'Name', 'ETFs', '# ETFs', 'Weight Sum (%)', 'Max Weight (%)', 'Identifiers'],
+      rows: getVisibleWatchlistRows().map((row, index) => [
+        String(rowNumber(row, index)),
         row.symbol,
         row.name,
         row.funds.join('|'),
         String(row.fundCount),
-        row.weightSum.toFixed(6),
-        row.maxWeight.toFixed(6),
+        row.weightSum === null ? '' : row.weightSum.toFixed(6), // unpublished weight: empty, never a crash
+        row.maxWeight === null ? '' : row.maxWeight.toFixed(6),
         row.cusips.join('|'),
       ]),
       scope: 'watchlist',
@@ -3282,8 +3346,9 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
     const monthEnd = (fund && fund.returns && fund.returns.monthEnd) || {};
     const quarterEnd = (fund && fund.returns && fund.returns.quarterEnd) || {};
     return {
-      headers: ['Ticker', 'Fund Name', 'Category', 'TER', 'NAV', 'Net Assets ($)', 'YTD (ME)', '1Y (ME)', '3Y (ME)', '5Y (ME)', '10Y (ME)', 'SI Ann. (ME)', 'ME As Of', '1Y (QE)', '3Y (QE)', 'Inception', 'Holdings', 'History'],
+      headers: ['#', 'Ticker', 'Fund Name', 'Category', 'TER', 'NAV', 'Net Assets ($)', 'YTD (ME)', '1Y (ME)', '3Y (ME)', '5Y (ME)', '10Y (ME)', 'SI Ann. (ME)', 'ME As Of', '1Y (QE)', '3Y (QE)', 'Inception', 'Holdings', 'History'],
       rows: [[
+        '1',
         fund ? fund.ticker : '',
         fund ? fund.name : '',
         fund ? fund.category : '',
@@ -3312,8 +3377,8 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
     const meta = fund ? fundMetaCache.get(fund.ticker) : null;
     const worksheet = meta && meta.distributions ? meta.distributions : { headers: [], rows: [] };
     return {
-      headers: worksheet.headers || [],
-      rows: sheetView('distributions', worksheet.headers || [], worksheet.rows || [], []).map((row: any) => row.values),
+      headers: ['#', ...(worksheet.headers || [])],
+      rows: sheetView('distributions', worksheet.headers || [], worksheet.rows || [], []).map((row: any, index: number) => [String(rowNumber(row, index)), ...row.values]),
       scope: fund ? `${fund.ticker}-distributions` : 'distributions',
     };
   }
@@ -3324,8 +3389,8 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
     const entry = fund ? sheetState.get(sheetKey(sheet)) : null;
     if (entry) {
       return {
-        headers: entry.headers,
-        rows: sheetView(sheet, entry.headers, entry.rows, NUMERIC_SHEET_HEADERS).map((row: any) => row.values),
+        headers: ['#', ...entry.headers],
+        rows: sheetView(sheet, entry.headers, entry.rows, NUMERIC_SHEET_HEADERS).map((row: any, index: number) => [String(rowNumber(row, index)), ...row.values]),
         scope: fund ? `${fund.ticker}-${sheet}` : sheet,
       };
     }
@@ -3333,8 +3398,9 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
   }
 
   return {
-    headers: ['Selected', 'Ticker', 'Fund Name', 'Type', 'NAV', 'Net Assets ($)', 'Expense (%)', 'Dividend Yield (%)', 'SEC Yield (%)', 'Frequency', 'YTD Return (%)', 'TR 1Y (%)', 'TR 3Y (%)', 'TR 5Y (%)', 'TR 10Y (%)', 'CAGR 3Y (%)', 'CAGR 5Y (%)', 'CAGR 10Y (%)', 'SI Ann. (%)', 'Return As Of', 'Inception', 'Holdings', 'History', 'As Of'],
-    rows: filteredCatalogFunds().map(fund => [
+    headers: ['#', 'Selected', 'Ticker', 'Fund Name', 'Type', 'NAV', 'Net Assets ($)', 'Expense (%)', 'Dividend Yield (%)', 'SEC Yield (%)', 'Frequency', 'YTD Return (%)', 'TR 1Y (%)', 'TR 3Y (%)', 'TR 5Y (%)', 'TR 10Y (%)', 'CAGR 3Y (%)', 'CAGR 5Y (%)', 'CAGR 10Y (%)', 'SI Ann. (%)', 'Return As Of', 'Inception', 'Holdings', 'History', 'As Of'],
+    rows: filteredCatalogFunds().map((fund, index) => [
+      String(rowNumber(fund, index)),
       state.selected.has(fund.ticker) ? 'yes' : 'no',
       fund.ticker,
       fund.name,
@@ -3677,6 +3743,7 @@ function handleUploadedFile(file: File): void {
       if (existingIndex >= 0) state.funds[existingIndex] = row;
       else state.funds.push(row);
       state.funds.sort((a, b) => a.ticker.localeCompare(b.ticker));
+      baselineCache = null; // rows replaced in place: rank again
 
       // Holdings live in memory: feed the sheet cache + a minimal meta so
       // detail tabs, lazy paging and Watchlist aggregation all work.
