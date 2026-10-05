@@ -85,6 +85,14 @@
      * used to produce a small up/down page shift when the table was full.
      */
     #table-scroll{overscroll-behavior:contain}
+    .busy-overlay{position:absolute;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;background:rgba(248,250,252,.72);color:#475569;font-size:.75rem;touch-action:none;cursor:progress;opacity:0;animation:busyShow .12s linear .15s forwards}
+    @keyframes busyShow{to{opacity:1}}
+    .busy-overlay[hidden]{display:none}
+    .busy-spinner{width:34px;height:34px;border-radius:50%;border:3px solid rgba(100,116,139,.3);border-top-color:#3b82f6;animation:busySpin .8s linear infinite}
+    @keyframes busySpin{to{transform:rotate(360deg)}}
+    @media (prefers-color-scheme:dark){.busy-overlay{background:rgba(15,23,42,.7);color:#cbd5e1}}
+    html.dark .busy-overlay{background:rgba(15,23,42,.7);color:#cbd5e1}
+    @media (prefers-reduced-motion:reduce){.busy-spinner{animation-duration:2.4s}}
 
     /*
      * Horizontal pinning for the catalog table: the Use checkbox and the
@@ -131,9 +139,9 @@
     .dark #table-scroll tbody tr.selected-row .catalog-sticky-col{background:#19274e}
 
     /* Detail navigation expands into place after an ETF is selected. */
-    main.space-y-6 > #selected-tabs-panel{max-height:0;margin-top:0;overflow:hidden;opacity:0;transform:translateY(-10px);padding-top:0;padding-bottom:0;border-color:transparent;transition:max-height .32s ease,margin-top .32s ease,padding .32s ease,opacity .22s ease,transform .32s ease,border-color .22s ease}
-    main.space-y-6 > #selected-tabs-panel.is-visible{max-height:8rem;margin-top:1.5rem;padding-top:1rem;padding-bottom:1rem;opacity:1;transform:translateY(0);border-color:rgb(226 232 240)}
-    .dark main.space-y-6 > #selected-tabs-panel.is-visible{border-color:rgb(51 65 85)}
+    main.space-y-6 > #selected-tabs-panel{margin-top:1.5rem;padding-top:1rem;padding-bottom:1rem;border-color:rgb(226 232 240)}
+    .dark main.space-y-6 > #selected-tabs-panel{border-color:rgb(51 65 85)}
+    .selected-tabs-hint{display:inline-flex;align-items:center;padding:.375rem .875rem;border:1px solid transparent;font-size:.75rem;line-height:1rem;color:#94a3b8}
 
     /*
      * Blacklist manager: same smooth expand/collapse contract as the detail
@@ -396,7 +404,8 @@
       </nav>
 
       <!-- Data Table Container -->
-      <div class="bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur overflow-hidden">
+      <div class="bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm backdrop-blur overflow-hidden relative">
+        <div id="busy-overlay" class="busy-overlay" role="status" aria-live="polite" hidden><div class="busy-spinner"></div><span id="busy-label">Updating the table…</span></div>
         <div id="table-scroll" class="overflow-x-auto overflow-y-auto themed-scroll">
           <table class="w-full text-left whitespace-nowrap">
             <thead id="table-head" class="bg-slate-50 dark:bg-slate-900/95 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider border-b border-slate-200 dark:border-slate-700 sticky top-0 z-20 backdrop-blur">
