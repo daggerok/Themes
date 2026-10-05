@@ -869,16 +869,18 @@ function syncHeadHeight(): void {
 
 /** Re-renders after a filter change and puts the caret back into the filter input that was being edited. */
 function rerenderKeepingFilterFocus(): void {
-  const active: any = document.activeElement;
-  const key = active && active.dataset ? active.dataset.filterCol : undefined;
-  const scope = active && active.dataset ? active.dataset.filterScope : undefined;
-  const caret = key !== undefined && typeof active.selectionStart === 'number' ? active.selectionStart : 0;
-  suppressTableAnimation = true;
-  render();
-  suppressTableAnimation = false;
-  if (key === undefined) return;
-  const next: any = [...el.tableHead.querySelectorAll('input[data-filter-col]')].find((node: any) => node.dataset.filterCol === key && node.dataset.filterScope === scope);
-  if (next) { next.focus(); try { next.setSelectionRange(caret, caret); } catch { /* not a text input */ } }
+  withBusy('Applying the filter…', () => {
+    const active: any = document.activeElement; // read when the work runs, so a key typed meanwhile keeps its caret
+    const key = active && active.dataset ? active.dataset.filterCol : undefined;
+    const scope = active && active.dataset ? active.dataset.filterScope : undefined;
+    const caret = key !== undefined && typeof active.selectionStart === 'number' ? active.selectionStart : 0;
+    suppressTableAnimation = true;
+    render();
+    suppressTableAnimation = false;
+    if (key === undefined) return;
+    const next: any = [...el.tableHead.querySelectorAll('input[data-filter-col]')].find((node: any) => node.dataset.filterCol === key && node.dataset.filterScope === scope);
+    if (next) { next.focus(); try { next.setSelectionRange(caret, caret); } catch { /* not a text input */ } }
+  });
 }
 
 function persistColumnFilters(): void {
@@ -958,7 +960,7 @@ function clearAllFilters(scope: string): void {
   filterTimers.clear();
   columnFilterState.filters[scope] = {};
   persistColumnFilters();
-  render();
+  renderBusy();
 }
 
 /** Header badge click: next type in the cycle; Shift+click returns to auto-detection. */
@@ -973,7 +975,7 @@ function cycleColumnType(scope: string, key: string, reset: boolean): void {
   else map[key] = next;
   columnFilterState.typeOverrides[scope] = map;
   persistColumnTypes();
-  render();
+  renderBusy();
 }
 
 /** Filter inputs and type badges live in the table header (delegated: the header is rebuilt on every render). */
@@ -984,7 +986,7 @@ function bindColumnFilterEvents(): void {
     filtersBtn.addEventListener('click', () => {
       columnFilterState.show = !columnFilterState.show;
       filterStorageSet(SHOW_FILTERS_KEY, String(columnFilterState.show));
-      render();
+      renderBusy();
     });
   }
   const rankBtn: any = document.getElementById('rank-btn');
@@ -992,7 +994,7 @@ function bindColumnFilterEvents(): void {
     rankBtn.addEventListener('click', () => {
       columnFilterState.sticky = !columnFilterState.sticky;
       filterStorageSet(STICKY_RANK_KEY, String(columnFilterState.sticky));
-      render();
+      renderBusy();
     });
   }
   if (clearBtn) {
@@ -1473,7 +1475,7 @@ function renderColumnsButton(): void {
 function applyColumnSelection(selected: Set<string>): void {
   hiddenColumns = new Set(menuColumns().filter(col => !col.locked && !selected.has(col.key)).map(col => col.key));
   persistHiddenColumns();
-  if (columnsStyle) columnsStyle.textContent = hiddenColumnsCss();
+  withBusy('Updating the columns…', () => { if (columnsStyle) columnsStyle.textContent = hiddenColumnsCss(); });
   renderColumnsButton();
 }
 
@@ -1562,7 +1564,7 @@ function categoryItems(): DropdownItem[] {
 function applyCategorySelection(selected: Set<string>): void {
   hiddenCategories = new Set(uniqueCategories().filter(category => !selected.has(category)));
   persistHiddenCategories();
-  render();
+  renderBusy();
 }
 
 function renderCategoriesButton(): void {
@@ -1603,6 +1605,40 @@ function ensureCategoriesMenu(): void {
 
 loadHiddenCategories();
 
+
+// ---- busy overlay: spinner over the table while heavy work blocks the page (same block in every app) ----
+
+let busyCount = 0;
+
+function setBusy(on: boolean, label = ''): void {
+  busyCount = Math.max(0, busyCount + (on ? 1 : -1));
+  const overlay: any = document.getElementById('busy-overlay');
+  const text: any = document.getElementById('busy-label');
+  if (on && label && text) text.textContent = label;
+  if (overlay) overlay.hidden = busyCount === 0;
+}
+
+/** Shows the spinner (CSS delays it ~150 ms, so quick work never flashes it), lets it paint, then runs the blocking work. */
+function withBusy(label: string, work: () => void): void {
+  setBusy(true, label);
+  requestAnimationFrame(() => setTimeout(() => {
+    try {
+      work();
+      const scroller: any = document.getElementById('table-scroll');
+      if (scroller) void scroller.offsetHeight; // layout of the new rows happens now, under the spinner
+    } finally {
+      requestAnimationFrame(() => setTimeout(() => setBusy(false), 0));
+    }
+  }, 0));
+}
+
+/** A user action that re-renders the whole table: the spinner shows while it runs (only if it takes longer than a blink). */
+function renderBusy(keepRows = true, after?: () => void): void {
+  withBusy('Updating the table…', () => {
+    render(keepRows);
+    if (after) after();
+  });
+}
 
 init();
 
@@ -1980,14 +2016,14 @@ async function ensureHoldingsForSelection(): Promise<void> {
   }
 }
 
-/** Progressive Watchlist rerenders are throttled (~150 ms) while rows stream in. */
+/** Progressive Watchlist rerenders are throttled (~500 ms) while rows stream in. */
 function scheduleWatchlistRefresh(): void {
   if (state.activeTab !== 'watchlist') return;
   if (watchlistRefreshTimer !== null) return;
   watchlistRefreshTimer = setTimeout(() => {
     watchlistRefreshTimer = null;
     if (state.activeTab === 'watchlist') { renderWatchlistTable(); renderTabs(); }
-  }, 150);
+  }, 500);
 }
 
 function activeSheetTab(): 'holdings' | 'history' | null {
@@ -2057,7 +2093,7 @@ function getSelectedTabs(): TabInfo[] {
   }
 
   if (state.selected.size > 0) {
-    const rowCount = getDedupedWatchlistRows().length;
+    const rowCount = watchlistTabCount();
     // While holdings are still loading, never show a misleading exact count:
     // "Loading…" (nothing aggregated yet) or "N+" (partial aggregation that
     // can only grow). The exact deduplicated count appears on completion.
@@ -2109,8 +2145,12 @@ function renderTabs(): void {
   renderCategoriesButton();
   categoriesDd?.refresh();
   const selectedTabs = getSelectedTabs();
-  el.selectedTabsPanel.classList.toggle('is-visible', selectedTabs.length > 0);
-  renderTabButtons(el.selectedTabsBar, selectedTabs);
+  // The panel is always there (a hint while nothing is selected), so the page does not jump when the first ETF is selected or the last one cleared.
+  if (selectedTabs.length) renderTabButtons(el.selectedTabsBar, selectedTabs, 0);
+  else {
+    el.selectedTabsBar.classList.remove('hidden');
+    el.selectedTabsBar.innerHTML = '<span class="selected-tabs-hint">Select an ETF with Use to open its Overview, Holdings, History and Watchlist here</span>';
+  }
 }
 
 function renderTabButtons(container: any, tabs: TabInfo[], minTabs = 1): void {
@@ -2517,7 +2557,7 @@ function bindSortHeaders(): void {
         state.sortDir = ['ticker', 'name', 'category', 'symbol', 'section', 'metric', 'identifier', 'label'].includes(key) ? 'asc' : 'desc';
       }
       rememberSortForCurrentTab();
-      render(false);
+      renderBusy(false);
     });
   });
 }
@@ -2714,15 +2754,38 @@ function getSelectedPositions(): HoldingPosition[] {
 
 let watchlistCache: { signature: string; rows: WatchlistRow[] } | null = null;
 
+function watchlistSignature(tickers: string[]): string {
+  return tickers.join('|') + '#' + tickers.map(ticker => (sheetState.get(`${ticker}:holdings`)?.rows.length ?? 0)).join(',');
+}
+
+let watchlistCountShown = 0;
+let watchlistCountTimer: any = null;
+
+/**
+ * Row count for the Watchlist tab label. The dedupe over every holding of every selected ETF is the heaviest
+ * computation of the page, so it never runs on the click path: a stale count is shown until it is rebuilt
+ * once (under the spinner) after holdings stopped loading. On the Watchlist tab itself the table needs the rows anyway.
+ */
+function watchlistTabCount(): number {
+  if (state.activeTab === 'watchlist') return (watchlistCountShown = getDedupedWatchlistRows().length);
+  const tickers = [...state.selected].sort();
+  if (watchlistCache && watchlistCache.signature === watchlistSignature(tickers)) return (watchlistCountShown = watchlistCache.rows.length);
+  if (watchlistCountTimer === null) {
+    watchlistCountTimer = setTimeout(() => {
+      watchlistCountTimer = null;
+      if (isHoldingsLoading()) return; // ensureHoldingsForSelection renders the tabs again when it is done
+      withBusy('Counting watchlist rows…', () => { getDedupedWatchlistRows(); renderTabs(); });
+    }, 400);
+  }
+  return watchlistCountShown;
+}
+
 function getDedupedWatchlistRows(): WatchlistRow[] {
   // Memoized: the aggregation is recomputed only when the selection or the
   // loaded row counts change (progressive streaming and tab label updates
   // otherwise re-render many times per second on large selections).
   const tickers = [...state.selected].sort();
-  const signature =
-    tickers.join('|') +
-    '#' +
-    tickers.map(ticker => (sheetState.get(`${ticker}:holdings`)?.rows.length ?? 0)).join(',');
+  const signature = watchlistSignature(tickers);
   if (watchlistCache && watchlistCache.signature === signature) return watchlistCache.rows;
 
   const map: Map<string, WatchlistRow> = new Map();
@@ -3201,22 +3264,26 @@ function toggleFund(ticker: string): void {
  *  Checking selects all visible rows; unchecking deselects visible rows only
  *  (hidden selections survive). */
 function toggleVisibleSelection(selectAll: boolean): void {
-  visibleCatalogRows().forEach(fund => {
-    if (selectAll) state.selected.add(fund.ticker);
-    else state.selected.delete(fund.ticker);
+  withBusy(selectAll ? 'Selecting ETFs…' : 'Clearing the selection…', () => {
+    visibleCatalogRows().forEach(fund => {
+      if (selectAll) state.selected.add(fund.ticker);
+      else state.selected.delete(fund.ticker);
+    });
+    afterSelectionChange();
   });
-  afterSelectionChange();
 }
 
 /** All ETFs pill checkbox: scope is always every non-blacklisted ETF in the
  *  entire catalog, operating from any tab under any filter. Toggle-only — it
  *  never navigates away from the current view. */
 function toggleAllCatalogEfts(selectAll: boolean): void {
-  state.funds.filter(fund => !state.blacklist.has(fund.ticker)).forEach(fund => {
-    if (selectAll) state.selected.add(fund.ticker);
-    else state.selected.delete(fund.ticker);
+  withBusy(selectAll ? 'Selecting ETFs…' : 'Clearing the selection…', () => {
+    state.funds.filter(fund => !state.blacklist.has(fund.ticker)).forEach(fund => {
+      if (selectAll) state.selected.add(fund.ticker);
+      else state.selected.delete(fund.ticker);
+    });
+    afterSelectionChange();
   });
-  afterSelectionChange();
 }
 
 /** Activates a selected fund from a clickable ticker badge (subtitle or
@@ -3236,7 +3303,7 @@ function activateFund(ticker: string): void {
 }
 
 /**
- * Everything the Clear button resets: the confirm text names each label, the saved keys are removed (a reload shows the
+ * Everything the Clear button resets: the label names each item, the saved keys are removed (a reload shows the
  * first-visit view) and reset() puts the state back to its default. Not listed, so kept: the blacklist and the theme.
  */
 const RESET_ITEMS: { label: string; keys: string[]; reset(): void }[] = [
@@ -3251,12 +3318,9 @@ const RESET_ITEMS: { label: string; keys: string[]; reset(): void }[] = [
   { label: 'Sticky #', keys: [STICKY_RANK_KEY], reset: () => { columnFilterState.sticky = false; } },
   { label: 'remembered table views', keys: [VIEW_KEY], reset: () => { savedViews = {}; settledViewTabs.clear(); restoringViewTabs.clear(); clearTimeout(saveViewTimer); } },
 ];
-const RESET_KEPT = ['blacklist', 'theme'];
 
-/** The Clear button: after one confirm, everything but the blacklist and the theme goes back to the first-visit view. */
+/** The Clear button: everything but the blacklist and the theme goes back to the first-visit view, no confirm dialog. */
 function clearSelectionAndSearch(): void {
-  const message = `Reset to the default view?\n\nWill be reset: ${RESET_ITEMS.map(item => item.label).join(', ')}\nWill be kept: ${RESET_KEPT.join(', ')}`;
-  if (!confirm(message)) return;
   RESET_ITEMS.forEach(item => { item.keys.forEach(filterStorageRemove); item.reset(); });
   [columnsDd, categoriesDd].forEach(dd => dd?.close());
   renderColumnsButton();
