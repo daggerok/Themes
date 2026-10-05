@@ -1,11 +1,52 @@
 {
+  "name": "themes",
+  "version": "1.0.0",
+  "description": "Themes",
+  "source": "src/index.html",
   "scripts": {
+    "clean": "rimraf -rf dist",
+    "ncp": "ncp api dist/api",
+    "build-github-pages": "npm run build -- --public-url=/Themes/",
+    "preserve": "npm run ncp",
+    "serve": "parcel --no-cache --no-source-maps --dist-dir ./dist",
+    "prebuild": "npm run clean",
+    "build": "parcel build --no-cache --no-source-maps --dist-dir ./dist",
+    "postbuild": "npm run ncp",
+    "start": "pm2 start 'npm run serve' --name app",
+    "restart": "pm2 restart app",
+    "ps": "pm2 ps",
+    "logs": "pm2 logs",
+    "stop": "pm2 kill",
     "test": "bun test",
     "update": "bun scripts/update-data.ts"
   },
+  "keywords": [
+    "tailwind",
+    "parcel",
+    "rimraf",
+    "html",
+    "pm2",
+    "css",
+    "ncp",
+    "bun"
+  ],
+  "author": "Maksim Kostromin / GitHub: daggerok",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@parcel/transformer-sass": "2.16.4",
+    "@tailwindcss/postcss": "4.3.3",
     "@types/bun": "1.4.2",
-    "@types/node": "26.6.3"
+    "@types/node": "26.6.3",
+    "ncp": "2.0.0",
+    "parcel": "2.16.4",
+    "pm2": "7.0.3",
+    "rimraf": "6.1.3",
+    "tailwindcss": "4.3.3"
+  },
+  "postcss": {
+    "plugins": {
+      "@tailwindcss/postcss": {}
+    }
   }
 }
