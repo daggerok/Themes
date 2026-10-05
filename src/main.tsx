@@ -687,7 +687,7 @@ function compileFilter(input: string, type: ColType, now: number = Date.now()): 
  * One filterable column of a table. `key` is the sort key of the column header (the key passed to
  * sortHeader), `text` the cell text as the table shows it (also the sample for the type detection),
  * `value` the exact number behind a numeric cell (so a filter compares full precision, not the
- * rounded text) and `extraClass` the classes of a horizontally pinned column.
+ * rounded-sm text) and `extraClass` the classes of a horizontally pinned column.
  */
 type FilterColumn = {
   key: string;
@@ -940,7 +940,7 @@ function setFilter(scope: string, key: string, value: string): void {
   rerenderKeepingFilterFocus();
 }
 
-/** Typing applies the filter after a short pause (FILTER_DEBOUNCE_MS), also when the input loses focus meanwhile; Enter applies it at once (a re-render on blur would swallow the click on a header). */
+/** Typing applies the filter after a short pause (FILTER_DEBOUNCE_MS), also when the input loses focus meanwhile; Enter applies it at once (a re-render on blur-sm would swallow the click on a header). */
 function scheduleFilter(scope: string, key: string, value: string): void {
   const id = `${scope}:${key}`;
   const pending = filterTimers.get(id);
@@ -2163,13 +2163,13 @@ function renderTabButtons(container: any, tabs: TabInfo[], minTabs = 1): void {
   container.innerHTML = tabs.map(tab => {
     // The All ETFs pill is lit only while no asset class narrows the table
     const isActive = tab.id === state.activeTab && (tab.id !== 'All' || !categoryFilterActive());
-    const activeClasses = 'bg-blue-600 text-white font-medium border-blue-500 shadow-sm';
+    const activeClasses = 'bg-blue-600 text-white font-medium border-blue-500 shadow-xs';
     const inactiveClasses = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700';
     if (tab.id === 'All') {
       return `
         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs transition border whitespace-nowrap ${isActive ? activeClasses : inactiveClasses}">
           <input type="checkbox" id="select-all-toggle" ${allSelected ? 'checked' : ''} class="w-3.5 h-3.5 accent-blue-600 cursor-pointer" title="Select / Deselect all ETFs" />
-          <button data-tab="All" class="font-medium hover:underline focus:outline-none">
+          <button data-tab="All" class="font-medium hover:underline focus:outline-hidden">
             ${escapeHtml(tab.label)} (${tab.count})
           </button>
         </div>
@@ -2515,7 +2515,7 @@ function sortHeader(label: string, key: string, numeric = false, extraClass = ''
   const arrow = active ? (state.sortDir === 'asc' ? ' ↑' : ' ↓') : '';
   const align = numeric ? ' text-right' : '';
   const tooltip = getHeaderTooltip(label);
-  return `<th class="py-3.5 px-4${align}${extraClass ? ' ' + extraClass : ''}" title="${escapeHtml(tooltip)}"><div class="flex items-center gap-1.5${numeric ? ' justify-end' : ''}"><button data-sort="${escapeHtml(key)}" title="${escapeHtml(tooltip)}" class="uppercase tracking-wider hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none focus:text-blue-600 dark:focus:text-blue-400">${escapeHtml(label)}${arrow}</button>${filterBadgeFor(key)}</div></th>`;
+  return `<th class="py-3.5 px-4${align}${extraClass ? ' ' + extraClass : ''}" title="${escapeHtml(tooltip)}"><div class="flex items-center gap-1.5${numeric ? ' justify-end' : ''}"><button data-sort="${escapeHtml(key)}" title="${escapeHtml(tooltip)}" class="uppercase tracking-wider hover:text-blue-600 dark:hover:text-blue-400 focus:outline-hidden focus:text-blue-600 dark:focus:text-blue-400">${escapeHtml(label)}${arrow}</button>${filterBadgeFor(key)}</div></th>`;
 }
 
 const STICKY_RANK_TIP = 'Sticky rank: the position of the row in the table sorted by the current column, before the column filters. Column filters only hide rows, so the numbers keep gaps (1, 4, 7...); the sort, the search and the top panel (categories, blacklist) rank again. Sticky # off: 1..N of the shown rows.';
@@ -2620,7 +2620,7 @@ function renderFundsTable(): void {
           <td class="catalog-sticky-col catalog-sticky-use py-2.5 px-4 text-center">
             <div class="inline-flex items-center justify-center gap-1.5">
               <input data-checkbox="${escapeHtml(fund.ticker)}" type="checkbox" ${selected ? 'checked' : ''} class="w-4 h-4 accent-blue-600 cursor-pointer" aria-label="Use ${escapeHtml(fund.ticker)}" />
-              <button data-blacklist="${escapeHtml(fund.ticker)}" class="w-4 h-4 rounded text-slate-300 dark:text-slate-600 hover:text-rose-500 dark:hover:text-rose-400 leading-none transition" title="Blacklist ${escapeHtml(fund.ticker)} — hide it from All ETFs">✕</button>
+              <button data-blacklist="${escapeHtml(fund.ticker)}" class="w-4 h-4 rounded-sm text-slate-300 dark:text-slate-600 hover:text-rose-500 dark:hover:text-rose-400 leading-none transition" title="Blacklist ${escapeHtml(fund.ticker)} — hide it from All ETFs">✕</button>
             </div>
           </td>
           <td class="catalog-sticky-col catalog-sticky-ticker py-2.5 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">${escapeHtml(fund.ticker)}</td>
@@ -3972,6 +3972,75 @@ function init(): void {
   void loadCatalog().catch(error => {
     const message = error instanceof Error ? error.message : String(error);
     el.tickerCount.textContent = 'Error';
-    setStatusRow(`Unable to load api/themes/index.json: ${message}. Run bun ./scripts/update-data.ts and serve the folder (for example bunx serve . -p 1234).`, 'error');
+    setStatusRow(`Unable to load api/themes/index.json: ${message}. Run bun ./scripts/update-data.ts and serve the site (bun run serve).`, 'error');
   });
 }
+
+// ---- header summary popover: hover, focus or click on the stock count opens it ----
+
+(() => {
+  const trigger = document.getElementById('ticker-count');
+  const panel = document.getElementById('app-summary');
+  if (!trigger || !panel) return;
+  document.body.appendChild(panel); // top layer: the header's stacking context must not put it under later panels
+  let pinned = false;
+  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+  const position = (): void => {
+    const rect = trigger.getBoundingClientRect();
+    panel.style.left = `${Math.max(16, Math.min(rect.right - panel.offsetWidth, innerWidth - panel.offsetWidth - 16))}px`;
+    panel.style.top = `${Math.max(16, Math.min(rect.bottom + 8, innerHeight - panel.offsetHeight - 16))}px`;
+  };
+  const show = (): void => {
+    clearTimeout(closeTimer);
+    panel.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    position();
+  };
+  const hide = (): void => {
+    clearTimeout(closeTimer);
+    panel.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  };
+  const scheduleHide = (): void => {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => {
+      const focused = document.activeElement;
+      if (!pinned && !trigger.matches(':hover') && !panel.matches(':hover') &&
+          focused !== trigger && !panel.contains(focused)) hide();
+    }, 150);
+  };
+  trigger.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(); });
+  panel.addEventListener('pointerenter', () => clearTimeout(closeTimer));
+  trigger.addEventListener('pointerleave', scheduleHide);
+  panel.addEventListener('pointerleave', scheduleHide);
+  trigger.addEventListener('focus', show);
+  panel.addEventListener('focusin', show);
+  trigger.addEventListener('blur', scheduleHide);
+  panel.addEventListener('focusout', scheduleHide);
+  trigger.addEventListener('click', () => { pinned = !pinned; if (pinned) show(); else hide(); });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    pinned = false;
+    if (panel.contains(document.activeElement)) trigger.focus();
+    hide();
+  });
+  document.addEventListener('pointerdown', event => {
+    const target = event.target as Node;
+    if (!trigger.contains(target) && !panel.contains(target)) { pinned = false; hide(); }
+  });
+  addEventListener('resize', () => { if (!panel.hidden) position(); });
+  addEventListener('scroll', () => { if (!panel.hidden) position(); }, { passive: true });
+  if (typeof ResizeObserver === 'function') new ResizeObserver(() => { if (!panel.hidden) position(); }).observe(panel);
+})();
+
+// ---- browser test hooks: the module scope hides these from the page, the shared UI tests (ETFs/.claude/tools/ui-std) reach them through window ----
+
+Object.assign(window, { COLUMN_TYPES_KEY, COLUMN_VISIBILITY_KEY, FUND_FILTER_COLUMNS, HIDDEN_CATEGORIES_KEY, activateFund, afterSelectionChange, categoryLabel, columnFilterState, copyText, currentExportRows, downloadText, filterExpressionFor, filterInfo, filteredCatalogFunds, fundMetaCache, getDedupedWatchlistRows, getVisibleWatchlistRows, isHoldingsLoading, menuColumns, persistColumnFilters, persistHiddenColumns, render, setCatalogColumnStyle, sheetKey, sheetState, state, uniqueCategories, visibleCatalogRows });
+Object.defineProperty(window, 'hiddenCategories', { get: () => hiddenCategories, set: value => { hiddenCategories = value; } });
+Object.defineProperty(window, 'hiddenColumns', { get: () => hiddenColumns, set: value => { hiddenColumns = value; } });
+
+// ---- links to the published feed: set at run time (a relative ./api/... href in index.html is a bundler dependency)
+
+document.querySelectorAll('a[data-feed-link]').forEach(link => {
+  (link as HTMLAnchorElement).href = new URL(link.getAttribute('data-feed-link') || '', document.baseURI).href;
+});
