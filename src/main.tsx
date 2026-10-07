@@ -2667,6 +2667,11 @@ function renderFundsTable(): void {
     });
   });
 
+  renderCatalogStatus(rows);
+}
+
+/** Status line, ETF counter and subtitle of the catalog table: the part of the render that follows the selection. */
+function renderCatalogStatus(rows: FundRow[]): void {
   const selected = state.selected.size;
   const queryText = currentQuery() ? ` matching “${currentQuery()}”` : '';
   const activeText = state.activeFundTicker ? ` Active ETF detail tabs are for ${state.activeFundTicker}.` : '';
@@ -3230,12 +3235,34 @@ function updateActiveFundFallback(): void {
 /** Shared trailer for every selection writer: keeps localStorage, tabs,
  *  subtitle badges, per-sheet counts and the Watchlist (visibility, loading
  *  state, count) in sync immediately — no extra click needed. */
-function afterSelectionChange(): void {
+function afterSelectionChange(changed?: string[]): void {
   updateActiveFundFallback();
   persistSelection();
+  const tabBefore = state.activeTab;
   ensureValidTab();
-  render();
+  if (changed && state.activeTab === tabBefore && isEtfCatalogTab(state.activeTab)) patchCatalogSelection(changed);
+  else render();
   void ensureHoldingsForSelection();
+}
+
+/**
+ * A selection change only moves the Use checkbox and the row highlight of the catalog table. Rebuilding every mounted row for it
+ * costs more the further the table was scrolled (about 0.3 s at 1400 rows), so the changed rows are patched in place.
+ */
+function patchCatalogSelection(tickers: string[]): void {
+  for (const ticker of tickers) {
+    const row = el.tableBody.querySelector(`tr[data-ticker="${CSS.escape(ticker)}"]`);
+    if (!row) continue;
+    const on = state.selected.has(ticker);
+    row.classList.toggle('selected-row', on);
+    const box: any = row.querySelector('input[data-checkbox]');
+    if (box) box.checked = on;
+  }
+  const rows = visibleCatalogRows();
+  const head: any = el.tableHead.querySelector('#select-all-checkbox');
+  if (head) head.checked = rows.length > 0 && rows.every(fund => state.selected.has(fund.ticker));
+  renderTabs();
+  renderCatalogStatus(rows);
 }
 
 /** Row Use checkbox (or row click): toggles exactly one ETF. */
@@ -3250,7 +3277,7 @@ function toggleFund(ticker: string): void {
     state.activeFundTicker = cleanTicker;
   }
 
-  afterSelectionChange();
+  afterSelectionChange([cleanTicker]);
   const activeTicker = state.activeFundTicker;
   if (activeTicker && state.activeTab.startsWith('detail:')) {
     void loadFundMeta(activeTicker).then(meta => {
