@@ -26,85 +26,88 @@
 <body class="min-h-screen font-sans bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
   <div class="min-h-screen flex flex-col animate-fade-in">
 
-    <!-- Header: intentionally mirrors daggerok/Amplify look and feel -->
-    <header class="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 px-4 sm:px-8 py-3 flex flex-wrap justify-between items-center gap-3 z-40 shadow-xs shrink-0">
-      <div class="flex flex-1 flex-wrap items-center gap-x-3 gap-y-1.5 min-w-0">
-        <div class="flex items-start gap-3 min-w-0">
-          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 7l-8.5 8.5-5-5L2 17" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7h6v6" />
-          </svg>
-          <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">Themes ETFs</h1>
-        </div>
-        <span id="app-subtitle" class="basis-full sm:basis-auto text-sm text-slate-500 dark:text-slate-400"></span>
-      </div>
-      <div class="flex items-center gap-3 shrink-0">
-        <button type="button" aria-controls="app-summary" aria-expanded="false" aria-label="ETF catalog information" id="ticker-count" class="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/30">
-          Loading…
-        </button>
-        <span id="app-summary" role="region" aria-label="ETF catalog information" hidden>
-          Search Themes ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab. Data comes from
-          <a href="#" data-feed-link="api/themes/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/themes/index.json</a> generated from
-          <a href="https://themesetfs.com/etfs" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">themesetfs.com catalog and daily holdings downloads</a> + Yahoo Finance
-        </span>
-        <button id="theme-toggle" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-base leading-none" title="Toggle Theme">🌙</button>
-      </div>
-    </header>
+    <main class="flex-1 w-full max-w-full p-4 sm:p-8 pb-0 sm:pb-0 lg:pt-0 space-y-6">
 
-    <main class="flex-1 w-full max-w-full p-4 sm:p-8 pb-0 sm:pb-0 space-y-6">
+      <div id="top-panels" class="max-lg:contents lg:sticky lg:top-0 lg:z-40 lg:space-y-6 lg:pt-8 lg:bg-slate-50 lg:dark:bg-slate-900">
+        <!-- Top panel: brand, detail tabs, ETF count and theme (was the page header). Sticky on every width. -->
+        <nav id="selected-tabs-panel" class="bg-white dark:bg-slate-800/80 max-lg:dark:bg-slate-800 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm flex flex-wrap items-center gap-x-3 gap-y-2 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] max-lg:sticky max-lg:top-0 max-lg:z-40 max-lg:mb-6" aria-label="Selected ETF detail views">
+          <div class="order-1 lg:min-w-0 flex flex-1 lg:flex-none flex-wrap items-center gap-x-3 gap-y-1.5 min-w-0">
+            <div class="flex items-start gap-3 min-w-0">
+              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 7l-8.5 8.5-5-5L2 17" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7h6v6" />
+              </svg>
+              <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">Themes ETFs</h1>
+            </div>
+            <span id="app-subtitle" class="basis-full sm:basis-auto text-sm text-slate-500 dark:text-slate-400"></span>
+          </div>
+          <div id="selected-tabs-bar" class="flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-0.5 order-3 lg:order-2 basis-full lg:basis-auto max-w-full themed-scroll"></div>
+          <div class="order-2 lg:order-3 flex items-center gap-3 shrink-0 ml-auto lg:ml-0 lg:justify-self-end">
+            <button type="button" aria-controls="app-summary" aria-expanded="false" aria-label="ETF catalog information" id="ticker-count" class="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/30">
+              Loading…
+            </button>
+            <span id="app-summary" role="region" aria-label="ETF catalog information" hidden>
+              Search Themes ETFs, select ETFs via the “Use” checkbox, then use the Watchlist tab. Data comes from
+              <a href="#" data-feed-link="api/themes/index.json" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">api/themes/index.json</a> generated from
+              <a href="https://themesetfs.com/etfs" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-600 dark:text-blue-400 hover:underline">themesetfs.com catalog and daily holdings downloads</a> + Yahoo Finance
+            </span>
+            <button id="theme-toggle" class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition text-base leading-none" title="Toggle Theme">🌙</button>
+          </div>
+        </nav>
 
-      <!-- Search, Tabs & Action Bar -->
-      <div class="flex flex-col lg:flex-row lg:flex-wrap lg:justify-start justify-between items-center gap-4 bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm">
+        <!-- Search, Tabs & Action Bar -->
+        <div class="max-lg:mb-6 flex flex-col lg:flex-row lg:flex-wrap lg:justify-start justify-between items-center gap-4 bg-white dark:bg-slate-800/80 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm">
 
-        <!-- Search is view-scoped: each tab keeps its own query. The ✕ button
-             clears only the active tab's filter (same glyph as the Use-column blacklist). -->
-        <div class="relative flex items-center w-full lg:w-96 shrink-0">
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search ETFs, fund names, holdings, tickers, CUSIPs, ISINs..."
-            disabled
-            class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg pl-4 pr-8 py-2 w-full focus:outline-hidden focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          />
-          <button
-            type="button"
-            id="search-clear-btn"
-            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm leading-none focus:outline-hidden"
-            title="Clear search filter"
-            aria-label="Clear search filter"
-          >✕</button>
-        </div>
-
-        <!-- ETF catalogue tabs: All ETFs + Themes ETFs categories. -->
-        <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full lg:w-auto lg:flex-none themed-scroll"></div>
-          <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
-          <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
-          <button id="rank-btn" type="button" aria-pressed="false" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Sticky #: number the rows by their rank in the sorted table before the column filters, so filtered rows keep their rank (1, 4, 7...). Off: 1..N of the shown rows">Sticky #: <span id="rank-summary">off</span></button>
-
-        <!-- Actions intentionally match Amplify / iShares naming and placement -->
-        <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto lg:ml-auto justify-end shrink-0">
-
-          <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
-
-          <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
-          <div
-            id="dropzone"
-            class="flex items-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-500 bg-slate-50 dark:bg-slate-900/60 transition-all rounded-lg px-3.5 py-2 cursor-pointer text-sm text-slate-600 dark:text-slate-300"
-            title="Upload SEC Form N-PORT-P primary_doc.xml (Themes ETF Trust holdings from EDGAR, CIK 0001976322 — the fallback the feed uses when themesetfs.com publishes no daily holdings CSV for a fund). Parsed in your browser; uploads live for this session only."
-          >
-            <input type="file" id="file-input" accept=".xml" class="hidden" />
-            <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-            </svg>
-            <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
+          <!-- Search is view-scoped: each tab keeps its own query. The ✕ button
+               clears only the active tab's filter (same glyph as the Use-column blacklist). -->
+          <div class="relative flex items-center w-full lg:w-96 shrink-0">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search ETFs, fund names, holdings, tickers, CUSIPs, ISINs..."
+              disabled
+              class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg pl-4 pr-8 py-2 w-full focus:outline-hidden focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            />
+            <button
+              type="button"
+              id="search-clear-btn"
+              class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm leading-none focus:outline-hidden"
+              title="Clear search filter"
+              aria-label="Clear search filter"
+            >✕</button>
           </div>
 
-          <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
-          <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
-          <button id="reset-btn" disabled title="Reset everything to the first-visit view: selection, searches, sorts, asset classes and columns, column filters, Sticky # and remembered views. The blacklist and the theme are kept" class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-rose-200 dark:hover:bg-rose-800/60 disabled:hover:bg-rose-100 dark:disabled:hover:bg-rose-900/40">Clear</button>
-          <button id="blacklist-btn" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700" title="Manage the blacklist of ETFs hidden from All ETFs (kept in browser localStorage)" aria-expanded="false">Blacklist</button>
-        </div>
+          <!-- ETF catalogue tabs: All ETFs + Themes ETFs categories. -->
+          <div id="tabs-bar" class="hidden flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full lg:w-auto lg:flex-none themed-scroll"></div>
+            <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
+            <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
+            <button id="rank-btn" type="button" aria-pressed="false" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Sticky #: number the rows by their rank in the sorted table before the column filters, so filtered rows keep their rank (1, 4, 7...). Off: 1..N of the shown rows">Sticky #: <span id="rank-summary">off</span></button>
 
+          <!-- Actions intentionally match Amplify / iShares naming and placement -->
+          <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto lg:ml-auto justify-end shrink-0">
+
+            <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
+
+            <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
+            <div
+              id="dropzone"
+              class="flex items-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-500 bg-slate-50 dark:bg-slate-900/60 transition-all rounded-lg px-3.5 py-2 cursor-pointer text-sm text-slate-600 dark:text-slate-300"
+              title="Upload SEC Form N-PORT-P primary_doc.xml (Themes ETF Trust holdings from EDGAR, CIK 0001976322 — the fallback the feed uses when themesetfs.com publishes no daily holdings CSV for a fund). Parsed in your browser; uploads live for this session only."
+            >
+              <input type="file" id="file-input" accept=".xml" class="hidden" />
+              <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
+            </div>
+
+            <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
+            <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
+            <button id="reset-btn" disabled title="Reset everything to the first-visit view: selection, searches, sorts, asset classes and columns, column filters, Sticky # and remembered views. The blacklist and the theme are kept" class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-rose-200 dark:hover:bg-rose-800/60 disabled:hover:bg-rose-100 dark:disabled:hover:bg-rose-900/40">Clear</button>
+            <button id="blacklist-btn" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700" title="Manage the blacklist of ETFs hidden from All ETFs (kept in browser localStorage)" aria-expanded="false">Blacklist</button>
+          </div>
+
+        </div>
       </div>
 
       <!-- Blacklist manager: blacklisted ETFs are hidden from All ETFs and stored in localStorage. -->
@@ -119,11 +122,6 @@
         <div id="blacklist-chips" class="flex flex-wrap gap-1.5 mt-3"></div>
         <p id="blacklist-empty" class="text-xs text-slate-400 dark:text-slate-500 mt-3">The blacklist is empty. Blacklisted ETFs disappear from All ETFs (and from selection), and are kept in your browser localStorage.</p>
       </div>
-
-      <!-- Selected ETF detail tabs appear immediately above the table. -->
-      <nav id="selected-tabs-panel" class="bg-white dark:bg-slate-800/80 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm" aria-label="Selected ETF detail views">
-        <div id="selected-tabs-bar" class="flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-1 w-full max-w-full themed-scroll"></div>
-      </nav>
 
       <!-- Data Table Container -->
       <div class="bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm overflow-hidden relative">

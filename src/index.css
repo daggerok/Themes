@@ -148,8 +148,8 @@
     .dark #table-scroll tbody tr.selected-row .catalog-sticky-col{background:#19274e}
 
     /* Detail navigation expands into place after an ETF is selected. */
-    main.space-y-6 > #selected-tabs-panel{margin-top:1.5rem;padding-top:1rem;padding-bottom:1rem;border-color:rgb(226 232 240)}
-    .dark main.space-y-6 > #selected-tabs-panel{border-color:rgb(51 65 85)}
+    #selected-tabs-panel{padding-top:.75rem;padding-bottom:.75rem;border-color:rgb(226 232 240)}
+    .dark #selected-tabs-panel{border-color:rgb(51 65 85)}
 
     /*
      * Blacklist manager: same smooth expand/collapse contract as the detail
