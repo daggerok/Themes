@@ -3580,8 +3580,12 @@ function exportTxt(): void {
 
 function fitTableHeight(): void {
   const rect = el.tableScroll.getBoundingClientRect();
-  const bottomPad = window.innerWidth < 640 ? 12 : 24;
-  const max = Math.max(240, window.innerHeight - rect.top - bottomPad);
+  // below the table: the border of its card, the bottom padding of main (one gutter) and the footer, so the footer ends at the bottom of the window
+  const card = el.tableScroll.parentElement;
+  const main = document.querySelector('main');
+  const footer = document.querySelector('footer');
+  const below = (card ? parseFloat(getComputedStyle(card).borderBottomWidth) : 0) + (main ? parseFloat(getComputedStyle(main).paddingBottom) : 0) + (footer ? footer.getBoundingClientRect().height : 0);
+  const max = Math.max(240, window.innerHeight - rect.top - below);
   el.tableScroll.style.maxHeight = `${max}px`;
 }
 
