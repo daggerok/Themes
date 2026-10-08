@@ -306,3 +306,31 @@
       box-shadow: 0 12px 30px rgb(15 23 42 / .2);
     }
     .dark #app-summary { background: #0f172a; color: #cbd5e1; border-color: #475569; }
+
+/* Clear dialog: what to reset, in the style of the dropdown panels (see clearSelectionAndSearch in main.tsx) */
+.clear-backdrop{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgb(15 23 42 / .5);animation:clearFade .14s ease}
+.clear-modal{width:min(26rem,100%);max-height:calc(100vh - 2rem);display:flex;flex-direction:column;gap:.75rem;padding:1.25rem;background:#fff;color:#0f172a;border:1px solid #e2e8f0;border-radius:.75rem;box-shadow:0 12px 30px rgb(15 23 42 / .16),0 2px 6px rgb(15 23 42 / .06)}
+.dark .clear-modal{background:#0f172a;color:#e2e8f0;border-color:#334155;box-shadow:0 12px 30px rgb(0 0 0 / .5),0 2px 6px rgb(0 0 0 / .3)}
+.clear-title{font-size:1.05rem;font-weight:600}
+.clear-hint{font-size:.75rem;color:#64748b}
+.dark .clear-hint{color:#94a3b8}
+.clear-tools{display:flex;gap:.4rem}
+.clear-list{display:flex;flex-direction:column;gap:.1rem;overflow:auto;padding:.25rem;border:1px solid #e2e8f0;border-radius:.5rem}
+.dark .clear-list{border-color:#334155}
+.clear-row{display:flex;align-items:center;gap:.6rem;padding:.4rem .5rem;border-radius:.4rem;font-size:.875rem;cursor:pointer;user-select:none}
+.clear-row:hover{background:#f1f5f9}
+.dark .clear-row:hover{background:#1e293b}
+.clear-actions{display:flex;justify-content:flex-end;gap:.5rem}
+.clear-btn{display:inline-flex;align-items:center;font-size:.8125rem;font-weight:500;padding:.45rem .9rem;border-radius:.5rem;border:1px solid #e2e8f0;background:#fff;color:#334155;cursor:pointer;transition:background-color .12s,border-color .12s}
+.clear-btn:hover{background:#f1f5f9}
+.dark .clear-btn{background:#0f172a;border-color:#334155;color:#e2e8f0}
+.dark .clear-btn:hover{background:#1e293b}
+.clear-btn-ok{background:#dc2626;border-color:#dc2626;color:#fff}
+.clear-btn-ok:hover{background:#b91c1c}
+.dark .clear-btn-ok{background:#dc2626;border-color:#dc2626;color:#fff}
+.dark .clear-btn-ok:hover{background:#b91c1c}
+.clear-btn:disabled{opacity:.5;cursor:not-allowed}
+.clear-btn kbd{margin-left:.5rem;padding:0 .3rem;font:inherit;font-size:.65rem;opacity:.7;border:1px solid currentColor;border-radius:.25rem}
+.clear-btn:focus-visible,.clear-row:focus-within{outline:2px solid #3b82f6;outline-offset:2px}
+@keyframes clearFade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.clear-backdrop{animation:none}}
