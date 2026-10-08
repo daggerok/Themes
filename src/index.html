@@ -30,20 +30,20 @@
 
       <div id="top-panels" class="max-lg:contents lg:sticky lg:top-0 lg:z-40 lg:space-y-6 lg:pt-8 lg:bg-slate-50 lg:dark:bg-slate-900">
         <!-- Top panel: brand, detail tabs, ETF count and theme (was the page header). Sticky on every width. -->
-        <nav id="selected-tabs-panel" class="bg-white dark:bg-slate-800/80 max-lg:dark:bg-slate-800 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm flex flex-wrap items-center gap-x-3 gap-y-2 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] max-lg:sticky max-lg:top-0 max-lg:z-40 max-lg:mb-6" aria-label="Selected ETF detail views">
-          <div class="order-1 lg:min-w-0 flex flex-1 lg:flex-none flex-wrap items-center gap-x-3 gap-y-1.5 min-w-0">
-            <div class="flex items-start gap-3 min-w-0">
+        <nav id="selected-tabs-panel" class="bg-white dark:bg-slate-800/80 max-lg:dark:bg-slate-800 px-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-xs backdrop-blur-sm flex flex-wrap items-center gap-x-3 gap-y-2 lg:grid lg:grid-cols-[minmax(11rem,1.5fr)_minmax(0,auto)_minmax(min-content,1fr)] max-lg:sticky max-lg:top-0 max-lg:z-40 max-lg:mb-6" aria-label="Selected ETF detail views">
+          <div class="order-1 lg:min-w-0 flex flex-1 flex-wrap sm:flex-nowrap items-center gap-x-3 gap-y-1.5 min-w-0">
+            <div class="flex items-start gap-3 min-w-0 sm:shrink-0">
               <svg class="w-6 h-6 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M22 7l-8.5 8.5-5-5L2 17" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7h6v6" />
               </svg>
               <h1 class="min-w-0 text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">Themes ETFs</h1>
             </div>
-            <span id="app-subtitle" class="basis-full sm:basis-auto text-sm text-slate-500 dark:text-slate-400"></span>
+            <span id="app-subtitle" class="hidden xl:block xl:flex-1 sm:min-w-0 truncate text-sm text-slate-500 dark:text-slate-400"></span>
           </div>
-          <div id="selected-tabs-bar" class="flex flex-wrap items-center justify-center gap-1.5 overflow-x-auto py-0.5 order-3 lg:order-2 basis-full lg:basis-auto max-w-full themed-scroll"></div>
+          <div id="selected-tabs-bar" class="flex flex-nowrap items-center [justify-content:safe_center] [&>*]:shrink-0 [&>*]:whitespace-nowrap gap-1.5 overflow-x-auto py-0.5 order-3 lg:order-2 basis-full lg:basis-auto max-w-full themed-scroll"></div>
           <div class="order-2 lg:order-3 flex items-center gap-3 shrink-0 ml-auto lg:ml-0 lg:justify-self-end">
-            <button type="button" aria-controls="app-summary" aria-expanded="false" aria-label="ETF catalog information" id="ticker-count" class="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/30">
+            <button type="button" aria-controls="app-summary" aria-expanded="false" aria-label="ETF catalog information" id="ticker-count" class="whitespace-nowrap bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-sm font-semibold px-3.5 py-1.5 rounded-full border border-blue-200 dark:border-blue-500/30">
               Loading…
             </button>
             <span id="app-summary" role="region" aria-label="ETF catalog information" hidden>
