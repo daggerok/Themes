@@ -3987,7 +3987,7 @@ function bindEvents(): void {
   if (typeof ResizeObserver === 'function') {
     // a block above the table that shrinks after the first fit does not change the page height (min-h-screen), only its own size tells
     const above = new ResizeObserver(() => fitTableHeight());
-    document.querySelectorAll('main > *').forEach(child => { if (!child.contains(el.tableScroll)) above.observe(child, { box: 'border-box' }); });
+    document.querySelectorAll('main > *, #top-panels > *').forEach(child => { if (!child.contains(el.tableScroll)) above.observe(child, { box: 'border-box' }); });
   }
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(() => fitTableHeight()).observe(document.body);
