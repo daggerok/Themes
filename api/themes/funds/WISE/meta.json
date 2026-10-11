@@ -1,5 +1,5 @@
 {
-  "asOfDate": "Oct 2, 2026",
+  "asOfDate": "Oct 9, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$27.94M",
@@ -8,8 +8,8 @@
   },
   "aumValue": 27937876,
   "category": "Thematic",
-  "closePrice": "$35.27",
-  "closePriceValue": 35.27,
+  "closePrice": "$35.18",
+  "closePriceValue": 35.18,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,17 +28,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-10-04T03:29:27Z",
+  "generatedAt": "2026-10-11T04:42:22Z",
   "history": {
-    "asOf": "2026-10-02",
-    "asOfDate": "Oct 2, 2026",
+    "asOf": "2026-10-09",
+    "asOfDate": "Oct 9, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 706
+    "totalRows": 711
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -55,44 +55,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.56,
-    "distributionYieldText": "4.56%",
-    "dividendYield": 4.56,
+    "distributionYield": 4.59,
+    "distributionYieldText": "4.59%",
+    "dividendYield": 4.59,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "4.56%",
-    "performanceAsOf": "2026-10-02",
+    "dividendYieldText": "4.59%",
+    "performanceAsOf": "2026-10-09",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -19.46,
+    "tr1y": -15.68,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.56,
-    "yield12MText": "4.56%",
-    "ytd": -9.49
+    "yield12M": 4.59,
+    "yield12MText": "4.59%",
+    "ytd": -9.73
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Oct 2, 2026",
-    "display": "$35.30",
+    "asOfDate": "Oct 9, 2026",
+    "display": "$35.11",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.3
+    "value": 35.11
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.3,
+  "navValue": 35.11,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 2, 2026",
+      "asOfDate": "Oct 9, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -19.46,
+      "yr1": -15.68,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -9.49
+      "ytd": -9.73
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -112,7 +112,7 @@
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
-    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-WISE.pdf",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-WISE-%2809.30.2026%29.pdf",
     "fundPage": "https://themesetfs.com/etfs/wise",
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",

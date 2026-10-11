@@ -1,5 +1,5 @@
 {
-  "asOfDate": "Oct 2, 2026",
+  "asOfDate": "Oct 9, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$9.65M",
@@ -8,8 +8,8 @@
   },
   "aumValue": 9652944,
   "category": "Commodities",
-  "closePrice": "$69.24",
-  "closePriceValue": 69.24,
+  "closePrice": "$69.92",
+  "closePriceValue": 69.92,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-10-04T03:28:45Z",
+  "generatedAt": "2026-10-11T04:42:12Z",
   "history": {
-    "asOf": "2026-10-02",
-    "asOfDate": "Oct 2, 2026",
+    "asOf": "2026-10-09",
+    "asOfDate": "Oct 9, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 606
+    "totalRows": 611
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.15,
-    "distributionYieldText": "4.15%",
-    "dividendYield": 4.15,
+    "distributionYield": 4.12,
+    "distributionYieldText": "4.12%",
+    "dividendYield": 4.12,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "4.15%",
-    "performanceAsOf": "2026-10-02",
+    "dividendYieldText": "4.12%",
+    "performanceAsOf": "2026-10-09",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 33.44,
+    "tr1y": 35.09,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.15,
-    "yield12MText": "4.15%",
-    "ytd": 7.02
+    "yield12M": 4.12,
+    "yield12MText": "4.12%",
+    "ytd": 8.07
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Oct 2, 2026",
-    "display": "$69.08",
+    "asOfDate": "Oct 9, 2026",
+    "display": "$69.61",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 69.08
+    "value": 69.61
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 69.08,
+  "navValue": 69.61,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 2, 2026",
+      "asOfDate": "Oct 9, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 33.44,
+      "yr1": 35.09,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 7.02
+      "ytd": 8.07
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -116,7 +116,7 @@
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
-    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-AGMI.pdf",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-AGMI-%2809.30.2026%29.pdf",
     "fundPage": "https://themesetfs.com/etfs/agmi",
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",

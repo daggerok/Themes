@@ -1,5 +1,5 @@
 {
-  "asOfDate": "Oct 2, 2026",
+  "asOfDate": "Oct 9, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$7.04M",
@@ -8,8 +8,8 @@
   },
   "aumValue": 7039380,
   "category": "Thematic",
-  "closePrice": "$47.77",
-  "closePriceValue": 47.77,
+  "closePrice": "$49.93",
+  "closePriceValue": 49.93,
   "dataFile": "./funds/SPAM/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-10-04T03:29:19Z",
+  "generatedAt": "2026-10-11T04:42:20Z",
   "history": {
-    "asOf": "2026-10-02",
-    "asOfDate": "Oct 2, 2026",
+    "asOf": "2026-10-09",
+    "asOfDate": "Oct 9, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 706
+    "totalRows": 711
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.31,
-    "distributionYieldText": "0.31%",
-    "dividendYield": 0.31,
+    "distributionYield": 0.3,
+    "distributionYieldText": "0.30%",
+    "dividendYield": 0.3,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.31%",
-    "performanceAsOf": "2026-10-02",
+    "dividendYieldText": "0.30%",
+    "performanceAsOf": "2026-10-09",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 33.73,
+    "tr1y": 42.86,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.31,
-    "yield12MText": "0.31%",
-    "ytd": 55.86
+    "yield12M": 0.3,
+    "yield12MText": "0.30%",
+    "ytd": 62.9
   },
   "name": "Cybersecurity ETF",
   "nav": {
-    "asOfDate": "Oct 2, 2026",
-    "display": "$47.64",
+    "asOfDate": "Oct 9, 2026",
+    "display": "$49.79",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 47.64
+    "value": 49.79
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 47.64,
+  "navValue": 49.79,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 2, 2026",
+      "asOfDate": "Oct 9, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 33.73,
+      "yr1": 42.86,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 55.86
+      "ytd": 62.9
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -116,7 +116,7 @@
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
-    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-SPAM.pdf",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-SPAM-%2809.30.2026%29.pdf",
     "fundPage": "https://themesetfs.com/etfs/spam",
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",

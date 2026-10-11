@@ -1,5 +1,5 @@
 {
-  "asOfDate": "Oct 2, 2026",
+  "asOfDate": "Oct 9, 2026",
   "aum": {
     "asOfDate": "Oct 1, 2026",
     "display": "$66.01M",
@@ -8,8 +8,8 @@
   },
   "aumValue": 66012558,
   "category": "Thematic",
-  "closePrice": "$43.20",
-  "closePriceValue": 43.2,
+  "closePrice": "$41.44",
+  "closePriceValue": 41.44,
   "dataFile": "./funds/BOTT/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-04T03:28:49Z",
+  "generatedAt": "2026-10-11T04:42:13Z",
   "history": {
-    "asOf": "2026-10-02",
-    "asOfDate": "Oct 2, 2026",
+    "asOf": "2026-10-09",
+    "asOfDate": "Oct 9, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 615
+    "totalRows": 620
   },
   "holdings": {
     "asOf": "2026-10-01",
@@ -64,39 +64,39 @@
     "dividendYield": 0.14,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.14%",
-    "performanceAsOf": "2026-10-02",
+    "performanceAsOf": "2026-10-09",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 3.57,
+    "tr1y": 3.16,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.14,
     "yield12MText": "0.14%",
-    "ytd": 1.27
+    "ytd": -2.86
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 2, 2026",
-    "display": "$43.00",
+    "asOfDate": "Oct 9, 2026",
+    "display": "$41.41",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 43
+    "value": 41.41
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 43,
+  "navValue": 41.41,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 2, 2026",
+      "asOfDate": "Oct 9, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 3.57,
+      "yr1": 3.16,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 1.27
+      "ytd": -2.86
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -116,7 +116,7 @@
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
-    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-BOTT.pdf",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-BOTT-%2809.30.2026%29.pdf",
     "fundPage": "https://themesetfs.com/etfs/bott",
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
