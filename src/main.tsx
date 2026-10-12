@@ -121,6 +121,10 @@ const SORTS_KEY = 'themes-tab-sorts';
 const SITE_STATE_KEY = 'themes-site-state';
 const HOLDINGS_CONCURRENCY = 6; // bounded whole-catalog aggregation workers
 const WATCHLIST_CHUNK = 250; // rows per rendered Watchlist DOM chunk
+const SHEET_CHUNK = 300; // rows per rendered Holdings / History DOM chunk (loaded pages beyond it mount on scroll)
+let sheetChunkSig = '';
+let sheetRenderedCount = 0;
+let sheetShownTotal = 0; // filtered rows of the shown sheet at the last render (how far the DOM window can grow)
 const DEFAULT_SELECTED_TICKERS: string[] = []; // start clean: no pre-selected funds
 
 const DETAIL_TABS: Array<{ key: string; label: string }> = [
@@ -1104,14 +1108,22 @@ function filteredCatalogFunds(): FundRow[] {
 }
 
 /** Sheet rows (holdings, history, distributions) as objects with the cells in col0..colN, as shown (search, sort, column filters). */
+/** Row objects of a sheet are built once per source row and reused while pages are appended in place (see fetchNextSheetPage). */
+const sheetRowObjects: WeakMap<string[][], any[]> = new WeakMap();
+
 function sheetView(scope: string, headers: string[], sourceRows: string[][], numericHeaders: string[]): any[] {
-  // Themes distribution rows are objects keyed by header ({ 'Ex-Date': ..., Amount: ... }); the other sheets are arrays
-  return tableView(scope, sheetFilterColumns(headers, numericHeaders), sourceRows, '', () => sourceRows.map((rawRow: any, sourceIndex) => {
-    const row: string[] = Array.isArray(rawRow) ? rawRow : headers.map(header => String((rawRow && rawRow[header]) ?? ''));
-    const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase(), rank: sourceIndex };
-    headers.forEach((header, index) => { cells[`col${index}`] = row[index] ?? ''; });
-    return cells;
-  }));
+  return tableView(scope, sheetFilterColumns(headers, numericHeaders), sourceRows, '', () => {
+    let built = sheetRowObjects.get(sourceRows);
+    if (!built || built.length > sourceRows.length) { built = []; sheetRowObjects.set(sourceRows, built); }
+    for (let sourceIndex = built.length; sourceIndex < sourceRows.length; sourceIndex++) {
+      const rawRow: any = sourceRows[sourceIndex];
+      const row: string[] = Array.isArray(rawRow) ? rawRow : headers.map(header => String((rawRow && rawRow[header]) ?? '')); // distribution rows are objects keyed by header
+      const cells: Record<string, unknown> = { values: row, searchIndex: row.join(' ').toLowerCase(), rank: sourceIndex };
+      for (let index = 0; index < headers.length; index++) cells[`col${index}`] = row[index] ?? '';
+      built.push(cells);
+    }
+    return built.slice();
+  });
 }
 
 // =========================================================================
@@ -2056,7 +2068,18 @@ function activeSheetTab(): 'holdings' | 'history' | null {
 function maybeLoadMoreRows(): void {
   const sheet = activeSheetTab();
   if (!sheet) return;
+  if (growSheetChunk()) return; // loaded rows first, the network second
   void loadNextSheetPage(sheet);
+}
+
+/** Mounts the next SHEET_CHUNK of already loaded sheet rows; false when every filtered row is in the DOM. */
+function growSheetChunk(): boolean {
+  const sheet = activeSheetTab();
+  if (!sheet || sheetRenderedCount + SHEET_CHUNK >= sheetShownTotal) return false;
+  sheetRenderedCount += SHEET_CHUNK;
+  renderDetailTable(sheet);
+  renderStaticLoadSentinel();
+  return true;
 }
 
 function renderStaticLoadSentinel(): void {
@@ -2070,7 +2093,7 @@ function renderStaticLoadSentinel(): void {
     el.staticLoadSentinel.classList.add('hidden');
     return;
   }
-  const more = entry.nextPage < entry.manifest.pages.length;
+  const more = entry.nextPage < entry.manifest.pages.length || sheetRenderedCount + SHEET_CHUNK < sheetShownTotal;
   el.staticLoadSentinel.classList.toggle('hidden', !more);
   el.staticLoadStatus.textContent = entry.loading ? 'Loading more rows…' : more ? 'Scroll or click to load more rows…' : '';
 }
@@ -2509,18 +2532,38 @@ function compareValues(a: unknown, b: unknown): number {
   return as.localeCompare(bs, undefined, { numeric: true });
 }
 
+const SORT_COLLATOR = new Intl.Collator(undefined, { numeric: true });
+const HISTORY_DATE_RE = /^\d{1,2}-[A-Za-z]{3}-\d{4}$/;
+
+type SortKeys = { empty: boolean; num: number | null; text: string; date: number };
+type SortKeyed = SortKeys & { row: any };
+
+/** The comparison keys of one cell, computed once per row (not once per comparison). */
+function sortKeyOf(value: unknown): SortKeys {
+  if (isEmptySortValue(value)) return { empty: true, num: null, text: '', date: NaN };
+  const num = numberOrNull(value);
+  const text = String(value ?? '');
+  const date = HISTORY_DATE_RE.test(text) ? Date.parse(text.replace(/-/g, ' ')) : NaN;
+  return { empty: false, num, text, date };
+}
+
 function sortRows(rows: any[]): any[] {
   if (state.sortKey === 'rank') return rows;
   const direction = state.sortDir === 'asc' ? 1 : -1;
   const key = state.sortKey;
-  return [...rows].sort((a, b) => {
-    const av = sortValue(a, key);
-    const bv = sortValue(b, key);
-    const ae = isEmptySortValue(av);
-    const be = isEmptySortValue(bv);
-    if (ae || be) return ae && be ? 0 : ae ? 1 : -1;
-    return compareValues(av, bv) * direction;
+  const keyed: SortKeyed[] = new Array(rows.length);
+  for (let i = 0; i < rows.length; i++) keyed[i] = { row: rows[i], ...sortKeyOf(sortValue(rows[i], key)) };
+  keyed.sort((a, b) => {
+    if (a.empty || b.empty) return a.empty && b.empty ? 0 : a.empty ? 1 : -1; // unavailable values last in both directions
+    let order: number;
+    if (a.num !== null && b.num !== null) order = a.num - b.num;
+    else if (!Number.isNaN(a.date) && !Number.isNaN(b.date)) order = a.date - b.date; // History dates ("21-Aug-2026") chronologically
+    else order = SORT_COLLATOR.compare(a.text, b.text);
+    return order * direction;
   });
+  const out: any[] = new Array(keyed.length);
+  for (let i = 0; i < keyed.length; i++) out[i] = keyed[i].row;
+  return out;
 }
 
 function isEmptySortValue(value: unknown): boolean {
@@ -2672,21 +2715,6 @@ function renderFundsTable(): void {
     }).join('');
   }
 
-  el.tableBody.querySelectorAll('input[data-checkbox]').forEach((checkbox: any) => {
-    checkbox.addEventListener('change', (event: any) => {
-      event.stopPropagation();
-      const ticker = checkbox.dataset.checkbox || '';
-      toggleFund(ticker);
-    });
-    checkbox.addEventListener('click', (event: any) => event.stopPropagation());
-  });
-
-  el.tableBody.querySelectorAll('button[data-blacklist]').forEach((button: any) => {
-    button.addEventListener('click', (event: any) => {
-      event.stopPropagation();
-      blacklistTickers([button.dataset.blacklist || '']);
-    });
-  });
 
   renderCatalogStatus(rows);
 }
@@ -2866,8 +2894,35 @@ function watchlistChunkSignature(rows: WatchlistRow[]): string {
 function growWatchlistChunk(): void {
   const rows = getVisibleWatchlistRows();
   if (watchlistRenderedCount + WATCHLIST_CHUNK >= rows.length) return;
+  const from = watchlistRenderedCount + WATCHLIST_CHUNK;
   watchlistRenderedCount += WATCHLIST_CHUNK;
-  renderWatchlistTable();
+  const moreRow = el.tableBody.querySelector('#watchlist-more-row');
+  if (!moreRow || watchlistChunkSignature(rows) !== watchlistChunkSig) { renderWatchlistTable(); return; } // rows changed: full render
+  const to = Math.min(rows.length, watchlistRenderedCount + WATCHLIST_CHUNK);
+  moreRow.insertAdjacentHTML('beforebegin', rows.slice(from, to).map((row, i) => watchlistRowHtml(row, from + i)).join(''));
+  const moreCell = moreRow.querySelector('td');
+  if (to >= rows.length) moreRow.remove();
+  else if (moreCell) moreCell.textContent = `Scroll or click to load more rows… (${rows.length - to} remaining)`;
+}
+
+/** One Watchlist row; shared by the full render and the append-only growWatchlistChunk. */
+function watchlistRowHtml(row: WatchlistRow, index: number): string {
+  return `
+      <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
+        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
+        <td class="watchlist-sticky-col watchlist-sticky-ticker py-2.5 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">${escapeHtml(row.symbol)}</td>
+        <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(row.name)}">${escapeHtml(row.name || '—')}</td>
+        <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300">
+          <div class="flex flex-wrap gap-1 max-w-md">
+            ${row.funds.map((ticker: string) => `<a href="javascript:void(0)" data-activate-fund="${escapeHtml(ticker)}" title="Open ${escapeHtml(ticker)} detail tabs" class="font-mono text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800 rounded-full px-2 py-0.5 hover:underline">${escapeHtml(ticker)}</a>`).join('')}
+          </div>
+        </td>
+        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.fundCount}</td>
+        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.weightSum.toFixed(3)}%</td>
+        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.maxWeight.toFixed(3)}%</td>
+        <td class="py-2.5 px-4 font-mono text-slate-600 dark:text-slate-400 text-xs">${escapeHtml(row.identifier || '—')}</td>
+      </tr>
+    `;
 }
 
 function renderWatchlistTable(): void {
@@ -2906,22 +2961,7 @@ function renderWatchlistTable(): void {
         : 'Holdings data is not available yet. Run bun ./scripts/update-data.ts to refresh the Themes ETFs feed.'
     }${currentQuery() ? ' No rows match your search.' : ''}</td></tr>`;
   } else {
-    let html = visibleRows.map((row, index) => `
-      <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
-        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
-        <td class="watchlist-sticky-col watchlist-sticky-ticker py-2.5 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">${escapeHtml(row.symbol)}</td>
-        <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(row.name)}">${escapeHtml(row.name || '—')}</td>
-        <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300">
-          <div class="flex flex-wrap gap-1 max-w-md">
-            ${row.funds.map((ticker: string) => `<a href="javascript:void(0)" data-activate-fund="${escapeHtml(ticker)}" title="Open ${escapeHtml(ticker)} detail tabs" class="font-mono text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800 rounded-full px-2 py-0.5 hover:underline">${escapeHtml(ticker)}</a>`).join('')}
-          </div>
-        </td>
-        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.fundCount}</td>
-        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.weightSum.toFixed(3)}%</td>
-        <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.maxWeight.toFixed(3)}%</td>
-        <td class="py-2.5 px-4 font-mono text-slate-600 dark:text-slate-400 text-xs">${escapeHtml(row.identifier || '—')}</td>
-      </tr>
-    `).join('');
+    let html = visibleRows.map((row, index) => watchlistRowHtml(row, index)).join('');
     if (loading) {
       html += `<tr><td colspan="8" class="py-3 text-center text-xs text-slate-400 dark:text-slate-500">Loading holdings of the remaining selected ETFs…</td></tr>`;
     }
@@ -2931,14 +2971,6 @@ function renderWatchlistTable(): void {
     el.tableBody.innerHTML = html;
   }
 
-  el.tableBody.querySelectorAll('a[data-activate-fund]').forEach((link: any) => {
-    link.addEventListener('click', (event: any) => {
-      event.stopPropagation();
-      activateFund(link.dataset.activateFund || '');
-    });
-  });
-  const moreRow = el.tableBody.querySelector('#watchlist-more-row');
-  if (moreRow) moreRow.addEventListener('click', () => growWatchlistChunk());
 
   const queryText = currentQuery() ? ` matching “${currentQuery()}”` : '';
   setStatus(`Watchlist built from ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}: ${rows.length} ticker${rows.length === 1 ? '' : 's'}${queryText}. Deduplicated by ticker, or by identifier for bond rows.${rankHint(rows.length)}`, 'success');
@@ -3001,6 +3033,11 @@ function renderSheetTable(fund: FundRow, sheet: 'holdings' | 'history'): void {
 
   const headers = entry.headers;
   const rows = sheetView(sheet, headers, entry.rows, NUMERIC_SHEET_HEADERS);
+  const chunkSig = [sheetKey(sheet), state.sortKey, state.sortDir, currentQuery(), columnFilterSig(sheet)].join('|');
+  if (chunkSig !== sheetChunkSig) { sheetChunkSig = chunkSig; sheetRenderedCount = 0; }
+  sheetShownTotal = rows.length;
+  const shownRows = rows.slice(0, sheetRenderedCount + SHEET_CHUNK);
+  const cellClasses = headers.map(header => NUMERIC_SHEET_HEADERS.includes(header) ? 'text-right font-mono text-slate-700 dark:text-slate-300' : 'text-slate-700 dark:text-slate-300');
 
   el.tableHead.innerHTML = `
     <tr>
@@ -3013,16 +3050,21 @@ function renderSheetTable(fund: FundRow, sheet: 'holdings' | 'history'): void {
   if (!rows.length) {
     el.tableBody.innerHTML = `<tr><td colspan="${headers.length + 1}" class="py-12 text-center text-slate-400 dark:text-slate-500">No rows match your search${entry.loading ? ' (still loading…)' : ''}.</td></tr>`;
   } else {
-    el.tableBody.innerHTML = rows.map((row, index) => {
+    const parts: string[] = new Array(shownRows.length);
+    for (let index = 0; index < shownRows.length; index++) {
+      const row = shownRows[index];
       const values: string[] = row.values || [];
-      return `
-      <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30">
-        <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>
-        ${values.map((cell, columnIndex) => `
-          <td class="py-2.5 px-4 ${NUMERIC_SHEET_HEADERS.includes(headers[columnIndex]) ? 'text-right font-mono text-slate-700 dark:text-slate-300' : 'text-slate-700 dark:text-slate-300'}">${escapeHtml(cell === '' ? '—' : cell)}</td>
-        `).join('')}
-      </tr>
-    `;}).join('');
+      let cells = '';
+      for (let columnIndex = 0; columnIndex < values.length; columnIndex++) {
+        const cell = values[columnIndex];
+        cells += `<td class="py-2.5 px-4 ${cellClasses[columnIndex] || 'text-slate-700 dark:text-slate-300'}">${escapeHtml(cell === '' ? '—' : cell)}</td>`;
+      }
+      parts[index] = `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition border-b border-slate-100 dark:border-slate-700/30"><td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(row, index)}</td>${cells}</tr>`;
+    }
+    if (rows.length > shownRows.length) {
+      parts.push(`<tr id="sheet-more-row" class="cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/30 transition"><td colspan="${headers.length + 1}" class="py-3 text-center text-xs text-slate-400 dark:text-slate-500">Scroll or click to show more rows… (${(rows.length - shownRows.length).toLocaleString('en-US')} loaded rows not shown yet)</td></tr>`);
+    }
+    el.tableBody.innerHTML = parts.join('');
   }
 
   el.tickerCount.textContent = fund.ticker;
@@ -4096,6 +4138,26 @@ function bindEvents(): void {
   });
   el.blacklistClearBtn.addEventListener('click', clearBlacklist);
 
+  // One delegated listener per event type instead of per-row listeners re-attached on every render.
+  el.tableBody.addEventListener('change', (event: any) => {
+    const target = event.target;
+    const checkbox = target && target.closest ? target.closest('input[data-checkbox]') : null;
+    if (!checkbox) return;
+    event.stopPropagation();
+    toggleFund(checkbox.dataset.checkbox || '');
+  });
+  el.tableBody.addEventListener('click', (event: any) => {
+    const target = event.target;
+    if (!target || !target.closest) return;
+    if (target.closest('input[data-checkbox]')) { event.stopPropagation(); return; }
+    const blacklist = target.closest('button[data-blacklist]');
+    if (blacklist) { event.stopPropagation(); blacklistTickers([blacklist.dataset.blacklist || '']); return; }
+    const link = target.closest('a[data-activate-fund]');
+    if (link) { event.stopPropagation(); activateFund(link.dataset.activateFund || ''); return; }
+    if (target.closest('#watchlist-more-row')) { growWatchlistChunk(); return; }
+    if (target.closest('#sheet-more-row')) growSheetChunk();
+  });
+
   // Paginated sheets: append more rows as the sentinel scrolls into view.
   if (typeof IntersectionObserver === 'function') {
     const observer = new IntersectionObserver(
@@ -4117,10 +4179,12 @@ function bindEvents(): void {
     }
     const sheet = activeSheetTab();
     if (!sheet || !state.activeFundTicker) return;
+    const distanceToBottom = el.tableScroll.scrollHeight - el.tableScroll.scrollTop - el.tableScroll.clientHeight;
+    if (distanceToBottom >= 600) return;
+    if (growSheetChunk()) return; // mount loaded rows before fetching the next page
     const entry = sheetState.get(sheetKey(sheet));
     if (!entry || entry.loading || entry.nextPage >= entry.manifest.pages.length) return;
-    const distanceToBottom = el.tableScroll.scrollHeight - el.tableScroll.scrollTop - el.tableScroll.clientHeight;
-    if (distanceToBottom < 600) void loadNextSheetPage(sheet);
+    void loadNextSheetPage(sheet);
   }, { passive: true });
 
   // Keep only the table scrolling: refit on viewport changes and whenever
