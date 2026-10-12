@@ -278,6 +278,9 @@ const state: AppState = {
 const metaInFlight: Map<string, Promise<any>> = new Map();
 const holdingsChains: Map<string, Promise<void>> = new Map();
 const holdingsComplete = new Set<string>();
+const holdingsInFlight = new Set<string>();
+const holdingsFailed = new Set<string>(); // fetch failed: not complete, retried after the fund is selected again
+const metaFailures = new Set<string>();
 let watchlistChunkSig = '';
 let watchlistRenderedCount = 0;
 let watchlistRefreshTimer: any = null;
@@ -1775,10 +1778,18 @@ function setStatus(message: string, tone: 'info' | 'success' | 'error'): void {
 // 4. Static API loading & paginated sheets (api/themes/**, iShares-style)
 // =========================================================================
 
-async function fetchJson(url: string): Promise<any> {
-  const response = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-cache' });
-  if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
-  return response.json();
+const FETCH_TIMEOUT_MS = 30000; // index.json, meta.json and sheet pages (headers and body)
+
+async function fetchJson(url: string, timeoutMs = FETCH_TIMEOUT_MS): Promise<any> {
+  const controller = typeof AbortController === 'function' ? new AbortController() : null;
+  const timer = controller && timeoutMs > 0 ? setTimeout(() => controller.abort(), timeoutMs) : null;
+  try {
+    const response = await fetch(url, { headers: { Accept: 'application/json' }, cache: 'no-cache', signal: controller ? controller.signal : undefined });
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    return await response.json();
+  } finally {
+    if (timer !== null) clearTimeout(timer);
+  }
 }
 
 /** Flattens index.json month-end metrics onto the row so sorting works. */
@@ -1864,9 +1875,11 @@ async function loadFundMeta(ticker: string): Promise<any> {
   const request = (async () => {
     try {
       const meta = await fetchJson(`./api/themes/funds/${encodeURIComponent(ticker)}/meta.json`);
+      metaFailures.delete(ticker);
       fundMetaCache.set(ticker, meta);
       return meta;
     } catch (error) {
+      metaFailures.add(ticker);
       console.warn(`Failed to load meta.json for ${ticker}:`, error);
       return null;
     }
@@ -1918,7 +1931,7 @@ async function fetchNextSheetPage(ticker: string, entry: SheetEntry): Promise<vo
   if (entry.nextPage >= entry.manifest.pages.length) return;
   const page = await fetchPage(ticker, entry.manifest.pages[entry.nextPage]);
   if (!entry.headers.length && page.headers.length) entry.headers = page.headers;
-  entry.rows = entry.rows.concat(page.rows);
+  for (let i = 0; i < page.rows.length; i++) entry.rows.push(page.rows[i]); // in place: no O(n) copy per page, same array identity for the memoized views
   entry.nextPage += 1;
 }
 
@@ -1950,7 +1963,7 @@ async function loadNextSheetPage(sheet: 'holdings' | 'history'): Promise<void> {
 /** True while any selected ETF's holdings have not finished loading. */
 function isHoldingsLoading(): boolean {
   for (const ticker of state.selected) {
-    if (!holdingsComplete.has(ticker)) return true;
+    if (!holdingsComplete.has(ticker) && !holdingsFailed.has(ticker)) return true;
   }
   return false;
 }
@@ -1962,11 +1975,15 @@ function isHoldingsLoading(): boolean {
  * the meantime is skipped; in-flight loads finish into the cache and are
  * ignored by the aggregation, which only reads the current selection.
  */
-async function loadAllHoldingsForTicker(ticker: string): Promise<void> {
-  await withTickerChain(ticker, async () => {
-    if (!state.selected.has(ticker)) return; // deselected while queued: skip
+async function loadAllHoldingsForTicker(ticker: string): Promise<boolean> {
+  return withTickerChain(ticker, async () => {
+    if (!state.selected.has(ticker)) return false; // deselected while queued: resume on the next selection
     const meta = await loadFundMeta(ticker);
-    if (!meta || !meta.holdings || !Array.isArray(meta.holdings.pages) || !meta.holdings.pages.length) return;
+    if (!meta) {
+      if (metaFailures.has(ticker)) throw new Error('meta.json unavailable');
+      return true; // catalog-only fund: no holdings published
+    }
+    if (!meta.holdings || !Array.isArray(meta.holdings.pages) || !meta.holdings.pages.length) return true;
     const key = `${ticker}:holdings`;
     let entry = sheetState.get(key);
     if (!entry) {
@@ -1974,9 +1991,10 @@ async function loadAllHoldingsForTicker(ticker: string): Promise<void> {
       sheetState.set(key, entry);
     }
     while (entry.nextPage < entry.manifest.pages.length) {
-      if (!state.selected.has(ticker)) return; // deselected mid-load: skip the rest
+      if (!state.selected.has(ticker)) return false; // deselected mid-load: the partial entry is kept and resumed later
       await fetchNextSheetPage(ticker, entry); // chain already held: no re-queue
     }
+    return true;
   });
 }
 
@@ -1988,18 +2006,21 @@ async function loadAllHoldingsForTicker(ticker: string): Promise<void> {
  * independent of the active fund.
  */
 async function ensureHoldingsForSelection(): Promise<void> {
-  const queue = [...state.selected].filter(ticker => !holdingsComplete.has(ticker));
+  holdingsFailed.forEach(ticker => { if (!state.selected.has(ticker)) holdingsFailed.delete(ticker); }); // deselect clears a failure: re-select retries
+  const queue = [...state.selected].filter(ticker => !holdingsComplete.has(ticker) && !holdingsInFlight.has(ticker) && !holdingsFailed.has(ticker));
   if (!queue.length) return;
+  queue.forEach(ticker => holdingsInFlight.add(ticker));
   const workers = Array.from({ length: Math.min(HOLDINGS_CONCURRENCY, queue.length) }, async () => {
     for (;;) {
       const ticker = queue.shift();
       if (!ticker) break;
       try {
-        await loadAllHoldingsForTicker(ticker);
+        if (await loadAllHoldingsForTicker(ticker)) holdingsComplete.add(ticker);
       } catch (error) {
         console.error(`Failed to load ${ticker} holdings:`, error);
+        holdingsFailed.add(ticker);
       } finally {
-        holdingsComplete.add(ticker);
+        holdingsInFlight.delete(ticker);
         if (state.selected.size > 0) {
           // Keep the Watchlist tab label honest (Loading… -> N+ -> exact)
           // even while the user stays on another tab.
