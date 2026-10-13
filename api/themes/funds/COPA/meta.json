@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 9, 2026",
+  "asOfDate": "Oct 12, 2026",
   "aum": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$12.62M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 12620880
+    "asOfDate": "Oct 12, 2026",
+    "display": "$12.64M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 12638400
   },
-  "aumValue": 12620880,
+  "aumValue": 12638400,
   "category": "Commodities",
   "closePrice": "$52.90",
   "closePriceValue": 52.9,
@@ -32,28 +32,28 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-11T04:42:16Z",
+  "generatedAt": "2026-10-13T02:28:51Z",
   "history": {
-    "asOf": "2026-10-09",
-    "asOfDate": "Oct 9, 2026",
+    "asOf": "2026-10-12",
+    "asOfDate": "Oct 12, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 513
+    "totalRows": 514
   },
   "holdings": {
-    "asOf": "2026-10-01",
-    "asOfDate": "Oct 1, 2026",
+    "asOf": "2026-10-12",
+    "asOfDate": "Oct 12, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 58
+    "totalRows": 116
   },
   "metrics": {
     "cagr10y": null,
@@ -64,22 +64,22 @@
     "dividendYield": 3.49,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "3.49%",
-    "performanceAsOf": "2026-10-09",
+    "performanceAsOf": "2026-10-12",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 48.1,
+    "tr1y": 38.89,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 3.49,
     "yield12MText": "3.49%",
-    "ytd": 22.43
+    "ytd": 21.5
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 9, 2026",
+    "asOfDate": "Oct 12, 2026",
     "display": "$52.66",
     "kind": "official Themes ETFs catalog NAV",
     "value": 52.66
@@ -89,14 +89,14 @@
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 9, 2026",
+      "asOfDate": "Oct 12, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 48.1,
+      "yr1": 38.89,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 22.43
+      "ytd": 21.5
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 12, 2026",
     "display": "240,000",
     "value": 240000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Copper-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "COPA",
-  "totalNetAssets": 12620880
+  "totalNetAssets": 12638400
 }

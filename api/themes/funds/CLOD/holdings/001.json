@@ -14,61 +14,61 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "00724F101",
-      "Market Value": "$71022.24",
+      "Market Value": "$70489.44",
       "Name": "Adobe Inc",
       "Shares Held": "296",
       "Ticker": "ADBE",
-      "Weight": "3.36%"
+      "Weight": "3.22%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "052769106",
-      "Market Value": "$33022.00",
+      "Market Value": "$36899.32",
       "Name": "Autodesk Inc",
       "Shares Held": "158",
       "Ticker": "ADSK",
-      "Weight": "1.56%"
+      "Weight": "1.68%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "00971T101",
-      "Market Value": "$11166.75",
+      "Market Value": "$10673.25",
       "Name": "Akamai Technologies Inc",
       "Shares Held": "105",
       "Ticker": "AKAM",
-      "Weight": "0.53%"
+      "Weight": "0.49%"
     },
     {
       "Asset Category": "Consumer Cyclicals",
       "Identifier": "023135106",
-      "Market Value": "$86704.20",
+      "Market Value": "$90316.44",
       "Name": "Amazon.com Inc",
       "Shares Held": "348",
       "Ticker": "AMZN",
-      "Weight": "4.10%"
+      "Weight": "4.12%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "038169207",
-      "Market Value": "$4630.30",
+      "Market Value": "$4417.50",
       "Name": "Applied Digital Corp",
       "Shares Held": "190",
       "Ticker": "APLD",
-      "Weight": "0.22%"
+      "Weight": "0.20%"
     },
     {
       "Asset Category": "Communication Services",
       "Identifier": "03831W108",
-      "Market Value": "$47340.09",
+      "Market Value": "$44151.81",
       "Name": "AppLovin Corp",
       "Shares Held": "163",
       "Ticker": "APP",
-      "Weight": "2.24%"
+      "Weight": "2.02%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$15.38",
+      "Market Value": "$15.41",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "22.15",
       "Ticker": "AUD",
@@ -77,52 +77,52 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "127387108",
-      "Market Value": "$67687.93",
+      "Market Value": "$71426.10",
       "Name": "Cadence Design Systems Inc",
       "Shares Held": "205",
       "Ticker": "CDNS",
-      "Weight": "3.20%"
+      "Weight": "3.26%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "17253J106",
-      "Market Value": "$3798.00",
+      "Market Value": "$3120.00",
       "Name": "Cipher Digital Inc",
       "Shares Held": "240",
       "Ticker": "CIFR",
-      "Weight": "0.18%"
+      "Weight": "0.14%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "79466L302",
-      "Market Value": "$116851.13",
+      "Market Value": "$119065.28",
       "Name": "Salesforce Inc",
       "Shares Held": "509",
       "Ticker": "CRM",
-      "Weight": "5.53%"
+      "Weight": "5.43%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "22788C105",
-      "Market Value": "$117549.00",
+      "Market Value": "$116776.44",
       "Name": "Crowdstrike Holdings Inc",
       "Shares Held": "444",
       "Ticker": "CRWD",
-      "Weight": "5.56%"
+      "Weight": "5.33%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "21873S108",
-      "Market Value": "$19863.36",
+      "Market Value": "$18299.28",
       "Name": "CoreWeave Inc",
       "Shares Held": "228",
       "Ticker": "CRWV",
-      "Weight": "0.94%"
+      "Weight": "0.84%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "204166102",
-      "Market Value": "$4497.60",
+      "Market Value": "$4661.10",
       "Name": "Commvault Systems Inc",
       "Shares Held": "30",
       "Ticker": "CVLT",
@@ -131,43 +131,43 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "23804L103",
-      "Market Value": "$64902.45",
+      "Market Value": "$68087.73",
       "Name": "Datadog Inc",
       "Shares Held": "237",
       "Ticker": "DDOG",
-      "Weight": "3.07%"
+      "Weight": "3.11%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "25402D102",
-      "Market Value": "$8403.57",
+      "Market Value": "$8278.83",
       "Name": "DigitalOcean Holdings Inc",
       "Shares Held": "63",
       "Ticker": "DOCN",
-      "Weight": "0.40%"
+      "Weight": "0.38%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BM8H5Y5",
-      "Market Value": "$11648.37",
+      "Market Value": "$12413.66",
       "Name": "Dassault Systemes SE",
       "Shares Held": "502",
       "Ticker": "DSY FP",
-      "Weight": "0.55%"
+      "Weight": "0.57%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "268150109",
-      "Market Value": "$12818.28",
+      "Market Value": "$14485.50",
       "Name": "Dynatrace Inc",
       "Shares Held": "222",
       "Ticker": "DT",
-      "Weight": "0.61%"
+      "Weight": "0.66%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$90.85",
+      "Market Value": "$89.48",
       "Name": "EURO",
       "Shares Held": "80.22",
       "Ticker": "EUR",
@@ -176,34 +176,34 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "315616102",
-      "Market Value": "$18697.56",
+      "Market Value": "$19886.58",
       "Name": "F5 Inc",
       "Shares Held": "42",
       "Ticker": "FFIV",
-      "Weight": "0.88%"
+      "Weight": "0.91%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "34959E109",
-      "Market Value": "$81335.80",
+      "Market Value": "$87787.70",
       "Name": "Fortinet Inc",
       "Shares Held": "455",
       "Ticker": "FTNT",
-      "Weight": "3.85%"
+      "Weight": "4.01%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "31846V328",
-      "Market Value": "$1772.72",
+      "Market Value": "$1396.39",
       "Name": "First American Treasury Obligations Fund 01/01/2040",
-      "Shares Held": "1,772.72",
+      "Shares Held": "1,396.39",
       "Ticker": "FXFXX",
-      "Weight": "0.08%"
+      "Weight": "0.06%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$7.09",
+      "Market Value": "$7.06",
       "Name": "BRITISH POUNDS",
       "Shares Held": "5.35",
       "Ticker": "GBP",
@@ -212,79 +212,79 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "380237107",
-      "Market Value": "$8595.90",
+      "Market Value": "$9208.80",
       "Name": "GoDaddy Inc",
       "Shares Held": "90",
       "Ticker": "GDDY",
-      "Weight": "0.41%"
+      "Weight": "0.42%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "668771108",
-      "Market Value": "$8587.80",
+      "Market Value": "$9106.50",
       "Name": "GEN DIGITAL INC",
       "Shares Held": "390",
       "Ticker": "GEN",
-      "Weight": "0.41%"
+      "Weight": "0.42%"
     },
     {
       "Asset Category": "Communication Services",
       "Identifier": "02079K305",
-      "Market Value": "$80514.72",
+      "Market Value": "$82536.48",
       "Name": "Alphabet Inc",
       "Shares Held": "234",
       "Ticker": "GOOGL",
-      "Weight": "3.81%"
+      "Weight": "3.77%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BNZFHC1",
-      "Market Value": "$15049.81",
+      "Market Value": "$15956.70",
       "Name": "Hexagon AB",
       "Shares Held": "1,530",
       "Ticker": "HEXAB SS",
-      "Weight": "0.71%"
+      "Weight": "0.73%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "44812J104",
-      "Market Value": "$6285.30",
+      "Market Value": "$6222.52",
       "Name": "HUT 8 CORP",
       "Shares Held": "73",
       "Ticker": "HUT",
-      "Weight": "0.30%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "45867G101",
-      "Market Value": "$5869.26",
-      "Name": "InterDigital Inc",
-      "Shares Held": "18",
-      "Ticker": "IDCC",
       "Weight": "0.28%"
     },
     {
       "Asset Category": "Information Technology",
+      "Identifier": "45867G101",
+      "Market Value": "$5906.52",
+      "Name": "InterDigital Inc",
+      "Shares Held": "18",
+      "Ticker": "IDCC",
+      "Weight": "0.27%"
+    },
+    {
+      "Asset Category": "Information Technology",
       "Identifier": "461202103",
-      "Market Value": "$54039.16",
+      "Market Value": "$59974.04",
       "Name": "Intuit Inc",
       "Shares Held": "196",
       "Ticker": "INTU",
-      "Weight": "2.56%"
+      "Weight": "2.74%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "79589L106",
-      "Market Value": "$9151.20",
+      "Market Value": "$9988.80",
       "Name": "Samsara Inc",
       "Shares Held": "240",
       "Ticker": "IOT",
-      "Weight": "0.43%"
+      "Weight": "0.46%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHJPY",
-      "Market Value": "$188.50",
+      "Market Value": "$187.03",
       "Name": "JAPANESE YEN",
       "Shares Held": "29,674",
       "Ticker": "JPY",
@@ -293,205 +293,205 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "60937P106",
-      "Market Value": "$20219.38",
+      "Market Value": "$22114.82",
       "Name": "MongoDB Inc",
       "Shares Held": "58",
       "Ticker": "MDB",
-      "Weight": "0.96%"
+      "Weight": "1.01%"
     },
     {
       "Asset Category": "Consumer Cyclicals",
       "Identifier": "58733R102",
-      "Market Value": "$60498.55",
+      "Market Value": "$66235.40",
       "Name": "MercadoLibre Inc",
       "Shares Held": "35",
       "Ticker": "MELI",
-      "Weight": "2.86%"
+      "Weight": "3.02%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "594918104",
-      "Market Value": "$113350.90",
+      "Market Value": "$119594.15",
       "Name": "Microsoft Corp",
       "Shares Held": "221",
       "Ticker": "MSFT",
-      "Weight": "5.36%"
+      "Weight": "5.46%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "594972408",
-      "Market Value": "$36894.69",
+      "Market Value": "$36795.88",
       "Name": "Strategy Inc",
       "Shares Held": "241",
       "Ticker": "MSTR",
-      "Weight": "1.75%"
+      "Weight": "1.68%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "N97284108",
-      "Market Value": "$36089.64",
+      "Market Value": "$32139.18",
       "Name": "Nebius Group NV",
       "Shares Held": "153",
       "Ticker": "NBIS",
-      "Weight": "1.71%"
+      "Weight": "1.47%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "18915M107",
-      "Market Value": "$81263.52",
+      "Market Value": "$82103.58",
       "Name": "Cloudflare Inc",
       "Shares Held": "234",
       "Ticker": "NET",
-      "Weight": "3.85%"
+      "Weight": "3.75%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "81762P102",
-      "Market Value": "$102919.68",
+      "Market Value": "$107765.76",
       "Name": "ServiceNow Inc",
       "Shares Held": "768",
       "Ticker": "NOW",
-      "Weight": "4.87%"
+      "Weight": "4.92%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "67059N108",
-      "Market Value": "$12673.80",
+      "Market Value": "$13345.20",
       "Name": "Nutanix Inc",
       "Shares Held": "180",
       "Ticker": "NTNX",
-      "Weight": "0.60%"
+      "Weight": "0.61%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "679295105",
-      "Market Value": "$26556.97",
+      "Market Value": "$28839.16",
       "Name": "Okta Inc",
       "Shares Held": "127",
       "Ticker": "OKTA",
-      "Weight": "1.26%"
+      "Weight": "1.32%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "68389X105",
-      "Market Value": "$82929.20",
+      "Market Value": "$82983.56",
       "Name": "Oracle Corp",
       "Shares Held": "604",
       "Ticker": "ORCL",
-      "Weight": "3.92%"
+      "Weight": "3.79%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "697435105",
-      "Market Value": "$105287.15",
+      "Market Value": "$107014.95",
       "Name": "Palo Alto Networks Inc",
       "Shares Held": "265",
       "Ticker": "PANW",
-      "Weight": "4.98%"
+      "Weight": "4.88%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "704326107",
-      "Market Value": "$23049.00",
+      "Market Value": "$24485.76",
       "Name": "Paychex Inc",
       "Shares Held": "234",
       "Ticker": "PAYX",
-      "Weight": "1.09%"
+      "Weight": "1.12%"
     },
     {
       "Asset Category": "Consumer Cyclicals",
       "Identifier": "BJDS7L3",
-      "Market Value": "$36322.88",
+      "Market Value": "$36128.46",
       "Name": "Prosus NV",
       "Shares Held": "903",
       "Ticker": "PRX NA",
-      "Weight": "1.72%"
+      "Weight": "1.65%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "781154109",
-      "Market Value": "$12477.23",
+      "Market Value": "$13081.09",
       "Name": "Rubrik Inc",
       "Shares Held": "109",
       "Ticker": "RBRK",
-      "Weight": "0.59%"
+      "Weight": "0.60%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "4846288",
-      "Market Value": "$113325.26",
+      "Market Value": "$116909.38",
       "Name": "SAP SE",
       "Shares Held": "539",
       "Ticker": "SAP GR",
-      "Weight": "5.36%"
+      "Weight": "5.34%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHSEK",
-      "Market Value": "$107.85",
+      "Market Value": "$107.59",
       "Name": "SWEDISH KRONA",
       "Shares Held": "1,080.64",
       "Ticker": "SEK",
-      "Weight": "0.01%"
+      "Weight": "0.00%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "833445109",
-      "Market Value": "$84210.88",
+      "Market Value": "$89371.76",
       "Name": "Snowflake Inc",
       "Shares Held": "248",
       "Ticker": "SNOW",
-      "Weight": "3.98%"
+      "Weight": "4.08%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "871607107",
-      "Market Value": "$61326.54",
+      "Market Value": "$70853.91",
       "Name": "Synopsys Inc",
       "Shares Held": "141",
       "Ticker": "SNPS",
-      "Weight": "2.90%"
+      "Weight": "3.23%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "049468101",
-      "Market Value": "$20976.93",
+      "Market Value": "$24306.75",
       "Name": "Atlassian Corp",
       "Shares Held": "117",
       "Ticker": "TEAM",
-      "Weight": "0.99%"
+      "Weight": "1.11%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "90138F102",
-      "Market Value": "$30708.30",
+      "Market Value": "$29679.30",
       "Name": "Twilio Inc",
       "Shares Held": "105",
       "Ticker": "TWLO",
-      "Weight": "1.45%"
+      "Weight": "1.35%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "92343E102",
-      "Market Value": "$16356.58",
+      "Market Value": "$17556.60",
       "Name": "VeriSign Inc",
       "Shares Held": "58",
       "Ticker": "VRSN",
-      "Weight": "0.77%"
+      "Weight": "0.80%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "98138H101",
-      "Market Value": "$27807.16",
+      "Market Value": "$27484.50",
       "Name": "Workday Inc",
       "Shares Held": "146",
       "Ticker": "WDAY",
-      "Weight": "1.32%"
+      "Weight": "1.25%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "98423F109",
-      "Market Value": "$3394.05",
+      "Market Value": "$3562.68",
       "Name": "Xometry Inc",
       "Shares Held": "33",
       "Ticker": "XMTR",
@@ -500,29 +500,29 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "98980L101",
-      "Market Value": "$18244.77",
+      "Market Value": "$19685.94",
       "Name": "Zoom Communications Inc",
       "Shares Held": "201",
       "Ticker": "ZM",
-      "Weight": "0.86%"
+      "Weight": "0.90%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "98980G102",
-      "Market Value": "$14757.08",
+      "Market Value": "$16707.72",
       "Name": "Zscaler Inc",
       "Shares Held": "74",
       "Ticker": "ZS",
-      "Weight": "0.70%"
+      "Weight": "0.76%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$-398.41",
+      "Market Value": "$308.36",
       "Name": "Cash & Other",
-      "Shares Held": "-398.41",
+      "Shares Held": "308.36",
       "Ticker": "Cash&Other",
-      "Weight": "-0.02%"
+      "Weight": "0.01%"
     }
   ],
   "ticker": "CLOD",

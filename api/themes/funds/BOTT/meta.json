@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 9, 2026",
+  "asOfDate": "Oct 13, 2026",
   "aum": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$66.01M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 66012558
+    "asOfDate": "Oct 13, 2026",
+    "display": "$62.94M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 62944920
   },
-  "aumValue": 66012558,
+  "aumValue": 62944920,
   "category": "Thematic",
   "closePrice": "$41.44",
   "closePriceValue": 41.44,
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-11T04:42:13Z",
+  "generatedAt": "2026-10-13T02:28:51Z",
   "history": {
-    "asOf": "2026-10-09",
-    "asOfDate": "Oct 9, 2026",
+    "asOf": "2026-10-12",
+    "asOfDate": "Oct 12, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 620
+    "totalRows": 621
   },
   "holdings": {
-    "asOf": "2026-10-01",
-    "asOfDate": "Oct 1, 2026",
+    "asOf": "2026-10-13",
+    "asOfDate": "Oct 13, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 0.14,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.14%",
-    "performanceAsOf": "2026-10-09",
+    "performanceAsOf": "2026-10-12",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 3.16,
+    "tr1y": -5.75,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.14,
     "yield12MText": "0.14%",
-    "ytd": -2.86
+    "ytd": -7.45
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 9, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "$41.41",
     "kind": "official Themes ETFs catalog NAV",
     "value": 41.41
@@ -89,14 +89,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 9, 2026",
+      "asOfDate": "Oct 12, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 3.16,
+      "yr1": -5.75,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -2.86
+      "ytd": -7.45
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,9 +110,9 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
-    "display": "1,580,000",
-    "value": 1580000
+    "asOfDate": "Oct 13, 2026",
+    "display": "1,590,000",
+    "value": 1590000
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "BOTT",
-  "totalNetAssets": 66012558
+  "totalNetAssets": 62944920
 }

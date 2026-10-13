@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 9, 2026",
+  "asOfDate": "Oct 13, 2026",
   "aum": {
-    "asOfDate": "Oct 1, 2026",
-    "display": "$91.38M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 91375848
+    "asOfDate": "Oct 13, 2026",
+    "display": "$89.83M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 89826592
   },
-  "aumValue": 91375848,
+  "aumValue": 89826592,
   "category": "Thematic",
   "closePrice": "$36.14",
   "closePriceValue": 36.14,
@@ -32,28 +32,28 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-10-11T04:42:19Z",
+  "generatedAt": "2026-10-13T02:28:53Z",
   "history": {
-    "asOf": "2026-10-09",
-    "asOfDate": "Oct 9, 2026",
+    "asOf": "2026-10-12",
+    "asOfDate": "Oct 12, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 500
+    "totalRows": 501
   },
   "holdings": {
-    "asOf": "2026-10-01",
-    "asOfDate": "Oct 1, 2026",
+    "asOf": "2026-10-13",
+    "asOfDate": "Oct 13, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 99
+    "totalRows": 98
   },
   "metrics": {
     "cagr10y": null,
@@ -64,22 +64,22 @@
     "dividendYield": 0.47,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.47%",
-    "performanceAsOf": "2026-10-09",
+    "performanceAsOf": "2026-10-12",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -4.52,
+    "tr1y": -5.24,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.47,
     "yield12MText": "0.47%",
-    "ytd": -5.52
+    "ytd": -5.49
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Oct 9, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "$36.19",
     "kind": "official Themes ETFs catalog NAV",
     "value": 36.19
@@ -89,14 +89,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 9, 2026",
+      "asOfDate": "Oct 12, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -4.52,
+      "yr1": -5.24,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -5.52
+      "ytd": -5.49
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 13, 2026",
     "display": "2,480,000",
     "value": 2480000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Transatlantic-Defense-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "NATO",
-  "totalNetAssets": 91375848
+  "totalNetAssets": 89826592
 }

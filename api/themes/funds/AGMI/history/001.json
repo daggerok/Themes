@@ -9,6 +9,12 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "69.44",
+      "Close": "69.44",
+      "Date": "2026-10-12",
+      "Volume": "1100"
+    },
+    {
       "Adj Close": "69.92",
       "Close": "69.92",
       "Date": "2026-10-09",
@@ -3676,5 +3682,5 @@
     }
   ],
   "ticker": "AGMI",
-  "totalRows": 611
+  "totalRows": 612
 }
