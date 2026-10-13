@@ -234,8 +234,8 @@ describe('parsing', () => {
     }] } });
     expect(parsed.exchange).toBe('NYSEArca');
     expect(parsed.history).toEqual([
-      { date: '2024-01-02', close: 110.01, adjClose: 110, volume: 1234 },
-      { date: '2024-01-01', close: 100, adjClose: 100, volume: 0 },
+      { date: '2024-01-02', close: 110.01, adjClose: 110, volume: 1234, adjCloseRaw: 109.995 },
+      { date: '2024-01-01', close: 100, adjClose: 100, volume: 0, adjCloseRaw: 100.004 },
     ]);
     expect(parsed.dividends).toEqual([{ date: '2024-01-01', amount: 0.25 }]);
   });
@@ -442,6 +442,25 @@ describe('pipeline', () => {
     expect(await box.run(feed(rows), live)).toBeNull();
     expect(box.touched()).toEqual([]);
     expect(box.files().map((f) => box.read(f))).toEqual(before);
+  });
+
+  test('two runs on the same source data write zero changes even when Yahoo adjusted closes jitter across a cent boundary', async () => {
+    const rows = [{ t: 'AAA', days: 3 }];
+    // Yahoo float32 noise seen live: AAM SPDV 2024-11-12 came back as 31.544998 and 31.545001 a minute apart
+    const jittered = (adjclose: number[]) => feed(rows, (url) => {
+      if (!/chart\/AAA\?/.test(url)) return null;
+      const payload = JSON.parse(chartJson(3));
+      payload.chart.result[0].indicators.adjclose = [{ adjclose }];
+      return new Response(JSON.stringify(payload));
+    });
+    const box = repo();
+    expect(await box.run(jittered([23.915001, 24.984999, 25.995001]), live)).toBeNull();
+    const first = box.files().map((f) => [f, box.read(f)]);
+    expect(await box.run(jittered([23.914998, 24.985002, 25.994999]), live)).toBeNull();
+    expect(box.files().map((f) => [f, box.read(f)])).toEqual(first);
+    // a real change beyond the noise is still written
+    expect(await box.run(jittered([23.9, 24.97, 25.98]), live)).toBeNull();
+    expect(box.json('funds/AAA/history/001.json').rows.map((r: any) => r['Adj Close'])).toEqual(['25.98', '24.97', '23.90']);
   });
 
   test('direct 403 on the catalog and the CSV falls back to the proxy, which is paced, and publishes fresh data', async () => {
