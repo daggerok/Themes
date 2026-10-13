@@ -103,7 +103,8 @@ export type ParsedHoldings = {
   sharesOutstanding: number | null;
   rows: Array<Record<(typeof HOLDINGS_HEADERS)[number], string>>;
 };
-export type YahooHistoryRow = { date: string; close: number | null; adjClose: number | null; volume: number | null };
+// adjCloseRaw: Yahoo's unrounded value, only used to tell float noise from a real change (never persisted).
+export type YahooHistoryRow = { date: string; close: number | null; adjClose: number | null; volume: number | null; adjCloseRaw?: number | null };
 export type YahooDistribution = { date: string; amount: number };
 export type ParsedYahooChart = {
   history: YahooHistoryRow[];
@@ -548,10 +549,11 @@ export function parseYahooChart(json: unknown): ParsedYahooChart {
     if (!Number.isFinite(unix)) continue;
     const date = new Date(unix * 1000).toISOString().slice(0, 10);
     const close = round(numberOrNull(quote.close?.[index]));
-    const adjClose = round(numberOrNull(adjusted[index] ?? quote.close?.[index]));
+    const adjCloseRaw = numberOrNull(adjusted[index] ?? quote.close?.[index]);
+    const adjClose = round(adjCloseRaw);
     const volume = numberOrNull(quote.volume?.[index]);
     if (close === null && adjClose === null) continue;
-    history.push({ date, close, adjClose, volume: volume === null ? null : Math.trunc(volume) });
+    history.push({ date, close, adjClose, volume: volume === null ? null : Math.trunc(volume), adjCloseRaw });
   }
   const dividends: YahooDistribution[] = Object.entries(result.events?.dividends ?? {})
     .map(([timestamp, event]) => {
@@ -568,6 +570,20 @@ export function parseYahooChart(json: unknown): ParsedYahooChart {
     dividends,
     exchange: cleanText(result.meta?.fullExchangeName ?? result.meta?.exchangeName) || null,
   };
+}
+
+// Yahoo's adjusted close is float32 and its last digits move with the request's period2, so a value
+// sitting on a cent boundary (31.544998 vs 31.545001) flips between runs. Within that noise the
+// published cent is kept: a rerun with the same source data changes nothing.
+export const ADJ_CLOSE_NOISE = 1e-4;
+export function keepPublishedAdjClose(history: YahooHistoryRow[], published: Array<Record<string, unknown>>): YahooHistoryRow[] {
+  const prior = new Map(published.map((row) => [String(row.Date ?? ''), numberOrNull(row['Adj Close'])]));
+  return history.map((row) => {
+    const priorAdj = prior.get(row.date) ?? null;
+    const raw = row.adjCloseRaw ?? row.adjClose;
+    if (priorAdj === null || row.adjClose === null || raw === null || row.adjClose === priorAdj) return row;
+    return Math.abs(raw - priorAdj) <= 0.005 + ADJ_CLOSE_NOISE ? { ...row, adjClose: priorAdj } : row;
+  });
 }
 
 function tagText(xml: string, tag: string): string {
@@ -1169,6 +1185,13 @@ function existingManifest(meta: any, key: 'holdings' | 'history'): Record<string
   return value && typeof value === 'object' && Array.isArray(value.pages) ? value : null;
 }
 
+/** Rows of a previously published paged sheet; a missing or unreadable page contributes nothing. */
+async function publishedRows(fundDir: string, manifest: Record<string, unknown> | null): Promise<Array<Record<string, unknown>>> {
+  const files = Array.isArray(manifest?.pages) ? (manifest.pages as unknown[]).map(String) : [];
+  const chunks = await Promise.all(files.map((page) => readJson<{ rows?: unknown }>(path.join(fundDir, page))));
+  return chunks.flatMap((chunk) => (Array.isArray(chunk?.rows) ? (chunk.rows as Array<Record<string, unknown>>) : []));
+}
+
 function asNumber(value: unknown): number | null {
   return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
@@ -1320,6 +1343,7 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
   const retainedSource = (previous: unknown): string => fallbackReason ? retainedLabel(previous) : (String(previous ?? '') || 'previously published data');
   if (retainedHoldings) note(`${fund.ticker}: keeping previously published holdings (${fallbackReason || 'no refresh attempted'})`);
   const priorHistory = existingManifest(prior, 'history');
+  if (yahoo && priorHistory) yahoo = { ...yahoo, history: keepPublishedAdjClose(yahoo.history, await publishedRows(fundDir, priorHistory)) };
   if (!holdings && !priorHoldings) throw new Error(fallbackReason || 'no current or previously published holdings data');
 
   const sheets: PagedSheet[] = [];
