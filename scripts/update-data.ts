@@ -13,6 +13,10 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { appendFile, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { readFile as outputReadFile, readdir as outputReadDir } from 'node:fs/promises';
+import { createHash as outputCreateHash } from 'node:crypto';
+import { join as outputJoin } from 'node:path';
+import { fileURLToPath as outputFileURLToPath } from 'node:url';
 
 // --- TLS trust store (identical in every ETF repo) ---
 const SYSTEM_CA_MARKER = 'ETF_UPDATER_SYSTEM_CA';
@@ -168,149 +172,171 @@ const DEFAULTS = {
 
 const rangePeriods = ['YTD', '1Y', '3Y', '5Y', '10Y'] as const;
 
-function outputClean(value: unknown): string {
-  return String(value ?? 'null').replace(/[\r\n\t]+/g, ' ');
-}
+// Console presentation; no changes to provider requests or persisted data.
+/** Presentation only: no requests, writes, filtering, or changes to updater state. */
 
-function outputVerbose(config: Pick<UpdaterConfig, 'verbose'>): boolean {
-  return config.verbose;
-}
-
-function outputNote(config: Pick<UpdaterConfig, 'verbose'>, message: string): void {
-  if (outputVerbose(config)) console.warn(`[ note     ] ${outputClean(message)}`);
-}
-
-function outputConfigEntries(config: UpdaterConfig): Array<[string, string]> {
-  const ranges = (range?: Range): string => range ? `${range.min}:${range.max}` : ':';
-  return [
-    ['MAX_FETCHES', String(config.maxFetches)],
-    ['REQUEST_SLEEP', String(config.requestSleepMs / 1000)],
-    ['CONCURRENCY', String(config.concurrency)],
-    ['MAX_RETRIES', String(config.maxRetries)],
-    ['TICKERS', [...config.tickers].join(',') || 'all'],
-    ['CATEGORY', config.category],
-    ['AUM', ranges(config.aumRange)],
-    ['TER', ranges(config.terRange)],
-    ['DIVIDEND_YIELD', ranges(config.dividendYieldRange)],
-    ['SEC_YIELD', ranges(config.secYieldRange)],
-    ...rangePeriods.flatMap((period): Array<[string, string]> => [
-      [`PERFORMANCE_${period}`, ranges(config.performanceRanges[period])],
-      [`TOTAL_RETURN_${period}`, ranges(config.totalReturnRanges[period])],
-    ]),
-    ['HOLDINGS_PAGE_SIZE', String(config.holdingsPageSize)],
-    ['HISTORY_PAGE_SIZE', String(config.historyPageSize)],
-    ['HISTORY_RANGE', config.historyRange],
-    ['EDGAR_FALLBACK', String(config.edgarFallback)],
-    ['SKIP_YAHOO', String(config.skipYahoo)],
-    ['SKIP_THEMES', String(config.skipThemes)],
-    ['SEC_UA', config.secUserAgent ? '<configured>' : ''],
-  ];
-}
-
-function outputPrintConfig(config: UpdaterConfig): void {
+const outputClean = (value: unknown): string => String(value ?? 'null').replace(/[\r\n\t]+/g, ' ');
+/** Presentation only: per-fund retry and fallback notices are printed when VERBOSE is enabled. */
+const outputVerbose = (): boolean => /^(1|true|yes|on)$/i.test((globalThis as any).process?.env?.VERBOSE ?? '');
+function outputNote(message: string): void { if (outputVerbose()) console.warn(message); }
+/** Names are the canonical environment knobs, not internal parser properties. */
+function outputConfigEntries(config: Record<string, any>): [string, string][] {
+  const values = new Map<string, string>();
+  const aliases: Record<string, string> = {
+    requestSleepSeconds: 'REQUEST_SLEEP', categories: 'CATEGORY',
+    aumRange: 'AUM', terRange: 'TER', dividendYieldRange: 'DIVIDEND_YIELD', secYieldRange: 'SEC_YIELD',
+    performanceRanges: 'PERFORMANCE', totalReturnRanges: 'TOTAL_RETURN',
+    skipVanEck: 'SKIP_VANECK', skipProShares: 'SKIP_PROSHARES',
+    skipWisdomTree: 'SKIP_WISDOMTREE', skipGoldmanSachs: 'SKIP_GOLDMANSACHS',
+  };
+  const range = (v: any): string => v?.source ?? `${Number.isFinite(v?.min) ? v.min : ''}:${Number.isFinite(v?.max) ? v.max : ''}`;
+  for (const [key, value] of Object.entries(config)) {
+    const name = aliases[key] ?? key.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toUpperCase();
+    if (name === 'PERFORMANCE' || name === 'TOTAL_RETURN') {
+      for (const period of ['YTD', '1Y', '3Y', '5Y', '10Y']) values.set(`${name}_${period}`, range(value?.[period]));
+    } else if (['AUM', 'TER', 'DIVIDEND_YIELD', 'SEC_YIELD'].includes(name)) {
+      values.set(name, range(value));
+    } else {
+      values.set(name, value instanceof Set ? [...value].join(',') || 'all' : Array.isArray(value) ? value.join(',') || 'all' : outputClean(value));
+    }
+  }
   const first = ['MAX_FETCHES', 'REQUEST_SLEEP', 'CONCURRENCY'];
-  const entries = [...outputConfigEntries(config), ['VERBOSE', String(config.verbose)] as [string, string]]
-    .sort(([left], [right]) => {
-      const a = first.indexOf(left);
-      const b = first.indexOf(right);
-      return (a < 0 ? first.length : a) - (b < 0 ? first.length : b) || left.localeCompare(right);
-    });
-  console.log(`[ config   ] ${BRAND_LABEL} updater:`);
-  for (const [name, value] of entries) console.log(`              ${name}=${value}`);
+  return [...values].sort(([a], [b]) => {
+    const ai = first.indexOf(a), bi = first.indexOf(b);
+    return (ai < 0 ? first.length : ai) - (bi < 0 ? first.length : bi) || a.localeCompare(b);
+  });
 }
-
+function outputConfigValue(key: string, value: string): string {
+  if (/TOKEN|PASSWORD|SECRET|COOKIE|SEC_UA/i.test(key)) return '<redacted>';
+  if (key === 'TICKERS' && ['', 'null', 'undefined'].includes(value)) return 'all';
+  return outputClean(value);
+}
+function outputPrintConfig(brand: string, config: Record<string, any>): void {
+  const entries: [string, string][] = [...outputConfigEntries(config), ['VERBOSE', String(outputVerbose())]];
+  console.log(`[ config   ] ${brand} updater:\n${entries.map(([key, value]) => `              ${key}=${outputConfigValue(key, value)}`).join('\n')}`);
+}
+function outputHasOutputFilters(config: Record<string, any>): boolean {
+  return outputConfigEntries(config).some(([name, value]) =>
+    /^(TICKERS|CATEGORY|AUM|TER|DIVIDEND_YIELD|SEC_YIELD|PERFORMANCE_|TOTAL_RETURN_)/.test(name) &&
+    !['', ':', 'null', 'all'].includes(value));
+}
 function outputPrintFilter(selected: number, total: number, deferred = false): void {
   console.log(`[ filter   ] ${selected} of ${total} funds ${deferred ? 'selected for evaluation (data-dependent filters applied per fund)' : 'pass filters'}`);
 }
-
-function outputStable(value: unknown): unknown {
+function outputStable(value: any): any {
   if (Array.isArray(value)) return value.map(outputStable);
-  if (value && typeof value === 'object') {
-    const record = value as Record<string, unknown>;
-    return Object.fromEntries(Object.keys(record).sort().filter((key) => !VOLATILE_KEYS.has(key)).map((key) => [key, outputStable(record[key])]));
-  }
+  if (value && typeof value === 'object') return Object.fromEntries(Object.keys(value).sort().filter(key => !['generatedAt', 'catalogReadAt'].includes(key)).map(key => [key, outputStable(value[key])]));
   return value;
 }
-
-function outputContentKey(value: unknown): string {
-  return JSON.stringify(outputStable(value)) ?? 'null';
-}
-
-async function outputInspectFund(root: string, ticker: string): Promise<{ digest: string; meta: Record<string, unknown> }> {
-  const dir = path.join(root, 'funds', ticker);
-  const hash = createHash('sha256');
-  async function visit(folder: string): Promise<void> {
-    const entries = await readdir(folder, { withFileTypes: true }).catch(() => []);
+function outputContentKey(value: unknown): string { return JSON.stringify(outputStable(value)) ?? 'null'; }
+async function outputInspectFund(root: URL | string, ticker: string): Promise<{ digest: string; meta: any }> {
+  const dir = outputJoin(root instanceof URL ? outputFileURLToPath(root) : root, 'funds', ticker);
+  const hash = outputCreateHash('sha256');
+  async function visit(path: string): Promise<void> {
+    const entries = await outputReadDir(path, { withFileTypes: true }).catch(() => []);
     for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
-      const file = path.join(folder, entry.name);
-      if (entry.isDirectory()) await visit(file);
-      if (entry.isFile() && entry.name.endsWith('.json')) {
-        const text = await readFile(file, 'utf8').catch(() => '');
-        hash.update(path.relative(dir, file));
+      if (entry.isDirectory()) await visit(outputJoin(path, entry.name));
+      else if (entry.name.endsWith('.json')) {
+        const text = await outputReadFile(outputJoin(path, entry.name), 'utf8').catch(() => '');
+        hash.update(outputJoin(path.slice(dir.length), entry.name));
         try { hash.update(outputContentKey(JSON.parse(text))); } catch { hash.update(text); }
       }
     }
   }
   await visit(dir);
-  const meta = await readJson<Record<string, unknown>>(path.join(dir, 'meta.json')) ?? {};
+  const meta = await outputReadFile(outputJoin(dir, 'meta.json'), 'utf8').then(JSON.parse).catch(() => ({}));
   return { digest: hash.digest('hex'), meta };
 }
-
-function outputCount(value: unknown): number | null {
-  if (typeof value === 'number') return value;
-  if (Array.isArray(value)) return value.length;
-  if (value && typeof value === 'object') {
-    const record = value as Record<string, unknown>;
-    if (typeof record.totalRows === 'number') return record.totalRows;
-    if (Array.isArray(record.rows)) return record.rows.length;
+const outputCount = (value: any): unknown => typeof value === 'number' ? value : Array.isArray(value) ? value.length : value?.totalRows ?? value?.rows?.length ?? null;
+const outputScalar = (value: any): any => value && typeof value === 'object' ? value.display ?? value.value ?? null : value;
+const outputUnits: Record<string, number> = { K: 1e3, M: 1e6, B: 1e9, T: 1e12, THOUSAND: 1e3, MILLION: 1e6, BILLION: 1e9, TRILLION: 1e12 };
+function outputMoney(value: any): string {
+  const raw = value && typeof value === 'object' && typeof value.value === 'number' && Number.isFinite(value.value) ? value.value : outputScalar(value);
+  if (raw === null || raw === undefined || raw === '—' || raw === '--') return 'null';
+  const text = String(raw).replace(/[$,\s]/g, '');
+  const match = text.match(/^([+-]?[\d.]+)(K|M|B|T|Thousand|Million|Billion|Trillion)?$/i);
+  if (!match) return outputClean(raw);
+  const number = Number(match[1]) * (outputUnits[match[2]?.toUpperCase() ?? ''] ?? 1);
+  if (!Number.isFinite(number)) return 'null';
+  for (const [unit, scale] of [['T', 1e12], ['B', 1e9], ['M', 1e6], ['K', 1e3]] as const) {
+    if (Math.abs(number) >= scale) return `$${(number / scale).toFixed(1)}${unit}`;
   }
-  return null;
+  return `$${number.toFixed(2)}`;
 }
-
-function outputMoney(value: unknown): string | null {
-  const raw = value && typeof value === 'object' ? (value as Record<string, unknown>).value : value;
-  if (raw === null || raw === undefined || raw === '' || raw === '—') return null;
-  const amount = typeof raw === 'number' ? raw : Number(String(raw).replace(/[$,\s]/g, ''));
-  if (!Number.isFinite(amount)) return null;
-  if (Math.abs(amount) >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`;
-  if (Math.abs(amount) >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`;
-  if (Math.abs(amount) >= 1e3) return `$${(amount / 1e3).toFixed(1)}K`;
-  return `$${amount.toFixed(2)}`;
+/** Yields: rounded to 2 decimals without trailing zeros; placeholders are omitted like null. */
+function outputPercent(value: any): unknown {
+  const raw = outputScalar(value);
+  if (raw === null || raw === undefined) return null;
+  if (typeof raw === 'number') return Number.isFinite(raw) ? Number(raw.toFixed(2)) : null;
+  const text = String(raw).trim().replace(/%$/, '').trim();
+  if (['', '-', '—', '--', 'n/a'].includes(text.toLowerCase())) return null;
+  const number = Number(text.replace(/,/g, ''));
+  return Number.isFinite(number) ? Number(number.toFixed(2)) : outputClean(raw);
 }
-
-function outputFundLine(index: number, total: number, ticker: string, status: string, data: Record<string, unknown> = {}, reason?: unknown): string {
+function outputFundLine(index: number, total: number, ticker: string, status: string, data: any = {}, reason?: unknown): string {
   const width = Math.max(2, String(total).length);
-  const field = (name: string, value: unknown): string => value === null || value === undefined || value === 'null' ? '' : `${name}=${outputClean(value)}`;
+  const metrics = data.metrics ?? {};
+  // Presentation only. Keep valid zero/false values; omit unavailable fields.
+  // outputMoney returns the string 'null' for an unavailable monetary value.
+  const field = (key: string, value: unknown): string =>
+    value === null || value === undefined || value === 'null' ? '' : `${key}=${outputClean(value)}`;
+  const sources = [
+    field('official', data.officialHistoryCount),
+    field('yahoo', data.yahooHistoryCount),
+  ].filter(part => part !== '').join(' ');
   const detail = [
-    field('history', outputCount(data.history)),
-    field('holdings', outputCount(data.holdings)),
-    field('divs', outputCount(data.distributions)),
-    field('netAssets', outputMoney(data.netAssets)),
-    field('div', data.dividendYield),
-    field('sec', data.secYield),
-  ].filter(Boolean).join(' ');
+    field('port', data.portId ?? data.portfolioId),
+    field('history', outputCount(data.history ?? data.historyCount)),
+    sources ? `(${sources})` : '',
+    field('holdings', outputCount(data.holdings ?? data.holdingsCount)),
+    field('divs', outputCount(data.worksheets?.Distributions ?? data.distributions)),
+    field('netAssets', outputMoney(data.netAssets ?? data.aum)),
+    field('total', outputMoney(data.totalFundNetAssets ?? data.totalNetAssets)),
+    field('div', outputPercent(data.trailingYield ?? data.yields?.effectiveYield ?? data.yields?.dividendYield ?? data.dividendYield ?? metrics.dividendYield)),
+    field('sec', outputPercent(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
+    field('wp', data.workplaceRaw),
+  ].filter(part => part !== '').join(' ');
   return `[ ${String(index).padStart(width)}/${String(total).padEnd(width)}  ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
 }
-
-function outputCreateReporter(root: string, total: number) {
+function outputCreateReporter(root: URL | string, total: number) {
   let completed = 0;
+  const tally = new Map<string, number>();
   return {
     before: (ticker: string) => outputInspectFund(root, ticker),
-    async result(ticker: string, before: { digest: string }, status?: string, reason?: unknown, extra: Record<string, unknown> = {}): Promise<void> {
+    async result(ticker: string, before: { digest: string }, status?: string, reason?: unknown, extra: any = {}) {
       const after = await outputInspectFund(root, ticker);
-      const meta = after.meta;
-      const metrics = (meta.metrics as Record<string, unknown> | undefined) ?? {};
-      console.log(outputFundLine(++completed, total, ticker, status ?? (before.digest === after.digest ? 'unchanged' : 'updated'), {
-        history: meta.history,
-        holdings: meta.holdings,
-        distributions: (meta.distributions as Record<string, unknown> | undefined)?.rows,
-        netAssets: meta.aum,
-        dividendYield: metrics.dividendYield,
-        secYield: metrics.secYield,
-        ...extra,
-      }, reason));
+      const final = status ?? (before.digest === after.digest ? 'unchanged' : 'updated');
+      tally.set(final, (tally.get(final) ?? 0) + 1);
+      console.log(outputFundLine(++completed, total, ticker, final, { ...after.meta, ...extra }, reason));
+    },
+    /** First [ done ] line: the statuses of every fund line this reporter printed. */
+    summary(startedAt: number): string {
+      const order = ['updated', 'unchanged', 'kept', 'skipped', 'failed'];
+      const statuses = [...order, ...[...tally.keys()].filter(status => !order.includes(status))];
+      return `[ done     ] ${completed} funds: ${statuses.map(status => `${tally.get(status) ?? 0} ${status}`).join(', ')} in ${((Date.now() - startedAt) / 1000).toFixed(1)}s`;
     },
   };
+}
+/** Second [ done ] line: published totals. */
+function outputCounts(funds: number, holdings: number, history: number): string {
+  return `[ done     ] counts: ${funds.toLocaleString('en-US')} funds / ${holdings.toLocaleString('en-US')} holdings rows / ${history.toLocaleString('en-US')} history rows`;
+}
+
+/** Per-fund VERBOSE detail, tagged once. */
+function note(message: string): void { outputNote(`[ note     ] ${outputClean(message)}`); }
+
+/** The `[ config ]` block: the parsed config under the canonical environment names (SEC_UA is redacted). */
+function printUpdaterConfig(config: UpdaterConfig): void {
+  const range = (value?: Range) => ({ source: value ? `${value.min}:${value.max}` : ':' });
+  const periods = (ranges: Partial<Record<string, Range>>) => Object.fromEntries(rangePeriods.map((period) => [period, range(ranges[period])]));
+  outputPrintConfig(BRAND_LABEL, {
+    maxFetches: config.maxFetches, requestSleepSeconds: config.requestSleepMs / 1000, concurrency: config.concurrency,
+    maxRetries: config.maxRetries, tickers: config.tickers, categories: config.category,
+    aumRange: range(config.aumRange), terRange: range(config.terRange), dividendYieldRange: range(config.dividendYieldRange),
+    secYieldRange: range(config.secYieldRange), performanceRanges: periods(config.performanceRanges), totalReturnRanges: periods(config.totalReturnRanges),
+    holdingsPageSize: config.holdingsPageSize, historyPageSize: config.historyPageSize, historyRange: config.historyRange,
+    edgarFallback: config.edgarFallback, skipYahoo: config.skipYahoo, skipThemes: config.skipThemes, SEC_UA: config.secUserAgent,
+  });
 }
 
 export function sanitizeTicker(raw: unknown): string {
@@ -882,7 +908,7 @@ export async function fetchWithRetry<T = Response>(
       if (error instanceof HttpError && ![408, 425, 429].includes(error.status) && error.status < 500) throw error;
     }
     if (attempt < config.maxRetries) {
-      outputNote(config, `retry ${attempt + 1}/${config.maxRetries}: ${url}`);
+      note(`retry ${attempt + 1}/${config.maxRetries}: ${url}`);
       await sleep(Math.max(250, config.requestSleepMs) * (attempt + 1));
     }
   }
@@ -972,7 +998,7 @@ export async function fetchOfficialText(
       directError = error instanceof Error ? error.message : String(error);
       if (error instanceof HttpError && error.status === 403) {
         issuerState.directDenials += 1;
-        if (issuerState.directDenials === DIRECT_DENIAL_LIMIT) console.warn('[ official  ] direct requests are denied from this network; using the read-only rendering proxy for the rest of the run');
+        if (issuerState.directDenials === DIRECT_DENIAL_LIMIT) note('direct requests are denied from this network; using the read-only rendering proxy for the rest of the run');
       }
     }
   }
@@ -1019,7 +1045,7 @@ async function fetchEdgarFallback(fund: CatalogFund, config: UpdaterConfig, gate
       if (!parsed.rows.length || !matchesNportSeries(parsed.seriesName, fund)) continue;
       return { asOf: parsed.asOf, netAssets: parsed.netAssets, sharesOutstanding: null, rows: parsed.rows };
     } catch (error) {
-      outputNote(config, `EDGAR N-PORT candidate failed for ${fund.ticker}: ${error instanceof Error ? error.message : String(error)}`);
+      note(`EDGAR N-PORT candidate failed for ${fund.ticker}: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
   return null;
@@ -1258,7 +1284,7 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
       holdingsSource = `official Themes ETFs daily holdings CSV${csv.via === 'proxy' ? ' (via read-only rendering proxy)' : ''}`;
     } catch (error) {
       fallbackReason = `official holdings unavailable: ${error instanceof Error ? error.message : String(error)}`;
-      outputNote(config, `${fund.ticker}: ${fallbackReason}`);
+      note(`${fund.ticker}: ${fallbackReason}`);
     }
   }
 
@@ -1267,13 +1293,13 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
       const fallback = await fetchEdgarFallback(fund, config, gate);
       const publishedAsOf = typeof prior?.holdings?.asOf === 'string' ? prior.holdings.asOf : null;
       if (fallback?.rows.length && publishedAsOf && (!fallback.asOf || fallback.asOf < publishedAsOf)) {
-        outputNote(config, `${fund.ticker}: SEC N-PORT (${fallback.asOf ?? 'undated'}) is older than the published holdings (${publishedAsOf}); keeping the published holdings`);
+        note(`${fund.ticker}: SEC N-PORT (${fallback.asOf ?? 'undated'}) is older than the published holdings (${publishedAsOf}); keeping the published holdings`);
       } else if (fallback?.rows.length) {
         holdings = fallback;
         holdingsSource = `SEC EDGAR Form N-PORT-P (${THEMES_ETF_TRUST}, CIK ${THEMES_ETF_TRUST_CIK})`;
       }
     } catch (error) {
-      outputNote(config, `${fund.ticker}: SEC fallback unavailable: ${error instanceof Error ? error.message : String(error)}`);
+      note(`${fund.ticker}: SEC fallback unavailable: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
 
@@ -1284,13 +1310,13 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
       if (!parsed.history.length) throw new Error('chart response contained no price rows');
       yahoo = parsed;
     }
-    catch (error) { outputNote(config, `${fund.ticker}: Yahoo history unavailable: ${error instanceof Error ? error.message : String(error)}`); }
+    catch (error) { note(`${fund.ticker}: Yahoo history unavailable: ${error instanceof Error ? error.message : String(error)}`); }
   }
 
   const priorHoldings = existingManifest(prior, 'holdings');
   const retainedHoldings = !holdings && Boolean(priorHoldings);
   const retainedSource = (previous: unknown): string => fallbackReason ? retainedLabel(previous) : (String(previous ?? '') || 'previously published data');
-  if (retainedHoldings) outputNote(config, `${fund.ticker}: keeping previously published holdings (${fallbackReason || 'no refresh attempted'})`);
+  if (retainedHoldings) note(`${fund.ticker}: keeping previously published holdings (${fallbackReason || 'no refresh attempted'})`);
   const priorHistory = existingManifest(prior, 'history');
   if (!holdings && !priorHoldings) throw new Error(fallbackReason || 'no current or previously published holdings data');
 
@@ -1447,7 +1473,8 @@ export async function main(env: Record<string, string | undefined> = process.env
   const controls = await runtimeControls(env);
   const config = readConfig(controls);
   installSystemCa((controls.USE_SYSTEM_CA ?? 'auto').toLowerCase());
-  outputPrintConfig(config);
+  if (controls.VERBOSE !== undefined || config.verbose) process.env.VERBOSE = String(config.verbose);
+  printUpdaterConfig(config);
   resetIssuerState();
   const gate = createRequestGate(config.concurrency, config.requestSleepMs);
   const proxyGate = createProxyGate(Math.max(PROXY_SLEEP_MS, config.requestSleepMs));
@@ -1494,7 +1521,7 @@ export async function main(env: Record<string, string | undefined> = process.env
   const reporter = outputCreateReporter(API_ROOT, candidates.length);
   const queue = candidates.slice();
   const updates = new Map<string, Record<string, unknown>>();
-  const stats = { updated: 0, unchanged: 0, skipped: 0, failed: 0 };
+  const stats = { skipped: 0, failed: 0 };
   const workerCount = Math.max(1, Math.min(config.concurrency, Math.max(1, queue.length)));
   const workers = Array.from({ length: workerCount }, async () => {
     for (;;) {
@@ -1512,8 +1539,6 @@ export async function main(env: Record<string, string | undefined> = process.env
         }
         await result.commit();
         updates.set(fund.ticker, result.entry);
-        const after = await outputInspectFund(API_ROOT, fund.ticker);
-        if (before.digest === after.digest) stats.unchanged += 1; else stats.updated += 1;
         await reporter.result(fund.ticker, before, undefined, result.reason);
       } catch (error) {
         stats.failed += 1;
@@ -1590,8 +1615,8 @@ export async function main(env: Record<string, string | undefined> = process.env
   }
   if (deadlineHit) console.warn(`[ deadline ] soft deadline of ${SOFT_DEADLINE_MS / 60_000} minutes reached; remaining funds were left for the next run`);
 
-  console.log(`[ done     ] ${stats.updated} funds updated, ${stats.failed} failures`);
-  console.log(`[ done     ] counts: funds=${counts.funds} holdings=${counts.holdings} history=${counts.history} unchanged=${stats.unchanged} skipped=${stats.skipped}`);
+  console.log(reporter.summary(startedAt));
+  console.log(outputCounts(counts.funds, counts.holdings, counts.history));
   if (stats.failed > 0 && stats.failed === candidates.length) {
     throw new Error(`nothing could be refreshed (every selected fund failed) and no published fallback exists: ${candidates.map((fund) => fund.ticker).join(', ')}`);
   }
