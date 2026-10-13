@@ -2,7 +2,7 @@
   "counts": {
     "funds": 10,
     "history": 6309,
-    "holdings": 676
+    "holdings": 526
   },
   "funds": [
     {
@@ -79,9 +79,9 @@
       "ticker": "AGMI"
     },
     {
-      "asOfDate": "Oct 12, 2026",
-      "aum": "$24.22M",
-      "aumValue": 24217674,
+      "asOfDate": "Oct 13, 2026",
+      "aum": "$23.29M",
+      "aumValue": 23289725,
       "category": "Commodities",
       "closePrice": "$93.34",
       "closePriceValue": 93.34,
@@ -96,7 +96,7 @@
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/aumi",
       "history": 709,
-      "holdings": 70,
+      "holdings": 35,
       "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
@@ -298,9 +298,9 @@
       "ticker": "CLOD"
     },
     {
-      "asOfDate": "Oct 12, 2026",
-      "aum": "$12.64M",
-      "aumValue": 12638400,
+      "asOfDate": "Oct 13, 2026",
+      "aum": "$12.56M",
+      "aumValue": 12557376,
       "category": "Commodities",
       "closePrice": "$52.90",
       "closePriceValue": 52.9,
@@ -315,7 +315,7 @@
       "exchange": "Cboe US",
       "fundPage": "https://themesetfs.com/etfs/copa",
       "history": 514,
-      "holdings": 116,
+      "holdings": 58,
       "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
@@ -590,9 +590,9 @@
       "ticker": "SPAM"
     },
     {
-      "asOfDate": "Oct 12, 2026",
-      "aum": "$24.37M",
-      "aumValue": 24367070,
+      "asOfDate": "Oct 13, 2026",
+      "aum": "$24.02M",
+      "aumValue": 24021200,
       "category": "Commodities",
       "closePrice": "$34.78",
       "closePriceValue": 34.78,
@@ -607,7 +607,7 @@
       "exchange": "Cboe US",
       "fundPage": "https://themesetfs.com/etfs/uran",
       "history": 514,
-      "holdings": 114,
+      "holdings": 57,
       "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
@@ -736,7 +736,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-13T02:28:53Z",
+  "generatedAt": "2026-10-13T04:08:40Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",

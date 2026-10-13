@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 12, 2026",
+  "asOfDate": "Oct 13, 2026",
   "aum": {
-    "asOfDate": "Oct 12, 2026",
-    "display": "$24.37M",
+    "asOfDate": "Oct 13, 2026",
+    "display": "$24.02M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 24367070
+    "value": 24021200
   },
-  "aumValue": 24367070,
+  "aumValue": 24021200,
   "category": "Commodities",
   "closePrice": "$34.78",
   "closePriceValue": 34.78,
@@ -32,7 +32,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-10-13T02:28:53Z",
+  "generatedAt": "2026-10-13T04:08:40Z",
   "history": {
     "asOf": "2026-10-12",
     "asOfDate": "Oct 12, 2026",
@@ -45,15 +45,15 @@
     "totalRows": 514
   },
   "holdings": {
-    "asOf": "2026-10-12",
-    "asOfDate": "Oct 12, 2026",
+    "asOf": "2026-10-13",
+    "asOfDate": "Oct 13, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-URAN.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 114
+    "totalRows": 57
   },
   "metrics": {
     "cagr10y": null,
@@ -79,7 +79,7 @@
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
-    "asOfDate": "Oct 12, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "$34.81",
     "kind": "official Themes ETFs catalog NAV",
     "value": 34.81
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 12, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "700,000",
     "value": 700000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "URAN",
-  "totalNetAssets": 24367070
+  "totalNetAssets": 24021200
 }

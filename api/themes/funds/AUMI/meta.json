@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 12, 2026",
+  "asOfDate": "Oct 13, 2026",
   "aum": {
-    "asOfDate": "Oct 12, 2026",
-    "display": "$24.22M",
+    "asOfDate": "Oct 13, 2026",
+    "display": "$23.29M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 24217674
+    "value": 23289725
   },
-  "aumValue": 24217674,
+  "aumValue": 23289725,
   "category": "Commodities",
   "closePrice": "$93.34",
   "closePriceValue": 93.34,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-13T02:28:51Z",
+  "generatedAt": "2026-10-13T04:08:38Z",
   "history": {
     "asOf": "2026-10-12",
     "asOfDate": "Oct 12, 2026",
@@ -45,15 +45,15 @@
     "totalRows": 709
   },
   "holdings": {
-    "asOf": "2026-10-12",
-    "asOfDate": "Oct 12, 2026",
+    "asOf": "2026-10-13",
+    "asOfDate": "Oct 13, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 70
+    "totalRows": 35
   },
   "metrics": {
     "cagr10y": null,
@@ -79,7 +79,7 @@
   },
   "name": "Gold Miners ETF",
   "nav": {
-    "asOfDate": "Oct 12, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "$93.14",
     "kind": "official Themes ETFs catalog NAV",
     "value": 93.14
@@ -110,9 +110,9 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 12, 2026",
-    "display": "260,000",
-    "value": 260000
+    "asOfDate": "Oct 13, 2026",
+    "display": "250,000",
+    "value": 250000
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AUMI",
-  "totalNetAssets": 24217674
+  "totalNetAssets": 23289725
 }

@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BSMW270",
       "Market Value": "$49124.72",
       "Name": "Cirrus Aircraft Ltd",
@@ -21,7 +21,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "BSY3HG5",
       "Market Value": "$27862.88",
       "Name": "Seyond Holdings Ltd",
@@ -30,7 +30,7 @@
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "03815J107",
       "Market Value": "$25891.08",
       "Name": "Applied Aerospace & Defense Inc",
@@ -39,7 +39,7 @@
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "03945R102",
       "Market Value": "$133965.16",
       "Name": "Archer Aviation Inc",
@@ -48,7 +48,7 @@
       "Weight": "0.15%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "000361105",
       "Market Value": "$178777.90",
       "Name": "AAR Corp",
@@ -57,7 +57,7 @@
       "Weight": "0.20%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "4012250",
       "Market Value": "$5707952.80",
       "Name": "AIRBUS GROUP SE",
@@ -66,7 +66,7 @@
       "Weight": "6.35%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "009422106",
       "Market Value": "$45452.12",
       "Name": "AIRO Group Holdings Inc",
@@ -75,7 +75,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BSD3PY0",
       "Market Value": "$30370.67",
       "Name": "Altinay Savunma Teknolojileri AS",
@@ -84,7 +84,7 @@
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMT9L19",
       "Market Value": "$260619.94",
       "Name": "Dassault Aviation SA",
@@ -93,7 +93,7 @@
       "Weight": "0.29%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "023939101",
       "Market Value": "$123831.40",
       "Name": "Amentum Holdings Inc",
@@ -102,7 +102,7 @@
       "Weight": "0.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "04339D105",
       "Market Value": "$153373.80",
       "Name": "Arxis Inc",
@@ -111,7 +111,7 @@
       "Weight": "0.17%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B03MP41",
       "Market Value": "$377254.42",
       "Name": "Aselsan Elektronik Sanayi Ve Ticaret AS",
@@ -120,7 +120,7 @@
       "Weight": "0.42%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "046484309",
       "Market Value": "$34027.08",
       "Name": "Astrotech Corp",
@@ -129,7 +129,7 @@
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "046433108",
       "Market Value": "$85757.95",
       "Name": "Astronics Corp",
@@ -138,7 +138,7 @@
       "Weight": "0.10%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "046433207",
       "Market Value": "$17156.20",
       "Name": "Astronics Corp",
@@ -147,7 +147,7 @@
       "Weight": "0.02%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "008073108",
       "Market Value": "$204235.03",
       "Name": "AeroVironment Inc",
@@ -156,7 +156,7 @@
       "Weight": "0.23%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "00835T107",
       "Market Value": "$41514.76",
       "Name": "Aevex Corp",
@@ -165,7 +165,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BYWZZF0",
       "Market Value": "$50040.67",
       "Name": "Avio SpA",
@@ -174,7 +174,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "0066701",
       "Market Value": "$66552.97",
       "Name": "Avon Technologies PLC",
@@ -183,7 +183,7 @@
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "05464C101",
       "Market Value": "$1504795.33",
       "Name": "Axon Enterprise Inc",
@@ -192,7 +192,7 @@
       "Weight": "1.68%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "097023105",
       "Market Value": "$6653534.50",
       "Name": "Boeing Co/The",
@@ -201,7 +201,7 @@
       "Weight": "7.41%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "0263494",
       "Market Value": "$3581786.51",
       "Name": "BAE Systems PLC",
@@ -210,7 +210,7 @@
       "Weight": "3.99%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BN33PL2",
       "Market Value": "$852251.10",
       "Name": "Bombardier Inc",
@@ -219,7 +219,7 @@
       "Weight": "0.95%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "086921103",
       "Market Value": "$115253.30",
       "Name": "Beta Technologies Inc",
@@ -228,7 +228,7 @@
       "Weight": "0.13%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B3FLWH9",
       "Market Value": "$96891.35",
       "Name": "Bodycote PLC",
@@ -237,7 +237,7 @@
       "Weight": "0.11%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "05605H100",
       "Market Value": "$612569.76",
       "Name": "BWX Technologies Inc",
@@ -246,7 +246,7 @@
       "Weight": "0.68%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "12448X201",
       "Market Value": "$38462.42",
       "Name": "Byrna Technologies Inc",
@@ -264,7 +264,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "12763L105",
       "Market Value": "$32506.72",
       "Name": "Cadre Holdings Inc",
@@ -273,7 +273,7 @@
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B45C9X4",
       "Market Value": "$85121.62",
       "Name": "Chemring Group PLC",
@@ -282,7 +282,7 @@
       "Weight": "0.09%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0YD2B9",
       "Market Value": "$62800.78",
       "Name": "Cohort PLC",
@@ -291,7 +291,7 @@
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMYGDM0",
       "Market Value": "$42376.52",
       "Name": "Colt CZ Group SE",
@@ -300,7 +300,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "224408104",
       "Market Value": "$480055.38",
       "Name": "Crane Co",
@@ -309,7 +309,7 @@
       "Weight": "0.53%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BLC88P9",
       "Market Value": "$112042.75",
       "Name": "CSG NV",
@@ -318,7 +318,7 @@
       "Weight": "0.12%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "231561101",
       "Market Value": "$888834.08",
       "Name": "Curtiss-Wright Corp",
@@ -336,7 +336,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "264147109",
       "Market Value": "$113892.75",
       "Name": "Ducommun Inc",
@@ -345,7 +345,7 @@
       "Weight": "0.13%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "52661A108",
       "Market Value": "$84739.98",
       "Name": "Leonardo DRS Inc",
@@ -363,7 +363,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "29970N104",
       "Market Value": "$32640.92",
       "Name": "Eve Holding Inc",
@@ -372,7 +372,7 @@
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G9471C206",
       "Market Value": "$14218.89",
       "Name": "Vertical Aerospace Ltd",
@@ -381,7 +381,7 @@
       "Weight": "0.02%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B06BGH5",
       "Market Value": "$49177.62",
       "Name": "Exail Technologies SA",
@@ -390,7 +390,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "5489916",
       "Market Value": "$53780.09",
       "Name": "LISI SA",
@@ -399,7 +399,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "31816X106",
       "Market Value": "$63339.90",
       "Name": "Firefly Aerospace Inc",
@@ -408,7 +408,7 @@
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G3730V105",
       "Market Value": "$779977.36",
       "Name": "FTAI Aviation Ltd",
@@ -435,7 +435,7 @@
       "Weight": "0.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "369550108",
       "Market Value": "$3581706.42",
       "Name": "General Dynamics Corp",
@@ -444,7 +444,7 @@
       "Weight": "3.99%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "369604301",
       "Market Value": "$6972794.88",
       "Name": "GE AEROSPACE",
@@ -453,7 +453,7 @@
       "Weight": "7.76%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BN0SDX8",
       "Market Value": "$259133.83",
       "Name": "Hensoldt AG",
@@ -462,7 +462,7 @@
       "Weight": "0.29%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "422806109",
       "Market Value": "$587644.02",
       "Name": "HEICO Corp",
@@ -471,7 +471,7 @@
       "Weight": "0.65%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "446413106",
       "Market Value": "$467597.13",
       "Name": "Huntington Ingalls Industries Inc",
@@ -489,7 +489,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "4162791",
       "Market Value": "$1032629.22",
       "Name": "Thales SA",
@@ -498,7 +498,7 @@
       "Weight": "1.15%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "438516205",
       "Market Value": "$3185899.08",
       "Name": "Honeywell International Inc",
@@ -507,7 +507,7 @@
       "Weight": "3.55%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "443201108",
       "Market Value": "$3676486.50",
       "Name": "Howmet Aerospace Inc",
@@ -516,7 +516,7 @@
       "Weight": "4.09%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "428291108",
       "Market Value": "$306584.55",
       "Name": "Hexcel Corp",
@@ -525,7 +525,7 @@
       "Weight": "0.34%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "45769N105",
       "Market Value": "$53328.60",
       "Name": "Innovative Solutions and Support Inc",
@@ -534,7 +534,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G65163100",
       "Market Value": "$140979.92",
       "Name": "Joby Aviation Inc",
@@ -543,7 +543,7 @@
       "Weight": "0.16%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "485924104",
       "Market Value": "$112663.92",
       "Name": "Karman Holdings Inc",
@@ -552,7 +552,7 @@
       "Weight": "0.13%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "50077B207",
       "Market Value": "$353978.10",
       "Name": "Kratos Defense & Security Solutions Inc",
@@ -561,7 +561,7 @@
       "Weight": "0.39%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0DJNG0",
       "Market Value": "$1020082.85",
       "Name": "LEONARDO-FINMECCANICA SPA",
@@ -570,7 +570,7 @@
       "Weight": "1.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "502431109",
       "Market Value": "$2118042.50",
       "Name": "L3Harris Technologies Inc",
@@ -579,7 +579,7 @@
       "Weight": "2.36%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "539830109",
       "Market Value": "$4391418.52",
       "Name": "Lockheed Martin Corp",
@@ -588,7 +588,7 @@
       "Weight": "4.89%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "53947R105",
       "Market Value": "$52149.68",
       "Name": "Loar Holdings Inc",
@@ -597,7 +597,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "46125A100",
       "Market Value": "$79410.50",
       "Name": "Intuitive Machines Inc",
@@ -606,7 +606,7 @@
       "Weight": "0.09%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "60471A101",
       "Market Value": "$179123.75",
       "Name": "Mirion Technologies Inc",
@@ -615,7 +615,7 @@
       "Weight": "0.20%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "60879E408",
       "Market Value": "$25991.52",
       "Name": "Momentus Inc",
@@ -624,7 +624,7 @@
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "615394202",
       "Market Value": "$495184.32",
       "Name": "Moog Inc",
@@ -633,7 +633,7 @@
       "Weight": "0.55%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "589378108",
       "Market Value": "$197903.16",
       "Name": "Mercury Systems Inc",
@@ -642,7 +642,7 @@
       "Weight": "0.22%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BNGDN82",
       "Market Value": "$346203.33",
       "Name": "Melrose Industries PLC",
@@ -651,7 +651,7 @@
       "Weight": "0.39%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B09DHL9",
       "Market Value": "$1008046.38",
       "Name": "MTU Aero Engines AG",
@@ -660,7 +660,7 @@
       "Weight": "1.12%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "666807102",
       "Market Value": "$3300425.00",
       "Name": "Northrop Grumman Corp",
@@ -678,7 +678,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "637215104",
       "Market Value": "$54144.10",
       "Name": "National Presto Industries Inc",
@@ -687,7 +687,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "671044105",
       "Market Value": "$144732.12",
       "Name": "OSI Systems Inc",
@@ -696,7 +696,7 @@
       "Weight": "0.16%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "70014A104",
       "Market Value": "$43987.52",
       "Name": "Park Aerospace Corp",
@@ -705,7 +705,7 @@
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0WMWD0",
       "Market Value": "$135478.65",
       "Name": "QinetiQ Group PLC",
@@ -714,7 +714,7 @@
       "Weight": "0.15%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMD6RR4",
       "Market Value": "$145465.46",
       "Name": "RENK Group AG",
@@ -723,7 +723,7 @@
       "Weight": "0.16%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "75776W103",
       "Market Value": "$102710.80",
       "Name": "Redwire Corp",
@@ -732,7 +732,7 @@
       "Weight": "0.11%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "5334588",
       "Market Value": "$2398684.94",
       "Name": "Rheinmetall AG",
@@ -741,7 +741,7 @@
       "Weight": "2.67%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "773121108",
       "Market Value": "$1848093.75",
       "Name": "Rocket Lab Corp",
@@ -750,7 +750,7 @@
       "Weight": "2.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B63H849",
       "Market Value": "$7131739.74",
       "Name": "Rolls-Royce Holdings PLC",
@@ -759,7 +759,7 @@
       "Weight": "7.94%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "75513E101",
       "Market Value": "$7705884.78",
       "Name": "RTX Corp",
@@ -768,7 +768,7 @@
       "Weight": "8.58%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BPXZH27",
       "Market Value": "$895239.60",
       "Name": "Saab AB",
@@ -777,7 +777,7 @@
       "Weight": "1.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B058TZ6",
       "Market Value": "$5707860.00",
       "Name": "Safran SA",
@@ -786,7 +786,7 @@
       "Weight": "6.35%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "80401C100",
       "Market Value": "$33422.16",
       "Name": "Satellogic Inc",
@@ -795,7 +795,7 @@
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMF8WG2",
       "Market Value": "$30526.05",
       "Name": "SDT Uzay VE Savunma Teknolojileri AS",
@@ -813,7 +813,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "92766K403",
       "Market Value": "$50585.82",
       "Name": "Virgin Galactic Holdings Inc",
@@ -822,7 +822,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "831754106",
       "Market Value": "$67379.05",
       "Name": "Smith & Wesson Brands Inc",
@@ -831,7 +831,7 @@
       "Weight": "0.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "893641100",
       "Market Value": "$2940962.44",
       "Name": "TransDigm Group Inc",
@@ -840,7 +840,7 @@
       "Weight": "3.27%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "879360105",
       "Market Value": "$1348211.02",
       "Name": "Teledyne Technologies Inc",
@@ -858,7 +858,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "883203101",
       "Market Value": "$631777.86",
       "Name": "Textron Inc",
@@ -867,7 +867,7 @@
       "Weight": "0.70%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BW5VWD8",
       "Market Value": "$50169.88",
       "Name": "Vincorion SE",
@@ -876,7 +876,7 @@
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "987084100",
       "Market Value": "$36922.98",
       "Name": "York Space Systems Inc",

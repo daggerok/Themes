@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 12, 2026",
+  "asOfDate": "Oct 13, 2026",
   "aum": {
-    "asOfDate": "Oct 12, 2026",
-    "display": "$12.64M",
+    "asOfDate": "Oct 13, 2026",
+    "display": "$12.56M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 12638400
+    "value": 12557376
   },
-  "aumValue": 12638400,
+  "aumValue": 12557376,
   "category": "Commodities",
   "closePrice": "$52.90",
   "closePriceValue": 52.9,
@@ -32,7 +32,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-13T02:28:51Z",
+  "generatedAt": "2026-10-13T04:08:38Z",
   "history": {
     "asOf": "2026-10-12",
     "asOfDate": "Oct 12, 2026",
@@ -45,15 +45,15 @@
     "totalRows": 514
   },
   "holdings": {
-    "asOf": "2026-10-12",
-    "asOfDate": "Oct 12, 2026",
+    "asOf": "2026-10-13",
+    "asOfDate": "Oct 13, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 116
+    "totalRows": 58
   },
   "metrics": {
     "cagr10y": null,
@@ -79,7 +79,7 @@
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 12, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "$52.66",
     "kind": "official Themes ETFs catalog NAV",
     "value": 52.66
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 12, 2026",
+    "asOfDate": "Oct 13, 2026",
     "display": "240,000",
     "value": 240000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "COPA",
-  "totalNetAssets": 12638400
+  "totalNetAssets": 12557376
 }
