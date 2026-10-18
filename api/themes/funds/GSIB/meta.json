@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 16, 2026",
+  "asOfDate": "Oct 19, 2026",
   "aum": {
-    "asOfDate": "Oct 13, 2026",
-    "display": "$39.75M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 39746395
+    "asOfDate": "Oct 19, 2026",
+    "display": "$39.30M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 39300755
   },
-  "aumValue": 39746395,
+  "aumValue": 39300755,
   "category": "Thematic",
   "closePrice": "$60.39",
   "closePriceValue": 60.39,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-10-18T03:36:29Z",
+  "generatedAt": "2026-10-18T06:52:35Z",
   "history": {
     "asOf": "2026-10-16",
     "asOfDate": "Oct 16, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 711
   },
   "holdings": {
-    "asOf": "2026-10-13",
-    "asOfDate": "Oct 13, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Global Systemically Important Banks ETF",
   "nav": {
-    "asOfDate": "Oct 16, 2026",
+    "asOfDate": "Oct 19, 2026",
     "display": "$60.46",
     "kind": "official Themes ETFs catalog NAV",
     "value": 60.46
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 19, 2026",
     "display": "650,000",
     "value": 650000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-GSIB.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Global-Systemically-Important-Banks-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "GSIB",
-  "totalNetAssets": 39746395
+  "totalNetAssets": 39300755
 }

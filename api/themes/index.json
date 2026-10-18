@@ -1,14 +1,14 @@
 {
   "counts": {
-    "funds": 11,
+    "funds": 10,
     "history": 6349,
     "holdings": 526
   },
   "funds": [
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$9.73M",
-      "aumValue": 9732030,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$9.38M",
+      "aumValue": 9383836,
       "category": "Commodities",
       "closePrice": "$67.05",
       "closePriceValue": 67.05,
@@ -79,9 +79,9 @@
       "ticker": "AGMI"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$23.29M",
-      "aumValue": 23289725,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$23.03M",
+      "aumValue": 23029250,
       "category": "Commodities",
       "closePrice": "$92.07",
       "closePriceValue": 92.07,
@@ -152,9 +152,9 @@
       "ticker": "AUMI"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$62.94M",
-      "aumValue": 62944920,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$57.61M",
+      "aumValue": 57608880,
       "category": "Thematic",
       "closePrice": "$35.94",
       "closePriceValue": 35.94,
@@ -225,9 +225,9 @@
       "ticker": "BOTT"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$2.19M",
-      "aumValue": 2191014,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$2.06M",
+      "aumValue": 2060520,
       "category": "Thematic",
       "closePrice": "$34.35",
       "closePriceValue": 34.35,
@@ -298,9 +298,9 @@
       "ticker": "CLOD"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$12.56M",
-      "aumValue": 12557376,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$11.84M",
+      "aumValue": 11839584,
       "category": "Commodities",
       "closePrice": "$49.12",
       "closePriceValue": 49.12,
@@ -371,54 +371,9 @@
       "ticker": "COPA"
     },
     {
-      "aum": "—",
-      "aumValue": null,
-      "category": "Thematic",
-      "closePrice": "$28.71",
-      "closePriceValue": 28.71,
-      "dataFile": null,
-      "distributions": {
-        "dividend": null,
-        "exDate": null,
-        "frequency": "00 - None",
-        "paymentsPerYear": null
-      },
-      "fundPage": "https://themesetfs.com/etfs/drgn",
-      "history": 0,
-      "holdings": 0,
-      "metrics": {
-        "cagr10y": null,
-        "cagr3y": null,
-        "cagr5y": null,
-        "distributionYield": null,
-        "distributionYieldText": "—",
-        "dividendYield": null,
-        "dividendYieldBasis": null,
-        "dividendYieldText": "—",
-        "performanceAsOf": null,
-        "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-        "secYield": null,
-        "secYieldText": "—",
-        "siAnn": null,
-        "tr10y": null,
-        "tr1y": null,
-        "tr3y": null,
-        "tr5y": null,
-        "yield12M": null,
-        "yield12MText": "—",
-        "ytd": null
-      },
-      "name": "China Generative Artificial Intelligence ETF",
-      "nav": "$28.95",
-      "navValue": 28.95,
-      "ter": "0.39%",
-      "terValue": 0.39,
-      "ticker": "DRGN"
-    },
-    {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$39.75M",
-      "aumValue": 39746395,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$39.30M",
+      "aumValue": 39300755,
       "category": "Thematic",
       "closePrice": "$60.39",
       "closePriceValue": 60.39,
@@ -489,9 +444,9 @@
       "ticker": "GSIB"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$89.83M",
-      "aumValue": 89826592,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$91.70M",
+      "aumValue": 91696264,
       "category": "Thematic",
       "closePrice": "$36.73",
       "closePriceValue": 36.73,
@@ -562,9 +517,9 @@
       "ticker": "NATO"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$7.26M",
-      "aumValue": 7256550,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$6.63M",
+      "aumValue": 6630915,
       "category": "Thematic",
       "closePrice": "$44.22",
       "closePriceValue": 44.22,
@@ -635,9 +590,9 @@
       "ticker": "SPAM"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$24.02M",
-      "aumValue": 24021200,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$22.74M",
+      "aumValue": 22744190,
       "category": "Commodities",
       "closePrice": "$32.46",
       "closePriceValue": 32.46,
@@ -708,9 +663,9 @@
       "ticker": "URAN"
     },
     {
-      "asOfDate": "Oct 16, 2026",
-      "aum": "$27.22M",
-      "aumValue": 27218976,
+      "asOfDate": "Oct 19, 2026",
+      "aum": "$22.75M",
+      "aumValue": 22753224,
       "category": "Thematic",
       "closePrice": "$31.53",
       "closePriceValue": 31.53,
@@ -781,7 +736,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-18T03:36:33Z",
+  "generatedAt": "2026-10-18T06:52:36Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",

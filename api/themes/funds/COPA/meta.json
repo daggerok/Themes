@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 16, 2026",
+  "asOfDate": "Oct 19, 2026",
   "aum": {
-    "asOfDate": "Oct 13, 2026",
-    "display": "$12.56M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 12557376
+    "asOfDate": "Oct 19, 2026",
+    "display": "$11.84M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 11839584
   },
-  "aumValue": 12557376,
+  "aumValue": 11839584,
   "category": "Commodities",
   "closePrice": "$49.12",
   "closePriceValue": 49.12,
@@ -32,7 +32,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-18T03:36:27Z",
+  "generatedAt": "2026-10-18T06:52:33Z",
   "history": {
     "asOf": "2026-10-16",
     "asOfDate": "Oct 16, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 518
   },
   "holdings": {
-    "asOf": "2026-10-13",
-    "asOfDate": "Oct 13, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 16, 2026",
+    "asOfDate": "Oct 19, 2026",
     "display": "$49.33",
     "kind": "official Themes ETFs catalog NAV",
     "value": 49.33
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 19, 2026",
     "display": "240,000",
     "value": 240000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Copper-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "COPA",
-  "totalNetAssets": 12557376
+  "totalNetAssets": 11839584
 }
