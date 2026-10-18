@@ -9,6 +9,30 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "60.39",
+      "Close": "60.39",
+      "Date": "2026-10-16",
+      "Volume": "5200"
+    },
+    {
+      "Adj Close": "60.69",
+      "Close": "60.69",
+      "Date": "2026-10-15",
+      "Volume": "1700"
+    },
+    {
+      "Adj Close": "60.05",
+      "Close": "60.05",
+      "Date": "2026-10-14",
+      "Volume": "5700"
+    },
+    {
+      "Adj Close": "61.10",
+      "Close": "61.10",
+      "Date": "2026-10-13",
+      "Volume": "2600"
+    },
+    {
       "Adj Close": "61.12",
       "Close": "61.12",
       "Date": "2026-10-12",
@@ -4252,5 +4276,5 @@
     }
   ],
   "ticker": "GSIB",
-  "totalRows": 707
+  "totalRows": 711
 }

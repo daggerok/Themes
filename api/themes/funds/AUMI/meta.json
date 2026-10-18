@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 13, 2026",
+  "asOfDate": "Oct 16, 2026",
   "aum": {
     "asOfDate": "Oct 13, 2026",
     "display": "$23.29M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 23289725
   },
   "aumValue": 23289725,
   "category": "Commodities",
-  "closePrice": "$93.34",
-  "closePriceValue": 93.34,
+  "closePrice": "$92.07",
+  "closePriceValue": 92.07,
   "dataFile": "./funds/AUMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-13T04:08:38Z",
+  "generatedAt": "2026-10-18T03:36:27Z",
   "history": {
-    "asOf": "2026-10-12",
-    "asOfDate": "Oct 12, 2026",
+    "asOf": "2026-10-16",
+    "asOfDate": "Oct 16, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 709
+    "totalRows": 713
   },
   "holdings": {
     "asOf": "2026-10-13",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.86,
-    "distributionYieldText": "0.86%",
-    "dividendYield": 0.86,
+    "distributionYield": 0.87,
+    "distributionYieldText": "0.87%",
+    "dividendYield": 0.87,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.86%",
-    "performanceAsOf": "2026-10-12",
+    "dividendYieldText": "0.87%",
+    "performanceAsOf": "2026-10-16",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 10.78,
+    "tr1y": 11.07,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.86,
-    "yield12MText": "0.86%",
-    "ytd": 0.72
+    "yield12M": 0.87,
+    "yield12MText": "0.87%",
+    "ytd": 0.13
   },
   "name": "Gold Miners ETF",
   "nav": {
-    "asOfDate": "Oct 13, 2026",
-    "display": "$93.14",
+    "asOfDate": "Oct 16, 2026",
+    "display": "$92.12",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 93.14
+    "value": 92.12
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 93.14,
+  "navValue": 92.12,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 12, 2026",
+      "asOfDate": "Oct 16, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 10.78,
+      "yr1": 11.07,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 0.72
+      "ytd": 0.13
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 13, 2026",
+    "asOfDate": null,
     "display": "250,000",
     "value": 250000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Gold-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

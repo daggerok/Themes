@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 13, 2026",
+  "asOfDate": "Oct 16, 2026",
   "aum": {
     "asOfDate": "Oct 13, 2026",
     "display": "$39.75M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 39746395
   },
   "aumValue": 39746395,
   "category": "Thematic",
-  "closePrice": "$60.85",
-  "closePriceValue": 60.85,
+  "closePrice": "$60.39",
+  "closePriceValue": 60.39,
   "dataFile": "./funds/GSIB/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-10-13T02:28:53Z",
+  "generatedAt": "2026-10-18T03:36:29Z",
   "history": {
-    "asOf": "2026-10-12",
-    "asOfDate": "Oct 12, 2026",
+    "asOf": "2026-10-16",
+    "asOfDate": "Oct 16, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 707
+    "totalRows": 711
   },
   "holdings": {
     "asOf": "2026-10-13",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 1.64,
-    "distributionYieldText": "1.64%",
-    "dividendYield": 1.64,
+    "distributionYield": 1.65,
+    "distributionYieldText": "1.65%",
+    "dividendYield": 1.65,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "1.64%",
-    "performanceAsOf": "2026-10-12",
+    "dividendYieldText": "1.65%",
+    "performanceAsOf": "2026-10-16",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 34.01,
+    "tr1y": 31.51,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 1.64,
-    "yield12MText": "1.64%",
-    "ytd": 16.31
+    "yield12M": 1.65,
+    "yield12MText": "1.65%",
+    "ytd": 14.92
   },
   "name": "Global Systemically Important Banks ETF",
   "nav": {
-    "asOfDate": "Oct 13, 2026",
-    "display": "$60.81",
+    "asOfDate": "Oct 16, 2026",
+    "display": "$60.46",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 60.81
+    "value": 60.46
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 60.81,
+  "navValue": 60.46,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 12, 2026",
+      "asOfDate": "Oct 16, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 34.01,
+      "yr1": 31.51,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 16.31
+      "ytd": 14.92
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 13, 2026",
+    "asOfDate": null,
     "display": "650,000",
     "value": 650000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-GSIB.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Global-Systemically-Important-Banks-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

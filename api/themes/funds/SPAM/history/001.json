@@ -9,6 +9,30 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "44.22",
+      "Close": "44.22",
+      "Date": "2026-10-16",
+      "Volume": "4200"
+    },
+    {
+      "Adj Close": "46.52",
+      "Close": "46.52",
+      "Date": "2026-10-15",
+      "Volume": "2900"
+    },
+    {
+      "Adj Close": "46.09",
+      "Close": "46.09",
+      "Date": "2026-10-14",
+      "Volume": "1000"
+    },
+    {
+      "Adj Close": "48.16",
+      "Close": "48.16",
+      "Date": "2026-10-13",
+      "Volume": "4900"
+    },
+    {
       "Adj Close": "48.51",
       "Close": "48.51",
       "Date": "2026-10-12",
@@ -4282,5 +4306,5 @@
     }
   ],
   "ticker": "SPAM",
-  "totalRows": 712
+  "totalRows": 716
 }
