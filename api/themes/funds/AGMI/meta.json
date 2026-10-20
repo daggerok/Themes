@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 19, 2026",
+  "asOfDate": "Oct 20, 2026",
   "aum": {
-    "asOfDate": "Oct 19, 2026",
-    "display": "$9.38M",
+    "asOfDate": "Oct 20, 2026",
+    "display": "$9.35M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 9383836
+    "value": 9347828
   },
-  "aumValue": 9383836,
+  "aumValue": 9347828,
   "category": "Commodities",
   "closePrice": "$67.05",
   "closePriceValue": 67.05,
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-10-18T06:52:33Z",
+  "generatedAt": "2026-10-20T04:31:17Z",
   "history": {
-    "asOf": "2026-10-16",
-    "asOfDate": "Oct 16, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 616
+    "totalRows": 617
   },
   "holdings": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 4.28,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "4.28%",
-    "performanceAsOf": "2026-10-16",
+    "performanceAsOf": "2026-10-19",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 25.09,
+    "tr1y": 21.18,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 4.28,
     "yield12MText": "4.28%",
-    "ytd": 3.63
+    "ytd": 3.38
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "$67.03",
     "kind": "official Themes ETFs catalog NAV",
     "value": 67.03
@@ -89,14 +89,14 @@
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 16, 2026",
+      "asOfDate": "Oct 19, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 25.09,
+      "yr1": 21.18,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 3.63
+      "ytd": 3.38
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "140,000",
     "value": 140000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AGMI",
-  "totalNetAssets": 9383836
+  "totalNetAssets": 9347828
 }

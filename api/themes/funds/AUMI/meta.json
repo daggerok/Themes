@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 19, 2026",
+  "asOfDate": "Oct 20, 2026",
   "aum": {
-    "asOfDate": "Oct 19, 2026",
-    "display": "$23.03M",
+    "asOfDate": "Oct 20, 2026",
+    "display": "$22.82M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 23029250
+    "value": 22823625
   },
-  "aumValue": 23029250,
+  "aumValue": 22823625,
   "category": "Commodities",
   "closePrice": "$92.07",
   "closePriceValue": 92.07,
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-18T06:52:34Z",
+  "generatedAt": "2026-10-20T04:31:17Z",
   "history": {
-    "asOf": "2026-10-16",
-    "asOfDate": "Oct 16, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 713
+    "totalRows": 714
   },
   "holdings": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 0.87,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.87%",
-    "performanceAsOf": "2026-10-16",
+    "performanceAsOf": "2026-10-19",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 11.07,
+    "tr1y": 5.42,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.87,
     "yield12MText": "0.87%",
-    "ytd": 0.13
+    "ytd": -1.35
   },
   "name": "Gold Miners ETF",
   "nav": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "$92.12",
     "kind": "official Themes ETFs catalog NAV",
     "value": 92.12
@@ -89,14 +89,14 @@
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 16, 2026",
+      "asOfDate": "Oct 19, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 11.07,
+      "yr1": 5.42,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 0.13
+      "ytd": -1.35
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "250,000",
     "value": 250000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AUMI",
-  "totalNetAssets": 23029250
+  "totalNetAssets": 22823625
 }

@@ -9,6 +9,12 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "59.63",
+      "Close": "59.63",
+      "Date": "2026-10-19",
+      "Volume": "10100"
+    },
+    {
       "Adj Close": "60.39",
       "Close": "60.39",
       "Date": "2026-10-16",
@@ -4276,5 +4282,5 @@
     }
   ],
   "ticker": "GSIB",
-  "totalRows": 711
+  "totalRows": 712
 }

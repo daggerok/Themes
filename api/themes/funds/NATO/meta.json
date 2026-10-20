@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 19, 2026",
+  "asOfDate": "Oct 20, 2026",
   "aum": {
-    "asOfDate": "Oct 19, 2026",
-    "display": "$91.70M",
+    "asOfDate": "Oct 20, 2026",
+    "display": "$90.82M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 91696264
+    "value": 90819336
   },
-  "aumValue": 91696264,
+  "aumValue": 90819336,
   "category": "Thematic",
   "closePrice": "$36.73",
   "closePriceValue": 36.73,
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-10-18T06:52:35Z",
+  "generatedAt": "2026-10-20T04:31:23Z",
   "history": {
-    "asOf": "2026-10-16",
-    "asOfDate": "Oct 16, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 505
+    "totalRows": 506
   },
   "holdings": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 0.46,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.46%",
-    "performanceAsOf": "2026-10-16",
+    "performanceAsOf": "2026-10-19",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -1.1,
+    "tr1y": -3.77,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.46,
     "yield12MText": "0.46%",
-    "ytd": -3.97
+    "ytd": -4.44
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "$36.97",
     "kind": "official Themes ETFs catalog NAV",
     "value": 36.97
@@ -89,14 +89,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 16, 2026",
+      "asOfDate": "Oct 19, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -1.1,
+      "yr1": -3.77,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -3.97
+      "ytd": -4.44
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "2,480,000",
     "value": 2480000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "NATO",
-  "totalNetAssets": 91696264
+  "totalNetAssets": 90819336
 }

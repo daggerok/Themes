@@ -1,14 +1,14 @@
 {
   "counts": {
     "funds": 10,
-    "history": 6349,
-    "holdings": 526
+    "history": 6359,
+    "holdings": 525
   },
   "funds": [
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$9.38M",
-      "aumValue": 9383836,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$9.35M",
+      "aumValue": 9347828,
       "category": "Commodities",
       "closePrice": "$67.05",
       "closePriceValue": 67.05,
@@ -22,7 +22,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/agmi",
-      "history": 616,
+      "history": 617,
       "holdings": 56,
       "inceptionDate": null,
       "metrics": {
@@ -34,18 +34,18 @@
         "dividendYield": 4.28,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "4.28%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 25.09,
+        "tr1y": 21.18,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 4.28,
         "yield12MText": "4.28%",
-        "ytd": 3.63
+        "ytd": 3.38
       },
       "name": "Silver Miners ETF",
       "nav": "$67.03",
@@ -54,14 +54,14 @@
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 25.09,
+          "yr1": 21.18,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 3.63
+          "ytd": 3.38
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -79,9 +79,9 @@
       "ticker": "AGMI"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$23.03M",
-      "aumValue": 23029250,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$22.82M",
+      "aumValue": 22823625,
       "category": "Commodities",
       "closePrice": "$92.07",
       "closePriceValue": 92.07,
@@ -95,7 +95,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/aumi",
-      "history": 713,
+      "history": 714,
       "holdings": 35,
       "inceptionDate": null,
       "metrics": {
@@ -107,18 +107,18 @@
         "dividendYield": 0.87,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "0.87%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 11.07,
+        "tr1y": 5.42,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 0.87,
         "yield12MText": "0.87%",
-        "ytd": 0.13
+        "ytd": -1.35
       },
       "name": "Gold Miners ETF",
       "nav": "$92.12",
@@ -127,14 +127,14 @@
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 11.07,
+          "yr1": 5.42,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 0.13
+          "ytd": -1.35
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -152,9 +152,9 @@
       "ticker": "AUMI"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$57.61M",
-      "aumValue": 57608880,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$58.75M",
+      "aumValue": 58746048,
       "category": "Thematic",
       "closePrice": "$35.94",
       "closePriceValue": 35.94,
@@ -168,7 +168,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/bott",
-      "history": 625,
+      "history": 626,
       "holdings": 41,
       "inceptionDate": null,
       "metrics": {
@@ -180,18 +180,18 @@
         "dividendYield": 0.17,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "0.17%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": -11.06,
+        "tr1y": -12.08,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 0.17,
         "yield12MText": "0.17%",
-        "ytd": -15.75
+        "ytd": -13.64
       },
       "name": "Humanoid Robotics ETF",
       "nav": "$36.23",
@@ -200,14 +200,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": -11.06,
+          "yr1": -12.08,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -15.75
+          "ytd": -13.64
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -225,9 +225,9 @@
       "ticker": "BOTT"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$2.06M",
-      "aumValue": 2060520,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$2.09M",
+      "aumValue": 2088306,
       "category": "Thematic",
       "closePrice": "$34.35",
       "closePriceValue": 34.35,
@@ -241,7 +241,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/clod",
-      "history": 711,
+      "history": 712,
       "holdings": 57,
       "inceptionDate": null,
       "metrics": {
@@ -253,18 +253,18 @@
         "dividendYield": 1.4,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "1.40%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 0.44,
+        "tr1y": 0.78,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 1.4,
         "yield12MText": "1.40%",
-        "ytd": 5.56
+        "ytd": 7.07
       },
       "name": "Cloud Computing ETF",
       "nav": "$34.34",
@@ -273,14 +273,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 0.44,
+          "yr1": 0.78,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 5.56
+          "ytd": 7.07
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -298,9 +298,9 @@
       "ticker": "CLOD"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$11.84M",
-      "aumValue": 11839584,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$11.76M",
+      "aumValue": 11761176,
       "category": "Commodities",
       "closePrice": "$49.12",
       "closePriceValue": 49.12,
@@ -314,7 +314,7 @@
       },
       "exchange": "Cboe US",
       "fundPage": "https://themesetfs.com/etfs/copa",
-      "history": 518,
+      "history": 519,
       "holdings": 58,
       "inceptionDate": null,
       "metrics": {
@@ -326,18 +326,18 @@
         "dividendYield": 3.73,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "3.73%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 38.17,
+        "tr1y": 34.8,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 3.73,
         "yield12MText": "3.73%",
-        "ytd": 13.68
+        "ytd": 12.96
       },
       "name": "Copper Miners ETF",
       "nav": "$49.33",
@@ -346,14 +346,14 @@
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 38.17,
+          "yr1": 34.8,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 13.68
+          "ytd": 12.96
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -371,9 +371,9 @@
       "ticker": "COPA"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$39.30M",
-      "aumValue": 39300755,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$38.77M",
+      "aumValue": 38773280,
       "category": "Thematic",
       "closePrice": "$60.39",
       "closePriceValue": 60.39,
@@ -387,7 +387,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/gsib",
-      "history": 711,
+      "history": 712,
       "holdings": 32,
       "inceptionDate": null,
       "metrics": {
@@ -399,18 +399,18 @@
         "dividendYield": 1.65,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "1.65%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 31.51,
+        "tr1y": 28.96,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 1.65,
         "yield12MText": "1.65%",
-        "ytd": 14.92
+        "ytd": 13.47
       },
       "name": "Global Systemically Important Banks ETF",
       "nav": "$60.46",
@@ -419,14 +419,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 31.51,
+          "yr1": 28.96,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 14.92
+          "ytd": 13.47
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -444,9 +444,9 @@
       "ticker": "GSIB"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$91.70M",
-      "aumValue": 91696264,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$90.82M",
+      "aumValue": 90819336,
       "category": "Thematic",
       "closePrice": "$36.73",
       "closePriceValue": 36.73,
@@ -460,7 +460,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/nato",
-      "history": 505,
+      "history": 506,
       "holdings": 98,
       "inceptionDate": null,
       "metrics": {
@@ -472,18 +472,18 @@
         "dividendYield": 0.46,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "0.46%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": -1.1,
+        "tr1y": -3.77,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 0.46,
         "yield12MText": "0.46%",
-        "ytd": -3.97
+        "ytd": -4.44
       },
       "name": "Transatlantic Defense ETF",
       "nav": "$36.97",
@@ -492,14 +492,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": -1.1,
+          "yr1": -3.77,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -3.97
+          "ytd": -4.44
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -517,9 +517,9 @@
       "ticker": "NATO"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$6.63M",
-      "aumValue": 6630915,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$6.71M",
+      "aumValue": 6705030,
       "category": "Thematic",
       "closePrice": "$44.22",
       "closePriceValue": 44.22,
@@ -533,7 +533,7 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/spam",
-      "history": 716,
+      "history": 717,
       "holdings": 45,
       "inceptionDate": null,
       "metrics": {
@@ -545,18 +545,18 @@
         "dividendYield": 0.34,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "0.34%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 29.07,
+        "tr1y": 28.96,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 0.34,
         "yield12MText": "0.34%",
-        "ytd": 44.27
+        "ytd": 46.17
       },
       "name": "Cybersecurity ETF",
       "nav": "$44.21",
@@ -565,14 +565,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 29.07,
+          "yr1": 28.96,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": 44.27
+          "ytd": 46.17
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -590,9 +590,9 @@
       "ticker": "SPAM"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$22.74M",
-      "aumValue": 22744190,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$22.51M",
+      "aumValue": 22507800,
       "category": "Commodities",
       "closePrice": "$32.46",
       "closePriceValue": 32.46,
@@ -606,7 +606,7 @@
       },
       "exchange": "Cboe US",
       "fundPage": "https://themesetfs.com/etfs/uran",
-      "history": 518,
+      "history": 519,
       "holdings": 57,
       "inceptionDate": null,
       "metrics": {
@@ -618,18 +618,18 @@
         "dividendYield": 3.26,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "3.26%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": -31.36,
+        "tr1y": -33.22,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 3.26,
         "yield12MText": "3.26%",
-        "ytd": -21.84
+        "ytd": -23.19
       },
       "name": "Uranium & Nuclear ETF",
       "nav": "$32.49",
@@ -638,14 +638,14 @@
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": -31.36,
+          "yr1": -33.22,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -21.84
+          "ytd": -23.19
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -663,9 +663,9 @@
       "ticker": "URAN"
     },
     {
-      "asOfDate": "Oct 19, 2026",
-      "aum": "$22.75M",
-      "aumValue": 22753224,
+      "asOfDate": "Oct 20, 2026",
+      "aum": "$22.96M",
+      "aumValue": 22956408,
       "category": "Thematic",
       "closePrice": "$31.53",
       "closePriceValue": 31.53,
@@ -679,8 +679,8 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/wise",
-      "history": 716,
-      "holdings": 47,
+      "history": 717,
+      "holdings": 46,
       "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
@@ -691,18 +691,18 @@
         "dividendYield": 5.09,
         "dividendYieldBasis": "computed-trailing-12m",
         "dividendYieldText": "5.09%",
-        "performanceAsOf": "2026-10-16",
+        "performanceAsOf": "2026-10-19",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": -26.78,
+        "tr1y": -27.16,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 5.09,
         "yield12MText": "5.09%",
-        "ytd": -19.09
+        "ytd": -18.3
       },
       "name": "Generative Artificial Intelligence ETF",
       "nav": "$31.60",
@@ -711,14 +711,14 @@
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 16, 2026",
+          "asOfDate": "Oct 19, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": -26.78,
+          "yr1": -27.16,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -19.09
+          "ytd": -18.3
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -736,7 +736,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-18T06:52:36Z",
+  "generatedAt": "2026-10-20T04:31:25Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",

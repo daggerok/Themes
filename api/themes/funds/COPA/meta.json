@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 19, 2026",
+  "asOfDate": "Oct 20, 2026",
   "aum": {
-    "asOfDate": "Oct 19, 2026",
-    "display": "$11.84M",
+    "asOfDate": "Oct 20, 2026",
+    "display": "$11.76M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 11839584
+    "value": 11761176
   },
-  "aumValue": 11839584,
+  "aumValue": 11761176,
   "category": "Commodities",
   "closePrice": "$49.12",
   "closePriceValue": 49.12,
@@ -32,21 +32,21 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-18T06:52:33Z",
+  "generatedAt": "2026-10-20T04:31:21Z",
   "history": {
-    "asOf": "2026-10-16",
-    "asOfDate": "Oct 16, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 518
+    "totalRows": 519
   },
   "holdings": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 3.73,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "3.73%",
-    "performanceAsOf": "2026-10-16",
+    "performanceAsOf": "2026-10-19",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 38.17,
+    "tr1y": 34.8,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 3.73,
     "yield12MText": "3.73%",
-    "ytd": 13.68
+    "ytd": 12.96
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "$49.33",
     "kind": "official Themes ETFs catalog NAV",
     "value": 49.33
@@ -89,14 +89,14 @@
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 16, 2026",
+      "asOfDate": "Oct 19, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 38.17,
+      "yr1": 34.8,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 13.68
+      "ytd": 12.96
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "240,000",
     "value": 240000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "COPA",
-  "totalNetAssets": 11839584
+  "totalNetAssets": 11761176
 }

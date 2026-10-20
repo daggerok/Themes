@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 19, 2026",
+  "asOfDate": "Oct 20, 2026",
   "aum": {
-    "asOfDate": "Oct 19, 2026",
-    "display": "$57.61M",
+    "asOfDate": "Oct 20, 2026",
+    "display": "$58.75M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 57608880
+    "value": 58746048
   },
-  "aumValue": 57608880,
+  "aumValue": 58746048,
   "category": "Thematic",
   "closePrice": "$35.94",
   "closePriceValue": 35.94,
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-18T06:52:33Z",
+  "generatedAt": "2026-10-20T04:31:19Z",
   "history": {
-    "asOf": "2026-10-16",
-    "asOfDate": "Oct 16, 2026",
+    "asOf": "2026-10-19",
+    "asOfDate": "Oct 19, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 625
+    "totalRows": 626
   },
   "holdings": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,22 +64,22 @@
     "dividendYield": 0.17,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.17%",
-    "performanceAsOf": "2026-10-16",
+    "performanceAsOf": "2026-10-19",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -11.06,
+    "tr1y": -12.08,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.17,
     "yield12MText": "0.17%",
-    "ytd": -15.75
+    "ytd": -13.64
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "$36.23",
     "kind": "official Themes ETFs catalog NAV",
     "value": 36.23
@@ -89,14 +89,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 16, 2026",
+      "asOfDate": "Oct 19, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -11.06,
+      "yr1": -12.08,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -15.75
+      "ytd": -13.64
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 19, 2026",
+    "asOfDate": "Oct 20, 2026",
     "display": "1,590,000",
     "value": 1590000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "BOTT",
-  "totalNetAssets": 57608880
+  "totalNetAssets": 58746048
 }
