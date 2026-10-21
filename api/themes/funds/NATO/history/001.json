@@ -9,6 +9,12 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "36.49",
+      "Close": "36.49",
+      "Date": "2026-10-20",
+      "Volume": "12600"
+    },
+    {
       "Adj Close": "36.55",
       "Close": "36.55",
       "Date": "2026-10-19",
@@ -3046,5 +3052,5 @@
     }
   ],
   "ticker": "NATO",
-  "totalRows": 506
+  "totalRows": 507
 }

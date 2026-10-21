@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 20, 2026",
+  "asOfDate": "Oct 21, 2026",
   "aum": {
-    "asOfDate": "Oct 20, 2026",
-    "display": "$22.51M",
+    "asOfDate": "Oct 21, 2026",
+    "display": "$22.38M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 22507800
+    "value": 22376760
   },
-  "aumValue": 22507800,
+  "aumValue": 22376760,
   "category": "Commodities",
-  "closePrice": "$32.46",
-  "closePriceValue": 32.46,
+  "closePrice": "$31.90",
+  "closePriceValue": 31.9,
   "dataFile": "./funds/URAN/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-10-20T04:31:25Z",
+  "generatedAt": "2026-10-21T06:43:42Z",
   "history": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 519
+    "totalRows": 520
   },
   "holdings": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-21",
+    "asOfDate": "Oct 21, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 3.26,
-    "distributionYieldText": "3.26%",
-    "dividendYield": 3.26,
+    "distributionYield": 3.3,
+    "distributionYieldText": "3.30%",
+    "dividendYield": 3.3,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "3.26%",
-    "performanceAsOf": "2026-10-19",
+    "dividendYieldText": "3.30%",
+    "performanceAsOf": "2026-10-20",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -33.22,
+    "tr1y": -30.31,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 3.26,
-    "yield12MText": "3.26%",
-    "ytd": -23.19
+    "yield12M": 3.3,
+    "yield12MText": "3.30%",
+    "ytd": -23.21
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
-    "asOfDate": "Oct 20, 2026",
-    "display": "$32.49",
+    "asOfDate": "Oct 21, 2026",
+    "display": "$32.15",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 32.49
+    "value": 32.15
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 32.49,
+  "navValue": 32.15,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 19, 2026",
+      "asOfDate": "Oct 20, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -33.22,
+      "yr1": -30.31,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -23.19
+      "ytd": -23.21
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 20, 2026",
+    "asOfDate": "Oct 21, 2026",
     "display": "700,000",
     "value": 700000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "URAN",
-  "totalNetAssets": 22507800
+  "totalNetAssets": 22376760
 }

@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 20, 2026",
+  "asOfDate": "Oct 21, 2026",
   "aum": {
-    "asOfDate": "Oct 20, 2026",
-    "display": "$6.71M",
+    "asOfDate": "Oct 21, 2026",
+    "display": "$6.75M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 6705030
+    "value": 6747375
   },
-  "aumValue": 6705030,
+  "aumValue": 6747375,
   "category": "Thematic",
-  "closePrice": "$44.22",
-  "closePriceValue": 44.22,
+  "closePrice": "$44.80",
+  "closePriceValue": 44.8,
   "dataFile": "./funds/SPAM/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-10-20T04:31:23Z",
+  "generatedAt": "2026-10-21T06:43:40Z",
   "history": {
-    "asOf": "2026-10-19",
-    "asOfDate": "Oct 19, 2026",
+    "asOf": "2026-10-20",
+    "asOfDate": "Oct 20, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 717
+    "totalRows": 718
   },
   "holdings": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-21",
+    "asOfDate": "Oct 21, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -64,39 +64,39 @@
     "dividendYield": 0.34,
     "dividendYieldBasis": "computed-trailing-12m",
     "dividendYieldText": "0.34%",
-    "performanceAsOf": "2026-10-19",
+    "performanceAsOf": "2026-10-20",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 28.96,
+    "tr1y": 29.7,
     "tr3y": null,
     "tr5y": null,
     "yield12M": 0.34,
     "yield12MText": "0.34%",
-    "ytd": 46.17
+    "ytd": 47.18
   },
   "name": "Cybersecurity ETF",
   "nav": {
-    "asOfDate": "Oct 20, 2026",
-    "display": "$44.21",
+    "asOfDate": "Oct 21, 2026",
+    "display": "$44.70",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 44.21
+    "value": 44.7
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 44.21,
+  "navValue": 44.7,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 19, 2026",
+      "asOfDate": "Oct 20, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 28.96,
+      "yr1": 29.7,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 46.17
+      "ytd": 47.18
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 20, 2026",
+    "asOfDate": "Oct 21, 2026",
     "display": "150,000",
     "value": 150000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "SPAM",
-  "totalNetAssets": 6705030
+  "totalNetAssets": 6747375
 }

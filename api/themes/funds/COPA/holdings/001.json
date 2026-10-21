@@ -14,133 +14,133 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BD5CLW0",
-      "Market Value": "$94608.45",
+      "Market Value": "$94118.92",
       "Name": "Shenzhen Zhongjin Lingnan Nonfemet Co Ltd",
       "Shares Held": "117,500",
       "Ticker": "000060 C2",
-      "Weight": "0.80%"
-    },
-    {
-      "Asset Category": "Materials",
-      "Identifier": "6728793",
-      "Market Value": "$257049.15",
-      "Name": "MMG Ltd",
-      "Shares Held": "264,227",
-      "Ticker": "1208 HK",
-      "Weight": "2.19%"
-    },
-    {
-      "Asset Category": "Materials",
-      "Identifier": "B890GY2",
-      "Market Value": "$299626.70",
-      "Name": "China Nonferrous Mining Corp Ltd",
-      "Shares Held": "166,657",
-      "Ticker": "1258 HK",
-      "Weight": "2.55%"
-    },
-    {
-      "Asset Category": "Materials",
-      "Identifier": "6641027",
-      "Market Value": "$185574.27",
-      "Name": "Nittetsu Mining Co Ltd",
-      "Shares Held": "9,900",
-      "Ticker": "1515 JP",
-      "Weight": "1.58%"
-    },
-    {
-      "Asset Category": "Materials",
-      "Identifier": "BNNVRL0",
-      "Market Value": "$95813.74",
-      "Name": "29Metals Ltd",
-      "Shares Held": "429,027",
-      "Ticker": "29M AU",
       "Weight": "0.81%"
     },
     {
       "Asset Category": "Materials",
+      "Identifier": "6728793",
+      "Market Value": "$252657.93",
+      "Name": "MMG Ltd",
+      "Shares Held": "264,227",
+      "Ticker": "1208 HK",
+      "Weight": "2.17%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "B890GY2",
+      "Market Value": "$285595.19",
+      "Name": "China Nonferrous Mining Corp Ltd",
+      "Shares Held": "166,657",
+      "Ticker": "1258 HK",
+      "Weight": "2.45%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "6641027",
+      "Market Value": "$176963.32",
+      "Name": "Nittetsu Mining Co Ltd",
+      "Shares Held": "9,900",
+      "Ticker": "1515 JP",
+      "Weight": "1.52%"
+    },
+    {
+      "Asset Category": "Materials",
+      "Identifier": "BNNVRL0",
+      "Market Value": "$93118.51",
+      "Name": "29Metals Ltd",
+      "Shares Held": "429,027",
+      "Ticker": "29M AU",
+      "Weight": "0.80%"
+    },
+    {
+      "Asset Category": "Materials",
       "Identifier": "BLC7SM3",
-      "Market Value": "$166591.36",
+      "Market Value": "$167558.83",
       "Name": "Ganzhou Teng Yuan Cobalt New Material Co Ltd",
       "Shares Held": "30,060",
       "Ticker": "301219 C2",
-      "Weight": "1.42%"
+      "Weight": "1.44%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "BS28YD8",
-      "Market Value": "$214597.91",
+      "Market Value": "$218795.43",
       "Name": "Guangdong Feinan Resources Recycling Co Ltd",
       "Shares Held": "68,640",
       "Ticker": "301500 C2",
-      "Weight": "1.82%"
+      "Weight": "1.88%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "BN4P5J5",
-      "Market Value": "$351512.70",
+      "Market Value": "$361997.59",
       "Name": "Jiujiang Defu Technology Co Ltd",
       "Shares Held": "31,400",
       "Ticker": "301511 C2",
-      "Weight": "2.99%"
+      "Weight": "3.10%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "6597089",
-      "Market Value": "$110920.21",
+      "Market Value": "$107254.29",
       "Name": "Mitsubishi Materials Corp",
       "Shares Held": "3,800",
       "Ticker": "5711 JP",
-      "Weight": "0.94%"
+      "Weight": "0.92%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BP3R4R7",
-      "Market Value": "$279057.58",
+      "Market Value": "$271885.82",
       "Name": "Jiangxi Copper Co Ltd",
       "Shares Held": "47,700",
       "Ticker": "600362 C1",
-      "Weight": "2.37%"
+      "Weight": "2.33%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BTK05J6",
-      "Market Value": "$490489.10",
+      "Market Value": "$495431.07",
       "Name": "Anglo American PLC",
       "Shares Held": "9,495",
       "Ticker": "AAL LN",
-      "Weight": "4.17%"
+      "Weight": "4.25%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BZ8W0K2",
-      "Market Value": "$197532.71",
+      "Market Value": "$193952.54",
       "Name": "Aeris Resources Ltd",
       "Shares Held": "602,210",
       "Ticker": "AIS AU",
-      "Weight": "1.68%"
+      "Weight": "1.66%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "2122355",
-      "Market Value": "$100698.72",
+      "Market Value": "$101855.52",
       "Name": "Altius Minerals Corp",
       "Shares Held": "2,565",
       "Ticker": "ALS CN",
-      "Weight": "0.86%"
+      "Weight": "0.87%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "0045614",
-      "Market Value": "$354246.49",
+      "Market Value": "$349046.08",
       "Name": "Antofagasta PLC",
       "Shares Held": "7,925",
       "Ticker": "ANTO LN",
-      "Weight": "3.01%"
+      "Weight": "2.99%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "2474261",
-      "Market Value": "$98914.96",
+      "Market Value": "$98352.76",
       "Name": "Avino Silver & Gold Mines Ltd",
       "Shares Held": "18,991",
       "Ticker": "ASM CN",
@@ -149,16 +149,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BYZTVM8",
-      "Market Value": "$324251.66",
+      "Market Value": "$322933.63",
       "Name": "ATALAYA MINING COPPER SA",
       "Shares Held": "26,222",
       "Ticker": "ATYM LN",
-      "Weight": "2.76%"
+      "Weight": "2.77%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$4859.41",
+      "Market Value": "$4875.06",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "6,962.9",
       "Ticker": "AUD",
@@ -167,34 +167,34 @@
     {
       "Asset Category": "Materials",
       "Identifier": "6144690",
-      "Market Value": "$535961.34",
+      "Market Value": "$529149.95",
       "Name": "BHP Group Ltd",
       "Shares Held": "12,702",
       "Ticker": "BHP AU",
-      "Weight": "4.56%"
+      "Weight": "4.54%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BPYTZ57",
-      "Market Value": "$187857.64",
+      "Market Value": "$187705.33",
       "Name": "Boliden AB",
       "Shares Held": "3,620",
       "Ticker": "BOL SS",
-      "Weight": "1.60%"
+      "Weight": "1.61%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "204448104",
-      "Market Value": "$140603.10",
+      "Market Value": "$141069.60",
       "Name": "Cia de Minas Buenaventura SAA",
       "Shares Held": "4,665",
       "Ticker": "BVN",
-      "Weight": "1.20%"
+      "Weight": "1.21%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$535.68",
+      "Market Value": "$537.75",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "755.92",
       "Ticker": "CAD",
@@ -203,7 +203,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "B67KBV2",
-      "Market Value": "$173858.24",
+      "Market Value": "$172416.09",
       "Name": "Central Asia Metals PLC",
       "Shares Held": "90,754",
       "Ticker": "CAML LN",
@@ -212,16 +212,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "2750488",
-      "Market Value": "$132580.97",
+      "Market Value": "$126115.46",
       "Name": "China Gold International Resources Corp Ltd",
       "Shares Held": "4,857",
       "Ticker": "CGG CN",
-      "Weight": "1.13%"
+      "Weight": "1.08%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "B0ZGW28",
-      "Market Value": "$83073.23",
+      "Market Value": "$83340.79",
       "Name": "Chalice Mining Ltd",
       "Shares Held": "125,961",
       "Ticker": "CHN AU",
@@ -230,16 +230,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BN79Z49",
-      "Market Value": "$83308.56",
+      "Market Value": "$84567.73",
       "Name": "Collective Mining Ltd",
       "Shares Held": "7,311",
       "Ticker": "CNL CN",
-      "Weight": "0.71%"
+      "Weight": "0.73%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCNY",
-      "Market Value": "$1214.50",
+      "Market Value": "$1214.99",
       "Name": "CHINESE YUAN",
       "Shares Held": "8,115",
       "Ticker": "CNY",
@@ -248,25 +248,25 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BMY5XY9",
-      "Market Value": "$302932.41",
+      "Market Value": "$302622.25",
       "Name": "Capstone Copper Corp",
       "Shares Held": "34,783",
       "Ticker": "CS CN",
-      "Weight": "2.58%"
+      "Weight": "2.60%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BF02Z72",
-      "Market Value": "$300117.24",
+      "Market Value": "$286771.72",
       "Name": "ERO Copper Corp",
       "Shares Held": "8,716",
       "Ticker": "ERO CN",
-      "Weight": "2.55%"
+      "Weight": "2.46%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$4386.45",
+      "Market Value": "$4395.82",
       "Name": "EURO",
       "Shares Held": "3,912.63",
       "Ticker": "EUR",
@@ -275,16 +275,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "35671D857",
-      "Market Value": "$1099190.25",
+      "Market Value": "$1085322.33",
       "Name": "Freeport-McMoRan Inc",
       "Shares Held": "15,759",
       "Ticker": "FCX",
-      "Weight": "9.35%"
+      "Weight": "9.31%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "2347608",
-      "Market Value": "$399027.81",
+      "Market Value": "$394790.00",
       "Name": "First Quantum Minerals Ltd",
       "Shares Held": "15,343",
       "Ticker": "FM CN",
@@ -297,12 +297,12 @@
       "Name": "First American Treasury Obligations Fund 01/01/2040",
       "Shares Held": "25,136.33",
       "Ticker": "FXFXX",
-      "Weight": "0.21%"
+      "Weight": "0.22%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$1519.76",
+      "Market Value": "$1528.38",
       "Name": "BRITISH POUNDS",
       "Shares Held": "1,142.37",
       "Ticker": "GBP",
@@ -311,16 +311,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "B4T3BW6",
-      "Market Value": "$636007.62",
+      "Market Value": "$623959.78",
       "Name": "Glencore PLC",
       "Shares Held": "84,795",
       "Ticker": "GLEN LN",
-      "Weight": "5.41%"
+      "Weight": "5.35%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BYZGY64",
-      "Market Value": "$36201.00",
+      "Market Value": "$36341.35",
       "Name": "GoldMining Inc",
       "Shares Held": "45,208",
       "Ticker": "GOLD CN",
@@ -329,61 +329,61 @@
     {
       "Asset Category": "Materials",
       "Identifier": "B05BDX1",
-      "Market Value": "$226634.31",
+      "Market Value": "$224277.24",
       "Name": "Hudbay Minerals Inc",
       "Shares Held": "9,476",
       "Ticker": "HBM CN",
-      "Weight": "1.93%"
+      "Weight": "1.92%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BNRNW06",
-      "Market Value": "$80139.91",
+      "Market Value": "$80113.93",
       "Name": "Hot Chili Ltd",
       "Shares Held": "81,152",
       "Ticker": "HCH AU",
-      "Weight": "0.68%"
+      "Weight": "0.69%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "46578C108",
-      "Market Value": "$161271.04",
+      "Market Value": "$155209.60",
       "Name": "Ivanhoe Electric Inc / US",
       "Shares Held": "18,368",
       "Ticker": "IE",
-      "Weight": "1.37%"
+      "Weight": "1.33%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "2878937",
-      "Market Value": "$128916.05",
+      "Market Value": "$126019.12",
       "Name": "Imperial Metals Corp",
       "Shares Held": "23,874",
       "Ticker": "III CN",
-      "Weight": "1.10%"
+      "Weight": "1.08%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BD73C40",
-      "Market Value": "$310753.88",
+      "Market Value": "$305052.97",
       "Name": "Ivanhoe Mines Ltd",
       "Shares Held": "42,206",
       "Ticker": "IVN CN",
-      "Weight": "2.64%"
+      "Weight": "2.62%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "3185216",
-      "Market Value": "$35565.82",
+      "Market Value": "$35767.57",
       "Name": "Jubilee Metals Group PLC",
       "Shares Held": "1,215,187",
       "Ticker": "JLP LN",
-      "Weight": "0.30%"
+      "Weight": "0.31%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHJPY",
-      "Market Value": "$219.72",
+      "Market Value": "$220.12",
       "Name": "JAPANESE YEN",
       "Shares Held": "34,837",
       "Ticker": "JPY",
@@ -392,7 +392,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BQZCG48",
-      "Market Value": "$50567.13",
+      "Market Value": "$49790.54",
       "Name": "Kantra Copper Ltd",
       "Shares Held": "67,089",
       "Ticker": "KAN AU",
@@ -401,61 +401,61 @@
     {
       "Asset Category": "Materials",
       "Identifier": "2866857",
-      "Market Value": "$436427.74",
+      "Market Value": "$433513.55",
       "Name": "Lundin Mining Corp",
       "Shares Held": "18,500",
       "Ticker": "LUN CN",
-      "Weight": "3.71%"
+      "Weight": "3.72%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BRCDGF2",
-      "Market Value": "$136787.30",
+      "Market Value": "$142494.63",
       "Name": "LunR Royalties Corp",
       "Shares Held": "11,930",
       "Ticker": "LUNR CN",
-      "Weight": "1.16%"
+      "Weight": "1.22%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "5485527",
-      "Market Value": "$232970.47",
+      "Market Value": "$222536.18",
       "Name": "Aurubis AG",
       "Shares Held": "1,390",
       "Ticker": "NDA GR",
-      "Weight": "1.98%"
+      "Weight": "1.91%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BVBCQW5",
-      "Market Value": "$211454.96",
+      "Market Value": "$214899.20",
       "Name": "NGEx Minerals Ltd",
       "Shares Held": "14,189",
       "Ticker": "NGEX CN",
-      "Weight": "1.80%"
+      "Weight": "1.84%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BTJWZX7",
-      "Market Value": "$44224.70",
+      "Market Value": "$43008.78",
       "Name": "Power Metallic Mines Inc",
       "Shares Held": "65,008",
       "Ticker": "PNPN CN",
-      "Weight": "0.38%"
+      "Weight": "0.37%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "84265V105",
-      "Market Value": "$424469.25",
+      "Market Value": "$425647.28",
       "Name": "Southern Copper Corp",
       "Shares Held": "2,103.624",
       "Ticker": "SCCO",
-      "Weight": "3.61%"
+      "Weight": "3.65%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHSEK",
-      "Market Value": "$333.57",
+      "Market Value": "$334.21",
       "Name": "SWEDISH KRONA",
       "Shares Held": "3,309.06",
       "Ticker": "SEK",
@@ -464,7 +464,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "6739739",
-      "Market Value": "$275525.80",
+      "Market Value": "$272788.53",
       "Name": "Sandfire Resources Ltd",
       "Shares Held": "19,174",
       "Ticker": "SFR AU",
@@ -473,34 +473,34 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BMQ5701",
-      "Market Value": "$206084.10",
+      "Market Value": "$209878.31",
       "Name": "Solaris Resources Inc",
       "Shares Held": "30,074",
       "Ticker": "SLS CN",
-      "Weight": "1.75%"
+      "Weight": "1.80%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "2879327",
-      "Market Value": "$429618.06",
+      "Market Value": "$435712.58",
       "Name": "Teck Resources Ltd",
       "Shares Held": "6,767",
       "Ticker": "TECK/B CN",
-      "Weight": "3.65%"
+      "Weight": "3.74%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BRSCTT8",
-      "Market Value": "$327289.37",
+      "Market Value": "$327384.88",
       "Name": "Trekor Metals Ltd",
       "Shares Held": "41,237",
       "Ticker": "TKO CN",
-      "Weight": "2.78%"
+      "Weight": "2.81%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BTZRRJ6",
-      "Market Value": "$128182.22",
+      "Market Value": "$126791.48",
       "Name": "Talon Metals Corp",
       "Shares Held": "22,113",
       "Ticker": "TLO CN",
@@ -509,7 +509,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "90291W108",
-      "Market Value": "$54073.65",
+      "Market Value": "$54024.94",
       "Name": "US Goldmining Inc",
       "Shares Held": "9,743",
       "Ticker": "USGO",
@@ -518,18 +518,18 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BN10LP1",
-      "Market Value": "$76679.53",
+      "Market Value": "$78802.75",
       "Name": "WA1 Resources Ltd",
       "Shares Held": "13,399",
       "Ticker": "WA1 AU",
-      "Weight": "0.65%"
+      "Weight": "0.68%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$13019.96",
+      "Market Value": "$12980.28",
       "Name": "Cash & Other",
-      "Shares Held": "13,019.96",
+      "Shares Held": "12,980.28",
       "Ticker": "Cash&Other",
       "Weight": "0.11%"
     }

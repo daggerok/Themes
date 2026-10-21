@@ -12,243 +12,243 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BSMW270",
-      "Market Value": "$48583.28",
+      "Market Value": "$48189.70",
       "Name": "Cirrus Aircraft Ltd",
       "Shares Held": "9,585",
       "Ticker": "2507 HK",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "BSY3HG5",
-      "Market Value": "$21144.19",
+      "Market Value": "$21308.80",
       "Name": "Seyond Holdings Ltd",
       "Shares Held": "130,152",
       "Ticker": "2665 HK",
       "Weight": "0.02%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "03815J107",
-      "Market Value": "$25987.24",
+      "Market Value": "$26564.20",
       "Name": "Applied Aerospace & Defense Inc",
       "Shares Held": "2,404",
       "Ticker": "AADX",
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "03945R102",
-      "Market Value": "$115398.56",
+      "Market Value": "$113684.72",
       "Name": "Archer Aviation Inc",
       "Shares Held": "28,564",
       "Ticker": "ACHR",
       "Weight": "0.13%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "000361105",
-      "Market Value": "$175293.02",
+      "Market Value": "$177444.40",
       "Name": "AAR Corp",
       "Shares Held": "1,778",
       "Ticker": "AIR",
-      "Weight": "0.19%"
+      "Weight": "0.20%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "4012250",
-      "Market Value": "$5926195.65",
+      "Market Value": "$5915621.07",
       "Name": "AIRBUS GROUP SE",
       "Shares Held": "27,200",
       "Ticker": "AIR FP",
-      "Weight": "6.53%"
+      "Weight": "6.52%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "009422106",
-      "Market Value": "$40140.52",
+      "Market Value": "$37712.36",
       "Name": "AIRO Group Holdings Inc",
       "Shares Held": "7,588",
       "Ticker": "AIRO",
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BSD3PY0",
-      "Market Value": "$27404.08",
+      "Market Value": "$27822.96",
       "Name": "Altinay Savunma Teknolojileri AS",
       "Shares Held": "118,905.998",
       "Ticker": "ALTNY TI",
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMT9L19",
-      "Market Value": "$274530.37",
+      "Market Value": "$272924.23",
       "Name": "Dassault Aviation SA",
       "Shares Held": "813",
       "Ticker": "AM FP",
       "Weight": "0.30%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "023939101",
-      "Market Value": "$127496.60",
+      "Market Value": "$130049.15",
       "Name": "Amentum Holdings Inc",
       "Shares Held": "6,545",
       "Ticker": "AMTM",
       "Weight": "0.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "04339D105",
-      "Market Value": "$172441.20",
+      "Market Value": "$167369.40",
       "Name": "Arxis Inc",
       "Shares Held": "3,210",
       "Ticker": "ARXS",
-      "Weight": "0.19%"
+      "Weight": "0.18%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B03MP41",
-      "Market Value": "$354147.39",
+      "Market Value": "$376499.89",
       "Name": "Aselsan Elektronik Sanayi Ve Ticaret AS",
       "Shares Held": "54,456",
       "Ticker": "ASELS TI",
-      "Weight": "0.39%"
+      "Weight": "0.42%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "046484309",
-      "Market Value": "$26125.97",
+      "Market Value": "$26814.22",
       "Name": "Astrotech Corp",
       "Shares Held": "5,506",
       "Ticker": "ASTC",
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "046433108",
-      "Market Value": "$84457.15",
+      "Market Value": "$81096.75",
       "Name": "Astronics Corp",
       "Shares Held": "1,355",
       "Ticker": "ATRO",
       "Weight": "0.09%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "046433207",
-      "Market Value": "$17127.20",
+      "Market Value": "$16260.00",
       "Name": "Astronics Corp",
       "Shares Held": "271",
       "Ticker": "ATROB",
       "Weight": "0.02%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "008073108",
-      "Market Value": "$183098.70",
+      "Market Value": "$182679.39",
       "Name": "AeroVironment Inc",
       "Shares Held": "1,553",
       "Ticker": "AVAV",
       "Weight": "0.20%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "00835T107",
-      "Market Value": "$41890.59",
+      "Market Value": "$41456.94",
       "Name": "Aevex Corp",
       "Shares Held": "2,891",
       "Ticker": "AVEX",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BYWZZF0",
-      "Market Value": "$51020.67",
+      "Market Value": "$50559.37",
       "Name": "Avio SpA",
       "Shares Held": "1,538",
       "Ticker": "AVIO IM",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "0066701",
-      "Market Value": "$71075.59",
+      "Market Value": "$69453.07",
       "Name": "Avon Technologies PLC",
       "Shares Held": "2,163",
       "Ticker": "AVON LN",
       "Weight": "0.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "05464C101",
-      "Market Value": "$1390999.79",
+      "Market Value": "$1425675.84",
       "Name": "Axon Enterprise Inc",
       "Shares Held": "3,631",
       "Ticker": "AXON",
-      "Weight": "1.53%"
+      "Weight": "1.57%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "097023105",
-      "Market Value": "$6720947.62",
+      "Market Value": "$6687592.17",
       "Name": "Boeing Co/The",
       "Shares Held": "35,111",
       "Ticker": "BA",
-      "Weight": "7.40%"
+      "Weight": "7.37%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "0263494",
-      "Market Value": "$3742551.42",
+      "Market Value": "$3753179.57",
       "Name": "BAE Systems PLC",
       "Shares Held": "144,082",
       "Ticker": "BA/ LN",
-      "Weight": "4.12%"
+      "Weight": "4.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BN33PL2",
-      "Market Value": "$902968.34",
+      "Market Value": "$946776.78",
       "Name": "Bombardier Inc",
       "Shares Held": "4,091",
       "Ticker": "BBD/B CN",
-      "Weight": "0.99%"
+      "Weight": "1.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "086921103",
-      "Market Value": "$104611.85",
+      "Market Value": "$105542.25",
       "Name": "Beta Technologies Inc",
       "Shares Held": "5,815",
       "Ticker": "BETA",
       "Weight": "0.12%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B3FLWH9",
-      "Market Value": "$97449.89",
+      "Market Value": "$98002.69",
       "Name": "Bodycote PLC",
       "Shares Held": "8,054",
       "Ticker": "BOY LN",
       "Weight": "0.11%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "05605H100",
-      "Market Value": "$594663.74",
+      "Market Value": "$587702.72",
       "Name": "BWX Technologies Inc",
       "Shares Held": "4,378",
       "Ticker": "BWXT",
       "Weight": "0.65%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "12448X201",
-      "Market Value": "$43655.48",
+      "Market Value": "$41628.92",
       "Name": "Byrna Technologies Inc",
       "Shares Held": "8,444",
       "Ticker": "BYRN",
@@ -257,70 +257,70 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$19.44",
+      "Market Value": "$19.51",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "27.43",
       "Ticker": "CAD",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "12763L105",
-      "Market Value": "$34054.06",
+      "Market Value": "$34028.90",
       "Name": "Cadre Holdings Inc",
       "Shares Held": "1,258",
       "Ticker": "CDRE",
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B45C9X4",
-      "Market Value": "$88409.96",
+      "Market Value": "$89245.42",
       "Name": "Chemring Group PLC",
       "Shares Held": "12,480",
       "Ticker": "CHG LN",
       "Weight": "0.10%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0YD2B9",
-      "Market Value": "$64754.44",
+      "Market Value": "$64423.69",
       "Name": "Cohort PLC",
       "Shares Held": "3,727",
       "Ticker": "CHRT LN",
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMYGDM0",
-      "Market Value": "$42362.87",
+      "Market Value": "$42410.99",
       "Name": "Colt CZ Group SE",
       "Shares Held": "1,083",
       "Ticker": "COLT CP",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "224408104",
-      "Market Value": "$484209.57",
+      "Market Value": "$472380.69",
       "Name": "Crane Co",
       "Shares Held": "2,347",
       "Ticker": "CR",
-      "Weight": "0.53%"
+      "Weight": "0.52%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BLC88P9",
-      "Market Value": "$119165.36",
+      "Market Value": "$117020.18",
       "Name": "CSG NV",
       "Shares Held": "7,015",
       "Ticker": "CSG CP",
       "Weight": "0.13%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "231561101",
-      "Market Value": "$876404.93",
+      "Market Value": "$873125.75",
       "Name": "Curtiss-Wright Corp",
       "Shares Held": "1,763",
       "Ticker": "CW",
@@ -329,25 +329,25 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHCZK",
-      "Market Value": "$97.98",
+      "Market Value": "$98.33",
       "Name": "CZECH KORUNA",
       "Shares Held": "2,126.69",
       "Ticker": "CZK",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "264147109",
-      "Market Value": "$114729.75",
+      "Market Value": "$112347.00",
       "Name": "Ducommun Inc",
       "Shares Held": "675",
       "Ticker": "DCO",
-      "Weight": "0.13%"
+      "Weight": "0.12%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "52661A108",
-      "Market Value": "$83693.22",
+      "Market Value": "$80743.26",
       "Name": "Leonardo DRS Inc",
       "Shares Held": "2,379",
       "Ticker": "DRS",
@@ -356,65 +356,65 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$1499.05",
+      "Market Value": "$1502.25",
       "Name": "EURO",
       "Shares Held": "1,337.12",
       "Ticker": "EUR",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "29970N104",
-      "Market Value": "$32043.83",
+      "Market Value": "$32839.95",
       "Name": "Eve Holding Inc",
       "Shares Held": "19,903",
       "Ticker": "EVEX",
       "Weight": "0.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G9471C206",
-      "Market Value": "$11957.46",
+      "Market Value": "$11719.41",
       "Name": "Vertical Aerospace Ltd",
       "Shares Held": "29,030",
       "Ticker": "EVTL",
       "Weight": "0.01%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B06BGH5",
-      "Market Value": "$49745.62",
+      "Market Value": "$49732.83",
       "Name": "Exail Technologies SA",
       "Shares Held": "353",
       "Ticker": "EXA FP",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "5489916",
-      "Market Value": "$56721.00",
+      "Market Value": "$56381.45",
       "Name": "LISI SA",
       "Shares Held": "820",
       "Ticker": "FII FP",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "31816X106",
-      "Market Value": "$54412.80",
+      "Market Value": "$53333.70",
       "Name": "Firefly Aerospace Inc",
       "Shares Held": "3,270",
       "Ticker": "FLY",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G3730V105",
-      "Market Value": "$769658.08",
+      "Market Value": "$744260.40",
       "Name": "FTAI Aviation Ltd",
       "Shares Held": "4,712",
       "Ticker": "FTAI",
-      "Weight": "0.85%"
+      "Weight": "0.82%"
     },
     {
       "Asset Category": "Money Market",
@@ -428,52 +428,52 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$76504.12",
+      "Market Value": "$76938.11",
       "Name": "BRITISH POUNDS",
       "Shares Held": "57,506.62",
       "Ticker": "GBP",
       "Weight": "0.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "369550108",
-      "Market Value": "$3645448.11",
+      "Market Value": "$3677585.88",
       "Name": "General Dynamics Corp",
       "Shares Held": "10,677",
       "Ticker": "GD",
-      "Weight": "4.01%"
+      "Weight": "4.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "369604301",
-      "Market Value": "$7032437.76",
+      "Market Value": "$6774663.04",
       "Name": "GE AEROSPACE",
       "Shares Held": "22,592",
       "Ticker": "GE",
-      "Weight": "7.74%"
+      "Weight": "7.47%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BN0SDX8",
-      "Market Value": "$282809.44",
+      "Market Value": "$279399.51",
       "Name": "Hensoldt AG",
       "Shares Held": "2,881",
       "Ticker": "HAG GR",
       "Weight": "0.31%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "422806109",
-      "Market Value": "$609560.26",
+      "Market Value": "$603705.38",
       "Name": "HEICO Corp",
       "Shares Held": "1,978",
       "Ticker": "HEI",
       "Weight": "0.67%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "446413106",
-      "Market Value": "$477532.44",
+      "Market Value": "$482119.33",
       "Name": "Huntington Ingalls Industries Inc",
       "Shares Held": "1,771",
       "Ticker": "HII",
@@ -482,322 +482,322 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHHKD",
-      "Market Value": "$55.81",
+      "Market Value": "$55.80",
       "Name": "HONG KONG DOLLAR",
       "Shares Held": "437.97",
       "Ticker": "HKD",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "4162791",
-      "Market Value": "$1081737.26",
+      "Market Value": "$1075168.41",
       "Name": "Thales SA",
       "Shares Held": "4,159",
       "Ticker": "HO FP",
       "Weight": "1.19%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "438516205",
-      "Market Value": "$3191066.06",
+      "Market Value": "$3241824.04",
       "Name": "Honeywell International Inc",
       "Shares Held": "15,197",
       "Ticker": "HON",
-      "Weight": "3.51%"
+      "Weight": "3.57%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "443201108",
-      "Market Value": "$3663499.50",
+      "Market Value": "$3523639.50",
       "Name": "Howmet Aerospace Inc",
       "Shares Held": "16,650",
       "Ticker": "HWM",
-      "Weight": "4.03%"
+      "Weight": "3.88%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "428291108",
-      "Market Value": "$330620.49",
+      "Market Value": "$329573.88",
       "Name": "Hexcel Corp",
       "Shares Held": "3,609",
       "Ticker": "HXL",
       "Weight": "0.36%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "45769N105",
-      "Market Value": "$54844.40",
+      "Market Value": "$53879.80",
       "Name": "Innovative Solutions and Support Inc",
       "Shares Held": "2,756",
       "Ticker": "IA",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "G65163100",
-      "Market Value": "$126443.08",
+      "Market Value": "$127540.20",
       "Name": "Joby Aviation Inc",
       "Shares Held": "27,428",
       "Ticker": "JOBY",
       "Weight": "0.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "485924104",
-      "Market Value": "$119837.94",
+      "Market Value": "$123796.02",
       "Name": "Karman Holdings Inc",
       "Shares Held": "3,534",
       "Ticker": "KRMN",
-      "Weight": "0.13%"
+      "Weight": "0.14%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "50077B207",
-      "Market Value": "$333140.85",
+      "Market Value": "$331354.80",
       "Name": "Kratos Defense & Security Solutions Inc",
       "Shares Held": "8,505",
       "Ticker": "KTOS",
       "Weight": "0.37%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0DJNG0",
-      "Market Value": "$1061023.90",
+      "Market Value": "$1060808.52",
       "Name": "LEONARDO-FINMECCANICA SPA",
       "Shares Held": "19,197",
       "Ticker": "LDO IM",
       "Weight": "1.17%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "502431109",
-      "Market Value": "$2167737.60",
+      "Market Value": "$2211565.30",
       "Name": "L3Harris Technologies Inc",
       "Shares Held": "8,890",
       "Ticker": "LHX",
-      "Weight": "2.39%"
+      "Weight": "2.44%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "539830109",
-      "Market Value": "$4703265.17",
+      "Market Value": "$4707383.09",
       "Name": "Lockheed Martin Corp",
       "Shares Held": "8,579",
       "Ticker": "LMT",
-      "Weight": "5.18%"
+      "Weight": "5.19%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "53947R105",
-      "Market Value": "$51832.00",
+      "Market Value": "$52007.56",
       "Name": "Loar Holdings Inc",
       "Shares Held": "836",
       "Ticker": "LOAR",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "46125A100",
-      "Market Value": "$66319.50",
+      "Market Value": "$65084.50",
       "Name": "Intuitive Machines Inc",
       "Shares Held": "6,175",
       "Ticker": "LUNR",
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "60471A101",
-      "Market Value": "$164573.39",
+      "Market Value": "$167990.52",
       "Name": "Mirion Technologies Inc",
       "Shares Held": "11,023",
       "Ticker": "MIR",
-      "Weight": "0.18%"
+      "Weight": "0.19%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "60879E408",
-      "Market Value": "$20593.92",
+      "Market Value": "$19514.40",
       "Name": "Momentus Inc",
       "Shares Held": "8,304",
       "Ticker": "MNTS",
       "Weight": "0.02%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "615394202",
-      "Market Value": "$492507.00",
+      "Market Value": "$485420.76",
       "Name": "Moog Inc",
       "Shares Held": "1,332",
       "Ticker": "MOG/A",
       "Weight": "0.54%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "589378108",
-      "Market Value": "$193622.52",
+      "Market Value": "$189902.44",
       "Name": "Mercury Systems Inc",
       "Shares Held": "2,548",
       "Ticker": "MRCY",
       "Weight": "0.21%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BNGDN82",
-      "Market Value": "$379556.56",
+      "Market Value": "$380539.98",
       "Name": "Melrose Industries PLC",
       "Shares Held": "58,285",
       "Ticker": "MRO LN",
       "Weight": "0.42%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B09DHL9",
-      "Market Value": "$1001932.33",
+      "Market Value": "$1005808.24",
       "Name": "MTU Aero Engines AG",
       "Shares Held": "2,577",
       "Ticker": "MTX GR",
-      "Weight": "1.10%"
+      "Weight": "1.11%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "666807102",
-      "Market Value": "$3474973.25",
+      "Market Value": "$3633870.00",
       "Name": "Northrop Grumman Corp",
       "Shares Held": "6,805",
       "Ticker": "NOC",
-      "Weight": "3.83%"
+      "Weight": "4.01%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHNOK",
-      "Market Value": "$4.93",
+      "Market Value": "$4.94",
       "Name": "NORWEGIAN KRONE",
       "Shares Held": "46.45",
       "Ticker": "NOK",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "637215104",
-      "Market Value": "$54899.65",
+      "Market Value": "$54476.25",
       "Name": "National Presto Industries Inc",
       "Shares Held": "365",
       "Ticker": "NPK",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "671044105",
-      "Market Value": "$143731.77",
+      "Market Value": "$144391.26",
       "Name": "OSI Systems Inc",
       "Shares Held": "741",
       "Ticker": "OSIS",
       "Weight": "0.16%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "70014A104",
-      "Market Value": "$42290.72",
+      "Market Value": "$41482.72",
       "Name": "Park Aerospace Corp",
       "Shares Held": "1,616",
       "Ticker": "PKE",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B0WMWD0",
-      "Market Value": "$143429.23",
+      "Market Value": "$142644.76",
       "Name": "QinetiQ Group PLC",
       "Shares Held": "22,120",
       "Ticker": "QQ/ LN",
       "Weight": "0.16%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMD6RR4",
-      "Market Value": "$160962.80",
+      "Market Value": "$157483.37",
       "Name": "RENK Group AG",
       "Shares Held": "3,760",
       "Ticker": "R3NK GR",
-      "Weight": "0.18%"
+      "Weight": "0.17%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "75776W103",
-      "Market Value": "$94244.40",
+      "Market Value": "$92462.00",
       "Name": "Redwire Corp",
       "Shares Held": "11,140",
       "Ticker": "RDW",
       "Weight": "0.10%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "5334588",
-      "Market Value": "$2655500.12",
+      "Market Value": "$2646604.80",
       "Name": "Rheinmetall AG",
       "Shares Held": "2,235",
       "Ticker": "RHM GR",
       "Weight": "2.92%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "773121108",
-      "Market Value": "$1444500.00",
+      "Market Value": "$1431562.50",
       "Name": "Rocket Lab Corp",
       "Shares Held": "28,125",
       "Ticker": "RKLB",
-      "Weight": "1.59%"
+      "Weight": "1.58%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B63H849",
-      "Market Value": "$6855203.21",
+      "Market Value": "$6847495.01",
       "Name": "Rolls-Royce Holdings PLC",
       "Shares Held": "386,972",
       "Ticker": "RR/ LN",
       "Weight": "7.55%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "75513E101",
-      "Market Value": "$7930877.13",
+      "Market Value": "$7981655.22",
       "Name": "RTX Corp",
       "Shares Held": "41,283",
       "Ticker": "RTX",
-      "Weight": "8.73%"
+      "Weight": "8.80%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BPXZH27",
-      "Market Value": "$963820.10",
+      "Market Value": "$952848.85",
       "Name": "Saab AB",
       "Shares Held": "14,755",
       "Ticker": "SAABB SS",
-      "Weight": "1.06%"
+      "Weight": "1.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B058TZ6",
-      "Market Value": "$5681182.99",
+      "Market Value": "$5649973.93",
       "Name": "Safran SA",
       "Shares Held": "16,072",
       "Ticker": "SAF FP",
-      "Weight": "6.26%"
+      "Weight": "6.23%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "80401C100",
-      "Market Value": "$27674.40",
+      "Market Value": "$26184.24",
       "Name": "Satellogic Inc",
       "Shares Held": "7,096",
       "Ticker": "SATL",
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMF8WG2",
-      "Market Value": "$27024.78",
+      "Market Value": "$27292.44",
       "Name": "SDT Uzay VE Savunma Teknolojileri AS",
       "Shares Held": "99,267",
       "Ticker": "SDTTR TI",
@@ -806,23 +806,23 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHSEK",
-      "Market Value": "$1552.91",
+      "Market Value": "$1555.89",
       "Name": "SWEDISH KRONA",
       "Shares Held": "15,405.14",
       "Ticker": "SEK",
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "92766K403",
-      "Market Value": "$44333.64",
+      "Market Value": "$44902.02",
       "Name": "Virgin Galactic Holdings Inc",
       "Shares Held": "18,946",
       "Ticker": "SPCE",
       "Weight": "0.05%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "831754106",
       "Market Value": "$69983.30",
       "Name": "Smith & Wesson Brands Inc",
@@ -831,22 +831,22 @@
       "Weight": "0.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "893641100",
-      "Market Value": "$3000073.70",
+      "Market Value": "$3001675.56",
       "Name": "TransDigm Group Inc",
       "Shares Held": "2,626",
       "Ticker": "TDG",
-      "Weight": "3.30%"
+      "Weight": "3.31%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "879360105",
-      "Market Value": "$1361612.72",
+      "Market Value": "$1388965.37",
       "Name": "Teledyne Technologies Inc",
       "Shares Held": "2,197",
       "Ticker": "TDY",
-      "Weight": "1.50%"
+      "Weight": "1.53%"
     },
     {
       "Asset Category": "—",
@@ -858,27 +858,27 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "883203101",
-      "Market Value": "$635279.40",
+      "Market Value": "$643199.55",
       "Name": "Textron Inc",
       "Shares Held": "8,337",
       "Ticker": "TXT",
-      "Weight": "0.70%"
+      "Weight": "0.71%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BW5VWD8",
-      "Market Value": "$53954.12",
+      "Market Value": "$52946.32",
       "Name": "Vincorion SE",
       "Shares Held": "2,468",
       "Ticker": "V1NC GR",
       "Weight": "0.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "987084100",
-      "Market Value": "$30706.08",
+      "Market Value": "$30976.38",
       "Name": "York Space Systems Inc",
       "Shares Held": "5,406",
       "Ticker": "YSS",
@@ -887,9 +887,9 @@
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$24890.08",
+      "Market Value": "$24101.46",
       "Name": "Cash & Other",
-      "Shares Held": "24,890.08",
+      "Shares Held": "24,101.46",
       "Ticker": "Cash&Other",
       "Weight": "0.03%"
     }
