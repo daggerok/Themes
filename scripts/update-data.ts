@@ -82,6 +82,8 @@ const API_ROOT = path.join('api', BRAND);
 /** Soft internal deadline: stop taking new funds, still write the index (the workflow limit is 30 minutes). */
 export const SOFT_DEADLINE_MS = 25 * 60_000;
 const HOLDINGS_HEADERS = ['Name', 'Ticker', 'Identifier', 'Weight', 'Market Value', 'Shares Held', 'Asset Category'] as const;
+/** Funds whose holdings legitimately fail a holdingsGuard check (geared, futures, look-through, top-N lists): ticker, or '*' for every fund -> relaxed checks. */
+const HOLDINGS_GUARD_RELAX: Record<string, string[]> = {};
 const HISTORY_HEADERS = ['Date', 'Close', 'Adj Close', 'Volume'] as const;
 const VOLATILE_KEYS = new Set(['generatedAt', 'catalogReadAt', 'updatedAt', 'savedAt']);
 
@@ -1327,6 +1329,10 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
       note(`${fund.ticker}: SEC fallback unavailable: ${error instanceof Error ? error.message : String(error)}`);
     }
   }
+  // Fresh holdings (official CSV, direct or via the proxy, or N-PORT) that look broken (no weight column, non-numeric
+  // weights, a bad weight sum, half the rows gone) never replace the published ones: the fund fails before anything is written.
+  const holdingsProblem = holdings ? holdingsGuard(HOLDINGS_HEADERS, holdings.rows, asNumber(prior?.holdings?.totalRows), HOLDINGS_GUARD_RELAX[fund.ticker] ?? HOLDINGS_GUARD_RELAX['*'] ?? []) : null;
+  if (holdingsProblem) throw new Error(`holdings guard: ${holdingsProblem}; ${prior ? 'kept the previous complete data' : 'no data published for this fund yet'}`);
 
   let yahoo: ParsedYahooChart | null = null;
   if (!config.skipYahoo) {
@@ -1654,3 +1660,49 @@ if (import.meta.main) {
     process.exit(1);
   });
 }
+
+// <holdings-guard> shared block of .claude/tools/etfs/etf-std/holdings-guard.block.ts, applied by apply-holdings-guard.ts: never edit it in one repo
+/**
+ * Sanity check of a fund's new holdings before they replace the published ones. Returns why they must be rejected
+ * (the caller then keeps the fund's previous state and reports it as failed), or null when they may be written.
+ * An empty sheet passes only when nothing was published before. Otherwise a Name and a weight column (Weight,
+ * Weight (%) or Market Weight) are required, >= 80% of the rows carry a numeric weight, the weights add up to
+ * 50..150 and the sheet keeps >= 50% of the previously published rows. `relax` switches off the checks a fund
+ * legitimately fails: 'numeric' and 'sum' (geared, inverse, futures, look-through, top-N lists) and 'count'.
+ * Rows are arrays in header order or objects keyed by the header text.
+ */
+export function holdingsGuard(headers: ReadonlyArray<string>, rows: ReadonlyArray<unknown>, previousRows: number | null | undefined, relax: ReadonlyArray<string> = []): string | null {
+  const previous = Number(previousRows) > 0 ? Number(previousRows) : 0;
+  if (!rows.length) return previous ? `no holdings rows (${previous} published)` : null;
+  const names = headers.map((header) => String(header).trim().toLowerCase());
+  const nameAt = names.indexOf('name');
+  let weightAt = names.indexOf('weight');
+  if (weightAt < 0) weightAt = names.indexOf('weight (%)');
+  if (weightAt < 0) weightAt = names.indexOf('market weight');
+  if (nameAt < 0 || weightAt < 0) return `no ${nameAt < 0 ? 'Name' : 'weight'} column (headers: ${headers.join(', ') || 'none'})`;
+  let numeric = 0;
+  let sum = 0;
+  for (let i = 0; i < rows.length; i++) {
+    const row: any = rows[i];
+    const weight = holdingsGuardNumber(Array.isArray(row) ? row[weightAt] : row && typeof row === 'object' ? row[headers[weightAt]] : undefined);
+    if (weight !== null) {
+      numeric++;
+      sum += weight;
+    }
+  }
+  if (relax.indexOf('numeric') < 0 && numeric < rows.length * 0.8) return `only ${numeric} of ${rows.length} rows have a numeric weight`;
+  if (relax.indexOf('sum') < 0 && (sum < 50 || sum > 150)) return `weights add up to ${sum.toFixed(2)}, outside 50..150`;
+  if (relax.indexOf('count') < 0 && previous && rows.length < previous * 0.5) return `${rows.length} rows, less than half of the ${previous} published`;
+  return null;
+}
+
+/** A weight cell as a number: %, $, commas and spaces are ignored, (x) is negative; null when it is no plain number (a zero-width character inside counts as broken). */
+function holdingsGuardNumber(value: unknown): number | null {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  let text = String(value === null || value === undefined ? '' : value).replace(/[ \t ,%$]/g, '').replace(/−/g, '-');
+  const negative = /^\(.*\)$/.test(text);
+  if (negative) text = text.slice(1, -1);
+  if (!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(text)) return null;
+  return negative ? -Number(text) : Number(text);
+}
+// </holdings-guard>
