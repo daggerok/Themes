@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 21, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 21, 2026",
     "display": "$23.01M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 23008680
   },
   "aumValue": 23008680,
   "category": "Thematic",
-  "closePrice": "$31.84",
-  "closePriceValue": 31.84,
+  "closePrice": "$31.26",
+  "closePriceValue": 31.26,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,17 +28,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-10-21T06:43:42Z",
+  "generatedAt": "2026-10-25T03:44:39Z",
   "history": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 718
+    "totalRows": 721
   },
   "holdings": {
     "asOf": "2026-10-21",
@@ -55,44 +55,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 5.05,
-    "distributionYieldText": "5.05%",
-    "dividendYield": 5.05,
+    "distributionYield": 5.14,
+    "distributionYieldText": "5.14%",
+    "dividendYield": 5.14,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "5.05%",
-    "performanceAsOf": "2026-10-20",
+    "dividendYieldText": "5.14%",
+    "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -26.06,
+    "tr1y": -28.4,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 5.05,
-    "yield12MText": "5.05%",
-    "ytd": -17.96
+    "yield12M": 5.14,
+    "yield12MText": "5.14%",
+    "ytd": -18.5
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$31.88",
+    "asOfDate": "Oct 23, 2026",
+    "display": "$31.35",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 31.88
+    "value": 31.35
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 31.88,
+  "navValue": 31.35,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 20, 2026",
+      "asOfDate": "Oct 23, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -26.06,
+      "yr1": -28.4,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -17.96
+      "ytd": -18.5
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 21, 2026",
+    "asOfDate": null,
     "display": "720,000",
     "value": 720000
   },
@@ -117,11 +117,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 21, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 21, 2026",
     "display": "$59.38M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 59379504
   },
   "aumValue": 59379504,
   "category": "Thematic",
-  "closePrice": "$36.84",
-  "closePriceValue": 36.84,
+  "closePrice": "$36.29",
+  "closePriceValue": 36.29,
   "dataFile": "./funds/BOTT/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-21T06:43:36Z",
+  "generatedAt": "2026-10-25T03:44:30Z",
   "history": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 627
+    "totalRows": 630
   },
   "holdings": {
     "asOf": "2026-10-21",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.16,
-    "distributionYieldText": "0.16%",
-    "dividendYield": 0.16,
+    "distributionYield": 0.17,
+    "distributionYieldText": "0.17%",
+    "dividendYield": 0.17,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.16%",
-    "performanceAsOf": "2026-10-20",
+    "dividendYieldText": "0.17%",
+    "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -9.75,
+    "tr1y": -11.62,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.16,
-    "yield12MText": "0.16%",
-    "ytd": -11.95
+    "yield12M": 0.17,
+    "yield12MText": "0.17%",
+    "ytd": -12.66
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$36.95",
+    "asOfDate": "Oct 23, 2026",
+    "display": "$36.30",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 36.95
+    "value": 36.3
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 36.95,
+  "navValue": 36.3,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 20, 2026",
+      "asOfDate": "Oct 23, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -9.75,
+      "yr1": -11.62,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -11.95
+      "ytd": -12.66
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 21, 2026",
+    "asOfDate": null,
     "display": "1,590,000",
     "value": 1590000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

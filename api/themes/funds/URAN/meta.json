@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 21, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 21, 2026",
     "display": "$22.38M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 22376760
   },
   "aumValue": 22376760,
   "category": "Commodities",
-  "closePrice": "$31.90",
-  "closePriceValue": 31.9,
+  "closePrice": "$31.13",
+  "closePriceValue": 31.13,
   "dataFile": "./funds/URAN/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-10-21T06:43:42Z",
+  "generatedAt": "2026-10-25T03:44:39Z",
   "history": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 520
+    "totalRows": 523
   },
   "holdings": {
     "asOf": "2026-10-21",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 3.3,
-    "distributionYieldText": "3.30%",
-    "dividendYield": 3.3,
+    "distributionYield": 3.37,
+    "distributionYieldText": "3.37%",
+    "dividendYield": 3.37,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "3.30%",
-    "performanceAsOf": "2026-10-20",
+    "dividendYieldText": "3.37%",
+    "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": -30.31,
+    "tr1y": -33.94,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 3.3,
-    "yield12MText": "3.30%",
-    "ytd": -23.21
+    "yield12M": 3.37,
+    "yield12MText": "3.37%",
+    "ytd": -25.19
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$32.15",
+    "asOfDate": "Oct 23, 2026",
+    "display": "$31.45",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 32.15
+    "value": 31.45
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 32.15,
+  "navValue": 31.45,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 20, 2026",
+      "asOfDate": "Oct 23, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -30.31,
+      "yr1": -33.94,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -23.21
+      "ytd": -25.19
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 21, 2026",
+    "asOfDate": null,
     "display": "700,000",
     "value": 700000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-URAN.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Uranium-Nuclear-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

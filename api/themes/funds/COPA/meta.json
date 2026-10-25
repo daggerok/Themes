@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 21, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 21, 2026",
     "display": "$11.66M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 11660736
   },
   "aumValue": 11660736,
   "category": "Commodities",
-  "closePrice": "$48.81",
-  "closePriceValue": 48.81,
+  "closePrice": "$45.51",
+  "closePriceValue": 45.51,
   "dataFile": "./funds/COPA/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-21T06:43:38Z",
+  "generatedAt": "2026-10-25T03:44:33Z",
   "history": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 520
+    "totalRows": 523
   },
   "holdings": {
     "asOf": "2026-10-21",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 3.76,
-    "distributionYieldText": "3.76%",
-    "dividendYield": 3.76,
+    "distributionYield": 4.03,
+    "distributionYieldText": "4.03%",
+    "dividendYield": 4.03,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "3.76%",
-    "performanceAsOf": "2026-10-20",
+    "dividendYieldText": "4.03%",
+    "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 40.95,
+    "tr1y": 27.15,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 3.76,
-    "yield12MText": "3.76%",
-    "ytd": 12.8
+    "yield12M": 4.03,
+    "yield12MText": "4.03%",
+    "ytd": 4.81
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$49.00",
+    "asOfDate": "Oct 23, 2026",
+    "display": "$45.62",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 49
+    "value": 45.62
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 49,
+  "navValue": 45.62,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 20, 2026",
+      "asOfDate": "Oct 23, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 40.95,
+      "yr1": 27.15,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 12.8
+      "ytd": 4.81
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 21, 2026",
+    "asOfDate": null,
     "display": "240,000",
     "value": 240000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-COPA.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Copper-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

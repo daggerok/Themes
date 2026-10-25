@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 21, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 21, 2026",
     "display": "$9.26M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 9262036
   },
   "aumValue": 9262036,
   "category": "Commodities",
-  "closePrice": "$66.89",
-  "closePriceValue": 66.89,
+  "closePrice": "$62.45",
+  "closePriceValue": 62.45,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-10-21T06:43:34Z",
+  "generatedAt": "2026-10-25T03:44:33Z",
   "history": {
-    "asOf": "2026-10-20",
-    "asOfDate": "Oct 20, 2026",
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 618
+    "totalRows": 621
   },
   "holdings": {
     "asOf": "2026-10-21",
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.3,
-    "distributionYieldText": "4.30%",
-    "dividendYield": 4.3,
+    "distributionYield": 4.6,
+    "distributionYieldText": "4.60%",
+    "dividendYield": 4.6,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "4.30%",
-    "performanceAsOf": "2026-10-20",
+    "dividendYieldText": "4.60%",
+    "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 33.78,
+    "tr1y": 22,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.3,
-    "yield12MText": "4.30%",
-    "ytd": 2.53
+    "yield12M": 4.6,
+    "yield12MText": "4.60%",
+    "ytd": -5.72
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$66.77",
+    "asOfDate": "Oct 23, 2026",
+    "display": "$62.35",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 66.77
+    "value": 62.35
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 66.77,
+  "navValue": 62.35,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 20, 2026",
+      "asOfDate": "Oct 23, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 33.78,
+      "yr1": 22,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 2.53
+      "ytd": -5.72
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 21, 2026",
+    "asOfDate": null,
     "display": "140,000",
     "value": 140000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AGMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Silver-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
