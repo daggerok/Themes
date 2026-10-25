@@ -10,7 +10,7 @@ import {
   parseCsv, parseNportXml, parseRange, parseThemesCatalog, parseThemesCatalogMarkdown, parseThemesHoldingsCsv,
   parseYahooChart, performanceFields, proxyEligible, readConfig, resetIssuerState, resolveControls, retainedLabel,
   rotateFromCursor, runtimeControls, samePublishedContent, skeletonEntry, stableStringify, stripProxyPreamble,
-  trailingDividendYield, withPerformanceFields, yahooChartUrl,
+  trailingDividendYield, withPerformanceFields, holdingsGuard, yahooChartUrl,
 } from './update-data.ts';
 
 // ---------------------------------------------------------------------------
@@ -223,6 +223,21 @@ describe('parsing', () => {
     });
     expect(parsed.rows[1]['Asset Category']).toBe('Money Market');
     expect(parseThemesHoldingsCsv('date,security_name\n')).toEqual({ asOf: null, netAssets: null, sharesOutstanding: null, rows: [] });
+  });
+
+  test('holdings guard: header-only, renamed weight column, broken weights, a bad weight sum and a halved sheet are rejected', () => {
+    const headers = ['Name', 'Ticker', 'Weight'];
+    const rows = [{ Name: 'A', Ticker: 'A', Weight: '60%' }, { Name: 'B', Ticker: 'B', Weight: '40%' }];
+    expect(holdingsGuard(headers, rows, 2)).toBeNull();
+    expect(holdingsGuard(headers, [['A', 'A', '60'], ['B', 'B', '40']], null)).toBeNull();
+    expect(holdingsGuard([], [], 0)).toBeNull(); // nothing published before: an empty sheet is honest
+    expect(holdingsGuard(headers, [], 505)).toContain('no holdings rows');
+    expect(holdingsGuard(['Name', 'Ticker', 'Wt'], rows, 2)).toContain('no weight column');
+    expect(holdingsGuard(headers, rows.map((row) => ({ ...row, Weight: '6\u200B0' })), 2)).toContain('numeric weight');
+    const allocation = [{ Name: 'Cash&Collateral', Ticker: '-', Weight: '100' }, { Name: 'Equities', Ticker: '-', Weight: '476' }];
+    expect(holdingsGuard(headers, allocation, 2)).toContain('outside 50..150');
+    expect(holdingsGuard(headers, allocation, 2, ['sum'])).toBeNull();
+    expect(holdingsGuard(headers, rows, 5)).toContain('less than half');
   });
 
   test('Yahoo chart: adjusted closes are rounded, zero volume is kept, a zero dividend is dropped', () => {
@@ -545,10 +560,12 @@ describe('pipeline', () => {
   });
 
   test('N-PORT freshness: an older filing never replaces published holdings, a newer one does', async () => {
+    // 20 positions of 5%: a whole filing that passes the holdings guard against the 31 published rows
+    const positions = Array.from({ length: 20 }, (_, i) => `<invstOrSec><name>Nport Corp ${i + 1}</name><ticker>NPC${i + 1}</ticker><cusip>99${i}</cusip><balance>1</balance><valUSD>50</valUSD><pctVal>5</pctVal><assetCat>EC</assetCat></invstOrSec>`).join('');
     const filing = (asOf: string) => (url: string): Response | null => {
       if (/Holdings-BOTT\.csv/.test(url)) return new Response('gone', { status: 404 });
       if (url.includes('data.sec.gov/submissions')) return new Response(JSON.stringify({ filings: { recent: { form: ['NPORT-P'], accessionNumber: ['0001-26-000001'], primaryDocument: ['primary_doc.xml'] } } }));
-      if (url.includes('/Archives/edgar/')) return new Response(`<edgarSubmission><seriesName>BOTT ETF</seriesName><repPdDate>${asOf}</repPdDate><totNetAssets>1000</totNetAssets><invstOrSec><name>Nport Corp</name><ticker>NPC</ticker><cusip>999</cusip><balance>1</balance><valUSD>5</valUSD><pctVal>5</pctVal><assetCat>EC</assetCat></invstOrSec></edgarSubmission>`);
+      if (url.includes('/Archives/edgar/')) return new Response(`<edgarSubmission><seriesName>BOTT ETF</seriesName><repPdDate>${asOf}</repPdDate><totNetAssets>1000</totNetAssets>${positions}</edgarSubmission>`);
       return null;
     };
     const rows = [{ t: 'BOTT', days: 0 }];
@@ -557,8 +574,21 @@ describe('pipeline', () => {
     expect([older.json('funds/BOTT/meta.json').holdings.totalRows, older.json('funds/BOTT/meta.json').source.holdingsSource]).toEqual([31, expect.stringContaining('retained')]);
     const newer = repo((api) => seedPublished(api));
     expect(await newer.run(feed(rows, filing('2026-12-31')), { TICKERS: 'BOTT', EDGAR_FALLBACK: 'true' })).toBeNull();
-    expect(newer.json('funds/BOTT/meta.json').holdings.totalRows).toBe(1);
+    expect(newer.json('funds/BOTT/meta.json').holdings.totalRows).toBe(20);
     expect(newer.json('funds/BOTT/meta.json').source.holdingsSource).toContain('N-PORT');
+  });
+
+  test('holdings that fail the guard keep the fund exactly as published and report it failed', async () => {
+    const rows = [{ t: 'AAA', days: 400 }];
+    const box = repo();
+    expect(await box.run(feed(rows), live)).toBeNull();
+    const snapshot = () => box.files().map((f) => [f, box.read(f)]);
+    const published = snapshot();
+    // a renamed weightings column: the CSV still parses, every Weight becomes '—'
+    const renamed = holdingsCsv.replace('weightings', 'weight_pct');
+    const error = await box.run(feed(rows, (url) => (/Holdings-AAA\.csv/.test(url) ? new Response(renamed) : null)), { ...live, TICKERS: 'AAA' });
+    expect(String(error)).toContain('every selected fund failed');
+    expect(snapshot()).toEqual(published);
   });
 
   test('index comparison ignores run timestamps and key order', () => {
