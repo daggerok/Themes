@@ -40,12 +40,12 @@
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 21.58,
+        "tr1y": 21.5,
         "tr3y": null,
         "tr5y": null,
         "yield12M": 4.71,
         "yield12MText": "4.71%",
-        "ytd": -6.04
+        "ytd": -6.11
       },
       "name": "Silver Miners ETF",
       "nav": "$60.90",
@@ -57,11 +57,11 @@
           "asOfDate": "Oct 26, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 21.58,
+          "yr1": 21.5,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -6.04
+          "ytd": -6.11
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -809,7 +809,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-26T19:41:16Z",
+  "generatedAt": "2026-10-26T23:38:13Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
