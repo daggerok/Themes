@@ -60,7 +60,9 @@ function fakeClock(): { waits: number[]; now: () => number } {
 // ---------------------------------------------------------------------------
 // Small inline samples (no fixture files)
 // ---------------------------------------------------------------------------
-const catalogHtml = `<script>window.productsData = [
+// the live page names window.productsData in an Alpine attribute (with product_url templates) before the assignment
+const catalogHtml = `<div x-data="sortableCompareTable(window.productsData)"><a :href="product.externalLink ? product.product_url : product.product_url + '/?utm_source=themesetfs'">x</a></div>
+<script>window.productsData = [
   { ticker: 'BOTT', externalLink: false, fund: "Humanoid Robotics ETF", category: "Thematic", nav: '42.61', price: '42.62', expense: '0.35',
     product_url: 'https://themesetfs.com/etfs/bott', product_factsheet: 'https://themesetfs.com/documents/BOTT.pdf' },
   { ticker: 'OUTSIDE', externalLink: true, fund: "External product", category: "Other", nav: '1.00', price: '1.00', expense: '0.00', product_url: 'https://example.invalid/etfs/outside' }
