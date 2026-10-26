@@ -101,6 +101,7 @@ type FundRow = TableRow & {
 type WatchlistRow = TableRow & {
   key: string;
   symbol: string;
+  ticker: string;
   name: string;
   funds: string[];
   fundCount: number;
@@ -1037,7 +1038,7 @@ function bindColumnFilterEvents(): void {
 
 const FUND_FILTER_COLUMNS: FilterColumn[] = [
   { key: 'ticker', label: 'Ticker', numeric: false, text: (fund: any) => String((fund.ticker) ?? ''), extraClass: 'catalog-sticky-col catalog-sticky-ticker' },
-  { key: 'name', label: 'Fund Name', numeric: false, text: (fund: any) => String((fund.name) ?? '') },
+  { key: 'name', label: 'Fund Name', numeric: false, text: (fund: any) => fundNameText(fund.name, fund) },
   { key: 'category', label: 'Type', numeric: false, text: (fund: any) => String((categoryLabel(fund.category)) ?? '') },
   { key: 'navValue', label: 'NAV', numeric: true, text: (fund: any) => String((fund.nav || '—') ?? ''), value: (fund: any) => fund.navValue },
   { key: 'aumValue', label: 'Net Assets', numeric: true, text: (fund: any) => String((formatMoney(fund.aumValue)) ?? ''), value: (fund: any) => fund.aumValue },
@@ -1833,6 +1834,7 @@ function normalizeFundRow(fund: IndexFund): FundRow {
     fund.exchange, fund.inceptionDate, fund.asOfDate, monthEnd.asOfDate,
     fund.distributions && fund.distributions.frequency, metrics.dividendYieldText, metrics.secYieldText,
     fund.cusip, fund.isin,
+    closedFundText(row),
   ].map(value => String(value ?? '').toLowerCase()).join(' ');
   return row;
 }
@@ -1913,7 +1915,7 @@ async function fetchPage(ticker: string, pagePath: string): Promise<{ headers: s
   const page = await fetchJson(`./api/themes/funds/${encodeURIComponent(ticker)}/${path}`);
   const headers: string[] = Array.isArray(page.headers) ? page.headers : [];
   const rows: any[] = Array.isArray(page.rows) ? page.rows : [];
-  return { headers, rows: rows.map(row => headers.map(header => String(row[header] ?? ''))) };
+  return { headers, rows: rows.map(row => headers.map((header, index) => String((Array.isArray(row) ? row[index] : row && row[header]) ?? ''))) }; // objects keyed by the header, or arrays in header order (iShares)
 }
 
 /** Loads the first page of a paginated sheet and prepares lazy appending. */
@@ -2688,7 +2690,7 @@ function renderFundsTable(): void {
             </div>
           </td>
           <td class="catalog-sticky-col catalog-sticky-ticker py-2.5 px-4 font-mono font-semibold text-blue-600 dark:text-blue-400">${escapeHtml(fund.ticker)}</td>
-          <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(fund.name)}">${escapeHtml(fund.name)}</td>
+          <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(fund.name)}">${escapeHtml(fund.name)}${closedBadgeHtml(fund)}</td>
           <td class="py-2.5 px-4 text-slate-600 dark:text-slate-300">${escapeHtml(categoryLabel(fund.category))}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${escapeHtml(fund.nav || '—')}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${formatMoney(fund.aumValue)}</td>
@@ -2748,36 +2750,318 @@ function cleanKeyPart(value: unknown): string {
   return text.toUpperCase();
 }
 
-/**
- * Documented dedupe key fallback order (docs/ui-contract.md §5):
- * Ticker -> CUSIP -> ISIN -> Identifier/Security ID -> SEDOL/FIGI -> Name.
- * Keys are namespaced (T:/C:/I:/D:/S:/N:) so identifier values can never
- * collide with tickers. Numeric local listing tickers (e.g. 005930) are
- * valid tickers, not placeholders. Rows are never aggressively dropped:
- * bonds without exchange tickers, cash positions, derivatives and zero-weight
- * holdings all resolve to a key (the name being the last resort).
- */
-function positionDedupeKey(row: Record<string, unknown>): { key: string; shown: string } | null {
-  const first = (...values: unknown[]): string => {
-    for (const value of values) {
-      const clean = cleanKeyPart(value);
-      if (clean) return clean;
+// ---- security identity of a holding (ETF-C3): the Watchlist merges rows of one security, never rows that only share a ticker ----
+
+/** Value of an identifier character: 0-9, then A-Z as 10..35, then the CUSIP extras * @ # (-1 for anything else). */
+function idCharValue(c: string): number {
+  return '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ*@#'.indexOf(c);
+}
+
+/** A 9-character CUSIP (or CINS) with a valid check digit. */
+function isCusip(text: string): boolean {
+  if (!/^[0-9A-Z*@#]{8}[0-9]$/.test(text)) return false;
+  let sum = 0;
+  for (let i = 0; i < 8; i++) {
+    const value = idCharValue(text.charAt(i)) * (i % 2 ? 2 : 1);
+    sum += Math.floor(value / 10) + (value % 10);
+  }
+  return (10 - (sum % 10)) % 10 === Number(text.charAt(8));
+}
+
+/** A 12-character ISIN: country, 9-character national code, Luhn check digit over the letters expanded to numbers. */
+function isIsin(text: string): boolean {
+  if (!/^[A-Z]{2}[0-9A-Z]{9}[0-9]$/.test(text)) return false;
+  let digits = '';
+  for (let i = 0; i < text.length; i++) digits += String(idCharValue(text.charAt(i)));
+  let sum = 0;
+  for (let i = 0; i < digits.length; i++) {
+    let digit = Number(digits.charAt(digits.length - 1 - i));
+    if (i % 2) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
     }
-    return '';
+    sum += digit;
+  }
+  return sum % 10 === 0;
+}
+
+/** A 7-character SEDOL (no vowels) with a valid check digit. */
+function isSedol(text: string): boolean {
+  if (!/^[0-9B-DF-HJ-NP-TV-Z]{6}[0-9]$/.test(text)) return false;
+  const weights = [1, 3, 1, 7, 3, 9, 1];
+  let sum = 0;
+  for (let i = 0; i < 7; i++) sum += idCharValue(text.charAt(i)) * weights[i];
+  return sum % 10 === 0;
+}
+
+/** A 12-character FIGI (BBG prefix, no vowels). */
+function isFigi(text: string): boolean {
+  return /^BBG[0-9B-DF-HJ-NP-TV-Z]{8}[0-9]$/.test(text);
+}
+
+const identifierKeyCache: Map<string, string[]> = new Map();
+
+/**
+ * Namespaced keys of one identifier cell (already cleaned and upper case), recognized by format and check digit whatever
+ * column it came from (Vanguard's CUSIP column also holds SEDOLs and ISINs): `C:` CUSIP, `I:` ISIN, `F:` FIGI, `S:` SEDOL.
+ * A U.S. or Canadian ISIN, or one built on a CINS, also gives its CUSIP, a British or Irish one its SEDOL, so brands that
+ * publish different identifiers of one security still meet. All-digit CUSIPs and SEDOLs that lost a leading zero in a
+ * spreadsheet are padded back. Anything else (cash lines, option symbols, swaps, internal codes) gives none.
+ */
+function identifierKeys(text: string): string[] {
+  const cached = identifierKeyCache.get(text);
+  if (cached) return cached;
+  let keys: string[] = [];
+  if (isFigi(text)) keys = [`F:${text}`];
+  else if (isIsin(text)) {
+    keys = [`I:${text}`];
+    const national = text.slice(2, 11);
+    if ((/^(US|CA)/.test(text) || /^[A-Z]/.test(national)) && isCusip(national)) keys.push(`C:${national}`);
+    if (/^(GB|IE|GG|JE|IM)00/.test(text) && isSedol(text.slice(4, 11))) keys.push(`S:${text.slice(4, 11)}`);
+  } else if (isCusip(text)) keys = [`C:${text}`];
+  else if (/^\d{8}$/.test(text) && isCusip(`0${text}`)) keys = [`C:0${text}`];
+  else if (isSedol(text)) keys = [`S:${text}`];
+  else if (/^\d{6}$/.test(text) && isSedol(`0${text}`)) keys = [`S:0${text}`];
+  identifierKeyCache.set(text, keys);
+  return keys;
+}
+
+/** Cells that may hold a security identifier, in the order their values are tried. */
+const SECURITY_ID_COLUMNS = ['CUSIP', 'ISIN', 'FIGI', 'SEDOL', 'Identifier', 'Security ID'];
+
+/** Legal-form and share-class words dropped from a name before the ticker+name match. */
+const NAME_NOISE_WORDS = ['INC', 'INCORPORATED', 'CORP', 'CORPORATION', 'CO', 'COMPANY', 'LTD', 'LIMITED', 'PLC', 'LLC', 'THE', 'CL', 'CLASS', 'COM', 'COMMON', 'STOCK', 'SHS', 'SHARES', 'ORD', 'NPV'];
+
+const securityNameCache: Map<string, string> = new Map();
+
+/** Name in one spelling for the ticker+name match: upper case, no punctuation or legal-form words (Apple Inc. = APPLE INC). */
+function securityNameKey(name: string): string {
+  const cached = securityNameCache.get(name);
+  if (cached !== undefined) return cached;
+  const key = name.toUpperCase().replace(/&/g, ' AND ').split(/[^A-Z0-9]+/).filter(word => word && NAME_NOISE_WORDS.indexOf(word) < 0).join(' ');
+  securityNameCache.set(name, key);
+  return key;
+}
+
+/** Asset classes of debt (bonds, notes, bills, loans, mortgage and asset-backed) in the brands' Asset Class or Asset Category cells, N-PORT codes included. */
+const DEBT_CLASS = /\b(fixed income|bonds?|treasur\w*|debt|dbt|notes?|bills?|govt|government|municipal|muni|loans?|lon|mbs|abs|cmo|remic|agency|sovereign|yankee|mortgage|asset backed|fnma|fhlmc|gnma|umbs)\b/i;
+
+const debtClassCache: Map<string, boolean> = new Map();
+
+/** True for a debt row: a debt asset class, a coupon or a maturity date. Its ticker is the issuer's, so it never meets the issuer's stock by ticker and name. */
+function isDebtRow(cells: Record<string, unknown>): boolean {
+  const classes = [cells['Asset Class'], cells['Asset Category'], cells['Security Type'], cells.Type];
+  for (let i = 0; i < classes.length; i++) {
+    const text = String(classes[i] ?? '');
+    if (!text) continue;
+    let debt = debtClassCache.get(text);
+    if (debt === undefined) {
+      debt = DEBT_CLASS.test(text);
+      debtClassCache.set(text, debt);
+    }
+    if (debt) return true;
+  }
+  const coupon = cleanKeyPart(cells.Coupon) || cleanKeyPart(cells['Coupon (%)']);
+  if (coupon && Number.isFinite(Number(coupon.replace(/[%,\s]/g, '')))) return true;
+  return /\d/.test(cleanKeyPart(cells.Maturity) || cleanKeyPart(cells['Maturity Date']));
+}
+
+/** Ticker in one spelling for the ticker+name match: BRK/B, BRK.B, BRK-B are one; U.S. exchange codes (AAPL UW, NVDA.O) are dropped. */
+function securityTickerKey(ticker: string): string {
+  return ticker.replace(/\.(O|N|OQ)$/, '').replace(/[\s./-]+/g, ' ').replace(/ (US|UN|UW|UQ|UR|UA|UP|UF|UV)$/, '').trim();
+}
+
+/** Watchlist identity of one holding row: `key` merges rows, `shown` is the Ticker cell, `ticker` the real ticker for Copy Tickers ('' when none). */
+type SecurityKey = { key: string; shown: string; ticker: string };
+
+/**
+ * Groups holding rows (header -> cell, from object and array pages alike) into securities and returns each row's key.
+ * Rows are one security when they share a CUSIP, ISIN, FIGI or SEDOL (`identifierKeys`). A row without one of those
+ * is matched by its other identifier text (cash lines, option symbols), or else by ticker and name.
+ * Ticker and name (plus debt or not: a bond carries its issuer's ticker) also join identified groups that publish
+ * different identifier kinds (one brand only SEDOLs, another only CUSIPs), but only when no two groups of that ticker
+ * and name disagree on a CUSIP, ISIN or SEDOL (FIGIs are not compared: VanEck publishes the composite FIGI of a stock,
+ * Schwab another level of it), and a row without identifiers joins an identified group only when exactly one group has
+ * its ticker and name. A ticker alone never merges anything: Vanguard's `T` on Treasuries stays apart from AT&T,
+ * MRK GY from MRK, 000100 of Yuhan from 000100 of TCL. The key is the group's first identifier (CUSIP, else ISIN,
+ * FIGI, SEDOL), the shown text its first ticker (else the identifier, else the name).
+ */
+function securityKeys(rows: Array<Record<string, unknown>>): SecurityKey[] {
+  const count = rows.length;
+  const parent: number[] = new Array(count);
+  // per group root: the first CUSIP, ISIN, SEDOL and FIGI key seen in the group ('' = none)
+  const cusip: string[] = new Array(count);
+  const isin: string[] = new Array(count);
+  const sedol: string[] = new Array(count);
+  const figi: string[] = new Array(count);
+  const strong: boolean[] = new Array(count);
+  const primary: string[] = new Array(count);
+  const pairs: string[] = new Array(count);
+  const tickers: string[] = new Array(count);
+  const names: string[] = new Array(count);
+  const find = (index: number): number => {
+    let root = index;
+    while (parent[root] !== root) root = parent[root];
+    let at = index;
+    while (parent[at] !== root) {
+      const next = parent[at];
+      parent[at] = root;
+      at = next;
+    }
+    return root;
   };
-  const ticker = first(row.Ticker, row.Symbol);
-  if (ticker) return { key: `T:${ticker}`, shown: ticker };
-  const cusip = first(row.CUSIP);
-  if (cusip) return { key: `C:${cusip}`, shown: cusip };
-  const isin = first(row.ISIN);
-  if (isin) return { key: `I:${isin}`, shown: isin };
-  const identifier = first(row.Identifier, row['Security ID']);
-  if (identifier) return { key: `D:${identifier}`, shown: identifier };
-  const sedol = first(row.SEDOL, row.FIGI);
-  if (sedol) return { key: `S:${sedol}`, shown: sedol };
-  const name = String(row.Name ?? row['Security Name'] ?? '').trim();
-  if (name) return { key: `N:${name.toUpperCase()}`, shown: name };
-  return null;
+  const identified = (root: number): boolean => !!(cusip[root] || isin[root] || sedol[root] || figi[root]);
+  const union = (a: number, b: number): void => {
+    const rootA = find(a);
+    const rootB = find(b);
+    if (rootA === rootB) return;
+    const low = rootA < rootB ? rootA : rootB;
+    const high = rootA < rootB ? rootB : rootA;
+    parent[high] = low;
+    if (!cusip[low]) cusip[low] = cusip[high];
+    if (!isin[low]) isin[low] = isin[high];
+    if (!sedol[low]) sedol[low] = sedol[high];
+    if (!figi[low]) figi[low] = figi[high];
+  };
+  const firstByLink: Map<string, number> = new Map();
+  const link = (key: string, index: number): void => {
+    const first = firstByLink.get(key);
+    if (first === undefined) firstByLink.set(key, index);
+    else union(first, index);
+  };
+  for (let i = 0; i < count; i++) {
+    const cells = rows[i];
+    parent[i] = i;
+    cusip[i] = '';
+    isin[i] = '';
+    sedol[i] = '';
+    figi[i] = '';
+    let other = '';
+    for (let c = 0; c < SECURITY_ID_COLUMNS.length; c++) {
+      const raw = cells[SECURITY_ID_COLUMNS[c]];
+      if (raw === undefined || raw === null || raw === '') continue;
+      const value = cleanKeyPart(raw);
+      if (!value) continue;
+      const keys = identifierKeys(value);
+      if (!keys.length && !other) other = value;
+      for (let k = 0; k < keys.length; k++) {
+        const key = keys[k];
+        const kind = key.charAt(0);
+        if (kind === 'C' && !cusip[i]) cusip[i] = key;
+        else if (kind === 'I' && !isin[i]) isin[i] = key;
+        else if (kind === 'S' && !sedol[i]) sedol[i] = key;
+        else if (kind === 'F' && !figi[i]) figi[i] = key;
+      }
+    }
+    const ticker = cleanKeyPart(cells.Ticker) || cleanKeyPart(cells.Symbol);
+    const name = String(cells.Name || cells['Security Name'] || cells.Description || '').trim();
+    const nameKey = securityNameKey(name);
+    strong[i] = identified(i);
+    tickers[i] = ticker;
+    names[i] = name;
+    pairs[i] = ticker ? `P:${securityTickerKey(ticker)}|${nameKey}|${isDebtRow(cells) ? 'debt' : ''}` : '';
+    primary[i] = strong[i] ? '' : other ? `D:${other}` : ticker ? '' : nameKey ? `N:${nameKey}` : '';
+    if (cusip[i]) link(cusip[i], i);
+    if (isin[i]) link(isin[i], i);
+    if (sedol[i]) link(sedol[i], i);
+    if (figi[i]) link(figi[i], i);
+    if (primary[i]) link(primary[i], i);
+  }
+  // ticker and name join identified groups of different identifier kinds, unless two of them disagree (then none join)
+  const groupsByPair: Map<string, number[]> = new Map();
+  for (let i = 0; i < count; i++) {
+    if (!pairs[i] || !strong[i]) continue;
+    const list = groupsByPair.get(pairs[i]);
+    if (list) list.push(i);
+    else groupsByPair.set(pairs[i], [i]);
+  }
+  groupsByPair.forEach(list => {
+    if (list.length < 2) return;
+    let seenCusip = '';
+    let seenIsin = '';
+    let seenSedol = '';
+    for (let n = 0; n < list.length; n++) {
+      const root = find(list[n]);
+      if (cusip[root] && seenCusip && cusip[root] !== seenCusip) return;
+      if (isin[root] && seenIsin && isin[root] !== seenIsin) return;
+      if (sedol[root] && seenSedol && sedol[root] !== seenSedol) return;
+      seenCusip = seenCusip || cusip[root];
+      seenIsin = seenIsin || isin[root];
+      seenSedol = seenSedol || sedol[root];
+    }
+    for (let n = 1; n < list.length; n++) union(list[0], list[n]);
+  });
+  // a row without identifiers joins the one identified group of its ticker and name, else the other such rows
+  const firstWeakByPair: Map<string, number> = new Map();
+  for (let i = 0; i < count; i++) {
+    if (!pairs[i] || strong[i] || identified(find(i))) continue; // its group may already have joined an identified one
+    const list = groupsByPair.get(pairs[i]);
+    const target = list ? find(list[0]) : -1;
+    let unique = target >= 0;
+    for (let n = 1; unique && list && n < list.length; n++) unique = find(list[n]) === target;
+    if (unique) {
+      union(target, i);
+      continue;
+    }
+    const first = firstWeakByPair.get(pairs[i]);
+    if (first === undefined) firstWeakByPair.set(pairs[i], i);
+    else union(first, i);
+  }
+  const byRoot: Array<SecurityKey | undefined> = new Array(count);
+  const groupTicker: string[] = new Array(count);
+  for (let i = 0; i < count; i++) {
+    const root = find(i);
+    if (tickers[i] && !groupTicker[root]) groupTicker[root] = tickers[i];
+  }
+  const out: SecurityKey[] = new Array(count);
+  for (let i = 0; i < count; i++) {
+    const root = find(i);
+    let resolved = byRoot[root];
+    if (!resolved) {
+      const id = cusip[root] || isin[root] || figi[root] || sedol[root] || primary[root];
+      const ticker = groupTicker[root] || '';
+      resolved = { key: id || pairs[root] || `R:${root}`, shown: ticker || id.replace(/^[A-Z]:/, '') || names[root], ticker };
+      byRoot[root] = resolved;
+    }
+    out[i] = resolved;
+  }
+  return out;
+}
+
+/** Copy Tickers of the Watchlist: the real tickers of the shown rows, each once (two securities may show one ticker), never a CUSIP or name stand-in. */
+function watchlistTickers(rows: Array<{ ticker: string }>): string[] {
+  const seen: Record<string, boolean> = {};
+  return rows.map(row => row.ticker).filter(ticker => {
+    if (!ticker || seen[ticker]) return false;
+    seen[ticker] = true;
+    return true;
+  });
+}
+
+// ---- closed funds (Q21): index rows with `status: closed`, `closedDate` and `closedSource` stay listed with a badge ----
+
+/** `Closed <date>` for a closed fund's index row, '' for any other fund. */
+function closedFundText(fund: Record<string, unknown> | null | undefined): string {
+  if (!fund || fund.status !== 'closed') return '';
+  const date = String(fund.closedDate ?? '').trim();
+  return date ? `Closed ${date}` : 'Closed';
+}
+
+/** Fund Name text for the column filter and the search: the name plus `Closed <date>`, so `closed` finds the closed funds and `!closed` hides them. */
+function fundNameText(name: unknown, fund: Record<string, unknown> | null | undefined): string {
+  const closed = closedFundText(fund);
+  const text = String(name ?? '');
+  return closed ? `${text} ${closed}` : text;
+}
+
+/** Badge after the fund name: links the SEC filing or issuer notice of the closing (`closedSource`, https only). */
+function closedBadgeHtml(fund: Record<string, unknown> | null | undefined): string {
+  const text = closedFundText(fund);
+  if (!text || !fund) return '';
+  const source = String(fund.closedSource ?? '').trim();
+  const tip = 'The fund is closed (liquidated): it keeps its last published data';
+  if (/^https:\/\//i.test(source)) return ` <a class="closed-badge" href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(`${tip}. Source: ${source}`)}">${escapeHtml(text)}</a>`;
+  return ` <span class="closed-badge" title="${escapeHtml(tip)}">${escapeHtml(text)}</span>`;
 }
 
 function sheetPositions(ticker: string): HoldingPosition[] {
@@ -2844,14 +3128,16 @@ function getDedupedWatchlistRows(): WatchlistRow[] {
   if (watchlistCache && watchlistCache.signature === signature) return watchlistCache.rows;
 
   const map: Map<string, WatchlistRow> = new Map();
-  getSelectedPositions().forEach(position => {
-    const resolved = positionDedupeKey(position.cells);
-    if (!resolved) return;
+  const positions = getSelectedPositions();
+  const resolvedKeys = securityKeys(positions.map(position => position.cells));
+  positions.forEach((position, index) => {
+    const resolved = resolvedKeys[index];
     let row = map.get(resolved.key);
     if (!row) {
       row = {
         key: resolved.key,
         symbol: resolved.shown,
+        ticker: resolved.ticker,
         name: position.name,
         funds: [],
         fundCount: 0,
@@ -2973,7 +3259,7 @@ function renderWatchlistTable(): void {
 
 
   const queryText = currentQuery() ? ` matching “${currentQuery()}”` : '';
-  setStatus(`Watchlist built from ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}: ${rows.length} ticker${rows.length === 1 ? '' : 's'}${queryText}. Deduplicated by ticker, or by identifier for bond rows.${rankHint(rows.length)}`, 'success');
+  setStatus(`Watchlist built from ${state.selected.size} selected ETF${state.selected.size === 1 ? '' : 's'}: ${rows.length} ticker${rows.length === 1 ? '' : 's'}${queryText}. One row per security (CUSIP, ISIN, FIGI or SEDOL, else ticker and name), never merged by ticker alone.${rankHint(rows.length)}`, 'success');
   el.tickerCount.textContent = `${rows.length} tickers`;
   renderSubtitle();
 }
@@ -3732,7 +4018,7 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
 
 function copyTickers(): void {
   let values: string[] = [];
-  if (state.activeTab === 'watchlist') values = getVisibleWatchlistRows().map(row => row.symbol);
+  if (state.activeTab === 'watchlist') values = watchlistTickers(getVisibleWatchlistRows()); // real tickers only, each once (two securities can show one ticker)
   else if (isDetailTab(state.activeTab)) values = currentExportRows().rows.map(row => String(row[0] ?? '')).filter(Boolean);
   else values = filteredCatalogFunds().map(fund => fund.ticker);
   values = values.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
