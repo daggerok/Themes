@@ -1,0 +1,131 @@
+{
+  "asOfDate": "Jun 30, 2026",
+  "aum": {
+    "asOfDate": "Jun 30, 2026",
+    "display": "$26.93M",
+    "source": "SEC EDGAR Form N-PORT-P (Themes ETF Trust, accession 0000894189-26-022856, report period 2026-06-30)",
+    "value": 26931397.35
+  },
+  "aumValue": 26931397.35,
+  "category": "Thematic",
+  "closePrice": "$28.53",
+  "closePriceValue": 28.53,
+  "dataFile": "./funds/DRGN/meta.json",
+  "distributionFrequency": "00 - None",
+  "distributions": {
+    "frequency": "00 - None",
+    "headers": [
+      "Ex-Date",
+      "Amount"
+    ],
+    "paymentsPerYear": null,
+    "rows": [
+      {
+        "Amount": "$0.4000",
+        "Ex-Date": "2025-12-18"
+      }
+    ]
+  },
+  "exchange": "Cboe US",
+  "fundPage": "https://themesetfs.com/etfs/drgn",
+  "generatedAt": "2026-10-26T06:55:32Z",
+  "history": {
+    "asOf": "2026-10-23",
+    "asOfDate": "Oct 23, 2026",
+    "pageSize": 1000,
+    "pages": [
+      "./history/001.json"
+    ],
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
+    "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "totalRows": 323
+  },
+  "holdings": {
+    "asOf": "2026-06-30",
+    "asOfDate": "Jun 30, 2026",
+    "pageSize": 250,
+    "pages": [
+      "./holdings/001.json"
+    ],
+    "source": "https://www.sec.gov/Archives/edgar/data/1976322/000089418926022856/primary_doc.xml",
+    "sourceKind": "SEC EDGAR Form N-PORT-P (Themes ETF Trust, accession 0000894189-26-022856, report period 2026-06-30)",
+    "totalRows": 24
+  },
+  "metrics": {
+    "cagr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "distributionYield": 1.41,
+    "distributionYieldText": "1.41%",
+    "dividendYield": 1.41,
+    "dividendYieldBasis": "computed-trailing-12m",
+    "dividendYieldText": "1.41%",
+    "performanceAsOf": "2026-10-23",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
+    "secYield": null,
+    "secYieldText": "—",
+    "siAnn": null,
+    "tr10y": null,
+    "tr1y": -15.99,
+    "tr3y": null,
+    "tr5y": null,
+    "yield12M": 1.41,
+    "yield12MText": "1.41%",
+    "ytd": -10.4
+  },
+  "name": "China Generative Artificial Intelligence ETF",
+  "nav": {
+    "asOfDate": "Jun 30, 2026",
+    "display": "$28.39",
+    "kind": "official Themes ETFs catalog NAV",
+    "value": 28.39
+  },
+  "navKind": "official Themes ETFs catalog NAV",
+  "navValue": 28.39,
+  "providerCategory": "Thematic",
+  "returns": {
+    "monthEnd": {
+      "asOfDate": "Oct 23, 2026",
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": -15.99,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": -10.4
+    },
+    "quarterEnd": {
+      "asOfDate": null,
+      "sinceInception": null,
+      "sinceInceptionCumulative": null,
+      "yr1": null,
+      "yr10": null,
+      "yr3": null,
+      "yr5": null,
+      "ytd": null
+    }
+  },
+  "sharesOutstanding": {
+    "asOfDate": "Jun 30, 2026",
+    "display": "—",
+    "value": null
+  },
+  "source": {
+    "catalog": "https://themesetfs.com/etfs",
+    "factsheet": "https://themesetfs.com/documents/Factsheets/Themes-ETFs-Factsheet-DRGN-%2809.30.2026%29.pdf",
+    "fundPage": "https://themesetfs.com/etfs/drgn",
+    "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
+    "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
+    "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-DRGN.csv",
+    "holdingsSource": "SEC EDGAR Form N-PORT-P (Themes ETF Trust, accession 0000894189-26-022856, report period 2026-06-30)",
+    "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
+    "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-China-Generative-Artificial-Intelligence-ETF.pdf",
+    "provider": "Themes Management Company LLC (Themes ETFs)",
+    "registrant": "Themes ETF Trust, CIK 0001976322",
+    "site": "https://themesetfs.com"
+  },
+  "ter": "0.39%",
+  "terValue": 0.39,
+  "ticker": "DRGN",
+  "totalNetAssets": 26931397.35
+}

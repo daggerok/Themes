@@ -1,0 +1,233 @@
+{
+  "headers": [
+    "Name",
+    "Ticker",
+    "Identifier",
+    "Weight",
+    "Market Value",
+    "Shares Held",
+    "Asset Category"
+  ],
+  "page": 1,
+  "pageSize": 250,
+  "rows": [
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100001401",
+      "Market Value": "1017140.92",
+      "Name": "TRS",
+      "Shares Held": "499400",
+      "Ticker": "—",
+      "Weight": "3.77678479"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "056752108",
+      "Market Value": "1531943.16",
+      "Name": "Baidu Inc",
+      "Shares Held": "13404",
+      "Ticker": "BIDU",
+      "Weight": "5.68831665"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100002RZ2",
+      "Market Value": "1201672.27",
+      "Name": "360 Security Technology Inc",
+      "Shares Held": "938300",
+      "Ticker": "—",
+      "Weight": "4.4619752"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100003MH9",
+      "Market Value": "903760.28",
+      "Name": "Arcsoft Corp Ltd",
+      "Shares Held": "172500",
+      "Ticker": "—",
+      "Weight": "3.35578681"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG532631028",
+      "Market Value": "1225268.88",
+      "Name": "Kuaishou Technology",
+      "Shares Held": "231000",
+      "Ticker": "—",
+      "Weight": "4.54959267"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG9845C1069",
+      "Market Value": "305986.73",
+      "Name": "Yidu Tech Inc",
+      "Shares Held": "517200",
+      "Ticker": "—",
+      "Weight": "1.13617101"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100000B81",
+      "Market Value": "1201353.49",
+      "Name": "Iflytek Co Ltd",
+      "Shares Held": "199600",
+      "Ticker": "—",
+      "Weight": "4.46079152"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG9830T1067",
+      "Market Value": "1261230.8",
+      "Name": "Xiaomi Corp",
+      "Shares Held": "457100",
+      "Ticker": "—",
+      "Weight": "4.68312425"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "Y2620V100",
+      "Market Value": "1577955.61",
+      "Name": "Foxconn Industrial Internet Co",
+      "Shares Held": "148400",
+      "Ticker": "—",
+      "Weight": "5.85916724"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG0705A1085",
+      "Market Value": "160675.01",
+      "Name": "Bairong Inc",
+      "Shares Held": "271000",
+      "Ticker": "—",
+      "Weight": "0.59660852"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG8062L1041",
+      "Market Value": "1093667.99",
+      "Name": "SenseTime Group Inc",
+      "Shares Held": "6401100",
+      "Ticker": "—",
+      "Weight": "4.06094038"
+    },
+    {
+      "Asset Category": "STIV",
+      "Identifier": "31846V328",
+      "Market Value": "66955.01",
+      "Name": "First American Treasury Obliga",
+      "Shares Held": "66955.01",
+      "Ticker": "—",
+      "Weight": "0.2486132"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "90114C107",
+      "Market Value": "273037.6",
+      "Name": "Tuya Inc",
+      "Shares Held": "155135",
+      "Ticker": "TUYA",
+      "Weight": "1.01382634"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "G5264Y108",
+      "Market Value": "1329750.79",
+      "Name": "Kingsoft Corp Ltd",
+      "Shares Held": "470200",
+      "Ticker": "—",
+      "Weight": "4.93754844"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG7611S1075",
+      "Market Value": "835780.36",
+      "Name": "RoboSense Technology Co Ltd",
+      "Shares Held": "295000",
+      "Ticker": "—",
+      "Weight": "3.10336797"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE1000041R8",
+      "Market Value": "2001550.62",
+      "Name": "Cambricon Technologies Corp Lt",
+      "Shares Held": "8512",
+      "Ticker": "—",
+      "Weight": "7.43203405"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100005PT2",
+      "Market Value": "2188379.46",
+      "Name": "Hygon Information Technology C",
+      "Shares Held": "40100",
+      "Ticker": "—",
+      "Weight": "8.12575535"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100005KD7",
+      "Market Value": "699697.69",
+      "Name": "Phancy Group Co Ltd",
+      "Shares Held": "229800",
+      "Ticker": "—",
+      "Weight": "2.59807421"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE0000012M2",
+      "Market Value": "1524744.3",
+      "Name": "IEIT Systems Co Ltd",
+      "Shares Held": "147800",
+      "Ticker": "—",
+      "Weight": "5.66158629"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100000BJ4",
+      "Market Value": "1319365.25",
+      "Name": "DAHUA INC",
+      "Shares Held": "542900",
+      "Ticker": "—",
+      "Weight": "4.8989855"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100003MN7",
+      "Market Value": "2096325.94",
+      "Name": "Montage Technology Co Ltd",
+      "Shares Held": "45900",
+      "Ticker": "—",
+      "Weight": "7.78394791"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG5264S1012",
+      "Market Value": "992859.48",
+      "Name": "Kingsoft Cloud Holdings Ltd",
+      "Shares Held": "1678200",
+      "Ticker": "—",
+      "Weight": "3.68662445"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "KYG292011031",
+      "Market Value": "155348.25",
+      "Name": "ECARX Holdings Inc",
+      "Shares Held": "120425",
+      "Ticker": "—",
+      "Weight": "0.57682952"
+    },
+    {
+      "Asset Category": "EC",
+      "Identifier": "CNE100005VF9",
+      "Market Value": "1941478.76",
+      "Name": "Yuanjie Semiconductor Technolo",
+      "Shares Held": "6985",
+      "Ticker": "—",
+      "Weight": "7.20897893"
+    }
+  ],
+  "ticker": "DRGN",
+  "totalRows": 24
+}

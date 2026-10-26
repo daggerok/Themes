@@ -1,8 +1,8 @@
 {
   "counts": {
     "funds": 11,
-    "history": 6399,
-    "holdings": 526
+    "history": 6722,
+    "holdings": 550
   },
   "funds": [
     {
@@ -371,46 +371,74 @@
       "ticker": "COPA"
     },
     {
-      "aum": "—",
-      "aumValue": null,
+      "asOfDate": "Jun 30, 2026",
+      "aum": "$26.93M",
+      "aumValue": 26931397.35,
       "category": "Thematic",
       "closePrice": "$28.53",
       "closePriceValue": 28.53,
-      "dataFile": null,
+      "dataFile": "./funds/DRGN/meta.json",
+      "distributionFrequency": "00 - None",
       "distributions": {
-        "dividend": null,
-        "exDate": null,
+        "dividend": "$0.4000",
+        "exDate": "2025-12-18",
         "frequency": "00 - None",
         "paymentsPerYear": null
       },
+      "exchange": "Cboe US",
       "fundPage": "https://themesetfs.com/etfs/drgn",
-      "history": 0,
-      "holdings": 0,
+      "history": 323,
+      "holdings": 24,
+      "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
         "cagr3y": null,
         "cagr5y": null,
-        "distributionYield": null,
-        "distributionYieldText": "—",
-        "dividendYield": null,
-        "dividendYieldBasis": null,
-        "dividendYieldText": "—",
-        "performanceAsOf": null,
+        "distributionYield": 1.41,
+        "distributionYieldText": "1.41%",
+        "dividendYield": 1.41,
+        "dividendYieldBasis": "computed-trailing-12m",
+        "dividendYieldText": "1.41%",
+        "performanceAsOf": "2026-10-23",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": null,
+        "tr1y": -15.99,
         "tr3y": null,
         "tr5y": null,
-        "yield12M": null,
-        "yield12MText": "—",
-        "ytd": null
+        "yield12M": 1.41,
+        "yield12MText": "1.41%",
+        "ytd": -10.4
       },
       "name": "China Generative Artificial Intelligence ETF",
       "nav": "$28.39",
+      "navKind": "official Themes ETFs catalog NAV",
       "navValue": 28.39,
+      "providerCategory": "Thematic",
+      "returns": {
+        "monthEnd": {
+          "asOfDate": "Oct 23, 2026",
+          "sinceInception": null,
+          "sinceInceptionCumulative": null,
+          "yr1": -15.99,
+          "yr10": null,
+          "yr3": null,
+          "yr5": null,
+          "ytd": -10.4
+        },
+        "quarterEnd": {
+          "asOfDate": null,
+          "sinceInception": null,
+          "sinceInceptionCumulative": null,
+          "yr1": null,
+          "yr10": null,
+          "yr3": null,
+          "yr5": null,
+          "ytd": null
+        }
+      },
       "ter": "0.39%",
       "terValue": 0.39,
       "ticker": "DRGN"
@@ -781,7 +809,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-26T06:52:43Z",
+  "generatedAt": "2026-10-26T06:55:32Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
