@@ -430,9 +430,11 @@ export function parseCsv(text: string): string[][] {
 }
 
 export function parseThemesCatalog(html: string): CatalogFund[] {
-  const marker = 'window.productsData';
-  const start = html.indexOf(marker);
-  if (start < 0) return [];
+  // the page names window.productsData in an Alpine x-data attribute first; its templates (product.product_url : ...) would
+  // shadow the first fund's fields, so the catalog starts at the assignment
+  const assignment = /window\.productsData\s*=\s*\[/.exec(html);
+  if (!assignment) return [];
+  const start = assignment.index;
   const end = html.indexOf('</script>', start);
   const source = html.slice(start, end < 0 ? undefined : end);
   const pieces = source.split(/\n\s*},\s*/g);
