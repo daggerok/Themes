@@ -1848,8 +1848,9 @@ export function withoutClosedFunds<T>(queue: ReadonlyArray<T>, tickerOf: (item: 
  * - CUSIP `000000000` and `N/A` are missing; a missing weight or value is null (an empty cell), never 0
  * - a ticker only for a common-stock row (assetCat EC, not a CVR, right, warrant or escrow line) traded in USD with a U.S.
  *   ISIN or none, or with a foreign ISIN when the Nasdaq Trader directories list that ticker for the same company (a U.S.
- *   listing such as Linde, NXP, IMAX); renamed issuers through `nportRenamedIssuers`; never one ticker on two different
- *   securities (`nportTickers`)
+ *   listing such as Linde, NXP, IMAX); renamed issuers through `nportRenamedIssuers`; an abbreviated or reordered name the
+ *   exact key misses through a looser key that must name one company (`nportLooseKey`, Q35: `Lowe's Cos` = `LOWES COMPANIES`,
+ *   `SCHWAB CHARLES CORP`); never one ticker on two different securities (`nportTickers`)
  * - identity: the filing must name the fund's own series id, or, with no series id known, the fund's name (`nportIdentity`)
  * - freshness: the report period must be strictly newer than the published holdings (`nportIsFresh`)
  * - filings come newest report period first from the registrant's own archive folder, never from the filer agent's CIK
@@ -2041,12 +2042,50 @@ export function nportNameKey(value: unknown): string {
   return text;
 }
 
-/** SEC company_tickers.json -> name key -> ticker (the first, largest company wins a shared key; the class-less key is added too). */
+/**
+ * Abbreviated words of issuer names (open-items etfs Q35) -> one spelling, each seen in N-PORT-P filings of the brands against
+ * the SEC company_tickers.json title of the same CUSIP issuer (2026-10-26): `LOWES COS` / `LOWES COMPANIES`, `AMERIPRISE FINL`,
+ * `VICI PPTYS`, `TAIWAN SEMICONDUCTOR MFG`, `ZIONS BANCORP NA` / `ZIONS BANCORPORATION NATIONAL ASSOCIATION`. '' drops the word.
+ */
+function nportLooseWords(): Record<string, string> {
+  return {
+    COS: '', COMPANIES: '', AND: '', OF: '', NA: '', NATIONAL_ASSOCIATION: '', INCORPORATION: '', REIT: '',
+    BANCORPORATION: 'BANCORP', FINL: 'FINANCIAL', PPTYS: 'PROPERTIES', PPTY: 'PROPERTY', MFG: 'MANUFACTURING', GRP: 'GROUP',
+    HLDGS: 'HOLDINGS', HLDG: 'HOLDING', INTL: 'INTERNATIONAL', SVCS: 'SERVICES', TECH: 'TECHNOLOGIES', TECHNOLOGY: 'TECHNOLOGIES',
+    SYS: 'SYSTEMS', NATL: 'NATIONAL', RES: 'RESOURCES', RLTY: 'REALTY', INDS: 'INDUSTRIES', INS: 'INSURANCE', BROS: 'BROTHERS', SVGS: 'SAVINGS',
+  };
+}
+
+/**
+ * The second, looser company key (open-items etfs Q35), used only for a row the exact key (`nportNameKey`) left without a
+ * ticker: a Bloomberg location or article after a slash dropped (`Charles Schwab Corp/The`, `Energy Fuels Inc/canada`; never a
+ * one-word start like `RE/MAX`), abbreviations read as one word (`nportLooseWords`), the share class dropped (the caller picks
+ * the class) and the words sorted, so EDGAR's reordered titles meet the usual order: `SCHWAB CHARLES CORP` = `Charles Schwab
+ * Corp`, `HORTON D R INC` = `DR Horton Inc`, `PRICE T ROWE GROUP INC` = `T Rowe Price Group Inc`. Several companies can share a
+ * loose key: `parseSecCompanyNames` and `parseUsListings` keep such a key empty, so it never gives a ticker.
+ */
+export function nportLooseKey(value: unknown): string {
+  let raw = String(value === null || value === undefined ? '' : value).trim();
+  const slash = /^(.*\s\S*[A-Za-z]{2}[.,]?)\s*\/\s*([A-Za-z][A-Za-z .,']*)$/.exec(raw);
+  if (slash) raw = slash[1];
+  // a trailing EDGAR or Bloomberg qualifier after the legal form: `CHEVRON CORP NEW`, `US BANCORP DEL`, `PROGRESSIVE CORP OHIO`
+  raw = raw.replace(/\b(CORP(?:ORATION)?|INC(?:ORPORATED)?|CO(?:MPANY)?|LTD|BANCORP|GROUP|GRP|TRUST|HOLDINGS?)\.?,?\s+(?:NEW|DEL|REINCORPORATION|OHIO|AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\.?$/i, '$1');
+  const words = nportLooseWords();
+  const key = nportNameKey(raw).replace(/ CL [A-Z]$/, '').replace(/\bNATIONAL ASSOCIATION\b/g, 'NATIONAL_ASSOCIATION');
+  return key.split(' ').map((word) => (Object.prototype.hasOwnProperty.call(words, word) ? words[word] : word)).filter(Boolean).sort().join(' ');
+}
+
+/**
+ * SEC company_tickers.json -> name key -> ticker (the first, largest company wins a shared key; the class-less key is added too).
+ * Each loose key (`nportLooseKey`) is added as `\u0001<loose key>` -> the company's tickers, space-separated in the table's
+ * order, or '' when two companies (CIKs) share it; `nportTickers` reads them for rows the exact key misses.
+ */
 export function parseSecCompanyNames(payload: unknown): Map<string, string> {
   const names = new Map<string, string>();
+  const loose = new Map<string, { cik: string; tickers: string[] } | null>();
   const rows = payload && typeof payload === 'object' ? Object.keys(payload as object).map((key) => (payload as Record<string, unknown>)[key]) : [];
   for (let i = 0; i < rows.length; i++) {
-    const row = rows[i] as { ticker?: unknown; title?: unknown } | null;
+    const row = rows[i] as { ticker?: unknown; title?: unknown; cik_str?: unknown } | null;
     if (!row || typeof row !== 'object') continue;
     const ticker = String(row.ticker === null || row.ticker === undefined ? '' : row.ticker).trim().toUpperCase();
     const key = nportNameKey(row.title);
@@ -2054,7 +2093,15 @@ export function parseSecCompanyNames(payload: unknown): Map<string, string> {
     if (!names.has(key)) names.set(key, ticker);
     const core = key.replace(/ CL [A-Z]$/, '');
     if (core && !names.has(core)) names.set(core, ticker);
+    const looseKey = nportLooseKey(row.title);
+    const cik = String(row.cik_str === null || row.cik_str === undefined ? '' : row.cik_str).replace(/\D/g, '');
+    if (!looseKey || !Number(cik)) continue;
+    const seen = loose.get(looseKey);
+    if (seen === undefined) loose.set(looseKey, { cik: String(Number(cik)), tickers: [ticker] });
+    else if (seen && seen.cik === String(Number(cik))) { if (seen.tickers.indexOf(ticker) < 0) seen.tickers.push(ticker); }
+    else loose.set(looseKey, null);
   }
+  loose.forEach((seen, looseKey) => names.set(`\u0001${looseKey}`, seen ? seen.tickers.join(' ') : ''));
   return names;
 }
 
@@ -2206,12 +2253,21 @@ export function parseUsListings(texts: ReadonlyArray<string>): Map<string, strin
     }
   }
   const issuers = new Map<string, string[]>();
+  const loose = new Map<string, string[]>();
   listings.forEach((name, symbol) => {
     const key = nportNameKey(nportIssuerName(name));
     if (key) issuers.set(key, (issuers.get(key) || []).concat(symbol));
+    const looseKey = nportLooseKey(nportIssuerName(name));
+    if (looseKey && nportListedCommon(name)) loose.set(looseKey, (loose.get(looseKey) || []).concat(symbol));
   });
   issuers.forEach((symbols, key) => { if (symbols.length > 1) listings.set(`\u0000${key}`, symbols.join(' ')); });
+  loose.forEach((symbols, looseKey) => listings.set(`\u0001${looseKey}`, symbols.join(' ')));
   return listings;
+}
+
+/** Is a symbol directory security name a company's own common or ordinary shares (not preferred, depositary, notes, warrants, units, rights)? */
+function nportListedCommon(name: string): boolean {
+  return !/\bDEPOSITARY\b|\bADSS?\b|\bADRS?\b|\bREGISTRY\b|\bPREFERRED\b|\bPREF\b|\bPFD\b|\bNOTES?\b|\bDEBENTURES?\b|\bWARRANTS?\b|\bUNITS?\b|\bRIGHTS?\b|%|\bDUE\s+\d{4}\b|\bPERPETUAL\b|\bCUMULATIVE\b|\bSUBORDINATED\b|\bTRUST\s+(?:SECURITIES|CERTIFICATES)\b|\bETNS?\b|\bEXCHANGE[- ]TRADED\b/i.test(name);
 }
 
 /** The share class a name or title states (`Class C`, `CL C`, `Series A`, `LIBERTY GLOBAL-C`), '' for none. */
@@ -2243,7 +2299,7 @@ function nportIssuerName(value: unknown): string {
  * Is `ticker` the company's own U.S. listing? The Nasdaq Trader directories (`parseUsListings`) list it under the same company
  * (same name key, or one key the start of the other: `BUNGE GLOBAL` and the directory's `BUNGE`, a name cut short after two words
  * or more: `CHECK POINT SOFTWARE TECH`), and not as depositary or New York registry shares, which are another security than
- * the foreign line (Shell's SHEL ADR, ASML's New York shares). When the issuer has several listed classes, the name or ]2;]1;
+ * the foreign line (Shell's SHEL ADR, ASML's New York shares). When the issuer has several listed classes, the name or title
  * must state the listed class (Liberty Latin America Class C is LILAK, not LILA). False without listings. Callers check that
  * the line trades in U.S. dollars: a Toronto or London line of the same company in its own currency never gets the U.S. ticker.
  */
@@ -2268,13 +2324,14 @@ export function nportUsListed(listings: Map<string, string> | null, ticker: stri
  *   `parseUsListings`) confirm the filer's or the name-matched ticker for the same company (`nportUsListed`); a local line in
  *   another currency, and every foreign row without listings, gets none
  * A ticker that lands on two different securities (Alphabet A and C, an ordinary share and its ADR) is dropped from the
- * name-matched rows; when the filer itself gave it to two securities it is dropped from all of them. Bonds, cash, funds and
- * derivatives stay identifier-keyed.
+ * name-matched rows; when the filer itself gave it to two securities it is dropped from all of them. Rows still without a
+ * ticker get the second, looser name match (`nportLooseTickers`), which never changes a ticker given here. Bonds, cash, funds
+ * and derivatives stay identifier-keyed.
  */
 export function nportTickers(positions: ReadonlyArray<NportPosition>, names: Map<string, string> | null = null, listings: Map<string, string> | null = null): string[] {
   const fromFiler: boolean[] = [];
   const secTickers = new Set<string>();
-  if (names) names.forEach((ticker) => secTickers.add(ticker));
+  if (names) names.forEach((ticker, key) => { if (key.charAt(0) !== '\u0001') secTickers.add(ticker); });
   const renames = nportRenamedIssuers();
   const renamed = (position: NportPosition, key: string): string => {
     const issuer = (position.cusip || (/^US[0-9A-Z]{10}$/.test(position.isin) ? position.isin.slice(2, 11) : '')).slice(0, 6);
@@ -2310,11 +2367,61 @@ export function nportTickers(positions: ReadonlyArray<NportPosition>, names: Map
     if (fromFiler[index] && seen.filer.indexOf(key) < 0) seen.filer.push(key);
     securities.set(ticker, seen);
   });
-  return tickers.map((ticker, index) => {
+  const exact = tickers.map((ticker, index) => {
     const seen = ticker ? securities.get(ticker) : undefined;
     if (!seen || seen.keys.length < 2) return ticker;
     return seen.filer.length === 1 && fromFiler[index] ? ticker : '';
   });
+  return nportLooseTickers(positions, exact, names, listings);
+}
+
+/**
+ * The second name match (open-items etfs Q35) for the common-stock rows `nportTickers` left without a ticker; the tickers it
+ * already gave never change. The row's loose key (`nportLooseKey`) must name one company: in the SEC table (`\u0001` entries of
+ * `parseSecCompanyNames`, one CIK) and/or in the symbol directories (`\u0001` entries of `parseUsListings`, common shares only),
+ * and when both know the key they must agree on the company. Of that company's tickers only its listed common shares count
+ * (with one SEC ticker and no listing, that ticker); several of them (Fox, Lennar, Zillow) need the class the row states in its
+ * name or title, matched to the listed security name, else no ticker. A foreign ISIN needs the directory listing of the same
+ * key (its own U.S. shares, never depositary ones). A ticker that a row of `exact` holds for another security, or that this pass
+ * finds for two securities, is dropped.
+ */
+function nportLooseTickers(positions: ReadonlyArray<NportPosition>, exact: string[], names: Map<string, string> | null, listings: Map<string, string> | null): string[] {
+  if (!names) return exact;
+  const companyOf = new Map<string, string>();
+  names.forEach((tickers, key) => { if (key.charAt(0) === '\u0001' && tickers) tickers.split(' ').forEach((ticker) => companyOf.set(ticker, key)); });
+  const securityOf = (position: NportPosition): string => position.cusip || position.isin || position.other || nportNameKey(position.name);
+  const listedClass = (symbol: string): string => nportShareClass(listings ? listings.get(symbol) : '');
+  const found = positions.map((position, index) => {
+    if (exact[index] || position.assetCat !== 'EC' || position.derivative || nportIsRight(position)) return '';
+    const foreign = Boolean(position.isin) && position.isin.slice(0, 2) !== 'US';
+    if (foreign ? position.currency !== 'USD' || !listings : position.currency && position.currency !== 'USD') return '';
+    if (!/^[0-9A-Z]{9}$/.test(position.cusip) && !/^[A-Z]{2}[0-9A-Z]{10}$/.test(position.isin)) return '';
+    const key = nportLooseKey(position.name);
+    if (!key) return '';
+    const sec = names.get(`\u0001${key}`);
+    const listed = listings ? listings.get(`\u0001${key}`) : undefined;
+    if (sec === '' || (sec === undefined && listed === undefined) || (foreign && !listed)) return '';
+    const listedSymbols = listed ? listed.split(' ') : [];
+    // the company: the SEC entry of the key, else the one SEC entry every listed symbol of the key belongs to
+    const company = sec !== undefined ? `\u0001${key}` : companyOf.get(listedSymbols[0]) || '';
+    if (!company || listedSymbols.some((symbol) => companyOf.get(symbol) !== company)) return '';
+    const tickers = String(names.get(company) || '').split(' ').filter(Boolean);
+    const common = tickers.filter((ticker) => listings && listings.has(ticker) && nportListedCommon(String(listings.get(ticker))));
+    const candidates = common.length ? common : tickers.length === 1 && !foreign ? tickers : [];
+    if (foreign && candidates.some((ticker) => listedSymbols.indexOf(ticker) < 0)) return '';
+    const wanted = nportShareClass(position.name, position.title);
+    if (candidates.length === 1) return !wanted || !listings || !listings.has(candidates[0]) || !listedClass(candidates[0]) || listedClass(candidates[0]) === wanted ? candidates[0] : '';
+    const classed = wanted ? candidates.filter((ticker) => listedClass(ticker) === wanted) : [];
+    return classed.length === 1 ? classed[0] : '';
+  });
+  const taken = new Map<string, string[]>();
+  exact.forEach((ticker, index) => { if (ticker) taken.set(ticker, (taken.get(ticker) || []).concat(securityOf(positions[index]))); });
+  found.forEach((ticker, index) => {
+    if (!ticker) return;
+    const seen = taken.get(ticker) || [];
+    if (seen.indexOf(securityOf(positions[index])) < 0) taken.set(ticker, seen.concat(securityOf(positions[index])));
+  });
+  return exact.map((ticker, index) => ticker || (found[index] && (taken.get(found[index]) || []).length === 1 ? found[index] : ''));
 }
 
 /** The browse-edgar Atom feed of one series' NPORT-P filings. */
