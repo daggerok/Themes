@@ -585,6 +585,25 @@ describe('pipeline 2', () => {
     expect([funds[0].metrics.performanceAsOf, funds[1].metrics.ytd, funds[1].metrics.returnsBasis, funds[1].metrics.performanceAsOf]).toEqual(['2026-09-29', 1, RETURNS_BASIS, null]);
   });
 
+  test('a retained run keeps the published display dates and changes only the retained labels; the next one writes nothing (Q34)', async () => {
+    const rows = [{ t: 'BOTT', days: 400 }];
+    const box = repo();
+    expect(await box.run(feed(rows), { ...live, TICKERS: 'BOTT' })).toBeNull();
+    const fresh = box.json('funds/BOTT/meta.json');
+    // the official CSV is gone, Yahoo still answers: holdings are retained, the history (last close today) is fresh
+    const csvDown = feed(rows, (url) => (/Holdings-BOTT\.csv/.test(url) ? new Response('gone', { status: 404 }) : null));
+    expect(await box.run(csvDown, { ...live, TICKERS: 'BOTT' })).toBeNull();
+    const retained = box.json('funds/BOTT/meta.json');
+    expect([retained.source.retained?.holdings, retained.asOfDate, retained.nav.asOfDate, retained.sharesOutstanding.asOfDate]).toEqual([true, 'Oct 1, 2026', 'Oct 1, 2026', 'Oct 1, 2026']);
+    const withoutLabels = (meta: any) => ({ ...meta, generatedAt: undefined, aum: { ...meta.aum, source: undefined }, source: { ...meta.source, holdingsSource: undefined, retained: undefined } });
+    expect(withoutLabels(retained)).toEqual(withoutLabels(fresh));
+    box.backdate();
+    box.logs.length = 0;
+    expect(await box.run(csvDown, { ...live, TICKERS: 'BOTT' })).toBeNull();
+    expect(box.touched()).toEqual([]);
+    expect(box.logs.some((line) => /BOTT +unchanged/.test(line))).toBe(true);
+  });
+
   test('a fund that fails the data filter is left untouched: files and index row stay byte-identical', async () => {
     const box = repo();
     await box.run(feed([{ t: 'OLD', days: 400 }]), { ...live, TICKERS: 'OLD' });
