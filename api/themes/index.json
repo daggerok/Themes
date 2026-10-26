@@ -1,7 +1,7 @@
 {
   "counts": {
     "funds": 11,
-    "history": 6722,
+    "history": 6723,
     "holdings": 550
   },
   "funds": [
@@ -10,8 +10,8 @@
       "aum": "$8.53M",
       "aumValue": 8526322,
       "category": "Commodities",
-      "closePrice": "$62.45",
-      "closePriceValue": 62.45,
+      "closePrice": "$61.00",
+      "closePriceValue": 61,
       "dataFile": "./funds/AGMI/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -22,46 +22,46 @@
       },
       "exchange": "NasdaqGM",
       "fundPage": "https://themesetfs.com/etfs/agmi",
-      "history": 621,
+      "history": 622,
       "holdings": 56,
       "inceptionDate": null,
       "metrics": {
         "cagr10y": null,
         "cagr3y": null,
         "cagr5y": null,
-        "distributionYield": 4.6,
-        "distributionYieldText": "4.60%",
-        "dividendYield": 4.6,
+        "distributionYield": 4.71,
+        "distributionYieldText": "4.71%",
+        "dividendYield": 4.71,
         "dividendYieldBasis": "computed-trailing-12m",
-        "dividendYieldText": "4.60%",
-        "performanceAsOf": "2026-10-23",
+        "dividendYieldText": "4.71%",
+        "performanceAsOf": "2026-10-26",
         "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
         "secYield": null,
         "secYieldText": "—",
         "siAnn": null,
         "tr10y": null,
-        "tr1y": 22,
+        "tr1y": 21.58,
         "tr3y": null,
         "tr5y": null,
-        "yield12M": 4.6,
-        "yield12MText": "4.60%",
-        "ytd": -5.72
+        "yield12M": 4.71,
+        "yield12MText": "4.71%",
+        "ytd": -6.04
       },
       "name": "Silver Miners ETF",
-      "nav": "$62.35",
+      "nav": "$60.90",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 62.35,
+      "navValue": 60.9,
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
-          "asOfDate": "Oct 23, 2026",
+          "asOfDate": "Oct 26, 2026",
           "sinceInception": null,
           "sinceInceptionCumulative": null,
-          "yr1": 22,
+          "yr1": 21.58,
           "yr10": null,
           "yr3": null,
           "yr5": null,
-          "ytd": -5.72
+          "ytd": -6.04
         },
         "quarterEnd": {
           "asOfDate": null,
@@ -809,7 +809,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-26T07:59:45Z",
+  "generatedAt": "2026-10-26T19:41:16Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
