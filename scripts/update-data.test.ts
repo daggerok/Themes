@@ -300,6 +300,14 @@ describe('parsing 3', () => {
       expect(parseThemesHoldingsCsv(holdingsFixture.replace(/2026-09-29/g, 'not a date')).asOf).toBeNull();
     }
   });
+
+  test('N-PORT issuer names match SEC titles across initials, a leading US and backslash EDGAR suffixes', () => {
+    const stock = (name: string, cusip: string) => `<invstOrSec><name>${name}</name><cusip>${cusip}</cusip><balance>1</balance><curCd>USD</curCd><valUSD>1</valUSD><pctVal>1</pctVal><assetCat>EC</assetCat></invstOrSec>`;
+    const filing = parseNportFiling(`<edgarSubmission><genInfo><seriesId>S000099999</seriesId></genInfo><invstOrSecs>${stock('US Bancorp', '902973304')}${stock('Bancorp Inc/The', '05969A105')}${stock('CH Robinson Worldwide Inc', '12541W209')}</invstOrSecs></edgarSubmission>`);
+    const names = parseSecCompanyNames({ 0: { ticker: 'USB', title: 'US BANCORP \\DE\\' }, 1: { ticker: 'TBBK', title: 'Bancorp, Inc.' }, 2: { ticker: 'CHRW', title: 'C H ROBINSON WORLDWIDE, INC.' } });
+    // U.S. Bancorp is not The Bancorp, and C.H. Robinson is one issuer however its initials are spaced
+    expect(nportTickers(filing.positions, names)).toEqual(['USB', 'TBBK', 'CHRW']);
+  });
 });
 
 // ===========================================================================
