@@ -1,6 +1,6 @@
 {
   "counts": {
-    "funds": 10,
+    "funds": 11,
     "history": 6399,
     "holdings": 526
   },
@@ -152,7 +152,7 @@
       "ticker": "AUMI"
     },
     {
-      "asOfDate": "Oct 26, 2026",
+      "asOfDate": "Oct 23, 2026",
       "aum": "$59.28M",
       "aumValue": 59284899,
       "category": "Thematic",
@@ -369,6 +369,51 @@
       "ter": "0.35%",
       "terValue": 0.35,
       "ticker": "COPA"
+    },
+    {
+      "aum": "—",
+      "aumValue": null,
+      "category": "Thematic",
+      "closePrice": "$28.53",
+      "closePriceValue": 28.53,
+      "dataFile": null,
+      "distributions": {
+        "dividend": null,
+        "exDate": null,
+        "frequency": "00 - None",
+        "paymentsPerYear": null
+      },
+      "fundPage": "https://themesetfs.com/etfs/drgn",
+      "history": 0,
+      "holdings": 0,
+      "metrics": {
+        "cagr10y": null,
+        "cagr3y": null,
+        "cagr5y": null,
+        "distributionYield": null,
+        "distributionYieldText": "—",
+        "dividendYield": null,
+        "dividendYieldBasis": null,
+        "dividendYieldText": "—",
+        "performanceAsOf": null,
+        "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
+        "secYield": null,
+        "secYieldText": "—",
+        "siAnn": null,
+        "tr10y": null,
+        "tr1y": null,
+        "tr3y": null,
+        "tr5y": null,
+        "yield12M": null,
+        "yield12MText": "—",
+        "ytd": null
+      },
+      "name": "China Generative Artificial Intelligence ETF",
+      "nav": "$28.39",
+      "navValue": 28.39,
+      "ter": "0.39%",
+      "terValue": 0.39,
+      "ticker": "DRGN"
     },
     {
       "asOfDate": "Oct 26, 2026",
@@ -736,7 +781,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-26T01:58:34Z",
+  "generatedAt": "2026-10-26T06:52:43Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",

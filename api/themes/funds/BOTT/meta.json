@@ -1,9 +1,9 @@
 {
-  "asOfDate": "Oct 26, 2026",
+  "asOfDate": "Oct 23, 2026",
   "aum": {
     "asOfDate": "Oct 26, 2026",
     "display": "$59.28M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 59284899
   },
   "aumValue": 59284899,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-26T01:58:28Z",
+  "generatedAt": "2026-10-26T06:52:43Z",
   "history": {
     "asOf": "2026-10-23",
     "asOfDate": "Oct 23, 2026",
@@ -79,7 +79,7 @@
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": "Oct 23, 2026",
     "display": "$36.30",
     "kind": "official Themes ETFs catalog NAV",
     "value": 36.3
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": null,
     "display": "1,590,000",
     "value": 1590000
   },
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
