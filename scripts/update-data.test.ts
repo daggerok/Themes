@@ -4,8 +4,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
-  CONTROL_NAMES, HttpError, PROXY_PREFIX, PROXY_SLEEP_MS, RETURNS_BASIS,
-  calculateReturn, createProxyGate, createRequestGate, deriveReturns, dividendYieldBasisFor, emptyMetrics, fetchOfficialText, fetchWithRetry,
+  CLOSED_FUNDS, CONTROL_NAMES, HttpError, PROXY_PREFIX, PROXY_SLEEP_MS, RETURNS_BASIS,
+  calculateReturn, closedFund, createProxyGate, createRequestGate, deriveReturns, dividendYieldBasisFor, emptyMetrics, fetchOfficialText, fetchWithRetry,
   formatDividendFrequency, inferDistributionFrequency, installSystemCa, isCertError, isFlatHistory, main, parseAumRange,
   parseCsv, parseNportXml, parseRange, parseThemesCatalog, parseThemesCatalogMarkdown, parseThemesHoldingsCsv,
   parseYahooChart, performanceFields, proxyEligible, readConfig, resetIssuerState, resolveControls, retainedLabel,
@@ -135,7 +135,9 @@ describe('controls', () => {
     expect((await runtimeControls({ TICKERS: 'BOTT', UNRELATED: 'x' })).TICKERS).toBe('BOTT');
     expect((await runtimeControls({})).CONCURRENCY).toBe('2');
   });
+});
 
+describe('controls 2', () => {
   test('ticker lists, AUM presets and ranges, return filters and HISTORY_RANGE casing', () => {
     expect([parseAumRange('micro'), parseAumRange('10M:2B')]).toEqual([{ min: 10e6, max: 300e6 }, { min: 10e6, max: 2e9 }]);
     expect([parseRange('0:0.35', 'TER'), parseRange(':', 'TER')]).toEqual([{ min: 0, max: 0.35 }, undefined]);
@@ -224,7 +226,9 @@ describe('parsing', () => {
     expect(parsed.rows[1]['Asset Category']).toBe('Money Market');
     expect(parseThemesHoldingsCsv('date,security_name\n')).toEqual({ asOf: null, netAssets: null, sharesOutstanding: null, rows: [] });
   });
+});
 
+describe('parsing 2', () => {
   test('holdings guard: header-only, renamed weight column, broken weights, a bad weight sum and a halved sheet are rejected', () => {
     const headers = ['Name', 'Ticker', 'Weight'];
     const rows = [{ Name: 'A', Ticker: 'A', Weight: '60%' }, { Name: 'B', Ticker: 'B', Weight: '40%' }];
@@ -308,7 +312,9 @@ describe('metrics', () => {
       expect(JSON.stringify(deriveReturns(daily(400), NOW))).toBe(expected);
     }
   });
+});
 
+describe('metrics 2', () => {
   test('returnsBasis is never empty and ends the metrics with performanceAsOf; every row shares one key set', () => {
     expect(performanceFields('2026-09-30')).toEqual({ returnsBasis: RETURNS_BASIS, performanceAsOf: '2026-09-30' });
     for (const bad of [null, undefined, '', 'Sep 30, 2026', '2026-9-30', 5]) expect(performanceFields(bad).performanceAsOf).toBeNull();
@@ -477,7 +483,9 @@ describe('pipeline', () => {
     expect(await box.run(jittered([23.9, 24.97, 25.98]), live)).toBeNull();
     expect(box.json('funds/AAA/history/001.json').rows.map((r: any) => r['Adj Close'])).toEqual(['25.98', '24.97', '23.90']);
   });
+});
 
+describe('pipeline 2', () => {
   test('direct 403 on the catalog and the CSV falls back to the proxy, which is paced, and publishes fresh data', async () => {
     const clock = fakeClock();
     const box = repo();
@@ -526,7 +534,9 @@ describe('pipeline', () => {
     expect(await box.run(feed([{ t: 'OLD', days: 400, nav: '25.00' }]), { ...live, TICKERS: 'OLD', TOTAL_RETURN_1Y: '900:1000' })).toBeNull();
     expect([box.read('funds/OLD/meta.json'), box.read('index.json')]).toEqual(before);
   });
+});
 
+describe('pipeline 3', () => {
   test('the MAX_FETCHES cursor wraps and a TICKERS run leaves the cursor alone', async () => {
     const rows = ['AAA', 'BBB', 'CCC'].map((t) => ({ t, days: 400 }));
     const box = repo();
@@ -577,7 +587,9 @@ describe('pipeline', () => {
     expect(newer.json('funds/BOTT/meta.json').holdings.totalRows).toBe(20);
     expect(newer.json('funds/BOTT/meta.json').source.holdingsSource).toContain('N-PORT');
   });
+});
 
+describe('pipeline 4', () => {
   test('holdings that fail the guard keep the fund exactly as published and report it failed', async () => {
     const rows = [{ t: 'AAA', days: 400 }];
     const box = repo();
@@ -589,6 +601,66 @@ describe('pipeline', () => {
     const error = await box.run(feed(rows, (url) => (/Holdings-AAA\.csv/.test(url) ? new Response(renamed) : null)), { ...live, TICKERS: 'AAA' });
     expect(String(error)).toContain('every selected fund failed');
     expect(snapshot()).toEqual(published);
+  });
+
+  test('a closed fund is never fetched or reported failed: its files stay as published, its index row says closed, a rerun writes nothing', async () => {
+    const entry = { ticker: 'BBB', closed: '2026-10-01', source: 'https://www.sec.gov/Archives/edgar/data/1/notice.htm' };
+    expect(() => closedFund([{ ...entry, closed: 'soon' }], 'BBB')).toThrow('CLOSED_FUNDS');
+    expect(closedFund([entry], 'bbb')).toEqual(entry);
+    const rows = ['AAA', 'BBB', 'CCC'].map((t) => ({ t, days: 400 }));
+    const box = repo();
+    expect(await box.run(feed(rows), live)).toBeNull();
+    const snapshot = (): Record<string, string> => Object.fromEntries(box.files().map((f) => [f, box.read(f)]));
+    const first = snapshot();
+    // the guard would reject these holdings: a renamed weightings column
+    const broken = feed(rows, (url) => (/Holdings-BBB\.csv/.test(url) ? new Response(holdingsCsv.replace('weightings', 'weight_pct')) : null));
+    CLOSED_FUNDS.push(entry);
+    try {
+      box.calls.length = 0;
+      expect(await box.run(broken, { ...live, TICKERS: 'BBB' })).toBeNull();
+      expect(box.calls.filter((call) => /bbb/i.test(call.url))).toEqual([]);
+      expect(process.exitCode).not.toBe(1);
+      expect(box.logs.join('\n')).not.toMatch(/BBB\s+failed/);
+      const closed = snapshot();
+      for (const name of Object.keys(first)) if (name !== 'index.json') expect([name, closed[name]]).toEqual([name, first[name]]);
+      const funds = box.json('index.json').funds;
+      expect(funds.map((row: any) => row.ticker)).toEqual(['AAA', 'BBB', 'CCC']);
+      expect(funds.find((row: any) => row.ticker === 'BBB')).toMatchObject({ status: 'closed', closedDate: '2026-10-01', closedSource: entry.source, dataFile: './funds/BBB/meta.json' });
+      expect(funds.filter((row: any) => row.status === 'closed')).toHaveLength(1);
+      expect(await box.run(broken, live)).toBeNull();
+      expect(snapshot()).toEqual(closed);
+      // the live catalog drops the closed fund: TICKERS still accepts it, its row and files are not pruned
+      const dropped = feed(rows.filter((row) => row.t !== 'BBB'));
+      expect(await box.run(dropped, { ...live, TICKERS: 'BBB' })).toBeNull();
+      expect(await box.run(dropped, live)).toBeNull();
+      expect(snapshot()).toEqual(closed);
+    } finally {
+      CLOSED_FUNDS.splice(CLOSED_FUNDS.indexOf(entry), 1);
+    }
+  });
+
+  test('a new fund rejected by the guard or answered by no source is failed with a catalog-only row, rebuilt from the live catalog next run', async () => {
+    const box = repo();
+    expect(await box.run(feed([{ t: 'AAA', days: 400 }]), live)).toBeNull();
+    const row = () => box.json('index.json').funds.find((fund: any) => fund.ticker === 'NEW');
+    const catalogOnly = () => {
+      expect(row()).toMatchObject({ dataFile: null, holdings: 0 });
+      expect(Object.keys(row().metrics).sort()).toEqual(Object.keys(emptyMetrics()).sort());
+      expect(row().metrics.returnsBasis).toBe(RETURNS_BASIS);
+      expect(existsSync(path.join(box.api, 'funds/NEW'))).toBe(false);
+      expect(box.logs.some((line) => /NEW\s+failed/.test(line))).toBe(true);
+      box.logs.length = 0;
+    };
+    const guardRejects = (url: string) => (/Holdings-NEW\.csv/.test(url) ? new Response(holdingsCsv.replace('weightings', 'weight_pct')) : null);
+    expect(await box.run(feed([{ t: 'AAA', days: 400 }, { t: 'NEW', days: 400 }], guardRejects), live)).toBeNull();
+    catalogOnly();
+    expect(row().navValue).toBe(20);
+    const noSource = (url: string) => (/NEW/.test(url) ? new Response('gone', { status: 404 }) : null);
+    expect(await box.run(feed([{ t: 'AAA', days: 400 }, { t: 'NEW', days: 400, nav: '25.00' }], noSource), live)).toBeNull();
+    catalogOnly();
+    expect(row().navValue).toBe(25);
+    expect(await box.run(feed([{ t: 'AAA', days: 400 }, { t: 'NEW', days: 400, nav: '25.00' }]), live)).toBeNull();
+    expect(row().dataFile).toBe('./funds/NEW/meta.json');
   });
 
   test('index comparison ignores run timestamps and key order', () => {
@@ -650,7 +722,9 @@ describe('network', () => {
     for (const status of [400, 404]) expect(proxyEligible(new HttpError(status))).toBe(false);
     expect(retainedLabel('official CSV')).toBe(retainedLabel(retainedLabel('official CSV')));
   });
+});
 
+describe('network 2', () => {
   test('request lanes pace independently, the proxy gate serializes every start', async () => {
     const clock = fakeClock();
     const gate = createRequestGate(2, 20);
