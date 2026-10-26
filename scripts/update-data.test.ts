@@ -673,7 +673,8 @@ describe('pipeline 3', () => {
     expect([meta.holdings.totalRows, meta.holdings.asOf, meta.holdings.source]).toEqual([20, '2026-12-31', `https://www.sec.gov/Archives/edgar/data/1976322/${own.replace(/-/g, '')}/primary_doc.xml`]);
     expect(meta.source.holdingsSource).toContain(`N-PORT-P (Themes ETF Trust, accession ${own}, report period 2026-12-31)`);
     expect(newer.json('funds/BOTT/holdings/001.json').rows[0]).toEqual({ Name: 'Nport Corp 1', Ticker: 'NPC1', Identifier: '990000000', Weight: '5', 'Market Value': '50', 'Shares Held': '1', 'Asset Category': 'EC' });
-    expect(newer.calls.filter((call) => /xslForm|\.txt$/.test(call.url))).toEqual([]);
+    // no XSL view and no SEC .txt submission (the Nasdaq Trader symbol directories of the ticker rule are .txt files too)
+    expect(newer.calls.filter((call) => /xslForm|sec\.gov\/.*\.txt$/.test(call.url))).toEqual([]);
   });
 });
 
