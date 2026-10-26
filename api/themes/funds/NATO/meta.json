@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 23, 2026",
+  "asOfDate": "Oct 26, 2026",
   "aum": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$90.70M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 90704016
+    "asOfDate": "Oct 26, 2026",
+    "display": "$84.57M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 84567525
   },
-  "aumValue": 90704016,
+  "aumValue": 84567525,
   "category": "Thematic",
   "closePrice": "$36.22",
   "closePriceValue": 36.22,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-10-25T03:44:37Z",
+  "generatedAt": "2026-10-26T01:58:32Z",
   "history": {
     "asOf": "2026-10-23",
     "asOfDate": "Oct 23, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 510
   },
   "holdings": {
-    "asOf": "2026-10-21",
-    "asOfDate": "Oct 21, 2026",
+    "asOf": "2026-10-26",
+    "asOfDate": "Oct 26, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Oct 23, 2026",
+    "asOfDate": "Oct 26, 2026",
     "display": "$36.30",
     "kind": "official Themes ETFs catalog NAV",
     "value": 36.3
@@ -110,9 +110,9 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
-    "display": "2,480,000",
-    "value": 2480000
+    "asOfDate": "Oct 26, 2026",
+    "display": "2,370,000",
+    "value": 2370000
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-NATO.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Transatlantic-Defense-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "NATO",
-  "totalNetAssets": 90704016
+  "totalNetAssets": 84567525
 }

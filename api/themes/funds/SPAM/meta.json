@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 23, 2026",
+  "asOfDate": "Oct 26, 2026",
   "aum": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$6.75M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 6747375
+    "asOfDate": "Oct 26, 2026",
+    "display": "$7.17M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 7167870
   },
-  "aumValue": 6747375,
+  "aumValue": 7167870,
   "category": "Thematic",
   "closePrice": "$46.09",
   "closePriceValue": 46.09,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-10-25T03:44:37Z",
+  "generatedAt": "2026-10-26T01:58:32Z",
   "history": {
     "asOf": "2026-10-23",
     "asOfDate": "Oct 23, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 721
   },
   "holdings": {
-    "asOf": "2026-10-21",
-    "asOfDate": "Oct 21, 2026",
+    "asOf": "2026-10-26",
+    "asOfDate": "Oct 26, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Cybersecurity ETF",
   "nav": {
-    "asOfDate": "Oct 23, 2026",
+    "asOfDate": "Oct 26, 2026",
     "display": "$46.01",
     "kind": "official Themes ETFs catalog NAV",
     "value": 46.01
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 26, 2026",
     "display": "150,000",
     "value": 150000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-SPAM.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Cybersecurity-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "SPAM",
-  "totalNetAssets": 6747375
+  "totalNetAssets": 7167870
 }

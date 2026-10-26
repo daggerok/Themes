@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Oct 23, 2026",
+  "asOfDate": "Oct 26, 2026",
   "aum": {
-    "asOfDate": "Oct 21, 2026",
-    "display": "$23.01M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 23008680
+    "asOfDate": "Oct 26, 2026",
+    "display": "$22.86M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 22863960
   },
-  "aumValue": 23008680,
+  "aumValue": 22863960,
   "category": "Thematic",
   "closePrice": "$31.26",
   "closePriceValue": 31.26,
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-10-25T03:44:39Z",
+  "generatedAt": "2026-10-26T01:58:34Z",
   "history": {
     "asOf": "2026-10-23",
     "asOfDate": "Oct 23, 2026",
@@ -41,8 +41,8 @@
     "totalRows": 721
   },
   "holdings": {
-    "asOf": "2026-10-21",
-    "asOfDate": "Oct 21, 2026",
+    "asOf": "2026-10-26",
+    "asOfDate": "Oct 26, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -75,7 +75,7 @@
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Oct 23, 2026",
+    "asOfDate": "Oct 26, 2026",
     "display": "$31.35",
     "kind": "official Themes ETFs catalog NAV",
     "value": 31.35
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": null,
+    "asOfDate": "Oct 26, 2026",
     "display": "720,000",
     "value": 720000
   },
@@ -117,19 +117,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "WISE",
-  "totalNetAssets": 23008680
+  "totalNetAssets": 22863960
 }
