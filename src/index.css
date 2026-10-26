@@ -102,6 +102,9 @@
     @media (prefers-color-scheme:dark){.busy-overlay{background:rgba(15,23,42,.7);color:#cbd5e1}}
     html.dark .busy-overlay{background:rgba(15,23,42,.7);color:#cbd5e1}
     @media (prefers-reduced-motion:reduce){.busy-spinner{animation-duration:2.4s}}
+    .closed-badge{display:inline-block;margin-left:.375rem;padding:0 .4rem;border:1px solid #fecaca;border-radius:9999px;background:#fef2f2;color:#b91c1c;font-size:.6875rem;font-weight:600;line-height:1.05rem;white-space:nowrap;vertical-align:middle;text-decoration:none}
+    a.closed-badge:hover{text-decoration:underline}
+    .dark .closed-badge{border-color:#7f1d1d;background:#3b1219;color:#fca5a5}
 
     /*
      * Horizontal pinning for the catalog table: the Use checkbox and the
