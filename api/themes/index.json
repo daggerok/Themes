@@ -225,7 +225,7 @@
       "ticker": "BOTT"
     },
     {
-      "asOfDate": "Oct 26, 2026",
+      "asOfDate": "Oct 23, 2026",
       "aum": "$2.15M",
       "aumValue": 2150826,
       "category": "Thematic",
@@ -809,7 +809,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-10-26T06:55:32Z",
+  "generatedAt": "2026-10-26T07:33:49Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
