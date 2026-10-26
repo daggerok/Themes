@@ -1,5 +1,5 @@
 {
-  "asOfDate": "Oct 23, 2026",
+  "asOfDate": "Oct 26, 2026",
   "aum": {
     "asOfDate": "Oct 26, 2026",
     "display": "$59.28M",
@@ -8,8 +8,8 @@
   },
   "aumValue": 59284899,
   "category": "Thematic",
-  "closePrice": "$36.29",
-  "closePriceValue": 36.29,
+  "closePrice": "$37.26",
+  "closePriceValue": 37.26,
   "dataFile": "./funds/BOTT/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-10-26T06:52:43Z",
+  "generatedAt": "2026-10-26T07:59:45Z",
   "history": {
     "asOf": "2026-10-23",
     "asOfDate": "Oct 23, 2026",
@@ -59,11 +59,11 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.17,
-    "distributionYieldText": "0.17%",
-    "dividendYield": 0.17,
+    "distributionYield": 0.16,
+    "distributionYieldText": "0.16%",
+    "dividendYield": 0.16,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.17%",
+    "dividendYieldText": "0.16%",
     "performanceAsOf": "2026-10-23",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
@@ -73,19 +73,19 @@
     "tr1y": -11.62,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.17,
-    "yield12MText": "0.17%",
+    "yield12M": 0.16,
+    "yield12MText": "0.16%",
     "ytd": -12.66
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Oct 23, 2026",
-    "display": "$36.30",
+    "asOfDate": "Oct 26, 2026",
+    "display": "$37.29",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 36.3
+    "value": 37.29
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 36.3,
+  "navValue": 37.29,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
