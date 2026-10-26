@@ -1457,7 +1457,9 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
   const dividendData = yahoo ? dividendsWorksheet(yahoo.dividends) : (prior?.distributions ?? { frequency: '00 - None', paymentsPerYear: null, headers: ['Ex-Date', 'Amount'], rows: [] });
   const dividendYield = yahoo ? trailingDividendYield(yahoo.dividends, fund.navValue ?? asNumber(prior?.navValue)) : asNumber(prior?.metrics?.dividendYield);
   const navValue = fund.navValue ?? asNumber(prior?.navValue);
-  const asOf = holdings?.asOf ?? (historyManifest?.asOf as string | undefined) ?? prior?.asOf ?? null;
+  // a retained run keeps the dates of the published holdings: the display dates never move to the Yahoo date and back (BOTT)
+  const retainedAsOf = retainedHoldings ? calendarIso(prior?.holdings?.asOf) : null;
+  const asOf = holdings?.asOf ?? retainedAsOf ?? (historyManifest?.asOf as string | undefined) ?? prior?.asOf ?? null;
   const ter = fund.terValue ?? asNumber(prior?.terValue);
   const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
 
@@ -1478,7 +1480,7 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
     closePrice: formatMoney(fund.closePriceValue ?? asNumber(prior?.closePriceValue)),
     closePriceValue: fund.closePriceValue ?? asNumber(prior?.closePriceValue),
     totalNetAssets: netAssets,
-    sharesOutstanding: { display: formatShares(sharesOutstanding), value: sharesOutstanding, asOfDate: isoDisplayDate(holdings?.asOf ?? null) },
+    sharesOutstanding: { display: formatShares(sharesOutstanding), value: sharesOutstanding, asOfDate: holdings ? isoDisplayDate(holdings.asOf) : (retainedHoldings ? prior?.sharesOutstanding?.asOfDate ?? null : null) },
     distributions: dividendData,
     returns: {
       monthEnd: {
@@ -1836,8 +1838,8 @@ export function withoutClosedFunds<T>(queue: ReadonlyArray<T>, tickerOf: (item: 
  * - identifiers come from the position itself: `<cusip>` text (or a `value` attribute), `<isin value>`, `<ticker value>`,
  *   `<other value>`; a derivative's reference instrument (inside `<derivativeInfo>`) never lends its identifiers to the position
  * - CUSIP `000000000` and `N/A` are missing; a missing weight or value is null (an empty cell), never 0
- * - a ticker only for an equity row (assetCat EC or EP) traded in USD with a U.S. ISIN or none, and never one ticker on two
- *   different securities (`nportTickers`)
+ * - a ticker only for a common-stock row (assetCat EC, not a CVR, right, warrant or escrow line) traded in USD with a U.S.
+ *   ISIN or none, and never one ticker on two different securities (`nportTickers`)
  * - identity: the filing must name the fund's own series id, or, with no series id known, the fund's name (`nportIdentity`)
  * - freshness: the report period must be strictly newer than the published holdings (`nportIsFresh`)
  * - filings come newest report period first from the registrant's own archive folder, never from the filer agent's CIK
@@ -1983,11 +1985,17 @@ export function parseNportFiling(xml: string): NportFiling {
   };
 }
 
-/** A number as sheet text: '' for null, no exponent, at most `digits` decimals (trailing zeros dropped). */
+/**
+ * A number as sheet text: '' for null, no exponent, at most `digits` decimals (trailing zeros dropped), and no binary float
+ * artifact: `115797518.01` stays `115797518.01`, not the `115797518.01000001` of `toFixed(8)`.
+ */
 export function nportCell(value: number | null, digits = 8): string {
   if (value === null || !Number.isFinite(value)) return '';
-  const text = value.toFixed(digits);
-  return text.indexOf('.') < 0 ? text : text.replace(/0+$/, '').replace(/\.$/, '');
+  const fixed = value.toFixed(digits);
+  // the shortest text of the rounded number; toFixed only where that text would be an exponent (very small or large numbers)
+  const shortest = String(Number(fixed));
+  if (!/e/i.test(shortest)) return shortest;
+  return fixed.indexOf('.') < 0 ? fixed : fixed.replace(/0+$/, '').replace(/\.$/, '');
 }
 
 /** The position's own identifier for a sheet: CUSIP, else ISIN, else the "other" code (a Bloomberg or internal id), else ''. */
@@ -2002,8 +2010,9 @@ export function nportIdentifier(position: NportPosition): string {
  * `BANCORP, INC.`), so both spellings of one issuer give one key.
  */
 export function nportNameKey(value: unknown): string {
-  // EDGAR adds a state or qualifier suffix to company titles ("COSTCO WHOLESALE CORP /NEW", "BANK OF AMERICA CORP /DE/", "US BANCORP \DE\"): drop a trailing one
-  const raw = String(value === null || value === undefined ? '' : value).replace(/(?:\s*[\/\\]\s*[A-Za-z]{2,3}\s*[\/\\]?)+\s*$/, '');
+  // EDGAR adds a state or qualifier suffix to company titles ("COSTCO WHOLESALE CORP /NEW", "BANK OF AMERICA CORP /DE/",
+  // "US BANCORP \DE\", "ACUITY INC. (DE)"): drop a trailing one
+  const raw = String(value === null || value === undefined ? '' : value).replace(/(?:\s*(?:[\/\\]\s*[A-Za-z]{2,3}\s*[\/\\]?|\(\s*[A-Za-z]{2,3}\s*\)))+\s*$/, '');
   let text = nportText(raw).toUpperCase().replace(/['’]/g, '').replace(/&/g, ' AND ').replace(/[^A-Z0-9]+/g, ' ').trim();
   text = text.replace(/\bCLASS\s+([A-Z])\b/g, 'CL $1').replace(/\bCL\s+([A-Z])\b/g, 'CL $1');
   // a run of single letters is one word, never the class letter after CL
@@ -2059,8 +2068,21 @@ export function parseSecFundTickers(payload: unknown): Map<string, NportSeriesRe
 }
 
 /**
- * Exchange tickers for the positions, in their order ('' for none). A ticker is given only to an equity row (assetCat EC or
- * EP) traded in USD (or with no currency) whose ISIN is U.S. or missing: first the filer's own `<ticker value>`, else the
+ * Is the row a contingent value right, a right, a warrant or an escrow line filed as equity? A placeholder CUSIP or ISIN
+ * (`436CVR021`, `US009CVR0445`, `549ESC028`, `866CNT017`) says so; so does the name or title (`NOVO NORDISK A/S - CVR`,
+ * `XYZ INC RIGHTS`, `... WARRANT FEB 2026`, `Luby's Inc Escrow`), except on a CUSIP with the common-stock issue number 10
+ * (Schwab titles Enovix common stock 293594107 "Enovix Corp Warrants"). `CVR` as the first word is a company (CVR Energy).
+ */
+function nportIsRight(position: NportPosition): boolean {
+  if (/^[0-9A-Z]{3}(?:CVR|ESC|CNT)/.test(position.cusip) || /^US[0-9A-Z]{3}(?:CVR|ESC|CNT)/.test(position.isin)) return true;
+  if (/^[0-9A-Z]{6}10[0-9]$/.test(position.cusip)) return false;
+  return [position.name, position.title].some((text) => /\S\s*\bCVRS?\b|\bCONTINGENT\b|\bRIGHTS?\b|\bRTS\b|\bWARRANTS?\b|\bWTS\b|\bESCROW\b/i.test(text));
+}
+
+/**
+ * Exchange tickers for the positions, in their order ('' for none). A ticker is given only to a common-stock row (assetCat
+ * EC; a preferred EP, a CVR, right, warrant or escrow line gets none, a name match would give it the issuer's common ticker)
+ * traded in USD (or with no currency) whose ISIN is U.S. or missing: first the filer's own `<ticker value>`, else the
  * SEC issuer-name table (`names`) when the row has a CUSIP or a U.S. ISIN. A ticker that lands on two different securities
  * (Alphabet A and C, an ordinary share and its ADR) is dropped from the name-matched rows; when the filer itself gave it
  * to two securities it is dropped from all of them. Bonds, cash, funds and derivatives stay identifier-keyed.
@@ -2069,7 +2091,7 @@ export function nportTickers(positions: ReadonlyArray<NportPosition>, names: Map
   const fromFiler: boolean[] = [];
   const tickers = positions.map((position, index) => {
     fromFiler[index] = false;
-    const equity = (position.assetCat === 'EC' || position.assetCat === 'EP') && !position.derivative;
+    const equity = position.assetCat === 'EC' && !position.derivative && !nportIsRight(position);
     const usd = !position.currency || position.currency === 'USD';
     if (!equity || !usd || (position.isin && position.isin.slice(0, 2) !== 'US')) return '';
     if (/^[A-Z][A-Z0-9.-]{0,9}$/.test(position.ticker)) {
