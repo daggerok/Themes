@@ -305,7 +305,7 @@ function outputFundLine(index: number, total: number, ticker: string, status: st
     field('sec', outputPercent(data.secYield ?? data.yields?.secYield ?? metrics.secYield)),
     field('wp', data.workplaceRaw),
   ].filter(part => part !== '').join(' ');
-  return `[ ${String(index).padStart(width)}/${String(total).padEnd(width)}  ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
+  return `[ ${`${String(index).padStart(width)}/${total}`.padEnd(8)} ] ${outputClean(ticker).padEnd(5)} ${status.padEnd(9)}${detail ? ` ${detail}` : ''}${reason ? ` reason=${outputClean(reason)}` : ''}`;
 }
 function outputCreateReporter(root: URL | string, total: number) {
   let completed = 0;
@@ -334,7 +334,7 @@ function outputCounts(funds: number, holdings: number, history: number): string 
 /** Per-fund VERBOSE detail, tagged once. */
 function note(message: string): void { outputNote(`[ note     ] ${outputClean(message)}`); }
 
-/** The `[ config ]` block: the parsed config under the canonical environment names (SEC_UA is redacted). */
+/** The `[ config   ]` block: the parsed config under the canonical environment names (SEC_UA is redacted). */
 function printUpdaterConfig(config: UpdaterConfig): void {
   const range = (value?: Range) => ({ source: value ? `${value.min}:${value.max}` : ':' });
   const periods = (ranges: Partial<Record<string, Range>>) => Object.fromEntries(rangePeriods.map((period) => [period, range(ranges[period])]));
