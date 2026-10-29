@@ -151,6 +151,9 @@ const COLUMN_TOOLTIPS: Record<string, string> = {
   ISIN: 'ISIN — International Securities Identification Number. Themes ETFs publishes it per fund in the fund page Fund Details panel (for example US78433H3030); holdings rows carry a CUSIP, not an ISIN.',
   TER: 'Expense Ratio — Total Annual Fund Operating Expenses as a % of assets, from the Fund Details panel of the official Themes ETFs fund page.',
   NAV: 'NAV (Net Asset Value) — Per-share dollar value published as "Net Asset Value" in the Fund Details panel of the official Themes ETFs fund page.',
+  '52W Range': '52W Range - where the last close sits between the 52-week low (0%) and high (100%) of the daily closes; sorts by that position. A fund with less than 52 weeks of history shows the range since its first close (amber bar).',
+  '52W Low': '52W Low - lowest daily close of the last 52 weeks (or since the first close of a younger fund).',
+  '52W High': '52W High - highest daily close of the last 52 weeks (or since the first close of a younger fund).',
   'Net Assets': 'Net Assets (AUM) — Total net assets published in the Fund Details panel of the official Themes ETFs fund page and repeated on every row of the daily holdings CSV.',
   Weight: 'Weight — Position weight as a percentage of the fund\'s total net assets, from the Weightings column of the daily holdings CSV. Negative for written (sold) option positions.',
   'Weight Sum': 'Weight Sum — Summed weight of this holding across all selected ETFs (%).',
@@ -1041,6 +1044,9 @@ const FUND_FILTER_COLUMNS: FilterColumn[] = [
   { key: 'name', label: 'Fund Name', numeric: false, text: (fund: any) => fundNameText(fund.name, fund) },
   { key: 'category', label: 'Type', numeric: false, text: (fund: any) => String((categoryLabel(fund.category)) ?? '') },
   { key: 'navValue', label: 'NAV', numeric: true, text: (fund: any) => String((fund.nav || '—') ?? ''), value: (fund: any) => fund.navValue },
+  { key: 'range52w', label: '52W Range', numeric: true, text: (fund: any) => range52wText(fund.range52w), value: (fund: any) => fund.range52w },
+  { key: 'week52Low', label: '52W Low', numeric: true, text: (fund: any) => range52wPriceText(fund.week52Low), value: (fund: any) => fund.week52Low },
+  { key: 'week52High', label: '52W High', numeric: true, text: (fund: any) => range52wPriceText(fund.week52High), value: (fund: any) => fund.week52High },
   { key: 'aumValue', label: 'Net Assets', numeric: true, text: (fund: any) => String((formatMoney(fund.aumValue)) ?? ''), value: (fund: any) => fund.aumValue },
   { key: 'terValue', label: 'Expense', numeric: true, text: (fund: any) => String((fund.ter || '—') ?? ''), value: (fund: any) => fund.terValue },
   { key: 'dividendYield', label: 'Dividend Yield', numeric: true, text: (fund: any) => String((formatPercent(fund.dividendYield)) ?? ''), value: (fund: any) => fund.dividendYield },
@@ -1656,6 +1662,59 @@ function renderBusy(keepRows = true, after?: () => void): void {
   });
 }
 
+// ---- 52-week range (owner 2026-10-29): index.json metrics week52Low, week52High, range52w, range52wClose, range52wAsOf, range52wSince, range52wBasis ----
+// Shared block of .claude/tools/etfs/ui-std/range52w-block.tsx: never edit it in one repo. CSS: range52w.css.
+
+/** A finite number or null (local copy, so the block needs nothing else from the app). */
+function range52wNumber(value: unknown): number | null {
+  if (value === null || value === undefined || value === '') return null;
+  const parsed = typeof value === 'number' ? value : Number(String(value).replace(/[$,%\s]/g, ''));
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+/** The three sortable row fields from a row's metrics: spread them into the flattened table row. */
+function range52wRowFields(metrics: any): { range52w: number | null; week52Low: number | null; week52High: number | null } {
+  const m = metrics && typeof metrics === 'object' ? metrics : {};
+  return { range52w: range52wNumber(m.range52w), week52Low: range52wNumber(m.week52Low), week52High: range52wNumber(m.week52High) };
+}
+
+/** `42.25%` (the `%` type of the column filters), or an em dash. */
+function range52wText(value: unknown): string {
+  const parsed = range52wNumber(value);
+  return parsed === null ? '—' : `${parsed.toFixed(2)}%`;
+}
+
+/** A 52-week low or high as a share price: `$25.29`, `$1,234.50`, or an em dash. */
+function range52wPriceText(value: unknown): string {
+  const parsed = range52wNumber(value);
+  return parsed === null ? '—' : `$${parsed.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+/** Tooltip: what the percent means, the close it is measured on, the range, the basis, and the note for a young fund. */
+function range52wTitle(metrics: any): string {
+  const m = metrics && typeof metrics === 'object' ? metrics : {};
+  const position = range52wNumber(m.range52w);
+  if (position === null) return '52-week range: not available (no price history, or the price did not move)';
+  const lines = [
+    `52-week range: ${range52wText(position)} (0% = at the 52-week low, 100% = at the 52-week high)`,
+    `Close ${range52wPriceText(m.range52wClose)}${m.range52wAsOf ? ` on ${m.range52wAsOf}` : ''}`,
+    `Low ${range52wPriceText(m.week52Low)}, high ${range52wPriceText(m.week52High)} (daily ${m.range52wBasis ? String(m.range52wBasis).toLowerCase() : 'close'} prices)`,
+  ];
+  if (m.range52wSince) lines.push(`Less than 52 weeks of history: range since ${m.range52wSince}`);
+  return lines.join('\n');
+}
+
+/** The table cell: the percent as text (so sorting, filters and exports keep working) over a thin bar of the same value. */
+function range52wCellHtml(metrics: any, tdClass: string): string {
+  const m = metrics && typeof metrics === 'object' ? metrics : {};
+  const position = range52wNumber(m.range52w);
+  // a fund with less than 52 weeks of history gets an amber bar instead of a blue one; the text stays the bare percent
+  const young = position !== null && m.range52wSince ? ' range52w-young' : '';
+  const bar = position === null ? '' : ` range52w-cell${young}" style="--range52w:${Math.min(100, Math.max(0, position))}%`;
+  return `<td class="${tdClass}${bar}" title="${escapeHtml(range52wTitle(m))}">${range52wText(position)}</td>`;
+}
+// ---- end of 52-week range ----
+
 init();
 
 // =========================================================================
@@ -1824,6 +1883,7 @@ function normalizeFundRow(fund: IndexFund): FundRow {
     cagr5y: metrics.cagr5y ?? monthEnd.yr5 ?? null,
     cagr10y: metrics.cagr10y ?? monthEnd.yr10 ?? null,
     dividendYield: metrics.dividendYield ?? null,
+    ...range52wRowFields(metrics),
     dividendFrequency: formatDividendFrequency(fund.distributions && fund.distributions.frequency ? fund.distributions.frequency : '—'),
     secYield: metrics.secYield ?? null, // official Themes ETFs 30-Day SEC Yield from the fund page / lineup table.
     returnAsOf: monthEnd.asOfDate ?? null,
@@ -2651,6 +2711,9 @@ function renderFundsTable(): void {
       ${sortHeader('Fund Name', 'name')}
       ${sortHeader('Type', 'category')}
       ${sortHeader('NAV', 'navValue', true)}
+      ${sortHeader('52W Range', 'range52w', true)}
+      ${sortHeader('52W Low', 'week52Low', true)}
+      ${sortHeader('52W High', 'week52High', true)}
       ${sortHeader('Net Assets', 'aumValue', true)}
       ${sortHeader('Expense', 'terValue', true)}
       ${sortHeader('Dividend Yield', 'dividendYield', true)}
@@ -2693,6 +2756,9 @@ function renderFundsTable(): void {
           <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(fund.name)}">${escapeHtml(fund.name)}${closedBadgeHtml(fund)}</td>
           <td class="py-2.5 px-4 text-slate-600 dark:text-slate-300">${escapeHtml(categoryLabel(fund.category))}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${escapeHtml(fund.nav || '—')}</td>
+          ${range52wCellHtml(fund.metrics, 'py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300')}
+          <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${range52wPriceText(fund.week52Low)}</td>
+          <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${range52wPriceText(fund.week52High)}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${formatMoney(fund.aumValue)}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${escapeHtml(fund.ter || '—')}</td>
           <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${formatPercent(fund.dividendYield)}</td>
@@ -3984,7 +4050,7 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
   }
 
   return {
-    headers: ['#', 'Selected', 'Ticker', 'Fund Name', 'Type', 'NAV', 'Net Assets ($)', 'Expense (%)', 'Dividend Yield (%)', 'SEC Yield (%)', 'Frequency', 'YTD Return (%)', 'TR 1Y (%)', 'TR 3Y (%)', 'TR 5Y (%)', 'TR 10Y (%)', 'CAGR 3Y (%)', 'CAGR 5Y (%)', 'CAGR 10Y (%)', 'SI Ann. (%)', 'Return As Of', 'Inception', 'Holdings', 'History', 'As Of'],
+    headers: ['#', 'Selected', 'Ticker', 'Fund Name', 'Type', 'NAV', '52W Range (%)', '52W Low ($)', '52W High ($)', 'Net Assets ($)', 'Expense (%)', 'Dividend Yield (%)', 'SEC Yield (%)', 'Frequency', 'YTD Return (%)', 'TR 1Y (%)', 'TR 3Y (%)', 'TR 5Y (%)', 'TR 10Y (%)', 'CAGR 3Y (%)', 'CAGR 5Y (%)', 'CAGR 10Y (%)', 'SI Ann. (%)', 'Return As Of', 'Inception', 'Holdings', 'History', 'As Of'],
     rows: filteredCatalogFunds().map((fund, index) => [
       String(rowNumber(fund, index)),
       state.selected.has(fund.ticker) ? 'yes' : 'no',
@@ -3992,6 +4058,9 @@ function currentExportRows(): { headers: string[]; rows: string[][]; scope: stri
       fund.name,
       fund.category,
       fund.nav || '',
+      numberCell(fund.range52w),
+      numberCell(fund.week52Low),
+      numberCell(fund.week52High),
       numberCell(fund.aumValue),
       numberCell(fund.terValue),
       numberCell(fund.dividendYield),
