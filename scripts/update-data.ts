@@ -1678,7 +1678,8 @@ export async function main(env: Record<string, string | undefined> = process.env
     allEntries.set(ticker, stored ? { ...entry, metrics } : { ...entry, dataFile: null, metrics: emptyMetrics() });
   }
   for (const [ticker, entry] of updates) allEntries.set(ticker, entry);
-  const funds = markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS);
+  // the 52-week range of every row from its published history pages (shared range-52w block)
+  const funds = await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS));
   const counts = {
     funds: funds.length,
     holdings: funds.reduce((sum, entry) => sum + Number(entry.holdings ?? 0), 0),
@@ -2767,3 +2768,119 @@ export function newFundsLines(report: { published: ReadonlyArray<string>; pendin
   return lines;
 }
 // </fund-selection>
+
+// <range-52w> shared block of .claude/tools/etfs/etf-std/range-52w.block.ts, applied by apply-block.ts: never edit it in one repo
+export type Range52w = {
+  week52Low: number | null; week52High: number | null; range52w: number | null; range52wClose: number | null; range52wAsOf: string | null;
+  range52wSince: string | null; range52wBasis: string | null;
+};
+
+/**
+ * The price columns of a history sheet, tried in this order: the market close first, NAV only when no market price is
+ * published. A function, not a const: the block sits at the end of update-data.ts, after the top-level `await main()`.
+ */
+export function range52wColumns(): string[] {
+  return ['Close', 'Market Price', 'NAV', 'NAV per Share'];
+}
+
+/** The seven `metrics` keys of the 52-week range, all null: a catalog-only row and a fund without history carry this. */
+export function range52wEmpty(): Range52w {
+  return { week52Low: null, week52High: null, range52w: null, range52wClose: null, range52wAsOf: null, range52wSince: null, range52wBasis: null };
+}
+
+/**
+ * The 52-week range from the closes of a fund's published history sheet (owner, 2026-10-29: closes, not intraday highs and
+ * lows; no extra requests). `headers` are the sheet headers, `rows` objects keyed by header or arrays in header order.
+ * - Price column: the first of range52wColumns() with at least two numeric values (`$1,234.50` reads as 1234.5); the date
+ *   column is `Date`, else `As Of`, else the first header. Dates go through calendarIso, so every published format works
+ * - Window: the last dated close and every close up to 52 weeks (364 days) before it. `week52Low` and `week52High` are the
+ *   lowest and highest close of the window, `range52w` the position of the last close between them in percent
+ *   (0 = at the low, 100 = at the high, 2 decimals). The last close is part of the window, so it never falls outside;
+ *   `range52wClose` and `range52wAsOf` are that close and its date (it can differ from the row's closePrice source)
+ * - A fund with less than 52 weeks of history gets the range since its first published close, and `range52wSince` names
+ *   that date (owner: "alternative" - the range since launch with a note); a full window has `range52wSince: null`
+ * - `range52wBasis` names the column used. Fewer than two closes give range52wEmpty(); a flat window (high = low) keeps
+ *   low and high but `range52w: null`, never a made-up 0 or 50
+ */
+export function range52wMetrics(headers: string[], rows: unknown[]): Range52w {
+  const list = Array.isArray(headers) ? headers.map((h) => String(h)) : [];
+  const dateHeader = list.indexOf('Date') >= 0 ? 'Date' : list.indexOf('As Of') >= 0 ? 'As Of' : list[0];
+  const cell = (row: unknown, header: string): unknown => {
+    if (Array.isArray(row)) return row[list.indexOf(header)];
+    return row && typeof row === 'object' ? (row as Record<string, unknown>)[header] : undefined;
+  };
+  const price = (value: unknown): number | null => {
+    if (typeof value === 'number') return Number.isFinite(value) && value > 0 ? value : null;
+    const text = String(value === null || value === undefined ? '' : value).replace(/[$,\s]/g, '');
+    if (!/^\d+(\.\d+)?$/.test(text)) return null;
+    const number = Number(text);
+    return number > 0 ? number : null;
+  };
+  const all = Array.isArray(rows) ? rows : [], columns = range52wColumns();
+  for (let c = 0; c < columns.length; c++) {
+    const column = columns[c];
+    if (list.indexOf(column) < 0 || !dateHeader) continue;
+    const points: Array<{ date: string; close: number }> = [];
+    for (let i = 0; i < all.length; i++) {
+      const date = calendarIso(cell(all[i], dateHeader)), close = price(cell(all[i], column));
+      if (date && close !== null) points.push({ date, close });
+    }
+    if (points.length < 2) continue;
+    points.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+    const last = points[points.length - 1];
+    const end = Date.UTC(Number(last.date.slice(0, 4)), Number(last.date.slice(5, 7)) - 1, Number(last.date.slice(8, 10)));
+    const start = new Date(end - 364 * 86400000).toISOString().slice(0, 10);
+    const window = points.filter((p) => p.date >= start);
+    if (window.length < 2) continue;
+    let low = window[0].close, high = window[0].close;
+    for (let i = 1; i < window.length; i++) { low = Math.min(low, window[i].close); high = Math.max(high, window[i].close); }
+    const round = (value: number, digits: number): number => Number(value.toFixed(digits));
+    return {
+      week52Low: round(low, 4), week52High: round(high, 4),
+      range52w: high > low ? round(((last.close - low) / (high - low)) * 100, 2) : null, range52wClose: round(last.close, 4), range52wAsOf: last.date,
+      range52wSince: points[0].date > start ? points[0].date : null,
+      range52wBasis: column,
+    };
+  }
+  return range52wEmpty();
+}
+/**
+ * The index rows with the five 52-week keys in every `metrics`, computed from each fund's published history pages
+ * (`funds/<T>/history/*.json` under `feedRoot`, the folder of index.json). Call it on the final rows right before
+ * index.json is written: updated, unchanged and kept funds all get the range of the history they publish, a row without
+ * `dataFile` or without history pages gets range52wEmpty(). A row without a `metrics` object is left as it is. The seven
+ * keys go in front of `returnsBasis` and `performanceAsOf`, so those two stay the last keys of `metrics`.
+ */
+export async function withRange52w<T>(feedRoot: URL | string, funds: T[]): Promise<T[]> {
+  const fs = await import('node:fs/promises');
+  const { pathToFileURL } = await import('node:url');
+  const root = feedRoot instanceof URL ? new URL(feedRoot.href.replace(/\/?$/, '/')) : pathToFileURL(String(feedRoot).replace(/\/?$/, '/'));
+  const out: T[] = [];
+  for (const fund of Array.isArray(funds) ? funds : []) {
+    const row = fund as unknown as Record<string, unknown>;
+    if (!row || typeof row !== 'object' || !row.metrics || typeof row.metrics !== 'object') { out.push(fund); continue; }
+    let range = range52wEmpty();
+    const dataFile = typeof row.dataFile === 'string' ? row.dataFile : '';
+    if (dataFile) {
+      const dir = new URL(`${dataFile.replace(/^\.\//, '').replace(/[^/]*$/, '')}history/`, root);
+      const names = (await fs.readdir(dir).catch(() => [] as string[])).filter((name) => /\.json$/.test(name)).sort();
+      let headers: string[] = [];
+      const rows: unknown[] = [];
+      for (const name of names) {
+        const page = await fs.readFile(new URL(name, dir), 'utf8').then((text) => JSON.parse(text)).catch(() => null);
+        if (!page || !Array.isArray(page.rows)) continue;
+        if (!headers.length && Array.isArray(page.headers)) headers = page.headers;
+        for (const item of page.rows) rows.push(item);
+      }
+      range = range52wMetrics(headers, rows);
+    }
+    // the range keys go in front of returnsBasis and performanceAsOf, which stay the last two keys (metrics contract)
+    const metrics: Record<string, unknown> = {}, old = row.metrics as Record<string, unknown>, tail = ['returnsBasis', 'performanceAsOf'];
+    for (const key of Object.keys(old)) if (tail.indexOf(key) < 0 && !(key in range)) metrics[key] = old[key];
+    Object.assign(metrics, range);
+    for (const key of tail) if (key in old) metrics[key] = old[key];
+    out.push({ ...row, metrics } as unknown as T);
+  }
+  return out;
+}
+// </range-52w>
