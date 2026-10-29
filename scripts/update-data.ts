@@ -2854,7 +2854,7 @@ export function range52wMetrics(headers: string[], rows: unknown[]): Range52w {
 export async function withRange52w<T>(feedRoot: URL | string, funds: T[]): Promise<T[]> {
   const fs = await import('node:fs/promises');
   const { pathToFileURL } = await import('node:url');
-  const root = feedRoot instanceof URL ? new URL(feedRoot.href.replace(/\/?$/, '/')) : pathToFileURL(String(feedRoot).replace(/\/?$/, '/'));
+  const root = feedRoot instanceof URL ? new URL(feedRoot.href.replace(/\/?$/, '/')) : new URL(pathToFileURL(String(feedRoot).replace(/\/?$/, '/')).href); // global URL, also with older @types/node (Amplify)
   const out: T[] = [];
   for (const fund of Array.isArray(funds) ? funds : []) {
     const row = fund as unknown as Record<string, unknown>;
