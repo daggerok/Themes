@@ -1137,13 +1137,20 @@ export function pageFileName(index: number): string {
   return `${String(index).padStart(3, '0')}.json`;
 }
 
+/** Sorts object keys alphabetically, except inside a `metrics` object, which keeps the insertion order of the metrics contract. */
 function stableValue(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(stableValue);
   if (value && typeof value === 'object') {
     const record = value as Record<string, unknown>;
-    return Object.fromEntries(Object.keys(record).sort().map((key) => [key, stableValue(record[key])]));
+    return Object.fromEntries(Object.keys(record).sort().map((key) => [key, key === 'metrics' ? keepOrder(record[key]) : stableValue(record[key])]));
   }
   return value;
+}
+
+function keepOrder(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return stableValue(value);
+  const record = value as Record<string, unknown>;
+  return Object.fromEntries(Object.keys(record).map((key) => [key, stableValue(record[key])]));
 }
 
 export function stableStringify(value: unknown): string {
@@ -1154,9 +1161,16 @@ function comparable(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(comparable);
   if (value && typeof value === 'object') {
     const record = value as Record<string, unknown>;
-    return Object.fromEntries(Object.keys(record).filter((key) => !VOLATILE_KEYS.has(key)).sort().map((key) => [key, comparable(record[key])]));
+    return Object.fromEntries(Object.keys(record).filter((key) => !VOLATILE_KEYS.has(key)).sort().map((key) => [key, key === 'metrics' ? comparableOrdered(record[key]) : comparable(record[key])]));
   }
   return value;
+}
+
+/** A metrics object is compared with its key order, so a file written in the old alphabetical order is rewritten once; the order is built deterministically, so a rerun still writes nothing. */
+function comparableOrdered(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return comparable(value);
+  const record = value as Record<string, unknown>;
+  return Object.fromEntries(Object.keys(record).map((key) => [key, comparable(record[key])]));
 }
 
 export function samePublishedContent(previous: unknown, candidate: unknown): boolean {

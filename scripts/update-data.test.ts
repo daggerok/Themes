@@ -497,6 +497,7 @@ describe('pipeline', () => {
     for (const row of Object.values(by) as any[]) {
       expect(Object.keys(row.metrics).sort()).toEqual(keys);
       expect(row.metrics.returnsBasis).toBeTruthy();
+      expect(Object.keys(row.metrics).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
     }
     expect(box.logs.join('\n')).not.toContain('gmail.com');
   });
@@ -759,7 +760,12 @@ describe('pipeline 4', () => {
     const first = { generatedAt: '2026-09-29T00:00:00Z', nested: { catalogReadAt: 'a', beta: 2, alpha: 1 } };
     expect(samePublishedContent(first, { generatedAt: '2026-09-30T00:00:00Z', nested: { catalogReadAt: 'b', alpha: 1, beta: 2 } })).toBe(true);
     expect(samePublishedContent(first, { generatedAt: '2026-09-30T00:00:00Z', nested: { alpha: 1, beta: 3 } })).toBe(false);
+    // metrics is the exception: a different key order is a change, so old alphabetical files are rewritten once
+    expect(samePublishedContent({ metrics: { a: 1, b: 2 } }, { metrics: { b: 2, a: 1 } })).toBe(false);
+    expect(samePublishedContent({ metrics: { a: 1, b: 2 } }, { metrics: { a: 1, b: 2 } })).toBe(true);
     expect(stableStringify({ z: 1, a: { b: 2, a: 1 } })).toBe('{\n  "a": {\n    "a": 1,\n    "b": 2\n  },\n  "z": 1\n}\n');
+    // metrics keeps its insertion order, the rest of the tree stays sorted
+    expect(stableStringify({ row: { metrics: { z: 1, a: 2 }, b: 1, a: 0 } })).toBe('{\n  "row": {\n    "a": 0,\n    "b": 1,\n    "metrics": {\n      "z": 1,\n      "a": 2\n    }\n  }\n}\n');
   });
 
   test('a HISTORY_RANGE run after a full run keeps the older history and distributions and writes nothing (Q25)', async () => {
