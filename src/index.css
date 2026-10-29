@@ -337,3 +337,6 @@
 .clear-btn:focus-visible,.clear-row:focus-within{outline:2px solid #3b82f6;outline-offset:2px}
 @keyframes clearFade{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.clear-backdrop{animation:none}}
+/* 52-week range cell (ui-std range52w-block.tsx): a 3px bar under the percent, filled up to the position */
+.range52w-cell{background-image:linear-gradient(to right,rgb(59 130 246 / .7) 0 var(--range52w,0%),rgb(148 163 184 / .35) var(--range52w,0%) 100%);background-repeat:no-repeat;background-size:calc(100% - 2rem) 3px;background-position:1rem calc(100% - .3rem)}
+.range52w-cell.range52w-young{background-image:linear-gradient(to right,rgb(245 158 11 / .75) 0 var(--range52w,0%),rgb(148 163 184 / .35) var(--range52w,0%) 100%)}
