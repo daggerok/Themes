@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 26, 2026",
+  "asOfDate": "Oct 29, 2026",
   "aum": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$19.36M",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$20.30M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 19360894
+    "value": 20299892
   },
-  "aumValue": 19360894,
+  "aumValue": 20299892,
   "category": "Commodities",
-  "closePrice": "$85.57",
-  "closePriceValue": 85.57,
+  "closePrice": "$88.16",
+  "closePriceValue": 88.16,
   "dataFile": "./funds/AUMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-26T01:58:26Z",
+  "generatedAt": "2026-10-29T20:55:17Z",
   "history": {
-    "asOf": "2026-10-23",
-    "asOfDate": "Oct 23, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 718
+    "totalRows": 722
   },
   "holdings": {
-    "asOf": "2026-10-26",
-    "asOfDate": "Oct 26, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 0.93,
-    "distributionYieldText": "0.93%",
-    "dividendYield": 0.93,
+    "distributionYield": 0.91,
+    "distributionYieldText": "0.91%",
+    "dividendYield": 0.91,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.93%",
-    "performanceAsOf": "2026-10-23",
+    "dividendYieldText": "0.91%",
+    "performanceAsOf": "2026-10-29",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 8.16,
+    "tr1y": 13.25,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.93,
-    "yield12MText": "0.93%",
-    "ytd": -8.6
+    "yield12M": 0.91,
+    "yield12MText": "0.91%",
+    "ytd": -7.06
   },
   "name": "Gold Miners ETF",
   "nav": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$86.41",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$88.26",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 86.41
+    "value": 88.26
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 86.41,
+  "navValue": 88.26,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 23, 2026",
+      "asOfDate": "Oct 29, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 8.16,
+      "yr1": 13.25,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -8.6
+      "ytd": -7.06
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": "Oct 29, 2026",
     "display": "230,000",
     "value": 230000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AUMI",
-  "totalNetAssets": 19360894
+  "totalNetAssets": 20299892
 }

@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 26, 2026",
+  "asOfDate": "Oct 29, 2026",
   "aum": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$8.53M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
-    "value": 8526322
+    "asOfDate": "Oct 29, 2026",
+    "display": "$8.79M",
+    "source": "official Themes ETFs daily holdings CSV",
+    "value": 8788906
   },
-  "aumValue": 8526322,
+  "aumValue": 8788906,
   "category": "Commodities",
-  "closePrice": "$61.00",
-  "closePriceValue": 61,
+  "closePrice": "$62.92",
+  "closePriceValue": 62.92,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-10-26T23:38:13Z",
+  "generatedAt": "2026-10-29T20:55:18Z",
   "history": {
-    "asOf": "2026-10-26",
-    "asOfDate": "Oct 26, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 622
+    "totalRows": 625
   },
   "holdings": {
-    "asOf": "2026-10-26",
-    "asOfDate": "Oct 26, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.71,
-    "distributionYieldText": "4.71%",
-    "dividendYield": 4.71,
+    "distributionYield": 4.57,
+    "distributionYieldText": "4.57%",
+    "dividendYield": 4.57,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "4.71%",
-    "performanceAsOf": "2026-10-26",
+    "dividendYieldText": "4.57%",
+    "performanceAsOf": "2026-10-29",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 21.5,
+    "tr1y": 23.5,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.71,
-    "yield12MText": "4.71%",
-    "ytd": -6.11
+    "yield12M": 4.57,
+    "yield12MText": "4.57%",
+    "ytd": -4.96
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$60.90",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$62.78",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 60.9
+    "value": 62.78
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 60.9,
+  "navValue": 62.78,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 26, 2026",
+      "asOfDate": "Oct 29, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 21.5,
+      "yr1": 23.5,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -6.11
+      "ytd": -4.96
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": "Oct 29, 2026",
     "display": "140,000",
     "value": 140000
   },
@@ -121,19 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AGMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Silver-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AGMI",
-  "totalNetAssets": 8526322
+  "totalNetAssets": 8788906
 }

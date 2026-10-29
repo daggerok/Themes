@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 26, 2026",
+  "asOfDate": "Oct 29, 2026",
   "aum": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$10.88M",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$11.33M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 10882608
+    "value": 11333880
   },
-  "aumValue": 10882608,
+  "aumValue": 11333880,
   "category": "Commodities",
-  "closePrice": "$45.51",
-  "closePriceValue": 45.51,
+  "closePrice": "$47.27",
+  "closePriceValue": 47.27,
   "dataFile": "./funds/COPA/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/copa",
-  "generatedAt": "2026-10-26T01:58:30Z",
+  "generatedAt": "2026-10-29T20:55:21Z",
   "history": {
-    "asOf": "2026-10-23",
-    "asOfDate": "Oct 23, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/COPA",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 523
+    "totalRows": 527
   },
   "holdings": {
-    "asOf": "2026-10-26",
-    "asOfDate": "Oct 26, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 4.03,
-    "distributionYieldText": "4.03%",
-    "dividendYield": 4.03,
+    "distributionYield": 3.9,
+    "distributionYieldText": "3.90%",
+    "dividendYield": 3.9,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "4.03%",
-    "performanceAsOf": "2026-10-23",
+    "dividendYieldText": "3.90%",
+    "performanceAsOf": "2026-10-29",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 27.15,
+    "tr1y": 26.96,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 4.03,
-    "yield12MText": "4.03%",
-    "ytd": 4.81
+    "yield12M": 3.9,
+    "yield12MText": "3.90%",
+    "ytd": 7.36
   },
   "name": "Copper Miners ETF",
   "nav": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$45.62",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$47.22",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 45.62
+    "value": 47.22
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 45.62,
+  "navValue": 47.22,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 23, 2026",
+      "asOfDate": "Oct 29, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 27.15,
+      "yr1": 26.96,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 4.81
+      "ytd": 7.36
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": "Oct 29, 2026",
     "display": "240,000",
     "value": 240000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "COPA",
-  "totalNetAssets": 10882608
+  "totalNetAssets": 11333880
 }

@@ -9,6 +9,30 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "27.96",
+      "Close": "27.96",
+      "Date": "2026-10-29",
+      "Volume": "11451"
+    },
+    {
+      "Adj Close": "28.94",
+      "Close": "28.94",
+      "Date": "2026-10-28",
+      "Volume": "3100"
+    },
+    {
+      "Adj Close": "28.55",
+      "Close": "28.55",
+      "Date": "2026-10-27",
+      "Volume": "7800"
+    },
+    {
+      "Adj Close": "29.14",
+      "Close": "29.14",
+      "Date": "2026-10-26",
+      "Volume": "2400"
+    },
+    {
       "Adj Close": "29.21",
       "Close": "29.21",
       "Date": "2026-10-23",
@@ -1948,5 +1972,5 @@
     }
   ],
   "ticker": "DRGN",
-  "totalRows": 323
+  "totalRows": 327
 }

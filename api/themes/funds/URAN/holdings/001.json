@@ -14,88 +14,88 @@
     {
       "Asset Category": "Industrials",
       "Identifier": "BD5CGG9",
-      "Market Value": "$203581.80",
+      "Market Value": "$199502.91",
       "Name": "RongFa Nuclear Equipment Co Ltd",
       "Shares Held": "254,800",
       "Ticker": "002366 C2",
-      "Weight": "0.94%"
+      "Weight": "0.86%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "BKT6GZ5",
-      "Market Value": "$749114.29",
+      "Market Value": "$751218.79",
       "Name": "CGN Power Co Ltd",
       "Shares Held": "1,095,900",
       "Ticker": "003816 C2",
-      "Weight": "3.44%"
+      "Weight": "3.23%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B755514",
-      "Market Value": "$571731.25",
+      "Market Value": "$612133.08",
       "Name": "CGN Mining Co Ltd",
       "Shares Held": "2,192,820",
       "Ticker": "1164 HK",
-      "Weight": "2.63%"
+      "Weight": "2.64%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "BYQDNJ0",
-      "Market Value": "$768235.11",
+      "Market Value": "$795044.44",
       "Name": "China National Nuclear Power Co Ltd",
       "Shares Held": "548,700",
       "Ticker": "601985 C1",
-      "Weight": "3.53%"
+      "Weight": "3.42%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "BWNN2V4",
-      "Market Value": "$242259.70",
+      "Market Value": "$238511.02",
       "Name": "Kyuden Holdings Inc",
       "Shares Held": "18,800",
       "Ticker": "642A JP",
-      "Weight": "1.11%"
+      "Weight": "1.03%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "BNHPPP8",
-      "Market Value": "$183104.36",
+      "Market Value": "$178780.08",
       "Name": "Chengdu Guoguang Electric Co Ltd",
       "Shares Held": "29,000",
       "Ticker": "688776 C1",
-      "Weight": "0.84%"
+      "Weight": "0.77%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "025537101",
-      "Market Value": "$929358.54",
+      "Market Value": "$918681.20",
       "Name": "American Electric Power Co Inc",
       "Shares Held": "7,166",
       "Ticker": "AEP",
-      "Weight": "4.27%"
+      "Weight": "3.96%"
     },
     {
       "Asset Category": "#N/A N/A",
       "Identifier": "BSQM0M7",
-      "Market Value": "$56899.08",
+      "Market Value": "$65493.82",
       "Name": "Atomic Eagle Ltd",
       "Shares Held": "237,798",
       "Ticker": "AEU AU",
-      "Weight": "0.26%"
+      "Weight": "0.28%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B55ZH25",
-      "Market Value": "$132843.23",
+      "Market Value": "$150506.48",
       "Name": "Alligator Energy Ltd",
       "Shares Held": "6,089,191",
       "Ticker": "AGE AU",
-      "Weight": "0.61%"
+      "Weight": "0.65%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BV87YW9",
-      "Market Value": "$18960.09",
+      "Market Value": "$21579.70",
       "Name": "Asarian Energy Ltd",
       "Shares Held": "72,760",
       "Ticker": "ARN CN",
@@ -104,43 +104,43 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$-1150.40",
+      "Market Value": "$-1154.40",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "-1,634.67",
       "Ticker": "AUD",
-      "Weight": "-0.01%"
+      "Weight": "0.00%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B07DXJ1",
-      "Market Value": "$458434.44",
+      "Market Value": "$561237.22",
       "Name": "Bannerman Energy Ltd",
       "Shares Held": "217,139",
       "Ticker": "BMN AU",
-      "Weight": "2.11%"
+      "Weight": "2.42%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B1XLCQ6",
-      "Market Value": "$531360.60",
+      "Market Value": "$659322.61",
       "Name": "Boss Energy Ltd",
       "Shares Held": "626,591",
       "Ticker": "BOE AU",
-      "Weight": "2.44%"
+      "Weight": "2.84%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "05605H100",
-      "Market Value": "$398359.08",
+      "Market Value": "$422694.72",
       "Name": "BWX Technologies Inc",
       "Shares Held": "3,132",
       "Ticker": "BWXT",
-      "Weight": "1.83%"
+      "Weight": "1.82%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$681.29",
+      "Market Value": "$681.99",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "954.28",
       "Ticker": "CAD",
@@ -149,97 +149,97 @@
     {
       "Asset Category": "Energy",
       "Identifier": "2166160",
-      "Market Value": "$1861288.99",
+      "Market Value": "$1983676.43",
       "Name": "Cameco Corp",
       "Shares Held": "23,673",
       "Ticker": "CCO CN",
-      "Weight": "8.55%"
+      "Weight": "8.54%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "21037T109",
-      "Market Value": "$1933570.05",
+      "Market Value": "$1968892.32",
       "Name": "Constellation Energy Corp",
       "Shares Held": "7,629",
       "Ticker": "CEG",
-      "Weight": "8.88%"
+      "Weight": "8.48%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCNY",
-      "Market Value": "$1480.47",
+      "Market Value": "$-0.07",
       "Name": "CHINESE YUAN",
-      "Shares Held": "9,876.14",
+      "Shares Held": "-0.46",
       "Ticker": "CNY",
-      "Weight": "0.01%"
+      "Weight": "0.00%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B04D4W4",
-      "Market Value": "$101471.97",
+      "Market Value": "$121037.56",
       "Name": "Cauldron Energy Ltd",
       "Shares Held": "2,720,521",
       "Ticker": "CXU AU",
-      "Weight": "0.47%"
+      "Weight": "0.52%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BYV3KD8",
-      "Market Value": "$62849.13",
+      "Market Value": "$73579.27",
       "Name": "DevEx Resources Ltd",
       "Shares Held": "595,374",
       "Ticker": "DEV AU",
-      "Weight": "0.29%"
+      "Weight": "0.32%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "2003223",
-      "Market Value": "$468171.29",
+      "Market Value": "$517988.69",
       "Name": "Denison Mines Corp",
       "Shares Held": "215,713",
       "Ticker": "DML CN",
-      "Weight": "2.15%"
+      "Weight": "2.23%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "26441C204",
-      "Market Value": "$927476.58",
+      "Market Value": "$917012.97",
       "Name": "Duke Energy Corp",
       "Shares Held": "7,421",
       "Ticker": "DUK",
-      "Weight": "4.26%"
+      "Weight": "3.95%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "6480275",
-      "Market Value": "$273401.22",
+      "Market Value": "$325159.21",
       "Name": "Deep Yellow Ltd",
       "Shares Held": "575,544",
       "Ticker": "DYL AU",
-      "Weight": "1.26%"
+      "Weight": "1.40%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "5271782",
-      "Market Value": "$355319.95",
+      "Market Value": "$350122.74",
       "Name": "Endesa SA",
       "Shares Held": "7,263",
       "Ticker": "ELE SM",
-      "Weight": "1.63%"
+      "Weight": "1.51%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BN48958",
-      "Market Value": "$377559.01",
+      "Market Value": "$440292.58",
       "Name": "Encore Energy Corp",
       "Shares Held": "545,203",
       "Ticker": "EU CN",
-      "Weight": "1.73%"
+      "Weight": "1.90%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$-442.54",
+      "Market Value": "$-441.21",
       "Name": "EURO",
       "Shares Held": "-395.3",
       "Ticker": "EUR",
@@ -248,16 +248,16 @@
     {
       "Asset Category": "Money Market",
       "Identifier": "31846V328",
-      "Market Value": "$68537.57",
+      "Market Value": "$70016.95",
       "Name": "First American Treasury Obligations Fund 01/01/2040",
-      "Shares Held": "68,537.57",
+      "Shares Held": "70,016.95",
       "Ticker": "FXFXX",
-      "Weight": "0.31%"
+      "Weight": "0.30%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$-842.77",
+      "Market Value": "$-840.05",
       "Name": "BRITISH POUNDS",
       "Shares Held": "-630.22",
       "Ticker": "GBP",
@@ -275,25 +275,25 @@
     {
       "Asset Category": "Industrials",
       "Identifier": "881454102",
-      "Market Value": "$55048.00",
+      "Market Value": "$65861.00",
       "Name": "Terrestrial Energy Inc",
       "Shares Held": "19,660",
       "Ticker": "IMSR",
-      "Weight": "0.25%"
+      "Weight": "0.28%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BTTRKM6",
-      "Market Value": "$461343.05",
+      "Market Value": "$529282.82",
       "Name": "IsoEnergy Ltd",
       "Shares Held": "58,269",
       "Ticker": "ISO CN",
-      "Weight": "2.12%"
+      "Weight": "2.28%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHJPY",
-      "Market Value": "$-11.83",
+      "Market Value": "$-11.74",
       "Name": "JAPANESE YEN",
       "Shares Held": "-1,855",
       "Ticker": "JPY",
@@ -302,34 +302,34 @@
     {
       "Asset Category": "Energy",
       "Identifier": "BGXQL36",
-      "Market Value": "$972765.50",
+      "Market Value": "$1075764.20",
       "Name": "NAC Kazatomprom JSC",
       "Shares Held": "16,349",
       "Ticker": "KAP LI",
-      "Weight": "4.47%"
+      "Weight": "4.63%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "2507952",
-      "Market Value": "$28055.90",
+      "Market Value": "$31479.86",
       "Name": "Laramide Resources Ltd",
       "Shares Held": "86,369",
       "Ticker": "LAM CN",
-      "Weight": "0.13%"
+      "Weight": "0.14%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "15643U104",
-      "Market Value": "$333167.40",
+      "Market Value": "$364126.44",
       "Name": "Centrus Energy Corp",
       "Shares Held": "3,252",
       "Ticker": "LEU",
-      "Weight": "1.53%"
+      "Weight": "1.57%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "53224K302",
-      "Market Value": "$452638.43",
+      "Market Value": "$483762.88",
       "Name": "Lightbridge Corp",
       "Shares Held": "88,927",
       "Ticker": "LTBR",
@@ -338,178 +338,178 @@
     {
       "Asset Category": "Energy",
       "Identifier": "2817833",
-      "Market Value": "$51241.50",
+      "Market Value": "$58622.40",
       "Name": "Mega Uranium Ltd",
       "Shares Held": "157,745",
       "Ticker": "MGA CN",
-      "Weight": "0.24%"
+      "Weight": "0.25%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "60471A101",
-      "Market Value": "$439945.86",
+      "Market Value": "$497575.50",
       "Name": "Mirion Technologies Inc",
       "Shares Held": "29,706",
       "Ticker": "MIR",
-      "Weight": "2.02%"
+      "Weight": "2.14%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "63010H108",
-      "Market Value": "$466384.64",
+      "Market Value": "$475206.06",
       "Name": "NANO Nuclear Energy Inc",
       "Shares Held": "38,354",
       "Ticker": "NNE",
-      "Weight": "2.14%"
+      "Weight": "2.05%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "269710109",
-      "Market Value": "$237221.84",
+      "Market Value": "$243177.20",
       "Name": "Eagle Nuclear Energy Corp",
       "Shares Held": "49,628",
       "Ticker": "NUCL",
-      "Weight": "1.09%"
+      "Weight": "1.05%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B987K72",
-      "Market Value": "$628591.13",
+      "Market Value": "$690510.87",
       "Name": "NexGen Energy Ltd",
       "Shares Held": "77,234",
       "Ticker": "NXE CN",
-      "Weight": "2.89%"
+      "Weight": "2.97%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "02156V109",
-      "Market Value": "$490637.00",
+      "Market Value": "$504974.40",
       "Name": "Oklo Inc",
       "Shares Held": "18,620",
       "Ticker": "OKLO",
-      "Weight": "2.25%"
+      "Weight": "2.17%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "69331C108",
-      "Market Value": "$477843.42",
+      "Market Value": "$497517.10",
       "Name": "PG&E Corp",
       "Shares Held": "37,834",
       "Ticker": "PCG",
-      "Weight": "2.20%"
+      "Weight": "2.14%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "6668468",
-      "Market Value": "$426809.26",
+      "Market Value": "$489924.91",
       "Name": "Paladin Energy Ltd",
       "Shares Held": "88,151",
       "Ticker": "PDN AU",
-      "Weight": "1.96%"
+      "Weight": "2.11%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "744573106",
-      "Market Value": "$789987.38",
+      "Market Value": "$794923.43",
       "Name": "Public Service Enterprise Group Inc",
       "Shares Held": "10,969",
       "Ticker": "PEG",
-      "Weight": "3.63%"
+      "Weight": "3.42%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BNQNDF9",
-      "Market Value": "$95499.85",
+      "Market Value": "$103565.38",
       "Name": "Atha Energy Corp",
       "Shares Held": "159,246",
       "Ticker": "SASK CN",
-      "Weight": "0.44%"
+      "Weight": "0.45%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "6111735",
-      "Market Value": "$239097.96",
+      "Market Value": "$263029.29",
       "Name": "Silex Systems Ltd",
       "Shares Held": "105,512",
       "Ticker": "SLX AU",
-      "Weight": "1.10%"
+      "Weight": "1.13%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "67079K100",
-      "Market Value": "$414060.94",
+      "Market Value": "$436380.21",
       "Name": "NuScale Power Corp",
       "Shares Held": "76,963",
       "Ticker": "SMR",
-      "Weight": "1.90%"
+      "Weight": "1.88%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "87422Q109",
-      "Market Value": "$423331.81",
+      "Market Value": "$448945.25",
       "Name": "Talen Energy Corp",
       "Shares Held": "1,291",
       "Ticker": "TLN",
-      "Weight": "1.94%"
+      "Weight": "1.93%"
     },
     {
       "Asset Category": "Utilities",
       "Identifier": "69349H107",
-      "Market Value": "$247938.85",
+      "Market Value": "$249343.00",
       "Name": "TXNM Energy Inc",
       "Shares Held": "4,255",
       "Ticker": "TXNM",
-      "Weight": "1.14%"
+      "Weight": "1.07%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "916896103",
-      "Market Value": "$510986.70",
+      "Market Value": "$579813.48",
       "Name": "Uranium Energy Corp",
       "Shares Held": "69,522",
       "Ticker": "UEC",
-      "Weight": "2.35%"
+      "Weight": "2.50%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "B0CJW86",
-      "Market Value": "$393276.63",
+      "Market Value": "$445943.13",
       "Name": "Ur-Energy Inc",
       "Shares Held": "487,489",
       "Ticker": "URE CN",
-      "Weight": "1.81%"
+      "Weight": "1.92%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "91703D100",
-      "Market Value": "$526220.31",
+      "Market Value": "$547698.69",
       "Name": "Uranium Royalty Corp",
       "Shares Held": "153,417",
       "Ticker": "UROY",
-      "Weight": "2.42%"
+      "Weight": "2.36%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "292671708",
-      "Market Value": "$297190.40",
+      "Market Value": "$331572.80",
       "Name": "Energy Fuels Inc/Canada",
       "Shares Held": "39,520",
       "Ticker": "UUUU",
-      "Weight": "1.37%"
+      "Weight": "1.43%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BR1FDY7",
-      "Market Value": "$18566.27",
+      "Market Value": "$18936.18",
       "Name": "Verdera Energy Corp",
       "Shares Held": "98,135",
       "Ticker": "V CN",
-      "Weight": "0.09%"
+      "Weight": "0.08%"
     },
     {
       "Asset Category": "Energy",
       "Identifier": "BF50RG4",
-      "Market Value": "$618306.50",
+      "Market Value": "$660334.30",
       "Name": "Yellow Cake PLC",
       "Shares Held": "91,740",
       "Ticker": "YCA LN",
@@ -518,9 +518,9 @@
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$-354.60",
+      "Market Value": "$-1010.42",
       "Name": "Cash & Other",
-      "Shares Held": "-354.6",
+      "Shares Held": "-1,010.42",
       "Ticker": "Cash&Other",
       "Weight": "0.00%"
     }

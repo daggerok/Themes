@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Oct 26, 2026",
+  "asOfDate": "Oct 29, 2026",
   "aum": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$38.20M",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$39.08M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 38204010
+    "value": 39082550
   },
-  "aumValue": 38204010,
+  "aumValue": 39082550,
   "category": "Thematic",
-  "closePrice": "$59.44",
-  "closePriceValue": 59.44,
+  "closePrice": "$60.12",
+  "closePriceValue": 60.12,
   "dataFile": "./funds/GSIB/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-10-26T01:58:30Z",
+  "generatedAt": "2026-10-29T20:55:23Z",
   "history": {
-    "asOf": "2026-10-23",
-    "asOfDate": "Oct 23, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 716
+    "totalRows": 720
   },
   "holdings": {
-    "asOf": "2026-10-26",
-    "asOfDate": "Oct 26, 2026",
+    "asOf": "2026-10-29",
+    "asOfDate": "Oct 29, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -59,44 +59,44 @@
     "cagr10y": null,
     "cagr3y": null,
     "cagr5y": null,
-    "distributionYield": 1.68,
-    "distributionYieldText": "1.68%",
-    "dividendYield": 1.68,
+    "distributionYield": 1.66,
+    "distributionYieldText": "1.66%",
+    "dividendYield": 1.66,
     "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "1.68%",
-    "performanceAsOf": "2026-10-23",
+    "dividendYieldText": "1.66%",
+    "performanceAsOf": "2026-10-29",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
     "secYield": null,
     "secYieldText": "—",
     "siAnn": null,
     "tr10y": null,
-    "tr1y": 26.1,
+    "tr1y": 28.7,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 1.68,
-    "yield12MText": "1.68%",
-    "ytd": 11.7
+    "yield12M": 1.66,
+    "yield12MText": "1.66%",
+    "ytd": 15.7
   },
   "name": "Global Systemically Important Banks ETF",
   "nav": {
-    "asOfDate": "Oct 26, 2026",
-    "display": "$59.40",
+    "asOfDate": "Oct 29, 2026",
+    "display": "$60.13",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 59.4
+    "value": 60.13
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 59.4,
+  "navValue": 60.13,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 23, 2026",
+      "asOfDate": "Oct 29, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 26.1,
+      "yr1": 28.7,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 11.7
+      "ytd": 15.7
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Oct 26, 2026",
+    "asOfDate": "Oct 29, 2026",
     "display": "650,000",
     "value": 650000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "GSIB",
-  "totalNetAssets": 38204010
+  "totalNetAssets": 39082550
 }

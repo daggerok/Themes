@@ -9,6 +9,30 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "37.28",
+      "Close": "37.28",
+      "Date": "2026-10-29",
+      "Volume": "4294"
+    },
+    {
+      "Adj Close": "38.98",
+      "Close": "38.98",
+      "Date": "2026-10-28",
+      "Volume": "4300"
+    },
+    {
+      "Adj Close": "37.89",
+      "Close": "37.89",
+      "Date": "2026-10-27",
+      "Volume": "4200"
+    },
+    {
+      "Adj Close": "37.99",
+      "Close": "37.99",
+      "Date": "2026-10-26",
+      "Volume": "6000"
+    },
+    {
       "Adj Close": "37.26",
       "Close": "37.26",
       "Date": "2026-10-23",
@@ -3790,5 +3814,5 @@
     }
   ],
   "ticker": "BOTT",
-  "totalRows": 630
+  "totalRows": 634
 }

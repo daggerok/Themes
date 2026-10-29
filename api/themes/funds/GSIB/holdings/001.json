@@ -14,7 +14,7 @@
     {
       "Asset Category": "Financials",
       "Identifier": "B60LZR6",
-      "Market Value": "$1534628.92",
+      "Market Value": "$1572760.34",
       "Name": "Agricultural Bank of China Ltd",
       "Shares Held": "1,829,287",
       "Ticker": "1288 HK",
@@ -23,97 +23,97 @@
     {
       "Asset Category": "Financials",
       "Identifier": "B0B8Z29",
-      "Market Value": "$1485377.20",
+      "Market Value": "$1526094.43",
       "Name": "Bank of Communications Co Ltd",
       "Shares Held": "1,431,254",
       "Ticker": "3328 HK",
-      "Weight": "3.89%"
+      "Weight": "3.90%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "B154564",
-      "Market Value": "$1477186.06",
+      "Market Value": "$1497936.78",
       "Name": "Bank of China Ltd",
       "Shares Held": "1,945,619",
       "Ticker": "3988 HK",
-      "Weight": "3.87%"
+      "Weight": "3.83%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "B0LMTQ3",
-      "Market Value": "$1502758.48",
+      "Market Value": "$1526271.25",
       "Name": "China Construction Bank Corp",
       "Shares Held": "1,207,039",
       "Ticker": "939 HK",
-      "Weight": "3.93%"
+      "Weight": "3.91%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "7262610",
-      "Market Value": "$1174244.72",
+      "Market Value": "$1196234.11",
       "Name": "Credit Agricole SA",
       "Shares Held": "70,302",
       "Ticker": "ACA FP",
-      "Weight": "3.07%"
+      "Weight": "3.06%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "060505104",
-      "Market Value": "$1294942.72",
+      "Market Value": "$1302370.20",
       "Name": "Bank of America Corp",
       "Shares Held": "25,612",
       "Ticker": "BAC",
-      "Weight": "3.39%"
-    },
-    {
-      "Asset Category": "Financials",
-      "Identifier": "06738E204",
-      "Market Value": "$1271985.66",
-      "Name": "Barclays PLC",
-      "Shares Held": "58,509",
-      "Ticker": "BCS",
       "Weight": "3.33%"
     },
     {
       "Asset Category": "Financials",
+      "Identifier": "06738E204",
+      "Market Value": "$1339271.01",
+      "Name": "Barclays PLC",
+      "Shares Held": "58,509",
+      "Ticker": "BCS",
+      "Weight": "3.43%"
+    },
+    {
+      "Asset Category": "Financials",
       "Identifier": "05565A202",
-      "Market Value": "$1186520.40",
+      "Market Value": "$1239254.64",
       "Name": "BNP Paribas SA",
       "Shares Held": "25,353",
       "Ticker": "BNPQY",
-      "Weight": "3.11%"
+      "Weight": "3.17%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "064058100",
-      "Market Value": "$1397800.96",
+      "Market Value": "$1435973.76",
       "Name": "Bank of New York Mellon Corp/The",
       "Shares Held": "9,664",
       "Ticker": "BNY",
-      "Weight": "3.66%"
+      "Weight": "3.67%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "172967424",
-      "Market Value": "$1345516.10",
+      "Market Value": "$1384447.05",
       "Name": "Citigroup Inc",
       "Shares Held": "11,155",
       "Ticker": "C",
-      "Weight": "3.52%"
+      "Weight": "3.54%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "D18190898",
-      "Market Value": "$1205973.60",
+      "Market Value": "$1295262.03",
       "Name": "Deutsche Bank AG",
       "Shares Held": "38,653",
       "Ticker": "DB",
-      "Weight": "3.16%"
+      "Weight": "3.31%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$51146.80",
+      "Market Value": "$50993.81",
       "Name": "EURO",
       "Shares Held": "45,687.39",
       "Ticker": "EUR",
@@ -122,34 +122,34 @@
     {
       "Asset Category": "Money Market",
       "Identifier": "31846V328",
-      "Market Value": "$81874.79",
+      "Market Value": "$122336.75",
       "Name": "First American Treasury Obligations Fund 01/01/2040",
-      "Shares Held": "81,874.79",
+      "Shares Held": "122,336.75",
       "Ticker": "FXFXX",
-      "Weight": "0.21%"
+      "Weight": "0.31%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "5966516",
-      "Market Value": "$1172081.30",
+      "Market Value": "$1213430.08",
       "Name": "Societe Generale SA",
       "Shares Held": "17,549",
       "Ticker": "GLE FP",
-      "Weight": "3.07%"
+      "Weight": "3.10%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "38141G104",
-      "Market Value": "$1386201.44",
+      "Market Value": "$1464544.11",
       "Name": "Goldman Sachs Group Inc/The",
       "Shares Held": "1,583",
       "Ticker": "GS",
-      "Weight": "3.63%"
+      "Weight": "3.75%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHHKD",
-      "Market Value": "$994.70",
+      "Market Value": "$994.48",
       "Name": "HONG KONG DOLLAR",
       "Shares Held": "7,801.86",
       "Ticker": "HKD",
@@ -158,34 +158,34 @@
     {
       "Asset Category": "Financials",
       "Identifier": "404280406",
-      "Market Value": "$1333358.72",
+      "Market Value": "$1269984.48",
       "Name": "HSBC Holdings PLC",
       "Shares Held": "14,704",
       "Ticker": "HSBC",
-      "Weight": "3.49%"
+      "Weight": "3.25%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "455807107",
-      "Market Value": "$1433875.96",
+      "Market Value": "$1509302.19",
       "Name": "Industrial & Commercial Bank of China Ltd",
       "Shares Held": "77,759",
       "Ticker": "IDCBY",
-      "Weight": "3.75%"
+      "Weight": "3.86%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "456837103",
-      "Market Value": "$1298371.52",
+      "Market Value": "$1341188.42",
       "Name": "ING Groep NV",
       "Shares Held": "40,778",
       "Ticker": "ING",
-      "Weight": "3.40%"
+      "Weight": "3.43%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "46625H100",
-      "Market Value": "$1409546.58",
+      "Market Value": "$1442364.30",
       "Name": "JPMORGAN CHASE & CO.",
       "Shares Held": "4,251",
       "Ticker": "JPM",
@@ -194,34 +194,34 @@
     {
       "Asset Category": "Financials",
       "Identifier": "60687Y109",
-      "Market Value": "$1298180.07",
+      "Market Value": "$1319884.23",
       "Name": "Mizuho Financial Group Inc",
       "Shares Held": "135,651",
       "Ticker": "MFG",
-      "Weight": "3.40%"
+      "Weight": "3.38%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "617446448",
-      "Market Value": "$1315482.21",
+      "Market Value": "$1393462.77",
       "Name": "Morgan Stanley",
       "Shares Held": "7,329",
       "Ticker": "MS",
-      "Weight": "3.44%"
+      "Weight": "3.57%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "606822104",
-      "Market Value": "$1347658.27",
+      "Market Value": "$1372603.06",
       "Name": "Mitsubishi UFJ Financial Group Inc",
       "Shares Held": "63,961",
       "Ticker": "MUFG",
-      "Weight": "3.53%"
+      "Weight": "3.51%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "780087102",
-      "Market Value": "$1467482.95",
+      "Market Value": "$1501783.18",
       "Name": "Royal Bank of Canada",
       "Shares Held": "7,334",
       "Ticker": "RY",
@@ -230,74 +230,74 @@
     {
       "Asset Category": "Financials",
       "Identifier": "05964H105",
-      "Market Value": "$1322032.08",
+      "Market Value": "$1203625.78",
       "Name": "Banco Santander SA",
       "Shares Held": "102,962",
       "Ticker": "SAN",
-      "Weight": "3.46%"
+      "Weight": "3.08%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "853254100",
-      "Market Value": "$1271723.66",
+      "Market Value": "$1346087.78",
       "Name": "Standard Chartered PLC",
       "Shares Held": "24,302",
       "Ticker": "SCBFY",
-      "Weight": "3.33%"
+      "Weight": "3.44%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "86562M209",
-      "Market Value": "$1342272.40",
+      "Market Value": "$1361447.72",
       "Name": "Sumitomo Mitsui Financial Group Inc",
       "Shares Held": "56,398",
       "Ticker": "SMFG",
-      "Weight": "3.51%"
+      "Weight": "3.48%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "857477103",
-      "Market Value": "$1361101.30",
+      "Market Value": "$1407409.40",
       "Name": "State Street Corp",
       "Shares Held": "8,110",
       "Ticker": "STT",
-      "Weight": "3.56%"
+      "Weight": "3.60%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "891160509",
-      "Market Value": "$1531955.34",
+      "Market Value": "$1554699.24",
       "Name": "Toronto-Dominion Bank/The",
       "Shares Held": "12,294",
       "Ticker": "TD",
-      "Weight": "4.01%"
+      "Weight": "3.98%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "H42097107",
-      "Market Value": "$1363556.22",
+      "Market Value": "$1372966.14",
       "Name": "UBS Group AG",
       "Shares Held": "29,406",
       "Ticker": "UBS",
-      "Weight": "3.57%"
+      "Weight": "3.51%"
     },
     {
       "Asset Category": "Financials",
       "Identifier": "949746101",
-      "Market Value": "$1403184.09",
+      "Market Value": "$1424983.77",
       "Name": "Wells Fargo & Co",
       "Shares Held": "17,031",
       "Ticker": "WFC",
-      "Weight": "3.67%"
+      "Weight": "3.65%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$134636.83",
+      "Market Value": "$92220.63",
       "Name": "Cash & Other",
-      "Shares Held": "134,636.83",
+      "Shares Held": "92,220.63",
       "Ticker": "Cash&Other",
-      "Weight": "0.35%"
+      "Weight": "0.24%"
     }
   ],
   "ticker": "GSIB",
