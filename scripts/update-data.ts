@@ -1424,9 +1424,11 @@ async function prepareFund(fund: CatalogFund, config: UpdaterConfig, gate: () =>
   const priorHistory = existingManifest(prior, 'history');
   if (yahoo && priorHistory) {
     const published = await publishedRows(fundDir, priorHistory);
-    // A HISTORY_RANGE window never shrinks the published history (and with it 3y, 5y, 10y and the distributions)
-    const joined = /^\d+y$/.test(config.historyRange) ? joinHistoryWindow(yahoo, published, Array.isArray(prior?.distributions?.rows) ? prior.distributions.rows : []) : yahoo;
-    if (!joined) note(`${fund.ticker}: Yahoo window (${config.historyRange}) does not join the published history; kept the published history and returns`);
+    // A fresh chart never shrinks the published history (and with it 3y, 5y, 10y and the distributions): the older published
+    // days stay, and a chart that does not join them keeps the published history and returns (shared windowed-chart block).
+    // This covers a HISTORY_RANGE window and a truncated `max` answer; a full `max` answer starts at inception: unchanged
+    const joined = joinHistoryWindow(yahoo, published, Array.isArray(prior?.distributions?.rows) ? prior.distributions.rows : []);
+    if (!joined) note(`${fund.ticker}: Yahoo chart does not join the published history (${config.historyRange}, ${yahoo.history.length} days); kept the published history and returns`);
     yahoo = joined ? { ...joined, history: keepPublishedAdjClose(joined.history, published) } : null;
   }
   if (!holdings && !priorHoldings) throw new Error(fallbackReason || 'no current or previously published holdings data');

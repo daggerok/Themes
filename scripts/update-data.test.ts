@@ -793,6 +793,24 @@ describe('pipeline 4', () => {
     expect(snapshot()).toEqual(first);
     expect(box.json('funds/AAA/meta.json').history.totalRows).toBe(800);
     expect(box.json('funds/AAA/meta.json').distributions.rows.length).toBe(27);
+    // a truncated `max` answer (Yahoo served 2 bars for some funds on 2026-10-29) never shrinks the history either:
+    // one that joins the published days keeps them all, one that does not join keeps the fund as published
+    expect(await box.run(windowed(2), live)).toBeNull();
+    expect(snapshot()).toEqual(first);
+    const lone = feed(rows, (url) => {
+      if (!/chart\/AAA\?/.test(url)) return null;
+      const payload = JSON.parse(JSON.stringify(full));
+      const result = payload.chart.result[0];
+      result.timestamp = [result.timestamp.at(-1) + 100 * 86_400];
+      result.indicators.quote[0].close = result.indicators.quote[0].close.slice(-1);
+      result.indicators.quote[0].volume = result.indicators.quote[0].volume.slice(-1);
+      result.indicators.adjclose[0].adjclose = result.indicators.adjclose[0].adjclose.slice(-1);
+      result.events.dividends = {};
+      return Response.json(payload);
+    });
+    await box.run(lone, live);
+    expect(box.json('funds/AAA/meta.json').history.totalRows).toBe(800);
+    expect(box.json('funds/AAA/meta.json').distributions.rows.length).toBe(27);
   });
 });
 
