@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Oct 29, 2026",
     "display": "$20.30M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 20299892
   },
   "aumValue": 20299892,
   "category": "Commodities",
-  "closePrice": "$88.16",
-  "closePriceValue": 88.16,
+  "closePrice": "$80.93",
+  "closePriceValue": 80.93,
   "dataFile": "./funds/AUMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-10-29T20:55:17Z",
+  "generatedAt": "2026-11-01T04:57:50Z",
   "history": {
-    "asOf": "2026-10-29",
-    "asOfDate": "Oct 29, 2026",
+    "asOf": "2026-10-30",
+    "asOfDate": "Oct 30, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 722
+    "totalRows": 723
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -56,47 +56,47 @@
     "totalRows": 35
   },
   "metrics": {
-    "cagr10y": null,
-    "cagr3y": null,
-    "cagr5y": null,
-    "distributionYield": 0.91,
-    "distributionYieldText": "0.91%",
-    "dividendYield": 0.91,
-    "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.91%",
-    "performanceAsOf": "2026-10-29",
-    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "secYield": null,
-    "secYieldText": "—",
-    "siAnn": null,
-    "tr10y": null,
-    "tr1y": 13.25,
+    "ytd": -11.98,
+    "tr1y": 6.12,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.91,
-    "yield12MText": "0.91%",
-    "ytd": -7.06
+    "tr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "cagr10y": null,
+    "siAnn": null,
+    "dividendYield": 0.98,
+    "dividendYieldText": "0.98%",
+    "distributionYield": 0.98,
+    "distributionYieldText": "0.98%",
+    "yield12M": 0.98,
+    "yield12MText": "0.98%",
+    "dividendYieldBasis": "computed-trailing-12m",
+    "secYield": null,
+    "secYieldText": "—",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
+    "performanceAsOf": "2026-10-30"
   },
   "name": "Gold Miners ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$88.26",
+    "display": "$81.97",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 88.26
+    "value": 81.97
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 88.26,
+  "navValue": 81.97,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 29, 2026",
+      "asOfDate": "Oct 30, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 13.25,
+      "yr1": 6.12,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -7.06
+      "ytd": -11.98
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Gold-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

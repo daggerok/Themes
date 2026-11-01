@@ -9,10 +9,16 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "31.71",
+      "Close": "31.71",
+      "Date": "2026-10-30",
+      "Volume": "7100"
+    },
+    {
       "Adj Close": "32.96",
       "Close": "32.96",
       "Date": "2026-10-29",
-      "Volume": "2386"
+      "Volume": "2400"
     },
     {
       "Adj Close": "32.93",
@@ -3172,5 +3178,5 @@
     }
   ],
   "ticker": "URAN",
-  "totalRows": 527
+  "totalRows": 528
 }

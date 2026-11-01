@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Oct 29, 2026",
     "display": "$7.42M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 7422630
   },
   "aumValue": 7422630,
   "category": "Thematic",
-  "closePrice": "$49.58",
-  "closePriceValue": 49.58,
+  "closePrice": "$46.97",
+  "closePriceValue": 46.97,
   "dataFile": "./funds/SPAM/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-10-29T20:55:25Z",
+  "generatedAt": "2026-11-01T04:57:59Z",
   "history": {
-    "asOf": "2026-10-29",
-    "asOfDate": "Oct 29, 2026",
+    "asOf": "2026-10-30",
+    "asOfDate": "Oct 30, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 725
+    "totalRows": 726
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -56,47 +56,47 @@
     "totalRows": 45
   },
   "metrics": {
-    "cagr10y": null,
-    "cagr3y": null,
-    "cagr5y": null,
-    "distributionYield": 0.3,
-    "distributionYieldText": "0.30%",
-    "dividendYield": 0.3,
-    "dividendYieldBasis": "computed-trailing-12m",
-    "dividendYieldText": "0.30%",
-    "performanceAsOf": "2026-10-29",
-    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "secYield": null,
-    "secYieldText": "—",
-    "siAnn": null,
-    "tr10y": null,
-    "tr1y": 41.95,
+    "ytd": 53.25,
+    "tr1y": 34.7,
     "tr3y": null,
     "tr5y": null,
-    "yield12M": 0.3,
-    "yield12MText": "0.30%",
-    "ytd": 58.76
+    "tr10y": null,
+    "cagr3y": null,
+    "cagr5y": null,
+    "cagr10y": null,
+    "siAnn": null,
+    "dividendYield": 0.32,
+    "dividendYieldText": "0.32%",
+    "distributionYield": 0.32,
+    "distributionYieldText": "0.32%",
+    "yield12M": 0.32,
+    "yield12MText": "0.32%",
+    "dividendYieldBasis": "computed-trailing-12m",
+    "secYield": null,
+    "secYieldText": "—",
+    "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
+    "performanceAsOf": "2026-10-30"
   },
   "name": "Cybersecurity ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$49.48",
+    "display": "$46.87",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 49.48
+    "value": 46.87
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 49.48,
+  "navValue": 46.87,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 29, 2026",
+      "asOfDate": "Oct 30, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 41.95,
+      "yr1": 34.7,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 58.76
+      "ytd": 53.25
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-SPAM.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Cybersecurity-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
