@@ -9,6 +9,36 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "28.19",
+      "Close": "28.19",
+      "Date": "2026-11-06",
+      "Volume": "5500"
+    },
+    {
+      "Adj Close": "27.34",
+      "Close": "27.34",
+      "Date": "2026-11-05",
+      "Volume": "7100"
+    },
+    {
+      "Adj Close": "30.12",
+      "Close": "30.12",
+      "Date": "2026-11-04",
+      "Volume": "6300"
+    },
+    {
+      "Adj Close": "30.33",
+      "Close": "30.33",
+      "Date": "2026-11-03",
+      "Volume": "900"
+    },
+    {
+      "Adj Close": "30.00",
+      "Close": "30.00",
+      "Date": "2026-11-02",
+      "Volume": "3100"
+    },
+    {
       "Adj Close": "30.84",
       "Close": "30.84",
       "Date": "2026-10-30",
@@ -4366,5 +4396,5 @@
     }
   ],
   "ticker": "WISE",
-  "totalRows": 726
+  "totalRows": 731
 }

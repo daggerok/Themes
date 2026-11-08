@@ -9,6 +9,36 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "92.33",
+      "Close": "92.33",
+      "Date": "2026-11-06",
+      "Volume": "3200"
+    },
+    {
+      "Adj Close": "90.35",
+      "Close": "90.35",
+      "Date": "2026-11-05",
+      "Volume": "2900"
+    },
+    {
+      "Adj Close": "88.84",
+      "Close": "88.84",
+      "Date": "2026-11-04",
+      "Volume": "8700"
+    },
+    {
+      "Adj Close": "81.56",
+      "Close": "81.56",
+      "Date": "2026-11-03",
+      "Volume": "600"
+    },
+    {
+      "Adj Close": "83.17",
+      "Close": "83.17",
+      "Date": "2026-11-02",
+      "Volume": "2700"
+    },
+    {
       "Adj Close": "80.93",
       "Close": "80.93",
       "Date": "2026-10-30",
@@ -4348,5 +4378,5 @@
     }
   ],
   "ticker": "AUMI",
-  "totalRows": 723
+  "totalRows": 728
 }

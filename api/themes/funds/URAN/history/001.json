@@ -9,6 +9,36 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "30.83",
+      "Close": "30.83",
+      "Date": "2026-11-06",
+      "Volume": "3700"
+    },
+    {
+      "Adj Close": "29.78",
+      "Close": "29.78",
+      "Date": "2026-11-05",
+      "Volume": "20600"
+    },
+    {
+      "Adj Close": "30.70",
+      "Close": "30.70",
+      "Date": "2026-11-04",
+      "Volume": "8900"
+    },
+    {
+      "Adj Close": "31.23",
+      "Close": "31.23",
+      "Date": "2026-11-03",
+      "Volume": "4800"
+    },
+    {
+      "Adj Close": "31.50",
+      "Close": "31.50",
+      "Date": "2026-11-02",
+      "Volume": "3500"
+    },
+    {
       "Adj Close": "31.71",
       "Close": "31.71",
       "Date": "2026-10-30",
@@ -3178,5 +3208,5 @@
     }
   ],
   "ticker": "URAN",
-  "totalRows": 528
+  "totalRows": 533
 }

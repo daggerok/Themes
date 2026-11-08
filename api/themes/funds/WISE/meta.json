@@ -8,8 +8,8 @@
   },
   "aumValue": 24076368,
   "category": "Thematic",
-  "closePrice": "$30.84",
-  "closePriceValue": 30.84,
+  "closePrice": "$27.34",
+  "closePriceValue": 27.34,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,17 +28,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-11-01T04:58:02Z",
+  "generatedAt": "2026-11-08T05:02:14Z",
   "history": {
-    "asOf": "2026-10-30",
-    "asOfDate": "Oct 30, 2026",
+    "asOf": "2026-11-06",
+    "asOfDate": "Nov 6, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 726
+    "totalRows": 731
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -52,8 +52,8 @@
     "totalRows": 47
   },
   "metrics": {
-    "ytd": -20.86,
-    "tr1y": -30.91,
+    "ytd": -27.66,
+    "tr1y": -31.73,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -61,38 +61,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 5.21,
-    "dividendYieldText": "5.21%",
-    "distributionYield": 5.21,
-    "distributionYieldText": "5.21%",
-    "yield12M": 5.21,
-    "yield12MText": "5.21%",
+    "dividendYield": 5.85,
+    "dividendYieldText": "5.85%",
+    "distributionYield": 5.85,
+    "distributionYieldText": "5.85%",
+    "yield12M": 5.85,
+    "yield12MText": "5.85%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-10-30"
+    "performanceAsOf": "2026-11-06"
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$30.93",
+    "display": "$27.51",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 30.93
+    "value": 27.51
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 30.93,
+  "navValue": 27.51,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 30, 2026",
+      "asOfDate": "Nov 6, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -30.91,
+      "yr1": -31.73,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -20.86
+      "ytd": -27.66
     },
     "quarterEnd": {
       "asOfDate": null,

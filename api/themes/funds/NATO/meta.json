@@ -8,8 +8,8 @@
   },
   "aumValue": 86259468,
   "category": "Thematic",
-  "closePrice": "$36.73",
-  "closePriceValue": 36.73,
+  "closePrice": "$35.62",
+  "closePriceValue": 35.62,
   "dataFile": "./funds/NATO/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-11-01T04:57:59Z",
+  "generatedAt": "2026-11-08T05:02:10Z",
   "history": {
-    "asOf": "2026-10-30",
-    "asOfDate": "Oct 30, 2026",
+    "asOf": "2026-11-06",
+    "asOfDate": "Nov 6, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 515
+    "totalRows": 520
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -56,8 +56,8 @@
     "totalRows": 97
   },
   "metrics": {
-    "ytd": -3.97,
-    "tr1y": -4.6,
+    "ytd": -6.38,
+    "tr1y": -4.07,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 0.46,
-    "dividendYieldText": "0.46%",
-    "distributionYield": 0.46,
-    "distributionYieldText": "0.46%",
-    "yield12M": 0.46,
-    "yield12MText": "0.46%",
+    "dividendYield": 0.47,
+    "dividendYieldText": "0.47%",
+    "distributionYield": 0.47,
+    "distributionYieldText": "0.47%",
+    "yield12M": 0.47,
+    "yield12MText": "0.47%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-10-30"
+    "performanceAsOf": "2026-11-06"
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$36.86",
+    "display": "$35.83",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 36.86
+    "value": 35.83
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 36.86,
+  "navValue": 35.83,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 30, 2026",
+      "asOfDate": "Nov 6, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -4.6,
+      "yr1": -4.07,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -3.97
+      "ytd": -6.38
     },
     "quarterEnd": {
       "asOfDate": null,

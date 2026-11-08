@@ -8,8 +8,8 @@
   },
   "aumValue": 23228170,
   "category": "Commodities",
-  "closePrice": "$31.71",
-  "closePriceValue": 31.71,
+  "closePrice": "$29.78",
+  "closePriceValue": 29.78,
   "dataFile": "./funds/URAN/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-11-01T04:58:02Z",
+  "generatedAt": "2026-11-08T05:02:13Z",
   "history": {
-    "asOf": "2026-10-30",
-    "asOfDate": "Oct 30, 2026",
+    "asOf": "2026-11-06",
+    "asOfDate": "Nov 6, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 528
+    "totalRows": 533
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -56,8 +56,8 @@
     "totalRows": 57
   },
   "metrics": {
-    "ytd": -23.65,
-    "tr1y": -36.47,
+    "ytd": -25.76,
+    "tr1y": -29.43,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 3.3,
-    "dividendYieldText": "3.30%",
-    "distributionYield": 3.3,
-    "distributionYieldText": "3.30%",
-    "yield12M": 3.3,
-    "yield12MText": "3.30%",
+    "dividendYield": 3.53,
+    "dividendYieldText": "3.53%",
+    "distributionYield": 3.53,
+    "distributionYieldText": "3.53%",
+    "yield12M": 3.53,
+    "yield12MText": "3.53%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-10-30"
+    "performanceAsOf": "2026-11-06"
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$32.10",
+    "display": "$30.03",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 32.1
+    "value": 30.03
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 32.1,
+  "navValue": 30.03,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 30, 2026",
+      "asOfDate": "Nov 6, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -36.47,
+      "yr1": -29.43,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -23.65
+      "ytd": -25.76
     },
     "quarterEnd": {
       "asOfDate": null,

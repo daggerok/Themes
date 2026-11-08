@@ -8,8 +8,8 @@
   },
   "aumValue": 39082550,
   "category": "Thematic",
-  "closePrice": "$59.84",
-  "closePriceValue": 59.84,
+  "closePrice": "$60.31",
+  "closePriceValue": 60.31,
   "dataFile": "./funds/GSIB/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-11-01T04:57:56Z",
+  "generatedAt": "2026-11-08T05:02:09Z",
   "history": {
-    "asOf": "2026-10-30",
-    "asOfDate": "Oct 30, 2026",
+    "asOf": "2026-11-06",
+    "asOfDate": "Nov 6, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 721
+    "totalRows": 726
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -56,8 +56,8 @@
     "totalRows": 32
   },
   "metrics": {
-    "ytd": 13.87,
-    "tr1y": 26.73,
+    "ytd": 14.31,
+    "tr1y": 25.75,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 1.67,
-    "dividendYieldText": "1.67%",
-    "distributionYield": 1.67,
-    "distributionYieldText": "1.67%",
-    "yield12M": 1.67,
-    "yield12MText": "1.67%",
+    "dividendYield": 1.65,
+    "dividendYieldText": "1.65%",
+    "distributionYield": 1.65,
+    "distributionYieldText": "1.65%",
+    "yield12M": 1.65,
+    "yield12MText": "1.65%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-10-30"
+    "performanceAsOf": "2026-11-06"
   },
   "name": "Global Systemically Important Banks ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$59.90",
+    "display": "$60.46",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 59.9
+    "value": 60.46
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 59.9,
+  "navValue": 60.46,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 30, 2026",
+      "asOfDate": "Nov 6, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 26.73,
+      "yr1": 25.75,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 13.87
+      "ytd": 14.31
     },
     "quarterEnd": {
       "asOfDate": null,

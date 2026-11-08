@@ -8,8 +8,8 @@
   },
   "aumValue": 2166054,
   "category": "Thematic",
-  "closePrice": "$33.34",
-  "closePriceValue": 33.34,
+  "closePrice": "$32.17",
+  "closePriceValue": 32.17,
   "dataFile": "./funds/CLOD/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,17 +28,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/clod",
-  "generatedAt": "2026-11-01T04:57:53Z",
+  "generatedAt": "2026-11-08T05:02:04Z",
   "history": {
-    "asOf": "2026-10-30",
-    "asOfDate": "Oct 30, 2026",
+    "asOf": "2026-11-06",
+    "asOfDate": "Nov 6, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 721
+    "totalRows": 726
   },
   "holdings": {
     "asOf": "2026-10-29",
@@ -52,8 +52,8 @@
     "totalRows": 57
   },
   "metrics": {
-    "ytd": 2.46,
-    "tr1y": -6.45,
+    "ytd": -1.08,
+    "tr1y": -5.63,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -61,38 +61,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 1.44,
-    "dividendYieldText": "1.44%",
-    "distributionYield": 1.44,
-    "distributionYieldText": "1.44%",
-    "yield12M": 1.44,
-    "yield12MText": "1.44%",
+    "dividendYield": 1.49,
+    "dividendYieldText": "1.49%",
+    "distributionYield": 1.49,
+    "distributionYieldText": "1.49%",
+    "yield12M": 1.49,
+    "yield12MText": "1.49%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-10-30"
+    "performanceAsOf": "2026-11-06"
   },
   "name": "Cloud Computing ETF",
   "nav": {
     "asOfDate": "Oct 29, 2026",
-    "display": "$33.37",
+    "display": "$32.20",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 33.37
+    "value": 32.2
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 33.37,
+  "navValue": 32.2,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Oct 30, 2026",
+      "asOfDate": "Nov 6, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -6.45,
+      "yr1": -5.63,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": 2.46
+      "ytd": -1.08
     },
     "quarterEnd": {
       "asOfDate": null,
