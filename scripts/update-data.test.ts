@@ -81,6 +81,8 @@ const holdingsFixture = `id,date,account,stock_ticker,cusip,security_name,shares
 const NOW = new Date('2026-10-02T00:00:00Z');
 // the 52-week range keys every index row gets from its published history pages (shared range-52w block)
 const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
+// the nine swing keys after them, from the Close column of the same history pages (shared swing block)
+const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
 const daily = (days: number, step = 0.01): Array<{ date: string; close: number; adjClose: number; volume: number }> =>
   Array.from({ length: days }, (_, i) => {
     const date = new Date(NOW.getTime() - i * 86_400_000).toISOString().slice(0, 10);
@@ -493,12 +495,14 @@ describe('pipeline', () => {
     for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr10y']) expect(by.OLD.metrics[key]).not.toBeNull();
     expect(by.OLD.metrics.tr10y).not.toBe(by.OLD.metrics.tr5y);
     expect([by.NOHOLD.dataFile, by.OLD.dataFile]).toEqual([null, './funds/OLD/meta.json']);
-    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS].sort();
+    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS].sort();
     for (const row of Object.values(by) as any[]) {
       expect(Object.keys(row.metrics).sort()).toEqual(keys);
       expect(row.metrics.returnsBasis).toBeTruthy();
       expect(Object.keys(row.metrics).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
+      expect(Object.keys(row.metrics).slice(-11, -2)).toEqual(SWING_KEYS);
     }
+    expect([typeof by.OLD.metrics.athPrice, by.OLD.metrics.athBasis, typeof by.OLD.metrics.volatility1y]).toEqual(['number', expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), 'number']);
     expect(box.logs.join('\n')).not.toContain('gmail.com');
   });
 
@@ -576,8 +580,8 @@ describe('pipeline 2', () => {
     expect(box.json('index.json').funds[0].ticker).toBe('BOTT');
     expect(meta.metrics.returnsBasis).toBe(RETURNS_BASIS);
     expect(meta.metrics.performanceAsOf).toBeNull();
-    // the index row adds the 52-week range keys; every other metric is the retained meta's
-    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key)))).toEqual(meta.metrics);
+    // the index row adds the 52-week range and the swing keys; every other metric is the retained meta's
+    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key) && !SWING_KEYS.includes(key)))).toEqual(meta.metrics);
     expect(box.touched().length).toBeGreaterThan(0);
   });
 
@@ -738,7 +742,7 @@ describe('pipeline 4', () => {
     const row = () => box.json('index.json').funds.find((fund: any) => fund.ticker === 'NEW');
     const catalogOnly = () => {
       expect(row()).toMatchObject({ dataFile: null, holdings: 0 });
-      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS].sort());
+      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS].sort());
       expect(row().metrics.returnsBasis).toBe(RETURNS_BASIS);
       expect(existsSync(path.join(box.api, 'funds/NEW'))).toBe(false);
       expect(box.logs.some((line) => /NEW\s+failed/.test(line))).toBe(true);

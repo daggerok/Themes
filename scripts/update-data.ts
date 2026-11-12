@@ -1694,8 +1694,8 @@ export async function main(env: Record<string, string | undefined> = process.env
     allEntries.set(ticker, stored ? { ...entry, metrics } : { ...entry, dataFile: null, metrics: emptyMetrics() });
   }
   for (const [ticker, entry] of updates) allEntries.set(ticker, entry);
-  // the 52-week range of every row from its published history pages (shared range-52w block)
-  const funds = await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS));
+  // the 52-week range and the swing metrics of every row from its published history pages (shared range-52w and swing blocks)
+  const funds = await withSwing(API_ROOT, await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS)));
   const counts = {
     funds: funds.length,
     holdings: funds.reduce((sum, entry) => sum + Number(entry.holdings ?? 0), 0),
@@ -2900,3 +2900,338 @@ export async function withRange52w<T>(feedRoot: URL | string, funds: T[]): Promi
   return out;
 }
 // </range-52w>
+
+// <swing> shared block of .claude/tools/etfs/etf-std/swing.block.ts, applied by apply-block.ts: never edit it in one repo
+// The formulas are those of investments/Stocks/scripts/metrics/swing.ts (screener plan 1.5 and 1.6), rewritten without
+// top-level consts: the block sits after the top-level `await main()` of update-data.ts, so a const would not exist yet
+// while main() runs. etf-std/blocks.test.ts runs both on one price set and expects identical output.
+export type SwingDay = { date: string; close: number };
+
+export type SwingMetrics = {
+  athPrice: number | null; // highest close of the series
+  athDate: string | null; // date of that close (the earliest one on a tie)
+  athBasis: string | null; // which history the ATH covers: `daily closes since <first date>`
+  pctFromAth: number | null; // (price / athPrice - 1) × 100
+  volatility1y: number | null; // sample stdev of the last 252 daily log returns × √252 × 100
+  sigmaFromMean60d: number | null; // (price - mean of the last 60 closes) / sample stdev of those closes
+  high60d: number | null; // highest of the last 60 closes
+  low60d: number | null; // lowest of the last 60 closes
+};
+
+/** The nine swing keys of an index row's `metrics`: pctFrom52wHigh plus SwingMetrics */
+export type SwingRow = { pctFrom52wHigh: number | null } & SwingMetrics;
+
+/** Sessions in a trading year: volatility1y uses this many daily returns (one more close) */
+export function swingYearSessions(): number {
+  return 252;
+}
+
+/** Closes behind sigmaFromMean60d, high60d and low60d */
+export function swingWindow(): number {
+  return 60;
+}
+
+function swingRoundTo(value: number, digits: number): number | null {
+  if (!Number.isFinite(value)) return null;
+  const f = Math.pow(10, digits);
+  return Math.round(value * f) / f;
+}
+
+function swingIsPositive(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0;
+}
+
+/** Sample standard deviation (n - 1); null below 2 values or when every value is equal */
+export function sampleStdev(values: number[]): number | null {
+  if (values.length < 2) return null;
+  let sum = 0;
+  for (let i = 0; i < values.length; i += 1) sum += values[i];
+  const mean = sum / values.length;
+  let squares = 0;
+  for (let i = 0; i < values.length; i += 1) squares += (values[i] - mean) * (values[i] - mean);
+  const sd = Math.sqrt(squares / (values.length - 1));
+  return sd > 0 && Number.isFinite(sd) ? sd : null;
+}
+
+/** (price / reference - 1) × 100, 2 decimals; null when a value is missing or not positive */
+export function pctFrom(price: unknown, reference: unknown): number | null {
+  return swingIsPositive(price) && swingIsPositive(reference) ? swingRoundTo((price / reference - 1) * 100, 2) : null;
+}
+
+/** pctFrom52wHigh = (price / week52High - 1) × 100 */
+export function pctFrom52wHigh(price: unknown, week52High: unknown): number | null {
+  return pctFrom(price, week52High);
+}
+
+/** Highest close and its first date; null for an empty series */
+export function allTimeHigh(days: SwingDay[]): { price: number; date: string } | null {
+  let best: SwingDay | null = null;
+  for (let i = 0; i < days.length; i += 1) if (swingIsPositive(days[i].close) && (!best || days[i].close > best.close)) best = days[i];
+  return best ? { price: best.close, date: best.date } : null;
+}
+
+/** Annualized volatility in percent from the last 252 daily log returns (253 closes); null with fewer closes */
+export function volatility1y(closes: number[]): number | null {
+  const sessions = swingYearSessions();
+  if (closes.length < sessions + 1) return null;
+  const tail = closes.slice(closes.length - sessions - 1);
+  const returns: number[] = [];
+  for (let i = 1; i < tail.length; i += 1) {
+    if (!swingIsPositive(tail[i]) || !swingIsPositive(tail[i - 1])) return null;
+    returns.push(Math.log(tail[i] / tail[i - 1]));
+  }
+  const sd = sampleStdev(returns);
+  return sd === null ? null : swingRoundTo(sd * Math.sqrt(sessions) * 100, 2);
+}
+
+/** Distance of the price from the mean of the last 60 closes in sample standard deviations; null with fewer closes or no spread */
+export function sigmaFromMean(price: unknown, closes: number[], window?: number): number | null {
+  const size = window === undefined ? swingWindow() : window;
+  if (!swingIsPositive(price) || closes.length < size) return null;
+  const tail = closes.slice(closes.length - size);
+  const sd = sampleStdev(tail);
+  if (sd === null) return null;
+  let sum = 0;
+  for (let i = 0; i < tail.length; i += 1) sum += tail[i];
+  return swingRoundTo((price - sum / tail.length) / sd, 2);
+}
+
+/** Every swing metric of one security. `price` is the last price (the last close when the quote has none) */
+export function swingMetrics(days: SwingDay[], price: unknown): SwingMetrics {
+  const closes = days.map((d) => d.close);
+  const ath = allTimeHigh(days);
+  const size = swingWindow();
+  const tail = closes.length >= size ? closes.slice(closes.length - size) : [];
+  return {
+    athPrice: ath ? swingRoundTo(ath.price, 4) : null,
+    athDate: ath ? ath.date : null,
+    athBasis: ath ? `daily closes since ${days[0].date}` : null,
+    pctFromAth: ath ? pctFrom(price, ath.price) : null,
+    volatility1y: volatility1y(closes),
+    sigmaFromMean60d: sigmaFromMean(price, closes),
+    high60d: tail.length ? swingRoundTo(Math.max.apply(null, tail), 4) : null,
+    low60d: tail.length ? swingRoundTo(Math.min.apply(null, tail), 4) : null,
+  };
+}
+
+/** The nine swing keys, all null: a catalog-only row, a fund without a close series and a too short series carry this. */
+export function swingEmpty(): SwingRow {
+  return { pctFrom52wHigh: null, athPrice: null, athDate: null, athBasis: null, pctFromAth: null, volatility1y: null, sigmaFromMean60d: null, high60d: null, low60d: null };
+}
+
+/** Sorted by date, one close per date (the last one read wins), positive closes only. */
+function swingSorted(days: SwingDay[]): SwingDay[] {
+  const byDate: Record<string, number> = {};
+  const dates: string[] = [];
+  for (let i = 0; i < days.length; i += 1) {
+    const day = days[i];
+    if (!day || typeof day.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(day.date) || !swingIsPositive(day.close)) continue;
+    if (!(day.date in byDate)) dates.push(day.date);
+    byDate[day.date] = day.close;
+  }
+  dates.sort();
+  return dates.map((date) => ({ date, close: byDate[date] }));
+}
+
+/**
+ * The swing keys of one fund from its daily closes (any order). The price is the last close: every brand reads the same
+ * kind of series, so a rerun on the same closes publishes the same values. pctFrom52wHigh compares it with the highest
+ * close of the last 52 weeks (364 days up to the last close, the window of the range-52w block) of the same series.
+ */
+export function swingRow(days: SwingDay[]): SwingRow {
+  const sorted = swingSorted(days);
+  if (!sorted.length) return swingEmpty();
+  const last = sorted[sorted.length - 1];
+  const end = Date.UTC(Number(last.date.slice(0, 4)), Number(last.date.slice(5, 7)) - 1, Number(last.date.slice(8, 10)));
+  const start = new Date(end - 364 * 86400000).toISOString().slice(0, 10);
+  let high = 0;
+  for (let i = 0; i < sorted.length; i += 1) if (sorted[i].date >= start && sorted[i].close > high) high = sorted[i].close;
+  const metrics = swingMetrics(sorted, last.close);
+  return {
+    pctFrom52wHigh: pctFrom52wHigh(last.close, high), athPrice: metrics.athPrice, athDate: metrics.athDate, athBasis: metrics.athBasis, pctFromAth: metrics.pctFromAth,
+    volatility1y: metrics.volatility1y, sigmaFromMean60d: metrics.sigmaFromMean60d, high60d: metrics.high60d, low60d: metrics.low60d,
+  };
+}
+
+/**
+ * The daily closes of a published history sheet: the `Close` column only (the split-adjusted, not dividend-adjusted Yahoo
+ * close the history brands publish), the date column `Date`, else `As Of`, else the first header, read with calendarIso.
+ * `rows` are objects keyed by header or arrays in header order. No `Close` column gives an empty list: NAV and issuer
+ * market prices are not split-adjusted, those brands read the Yahoo chart instead (swingDaysFromChart).
+ */
+export function swingDaysFromHistory(headers: string[], rows: unknown[]): SwingDay[] {
+  const list = Array.isArray(headers) ? headers.map((h) => String(h)) : [];
+  if (list.indexOf('Close') < 0) return [];
+  const dateHeader = list.indexOf('Date') >= 0 ? 'Date' : list.indexOf('As Of') >= 0 ? 'As Of' : list[0];
+  const cell = (row: unknown, header: string): unknown => {
+    if (Array.isArray(row)) return row[list.indexOf(header)];
+    return row && typeof row === 'object' ? (row as Record<string, unknown>)[header] : undefined;
+  };
+  const out: SwingDay[] = [];
+  const all = Array.isArray(rows) ? rows : [];
+  for (let i = 0; i < all.length; i += 1) {
+    const raw = cell(all[i], 'Close');
+    const text = typeof raw === 'number' ? String(raw) : String(raw === null || raw === undefined ? '' : raw).replace(/[$,\s]/g, '');
+    const date = calendarIso(cell(all[i], dateHeader));
+    if (!date || !/^\d+(\.\d+)?(e[-+]?\d+)?$/i.test(text)) continue;
+    const close = Number(text);
+    if (close > 0) out.push({ date, close });
+  }
+  return out;
+}
+
+/**
+ * The daily closes of a Yahoo chart answer (swingChartUrl): `indicators.quote[0].close`, which Yahoo adjusts for splits
+ * and not for dividends, dated by the UTC day of the timestamp (as in Stocks). Null when the answer has no result (unknown
+ * ticker, error payload, not JSON) or bars other than daily (`meta.dataGranularity` not `1d`); missing closes are skipped.
+ */
+export function swingDaysFromChart(payload: unknown): SwingDay[] | null {
+  let json: unknown = payload;
+  if (typeof payload === 'string') {
+    try { json = JSON.parse(payload); } catch (_) { return null; }
+  }
+  const chart = json && typeof json === 'object' ? (json as { chart?: { result?: unknown } }).chart : undefined;
+  const results = chart && Array.isArray(chart.result) ? chart.result : null;
+  const result = results && results[0] && typeof results[0] === 'object' ? (results[0] as Record<string, unknown>) : null;
+  if (!result) return null;
+  const meta = result.meta && typeof result.meta === 'object' ? (result.meta as Record<string, unknown>) : {};
+  if (typeof meta.dataGranularity === 'string' && meta.dataGranularity !== '1d') return null;
+  const stamps = Array.isArray(result.timestamp) ? (result.timestamp as unknown[]) : [];
+  const indicators = result.indicators as { quote?: Array<{ close?: unknown[] }> } | undefined;
+  const quote = indicators && Array.isArray(indicators.quote) && indicators.quote[0] ? indicators.quote[0] : {};
+  const closes = Array.isArray(quote.close) ? quote.close : [];
+  const out: SwingDay[] = [];
+  for (let i = 0; i < stamps.length; i += 1) {
+    const stamp = stamps[i], close = closes[i];
+    if (typeof stamp !== 'number' || !Number.isFinite(stamp) || !swingIsPositive(close)) continue;
+    out.push({ date: new Date(stamp * 1000).toISOString().slice(0, 10), close });
+  }
+  return out;
+}
+
+/**
+ * The Yahoo chart request of one fund: the whole daily history since listing. Explicit period1=0 and period2 (tomorrow), never
+ * `range=max`: Yahoo answers `range=max&interval=1d` with weekly bars for a long history.
+ */
+export function swingChartUrl(ticker: string, nowMs?: number): string {
+  const period2 = Math.floor((nowMs === undefined ? Date.now() : nowMs) / 1000) + 86400;
+  return `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?period1=0&period2=${period2}&interval=1d&includePrePost=false&events=split`;
+}
+
+export type SwingOptions = {
+  /**
+   * Yahoo mode (brands whose history has no `Close` column): GETs swingChartUrl(ticker) through the brand's own fetch helper
+   * (its timeouts, retries and headers) and returns the body text or parsed JSON. Without it the block reads the `Close`
+   * column of the published history pages (history mode, no requests).
+   */
+  fetchChart?: (url: string, ticker: string) => Promise<unknown>;
+  /** Yahoo mode: the tickers this run updated. Other rows keep their published swing keys. Default: every row with `dataFile` */
+  tickers?: string[] | null;
+  /** Yahoo mode: the previously published index rows; a fund whose chart failed or was not requested keeps their swing keys */
+  previous?: unknown[] | null;
+  /** Yahoo mode: parallel chart requests (the brand's CONCURRENCY), default 4 */
+  concurrency?: number;
+  /** Yahoo mode: one call per failed chart, for the brand's log */
+  onError?: (ticker: string, error: unknown) => void;
+};
+
+/**
+ * The index rows with the nine swing keys in every `metrics`. Call it on the final rows right after withRange52w, right
+ * before index.json is written. The keys go in front of `returnsBasis` and `performanceAsOf`, which stay the last two keys.
+ * - History mode (no `fetchChart`): from the `Close` column of each fund's published history pages
+ *   (`funds/<T>/history/*.json` under `feedRoot`, the folder of index.json), so kept funds get the same values again
+ * - Yahoo mode: from swingChartUrl for the funds of `tickers`; a failed or empty chart, a chart that starts more than 31
+ *   days after the published `athBasis` date (a truncated `max` answer) and a fund not requested keep the swing keys
+ *   published before (`previous`, else the row's own), so a failed source never changes a published fund
+ * - A row without `dataFile` gets swingEmpty(); a row without a `metrics` object is left as it is
+ */
+export async function withSwing<T>(feedRoot: URL | string, funds: T[], options?: SwingOptions): Promise<T[]> {
+  const opts: SwingOptions = options || {};
+  const list = Array.isArray(funds) ? funds : [];
+  const rows = list.map((fund) => fund as unknown as Record<string, unknown>);
+  const keys = Object.keys(swingEmpty());
+  const tickerOf = (row: unknown): string => (row && typeof row === 'object' && typeof (row as Record<string, unknown>).ticker === 'string' ? String((row as Record<string, unknown>).ticker) : '');
+  const hasData = (row: Record<string, unknown>): boolean => !!row && typeof row === 'object' && !!row.metrics && typeof row.metrics === 'object' && typeof row.dataFile === 'string' && row.dataFile !== '';
+  const published = (row: unknown): SwingRow | null => {
+    const metrics = row && typeof row === 'object' ? (row as Record<string, unknown>).metrics : null;
+    if (!metrics || typeof metrics !== 'object') return null;
+    const out = swingEmpty() as unknown as Record<string, unknown>;
+    for (let k = 0; k < keys.length; k += 1) {
+      if (!(keys[k] in (metrics as Record<string, unknown>))) return null;
+      out[keys[k]] = (metrics as Record<string, unknown>)[keys[k]];
+    }
+    return out as unknown as SwingRow;
+  };
+  const computed: Array<SwingRow | null> = rows.map(() => null);
+  if (opts.fetchChart) {
+    const fetchChart = opts.fetchChart;
+    const before: Record<string, unknown> = {};
+    const previous = Array.isArray(opts.previous) ? opts.previous : [];
+    for (let i = 0; i < previous.length; i += 1) if (tickerOf(previous[i])) before[tickerOf(previous[i])] = previous[i];
+    const wanted = Array.isArray(opts.tickers) ? opts.tickers.map((t) => String(t)) : null;
+    const queue: number[] = [];
+    for (let i = 0; i < rows.length; i += 1) if (hasData(rows[i]) && (!wanted || wanted.indexOf(tickerOf(rows[i])) >= 0)) queue.push(i);
+    let next = 0;
+    const worker = async (): Promise<void> => {
+      while (next < queue.length) {
+        const index = queue[next];
+        next += 1;
+        const ticker = tickerOf(rows[index]);
+        try {
+          const days = swingDaysFromChart(await fetchChart(swingChartUrl(ticker), ticker));
+          if (!days || !days.length) throw new Error('Yahoo chart returned no daily closes');
+          const row = swingRow(days);
+          // a truncated `max` answer (Yahoo served 2 bars on 2026-10-29) never shrinks the ATH history: a series that starts
+          // more than 31 days after the published one is a failed source
+          const old = published(before[ticker]) || published(rows[index]);
+          const since = old && typeof old.athBasis === 'string' ? /(\d{4}-\d{2}-\d{2})$/.exec(old.athBasis) : null;
+          const first = row.athBasis ? row.athBasis.slice(-10) : '';
+          if (since && first && Date.parse(`${first}T00:00:00Z`) - Date.parse(`${since[1]}T00:00:00Z`) > 31 * 86400000) throw new Error(`Yahoo chart starts ${first}, after the published history since ${since[1]}`);
+          computed[index] = row;
+        } catch (error) {
+          if (opts.onError) opts.onError(ticker, error);
+        }
+      }
+    };
+    const lanes = Math.max(1, Math.min(queue.length || 1, Math.floor(Number(opts.concurrency) || 4)));
+    const workers: Array<Promise<void>> = [];
+    for (let i = 0; i < lanes; i += 1) workers.push(worker());
+    await Promise.all(workers);
+    for (let i = 0; i < rows.length; i += 1) {
+      if (computed[i] || !hasData(rows[i])) continue;
+      computed[i] = published(before[tickerOf(rows[i])]) || published(rows[i]);
+    }
+  } else {
+    const fs = await import('node:fs/promises');
+    const { pathToFileURL } = await import('node:url');
+    const root = feedRoot instanceof URL ? new URL(feedRoot.href.replace(/\/?$/, '/')) : new URL(pathToFileURL(String(feedRoot).replace(/\/?$/, '/')).href);
+    for (let i = 0; i < rows.length; i += 1) {
+      if (!hasData(rows[i])) continue;
+      const dir = new URL(`${String(rows[i].dataFile).replace(/^\.\//, '').replace(/[^/]*$/, '')}history/`, root);
+      const names = (await fs.readdir(dir).catch(() => [] as string[])).filter((name) => /\.json$/.test(name)).sort();
+      let headers: string[] = [];
+      const sheet: unknown[] = [];
+      for (const name of names) {
+        const page = await fs.readFile(new URL(name, dir), 'utf8').then((text) => JSON.parse(text)).catch(() => null);
+        if (!page || !Array.isArray(page.rows)) continue;
+        if (!headers.length && Array.isArray(page.headers)) headers = page.headers;
+        for (const item of page.rows) sheet.push(item);
+      }
+      computed[i] = swingRow(swingDaysFromHistory(headers, sheet));
+    }
+  }
+  const out: T[] = [];
+  for (let i = 0; i < rows.length; i += 1) {
+    const row = rows[i];
+    if (!row || typeof row !== 'object' || !row.metrics || typeof row.metrics !== 'object') { out.push(list[i]); continue; }
+    const swing = (computed[i] || swingEmpty()) as unknown as Record<string, unknown>;
+    // the swing keys go in front of returnsBasis and performanceAsOf, which stay the last two keys (metrics contract)
+    const metrics: Record<string, unknown> = {}, old = row.metrics as Record<string, unknown>, tail = ['returnsBasis', 'performanceAsOf'];
+    for (const key of Object.keys(old)) if (tail.indexOf(key) < 0 && keys.indexOf(key) < 0) metrics[key] = old[key];
+    for (let k = 0; k < keys.length; k += 1) metrics[keys[k]] = swing[keys[k]];
+    for (const key of tail) if (key in old) metrics[key] = old[key];
+    out.push({ ...row, metrics } as unknown as T);
+  }
+  return out;
+}
+// </swing>
