@@ -36,7 +36,7 @@
   "devDependencies": {
     "@parcel/transformer-sass": "2.16.4",
     "@tailwindcss/postcss": "4.3.3",
-    "@types/bun": "1.4.2",
+    "@types/bun": "1.4.4",
     "@types/node": "26.6.3",
     "ncp": "2.0.0",
     "parcel": "2.16.4",
