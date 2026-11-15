@@ -1716,189 +1716,97 @@ function range52wCellHtml(metrics: any, tdClass: string): string {
 // ---- end of 52-week range ----
 
 /**
-
  * Actions menu (owner 2026-11-14): the action buttons of the toolbar (Copy Tickers, Upload / Drop N-PORT XML where the app has it,
-
  * Export .csv, Export .txt, Clear, Blacklist) live in one ☰ menu at the left start of the toolbar. The buttons keep their ids
-
  * and their own click handlers: the menu only moves them into its panel, so Clear still opens its dialog, Export still downloads
-
  * and the file input still opens. Enter, Space or ArrowDown on ☰ opens the menu and focuses the first enabled item, the arrows,
-
  * Home and End move, Esc or Tab closes it (Esc returns focus to ☰), a click outside closes it. An item closes the menu when
-
  * clicked, except Copy Tickers (`data-am-keep`) so its "Copied!" feedback stays visible. Dragging a file over ☰ opens the menu
-
  * so the file can be dropped on the upload item. The panel moves to <body> (position: fixed under ☰, like the dropdown panels),
-
  * so no card or sticky wrapper clips it.
-
  */
-
 function setupActionsMenu(): void {
-
   const trigger = document.getElementById('actions-btn');
-
   const panel = document.getElementById('actions-panel');
-
   if (!trigger || !panel || panel.dataset.amReady) return;
-
   panel.dataset.amReady = '1';
-
   document.body.appendChild(panel);
-
   const items = (): HTMLElement[] => Array.from(panel.querySelectorAll<HTMLElement>('[role="menuitem"]'));
-
   const enabled = (): HTMLElement[] => items().filter(item => !item.hasAttribute('disabled') && item.getAttribute('aria-disabled') !== 'true');
-
   const isOpen = (): boolean => !panel.hidden;
-
   const place = (): void => {
-
     const rect = trigger.getBoundingClientRect();
-
     const width = panel.offsetWidth;
-
     const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8));
-
     panel.style.left = `${Math.round(left)}px`;
-
     panel.style.top = `${Math.round(rect.bottom + 6)}px`;
-
     panel.style.maxHeight = `${Math.max(160, Math.round(window.innerHeight - rect.bottom - 16))}px`;
-
   };
-
   const focusItem = (index: number): void => {
-
     const list = enabled();
-
     if (!list.length) return;
-
     const i = ((index % list.length) + list.length) % list.length;
-
     list[i].focus();
-
   };
-
   const open = (focusFirst: boolean): void => {
-
     if (isOpen()) return;
-
     panel.hidden = false;
-
     trigger.setAttribute('aria-expanded', 'true');
-
     place();
-
     requestAnimationFrame(() => panel.classList.add('is-open'));
-
     if (focusFirst) focusItem(0);
-
   };
-
   const close = (returnFocus: boolean): void => {
-
     if (!isOpen()) return;
-
     panel.classList.remove('is-open');
-
     panel.hidden = true;
-
     trigger.setAttribute('aria-expanded', 'false');
-
     if (returnFocus) trigger.focus();
-
   };
-
   items().forEach(item => { item.tabIndex = -1; });
-
   trigger.addEventListener('click', () => { if (isOpen()) close(false); else open(false); });
-
   trigger.addEventListener('keydown', (event: KeyboardEvent) => {
-
     if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
-
       event.preventDefault();
-
       if (isOpen()) focusItem(0); else open(true);
-
     } else if (event.key === 'ArrowUp') {
-
       event.preventDefault();
-
       open(false);
-
       focusItem(-1);
-
     } else if (event.key === 'Escape' && isOpen()) {
-
       event.preventDefault();
-
       close(true);
-
     }
-
   });
-
   trigger.addEventListener('dragenter', () => open(false));
-
   panel.addEventListener('keydown', (event: KeyboardEvent) => {
-
     const list = enabled();
-
     const current = document.activeElement instanceof HTMLElement ? list.indexOf(document.activeElement) : -1;
-
     if (event.key === 'ArrowDown') { event.preventDefault(); focusItem(current + 1); }
-
     else if (event.key === 'ArrowUp') { event.preventDefault(); focusItem(current < 0 ? -1 : current - 1); }
-
     else if (event.key === 'Home') { event.preventDefault(); focusItem(0); }
-
     else if (event.key === 'End') { event.preventDefault(); focusItem(-1); }
-
     else if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(true); }
-
     else if (event.key === 'Tab') close(true);
-
     else if ((event.key === 'Enter' || event.key === ' ') && event.target instanceof HTMLElement && event.target.tagName !== 'BUTTON') {
-
       event.preventDefault();
-
       event.target.click(); // the upload item is a div: Enter and Space press it like a button
-
     }
-
   });
-
   // capture: the menu closes (focus back on ☰) before the item's own handler runs, so a dialog it opens returns focus to ☰
-
   panel.addEventListener('click', (event: MouseEvent) => {
-
     const item = event.target instanceof Element ? event.target.closest<HTMLElement>('[role="menuitem"]') : null;
-
     if (!item || item.hasAttribute('data-am-keep')) return;
-
     close(true);
-
   }, true);
-
   document.addEventListener('mousedown', (event: MouseEvent) => {
-
     const target = event.target instanceof Node ? event.target : null;
-
     if (isOpen() && target && !panel.contains(target) && !trigger.contains(target)) close(false);
-
   });
-
   window.addEventListener('resize', () => { if (isOpen()) place(); });
-
   window.addEventListener('scroll', () => { if (isOpen()) place(); }, true);
-
 }
-
 setupActionsMenu();
-
 
 init();
 
@@ -2470,7 +2378,7 @@ function renderTabButtons(container: any, tabs: TabInfo[], minTabs = 1): void {
       <button
         data-tab="${escapeHtml(tab.id)}"
         class="px-3.5 py-1.5 rounded-full text-xs transition border whitespace-nowrap ${isActive ? activeClasses : inactiveClasses}">
-        ${escapeHtml(tab.label)} (${tab.count})
+        ${escapeHtml(tab.label)}<span${container === el.selectedTabsBar ? ' class="lg:max-xl:hidden"' : ''}> (${tab.count})</span>
       </button>
     `;
   }).join('');
