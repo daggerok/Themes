@@ -82,6 +82,7 @@ const NOW = new Date('2026-10-02T00:00:00Z');
 // the 52-week range keys every index row gets from its published history pages (shared range-52w block)
 const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
 // the nine swing keys after them, from the Close column of the same history pages (shared swing block)
+const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
 const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
 const daily = (days: number, step = 0.01): Array<{ date: string; close: number; adjClose: number; volume: number }> =>
   Array.from({ length: days }, (_, i) => {
@@ -412,12 +413,15 @@ describe('metrics 2', () => {
 type Row = { t: string; days: number; flat?: boolean; nav?: string };
 const htmlCatalog = (rows: Row[]): string => `<script>window.productsData = [\n${rows.map((r) => `{\n ticker: '${r.t}',\n externalLink: false,\n fund: "${r.t} ETF",\n category: "Thematic",\n nav: '${r.nav ?? '20.00'}',\n price: '20.10',\n expense: '0.35',\n product_url: 'https://themesetfs.com/etfs/${r.t.toLowerCase()}'\n}`).join(',\n')}\n];</script>`;
 const holdingsCsv = 'date,stock_ticker,cusip,security_name,shares,market_value,weightings,net_assets,shares_outstanding,sector\n2026-10-01,AAA,111,Alpha,10,500,50,1000,100,Tech\n';
-const chartJson = (days: number, flat = false): string => {
+const chartJson = (days: number, flat = false, dividend = false): string => {
   const last = Math.floor(Date.now() / 86_400_000) * 86_400;
   const timestamp = Array.from({ length: days }, (_, i) => last - (days - 1 - i) * 86_400);
   const close = timestamp.map((_, i) => (flat ? 38.34 : 20 + i * 0.01));
   const events = Object.fromEntries(timestamp.filter((_, i) => i % 30 === 0 && !flat).map((t) => [String(t), { amount: 0.1 }]));
-  return JSON.stringify({ chart: { result: [{ timestamp, indicators: { quote: [{ close, volume: close.map(() => (flat ? 0 : 5)) }], adjclose: [{ adjclose: close }] }, events: { dividends: events }, meta: { fullExchangeName: 'NYSEArca' } }] } });
+  // the dividends block asks for the same chart with includePrePost=false: one 0.25 event on the last bar, listing on the first bar
+  const dividends = dividend ? { [String(timestamp[timestamp.length - 1])]: { amount: 0.25, date: timestamp[timestamp.length - 1] } } : events;
+  const meta = dividend ? { fullExchangeName: 'NYSEArca', dataGranularity: '1d', firstTradeDate: timestamp[0] } : { fullExchangeName: 'NYSEArca' };
+  return JSON.stringify({ chart: { result: [{ timestamp, indicators: { quote: [{ close, volume: close.map(() => (flat ? 0 : 5)) }], adjclose: [{ adjclose: close }] }, events: { dividends }, meta }] } });
 };
 const blocked = (): Response => new Response('Access Denied', { status: 403 });
 /** Healthy provider: catalog, one CSV per fund (NOHOLD has none) and a Yahoo chart per fund. */
@@ -429,7 +433,7 @@ const feed = (rows: Row[], extra?: (url: string) => Response | null) => (url: st
   if (csvMatch) return rows.some((r) => r.t === csvMatch[1]) && csvMatch[1] !== 'NOHOLD' ? new Response(holdingsCsv) : new Response('gone', { status: 404 });
   const chartMatch = /chart\/(\w+)\?/.exec(url);
   const row = rows.find((r) => r.t === chartMatch?.[1]);
-  return row && row.days > 0 ? new Response(chartJson(row.days, row.flat)) : new Response('{}', { status: 404 });
+  return row && row.days > 0 ? new Response(chartJson(row.days, row.flat, url.includes('includePrePost=false'))) : new Response('{}', { status: 404 });
 };
 
 function repo(seed: (api: string) => void = () => {}) {
@@ -495,13 +499,20 @@ describe('pipeline', () => {
     for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr10y']) expect(by.OLD.metrics[key]).not.toBeNull();
     expect(by.OLD.metrics.tr10y).not.toBe(by.OLD.metrics.tr5y);
     expect([by.NOHOLD.dataFile, by.OLD.dataFile]).toEqual([null, './funds/OLD/meta.json']);
-    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS].sort();
+    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS].sort();
     for (const row of Object.values(by) as any[]) {
       expect(Object.keys(row.metrics).sort()).toEqual(keys);
       expect(row.metrics.returnsBasis).toBeTruthy();
       expect(Object.keys(row.metrics).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
-      expect(Object.keys(row.metrics).slice(-11, -2)).toEqual(SWING_KEYS);
+      expect(Object.keys(row.metrics).slice(-17, -8)).toEqual(SWING_KEYS);
+      expect(Object.keys(row.metrics).slice(-8, -2)).toEqual(DIVIDEND_KEYS);
     }
+    // the dividends block: the mocked event of 0.25 on the last bar is the whole trailing sum, nothing else is known
+    expect(by.OLD.metrics.dividendRate).toBe(0.25);
+    for (const key of DIVIDEND_KEYS.slice(1, 4)) expect(by.OLD.metrics[key]).toBeNull();
+    expect([by.OLD.metrics.dividendStreak, by.OLD.metrics.dividendCut10y]).toEqual([null, null]);
+    const dividendRequests = box.calls.filter((call) => /chart\/\w+\?.*includePrePost=false/.test(call.url)).map((call) => /chart\/(\w+)\?/.exec(call.url)![1]).sort();
+    expect(dividendRequests).toEqual(['FLT', 'OLD', 'YNG']);
     expect([typeof by.OLD.metrics.athPrice, by.OLD.metrics.athBasis, typeof by.OLD.metrics.volatility1y]).toEqual(['number', expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), 'number']);
     expect(box.logs.join('\n')).not.toContain('gmail.com');
   });
@@ -512,7 +523,10 @@ describe('pipeline', () => {
     await box.run(feed(rows), live);
     const others = () => JSON.stringify(['BBB', 'CCC'].map((t) => box.read(`funds/${t}/meta.json`)));
     const before = others();
+    const seen = box.calls.length;
     expect(await box.run(feed(rows), { ...live, TICKERS: 'AAA' })).toBeNull();
+    // the dividend chart is requested for the updated fund only, never for an unselected one
+    expect(box.calls.slice(seen).filter((call) => /chart\/\w+\?.*includePrePost=false/.test(call.url)).map((call) => /chart\/(\w+)\?/.exec(call.url)![1])).toEqual(['AAA']);
     expect(box.tickers()).toEqual(['AAA', 'BBB', 'CCC']);
     expect(others()).toBe(before);
     expect(await box.run(() => blocked(), { TICKERS: 'AAA' })).toBeNull();
@@ -581,7 +595,7 @@ describe('pipeline 2', () => {
     expect(meta.metrics.returnsBasis).toBe(RETURNS_BASIS);
     expect(meta.metrics.performanceAsOf).toBeNull();
     // the index row adds the 52-week range and the swing keys; every other metric is the retained meta's
-    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key) && !SWING_KEYS.includes(key)))).toEqual(meta.metrics);
+    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key) && !SWING_KEYS.includes(key) && !DIVIDEND_KEYS.includes(key)))).toEqual(meta.metrics);
     expect(box.touched().length).toBeGreaterThan(0);
   });
 
@@ -742,7 +756,7 @@ describe('pipeline 4', () => {
     const row = () => box.json('index.json').funds.find((fund: any) => fund.ticker === 'NEW');
     const catalogOnly = () => {
       expect(row()).toMatchObject({ dataFile: null, holdings: 0 });
-      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS].sort());
+      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS].sort());
       expect(row().metrics.returnsBasis).toBe(RETURNS_BASIS);
       expect(existsSync(path.join(box.api, 'funds/NEW'))).toBe(false);
       expect(box.logs.some((line) => /NEW\s+failed/.test(line))).toBe(true);
