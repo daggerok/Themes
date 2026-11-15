@@ -1694,8 +1694,14 @@ export async function main(env: Record<string, string | undefined> = process.env
     allEntries.set(ticker, stored ? { ...entry, metrics } : { ...entry, dataFile: null, metrics: emptyMetrics() });
   }
   for (const [ticker, entry] of updates) allEntries.set(ticker, entry);
-  // the 52-week range and the swing metrics of every row from its published history pages (shared range-52w and swing blocks)
-  const funds = await withSwing(API_ROOT, await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS)));
+  // the 52-week range and the swing metrics of every row from its published history pages (shared range-52w and swing blocks),
+  // the dividend metrics from one Yahoo daily chart per fund this run updated (shared dividends block)
+  const funds = await withDividends(API_ROOT, await withSwing(API_ROOT, await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS))), {
+    fetchChart: (url) => fetchJson(url, config, gate),
+    tickers: config.skipYahoo ? [] : Array.from(updates.keys()),
+    previous: Array.from(previousEntries.values()), concurrency: config.concurrency,
+    onError: (ticker, error) => outputNote(`[ dividend ] ${ticker}: ${error instanceof Error ? error.message : String(error)}; published dividend metrics kept`),
+  });
   const counts = {
     funds: funds.length,
     holdings: funds.reduce((sum, entry) => sum + Number(entry.holdings ?? 0), 0),
@@ -3111,11 +3117,12 @@ export function swingDaysFromChart(payload: unknown): SwingDay[] | null {
 
 /**
  * The Yahoo chart request of one fund: the whole daily history since listing. Explicit period1=0 and period2 (tomorrow), never
- * `range=max`: Yahoo answers `range=max&interval=1d` with weekly bars for a long history.
+ * `range=max`: Yahoo answers `range=max&interval=1d` with weekly bars for a long history. The answer also carries the dividend
+ * events (`events=div%7Csplit`) for the dividends block, so a tap on the same request serves both blocks.
  */
 export function swingChartUrl(ticker: string, nowMs?: number): string {
   const period2 = Math.floor((nowMs === undefined ? Date.now() : nowMs) / 1000) + 86400;
-  return `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?period1=0&period2=${period2}&interval=1d&includePrePost=false&events=split`;
+  return `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?period1=0&period2=${period2}&interval=1d&includePrePost=false&events=div%7Csplit`;
 }
 
 export type SwingOptions = {
@@ -3235,3 +3242,342 @@ export async function withSwing<T>(feedRoot: URL | string, funds: T[], options?:
   return out;
 }
 // </swing>
+
+// <dividends> shared block of .claude/tools/etfs/etf-std/dividends.block.ts, applied by apply-block.ts: never edit it in one repo
+// The formulas are those of investments/Stocks/scripts/update-data.ts `dividendMetrics` and scripts/metrics/dividends.ts
+// `dividendHistory`, rewritten without top-level consts (the block sits after `await main()`). Two ETF differences: the
+// listing year (year of `meta.firstTradeDate`) is dropped from the yearly sums, and the cut tolerance is 20% instead of 10%.
+// Source: the dividend events of the Yahoo daily chart (swingChartUrl, split adjusted), never the brand distributions.
+// etf-std/blocks.test.ts runs this block and the Stocks functions on the same data and expects identical output.
+export type DividendEvent = { date: string; amount: number };
+
+/** asOf: last daily bar; firstDay: first daily bar; listed: meta.firstTradeDate (null only in tests, then no year is dropped) */
+export type DividendsChart = { asOf: string; firstDay: string; listed: string | null; events: DividendEvent[] };
+
+/** The six dividend keys of an index row's `metrics`, in key order */
+export type DividendRow = {
+  dividendRate: number | null; // sum of the amounts with ex-dates in the 365.25 days up to asOf, 4 decimals
+  dividendGrowth: number | null; // last complete calendar year against the year before, percent
+  dividendGrowth3y: number | null; // yearly rate over 3 years, percent
+  dividendGrowth5y: number | null; // yearly rate over 5 years, percent
+  dividendStreak: number | null; // complete calendar years in a row with a higher sum than the base year
+  dividendCut10y: boolean | null; // a confirmed cut in the last 10 complete calendar years
+};
+
+/** A drop smaller than this share of the base year is ordinary fluctuation, not a cut (Stocks: 0.1) */
+export function dividendCutTolerance(): number {
+  return 0.2;
+}
+
+/** A year more than this factor above both neighbours is a special dividend or a shifted payment */
+export function dividendSpikeFactor(): number {
+  return 1.2;
+}
+
+/** Window of the cut flag in complete calendar years */
+export function dividendCutWindowYears(): number {
+  return 10;
+}
+
+/** Complete calendar years kept for the streak (plus the current partial year) */
+export function dividendAnnualYears(): number {
+  return 30;
+}
+
+/** The six dividend keys, all null: a catalog-only row and a fund that never paid carry this */
+export function dividendsEmpty(): DividendRow {
+  return { dividendRate: null, dividendGrowth: null, dividendGrowth3y: null, dividendGrowth5y: null, dividendStreak: null, dividendCut10y: null };
+}
+
+function dividendRoundTo(value: number, digits: number): number | null {
+  if (!Number.isFinite(value)) return null;
+  const f = Math.pow(10, digits);
+  return Math.round(value * f) / f;
+}
+
+function dividendIsoDay(seconds: number): string {
+  return new Date(seconds * 1000).toISOString().slice(0, 10);
+}
+
+/** Unrounded sums by calendar year, years after `listedYear` only; `years` newest first */
+function dividendYearSums(events: DividendEvent[], listedYear?: number | null): { years: number[]; sums: Record<number, number> } {
+  const sums: Record<number, number> = {};
+  const years: number[] = [];
+  const list = Array.isArray(events) ? events : [];
+  for (let i = 0; i < list.length; i += 1) {
+    const event = list[i];
+    if (!event || typeof event.date !== 'string' || typeof event.amount !== 'number' || !Number.isFinite(event.amount) || event.amount <= 0) continue;
+    const year = Number(event.date.slice(0, 4));
+    if (!Number.isFinite(year)) continue;
+    if (typeof listedYear === 'number' && Number.isFinite(listedYear) && year <= listedYear) continue;
+    if (!(year in sums)) { sums[year] = 0; years.push(year); }
+    sums[year] += event.amount;
+  }
+  years.sort((a, b) => b - a);
+  return { years, sums };
+}
+
+/**
+ * The Yahoo daily chart answer (text or parsed JSON) as dividend events. Null (a failed source) when there is no result, the
+ * bars are not daily, there is no finite timestamp, `meta.firstTradeDate` is missing (completeness unproven) or the first bar
+ * is more than 31 days after it (a truncated answer). Missing `events.dividends` is an honest empty list
+ */
+export function dividendsFromChart(payload: unknown): DividendsChart | null {
+  let json: unknown = payload;
+  if (typeof payload === 'string') {
+    try { json = JSON.parse(payload); } catch (_) { return null; }
+  }
+  const chart = json && typeof json === 'object' ? (json as { chart?: { result?: unknown } }).chart : undefined;
+  const results = chart && Array.isArray(chart.result) ? chart.result : null;
+  const result = results && results[0] && typeof results[0] === 'object' ? (results[0] as Record<string, unknown>) : null;
+  if (!result) return null;
+  const meta = result.meta && typeof result.meta === 'object' ? (result.meta as Record<string, unknown>) : {};
+  if (typeof meta.dataGranularity === 'string' && meta.dataGranularity !== '1d') return null;
+  const stamps = Array.isArray(result.timestamp) ? (result.timestamp as unknown[]) : [];
+  let first = Infinity, last = -Infinity;
+  for (let i = 0; i < stamps.length; i += 1) {
+    const stamp = stamps[i];
+    if (typeof stamp !== 'number' || !Number.isFinite(stamp)) continue;
+    if (stamp < first) first = stamp;
+    if (stamp > last) last = stamp;
+  }
+  if (first === Infinity) return null;
+  const listed = meta.firstTradeDate;
+  if (typeof listed !== 'number' || !Number.isFinite(listed)) return null;
+  if (first - listed > 31 * 86400) return null;
+  const events: DividendEvent[] = [];
+  const raw = result.events && typeof result.events === 'object' ? (result.events as Record<string, unknown>).dividends : null;
+  if (raw && typeof raw === 'object') {
+    const keys = Object.keys(raw);
+    for (let i = 0; i < keys.length; i += 1) {
+      const item = (raw as Record<string, unknown>)[keys[i]];
+      if (!item || typeof item !== 'object') continue;
+      const amount = (item as Record<string, unknown>).amount, when = (item as Record<string, unknown>).date;
+      if (typeof amount !== 'number' || !Number.isFinite(amount) || amount <= 0) continue;
+      const seconds = typeof when === 'number' && Number.isFinite(when) ? when : Number(keys[i]);
+      if (!Number.isFinite(seconds)) continue;
+      events.push({ date: dividendIsoDay(seconds), amount });
+    }
+  }
+  events.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+  return { asOf: dividendIsoDay(last), firstDay: dividendIsoDay(first), listed: dividendIsoDay(listed), events };
+}
+
+/** Calendar-year sums newest first, years after the listing year and within the last 30 complete years, 4 decimals (the current partial year included) */
+export function dividendAnnual(events: DividendEvent[], asOf: string, listedYear?: number | null): Array<{ year: number; dps: number }> {
+  const complete = Number(String(asOf).slice(0, 4)) - 1;
+  const totals = dividendYearSums(events, listedYear);
+  const out: Array<{ year: number; dps: number }> = [];
+  for (let i = 0; i < totals.years.length; i += 1) {
+    const year = totals.years[i];
+    if (year > complete - dividendAnnualYears()) out.push({ year, dps: dividendRoundTo(totals.sums[year], 4) || 0 });
+  }
+  return out;
+}
+
+/**
+ * Streak of yearly increases and the 10-year cut flag (Stocks scripts/metrics/dividends.ts, line by line): a year is compared
+ * with its base (the year before, or the year before a spike), a cut is a drop of more than `tolerance` that the next complete
+ * year does not recover, a year without payment after a paying year is a cut, years before the first payment are unknown
+ */
+export function dividendHistory(annual: Array<{ year: number; dps: number }>, asOf: string, tolerance?: number): { dividendStreak: number | null; dividendCut10y: boolean | null } {
+  const cutTolerance = tolerance === undefined ? dividendCutTolerance() : tolerance;
+  const spike = dividendSpikeFactor();
+  const none = { dividendStreak: null, dividendCut10y: null };
+  const lastYear = Number(String(asOf).slice(0, 4));
+  if (!Number.isFinite(lastYear) || !annual.length) return none;
+  const complete = lastYear - 1; // the current calendar year is partial
+  const byYear: Record<number, number> = {};
+  let first = Infinity;
+  annual.forEach((a) => {
+    if (!Number.isFinite(a.year) || !Number.isFinite(a.dps) || a.dps <= 0 || a.year > complete) return;
+    byYear[a.year] = (byYear[a.year] === undefined ? 0 : byYear[a.year]) + a.dps;
+    first = Math.min(first, a.year);
+  });
+  if (first === Infinity) return none;
+  /** dps of a year, 0 for a year without payments after the first one, null before it */
+  const dps = (y: number): number | null => (y < first ? null : byYear[y] === undefined ? 0 : byYear[y]);
+  const base = (y: number): number | null => {
+    const prev = dps(y - 1), before = dps(y - 2), cur = dps(y);
+    if (prev === null) return null;
+    if (before !== null && before > 0 && cur !== null && prev > spike * before && prev > spike * cur) return before;
+    return prev;
+  };
+  const isCut = (y: number): boolean => {
+    const b = base(y), cur = dps(y);
+    if (b === null || cur === null || b <= 0 || cur >= (1 - cutTolerance) * b) return false;
+    const next = y < complete ? dps(y + 1) : null;
+    return next === null || next < (1 - cutTolerance) * b;
+  };
+  let paidInWindow = false;
+  let cut = false;
+  for (let y = complete - dividendCutWindowYears() + 1; y <= complete; y += 1) {
+    const now = dps(y), prev = dps(y - 1);
+    if ((now === null ? 0 : now) > 0 || (prev === null ? 0 : prev) > 0) paidInWindow = true;
+    if (isCut(y)) cut = true;
+  }
+  let streak: number | null = null;
+  const last = dps(complete);
+  if ((last === null ? 0 : last) > 0) {
+    streak = 0;
+    for (let y = complete; ; y -= 1) {
+      const b = base(y), cur = dps(y);
+      if (b === null || cur === null || !(b > 0) || !(cur > b)) break;
+      streak += 1;
+    }
+  }
+  return { dividendStreak: streak, dividendCut10y: paidInWindow ? cut : null };
+}
+
+/** The six keys of one fund from its chart: no wall clock, so a rerun on the same answer gives the same values */
+export function dividendRow(chart: DividendsChart, tolerance?: number): DividendRow {
+  const listedYear = chart.listed ? Number(chart.listed.slice(0, 4)) : null;
+  const events = Array.isArray(chart.events) ? chart.events : [];
+  const complete = Number(String(chart.asOf).slice(0, 4)) - 1; // the current calendar year is partial
+  const totals = dividendYearSums(events, listedYear);
+  const dps = (y: number): number | null => (y in totals.sums ? totals.sums[y] : null);
+  const growth = (back: number): number | null => {
+    const a = dps(complete), b = dps(complete - back);
+    if (a === null || b === null || b <= 0) return null;
+    return dividendRoundTo((back === 1 ? a / b - 1 : Math.pow(a / b, 1 / back) - 1) * 100, 2);
+  };
+  const cutoff = new Date(Date.parse(`${chart.asOf}T00:00:00Z`) - 365.25 * 86400000).toISOString().slice(0, 10);
+  let ttm = 0;
+  for (let i = 0; i < events.length; i += 1) {
+    const event = events[i];
+    if (event && event.date > cutoff && typeof event.amount === 'number' && Number.isFinite(event.amount) && event.amount > 0) ttm += event.amount;
+  }
+  const history = dividendHistory(dividendAnnual(events, chart.asOf, listedYear), chart.asOf, tolerance);
+  return {
+    dividendRate: ttm > 0 ? dividendRoundTo(ttm, 4) : null,
+    dividendGrowth: growth(1), dividendGrowth3y: growth(3), dividendGrowth5y: growth(5),
+    dividendStreak: history.dividendStreak, dividendCut10y: history.dividendCut10y,
+  };
+}
+
+/**
+ * Wraps the brand fetch that withSwing uses (Yahoo-mode brands): every answer also fills `seen[ticker]` with its parsed
+ * dividend events (null for an incomplete chart), the payload goes back untouched; a rejected fetch stores nothing
+ */
+export function dividendsTap(fetchChart: (url: string, ticker: string) => Promise<unknown>): { fetchChart: (url: string, ticker: string) => Promise<unknown>; seen: Record<string, DividendsChart | null> } {
+  const seen: Record<string, DividendsChart | null> = {};
+  return {
+    seen,
+    fetchChart: async (url: string, ticker: string): Promise<unknown> => {
+      const payload = await fetchChart(url, ticker);
+      seen[ticker] = dividendsFromChart(payload);
+      return payload;
+    },
+  };
+}
+
+export type DividendsOptions = {
+  /** Tap mode: `dividendsTap(...).seen` of the swing request */
+  charts?: Record<string, DividendsChart | null>;
+  /** Own-request mode: GETs swingChartUrl(ticker) through the brand's own Yahoo fetch, returns the body text or parsed JSON */
+  fetchChart?: (url: string, ticker: string) => Promise<unknown>;
+  /** Own-request mode: the funds this run updated; always pass it (`[]` under SKIP_YAHOO) */
+  tickers?: string[] | null;
+  /** The previously published index rows: a fund that is not recomputed keeps their dividend keys */
+  previous?: unknown[] | null;
+  /** Own-request mode: parallel chart requests, default 4 */
+  concurrency?: number;
+  /** Own-request mode: time for all requests, default 150000 ms; funds left after it keep their published keys */
+  budgetMs?: number;
+  /** One call per failed chart (and `*` once for the budget), for the brand's log */
+  onError?: (ticker: string, error: unknown) => void;
+};
+
+/**
+ * The index rows with the six dividend keys in every `metrics`, after the swing keys and before `returnsBasis` and
+ * `performanceAsOf`. Wired once: `withDividends(feedRoot, await withSwing(...), options)`.
+ * - Tap mode (`charts`): a fund with a complete chart gets fresh keys, an incomplete chart is reported and keeps the published keys
+ * - Own-request mode (`fetchChart`): one swingChartUrl request per fund of `tickers`, funds without published keys first, within `budgetMs`
+ * - A failed source never changes a published fund (`previous`, else the row's own keys); a row without `dataFile` gets
+ *   dividendsEmpty(); a row without a `metrics` object is left as it is
+ */
+export async function withDividends<T>(feedRoot: URL | string, funds: T[], options?: DividendsOptions): Promise<T[]> {
+  const opts: DividendsOptions = options || {};
+  const list = Array.isArray(funds) ? funds : [];
+  const rows = list.map((fund) => fund as unknown as Record<string, unknown>);
+  const keys = Object.keys(dividendsEmpty());
+  const tickerOf = (row: unknown): string => (row && typeof row === 'object' && typeof (row as Record<string, unknown>).ticker === 'string' ? String((row as Record<string, unknown>).ticker) : '');
+  const hasData = (row: Record<string, unknown>): boolean => !!row && typeof row === 'object' && !!row.metrics && typeof row.metrics === 'object' && typeof row.dataFile === 'string' && row.dataFile !== '';
+  const own = (row: unknown): DividendRow | null => {
+    const metrics = row && typeof row === 'object' ? (row as Record<string, unknown>).metrics : null;
+    if (!metrics || typeof metrics !== 'object') return null;
+    const out = dividendsEmpty() as unknown as Record<string, unknown>;
+    for (let k = 0; k < keys.length; k += 1) {
+      if (!(keys[k] in (metrics as Record<string, unknown>))) return null;
+      out[keys[k]] = (metrics as Record<string, unknown>)[keys[k]];
+    }
+    return out as unknown as DividendRow;
+  };
+  const before: Record<string, unknown> = {};
+  const previous = Array.isArray(opts.previous) ? opts.previous : [];
+  for (let i = 0; i < previous.length; i += 1) if (tickerOf(previous[i])) before[tickerOf(previous[i])] = previous[i];
+  const published = (row: Record<string, unknown>): DividendRow => own(before[tickerOf(row)]) || own(row) || dividendsEmpty();
+  const computed: Array<DividendRow | null> = rows.map(() => null);
+  const report = (ticker: string, error: unknown): void => { if (opts.onError) opts.onError(ticker, error); };
+  if (opts.charts && typeof opts.charts === 'object') {
+    const charts = opts.charts;
+    for (let i = 0; i < rows.length; i += 1) {
+      if (!hasData(rows[i])) continue;
+      const ticker = tickerOf(rows[i]);
+      if (!Object.prototype.hasOwnProperty.call(charts, ticker)) continue;
+      const chart = charts[ticker];
+      if (chart) computed[i] = dividendRow(chart);
+      else report(ticker, new Error('Yahoo chart is not a complete daily history'));
+    }
+  } else if (opts.fetchChart) {
+    const fetchChart = opts.fetchChart;
+    const wanted = Array.isArray(opts.tickers) ? opts.tickers.map((t) => String(t)) : null;
+    const missing: number[] = [], rest: number[] = [];
+    for (let i = 0; i < rows.length; i += 1) {
+      if (!hasData(rows[i]) || (wanted && wanted.indexOf(tickerOf(rows[i])) < 0)) continue;
+      const old = own(before[tickerOf(rows[i])]) || own(rows[i]);
+      let known = false;
+      if (old) for (let k = 0; k < keys.length; k += 1) if ((old as unknown as Record<string, unknown>)[keys[k]] !== null) known = true;
+      (known ? rest : missing).push(i);
+    }
+    const queue = missing.concat(rest);
+    const budget = opts.budgetMs === undefined || !Number.isFinite(Number(opts.budgetMs)) ? 150000 : Math.max(0, Number(opts.budgetMs));
+    const started = Date.now();
+    let next = 0, spent = false;
+    const worker = async (): Promise<void> => {
+      while (next < queue.length) {
+        if (Date.now() - started >= budget) { spent = true; return; }
+        const index = queue[next];
+        next += 1;
+        const ticker = tickerOf(rows[index]);
+        try {
+          const chart = dividendsFromChart(await fetchChart(swingChartUrl(ticker), ticker));
+          if (!chart) throw new Error('Yahoo chart is not a complete daily history');
+          computed[index] = dividendRow(chart);
+        } catch (error) {
+          report(ticker, error);
+        }
+      }
+    };
+    const lanes = Math.max(1, Math.min(queue.length || 1, Math.floor(Number(opts.concurrency) || 4)));
+    const workers: Array<Promise<void>> = [];
+    for (let i = 0; i < lanes; i += 1) workers.push(worker());
+    await Promise.all(workers);
+    if (spent) report('*', new Error(`dividends budget of ${Math.round(budget / 1000)} s reached, ${queue.length - next} funds keep their published dividend metrics`));
+  }
+  const out: T[] = [];
+  for (let i = 0; i < rows.length; i += 1) {
+    const row = rows[i];
+    if (!row || typeof row !== 'object' || !row.metrics || typeof row.metrics !== 'object') { out.push(list[i]); continue; }
+    const values = (hasData(row) ? computed[i] || published(row) : dividendsEmpty()) as unknown as Record<string, unknown>;
+    // the dividend keys go in front of returnsBasis and performanceAsOf, which stay the last two keys (metrics contract)
+    const metrics: Record<string, unknown> = {}, old = row.metrics as Record<string, unknown>, tail = ['returnsBasis', 'performanceAsOf'];
+    const oldKeys = Object.keys(old);
+    for (let k = 0; k < oldKeys.length; k += 1) if (tail.indexOf(oldKeys[k]) < 0 && keys.indexOf(oldKeys[k]) < 0) metrics[oldKeys[k]] = old[oldKeys[k]];
+    for (let k = 0; k < keys.length; k += 1) metrics[keys[k]] = values[keys[k]];
+    for (let k = 0; k < tail.length; k += 1) if (tail[k] in old) metrics[tail[k]] = old[tail[k]];
+    out.push({ ...row, metrics } as unknown as T);
+  }
+  return out;
+}
+// </dividends>
