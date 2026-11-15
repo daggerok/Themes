@@ -1717,13 +1717,14 @@ function range52wCellHtml(metrics: any, tdClass: string): string {
 
 /**
  * Actions menu (owner 2026-11-14): the action buttons of the toolbar (Copy Tickers, Upload / Drop N-PORT XML where the app has it,
- * Export .csv, Export .txt, Clear, Blacklist) live in one ☰ menu at the left start of the toolbar. The buttons keep their ids
+ * Export .csv, Export .txt, Clear, Blacklist) live in one ☰ menu at the right end of the toolbar (owner 2026-11-15; right of the
+ * search on a phone). The buttons keep their ids
  * and their own click handlers: the menu only moves them into its panel, so Clear still opens its dialog, Export still downloads
  * and the file input still opens. Enter, Space or ArrowDown on ☰ opens the menu and focuses the first enabled item, the arrows,
  * Home and End move, Esc or Tab closes it (Esc returns focus to ☰), a click outside closes it. An item closes the menu when
  * clicked, except Copy Tickers (`data-am-keep`) so its "Copied!" feedback stays visible. Dragging a file over ☰ opens the menu
  * so the file can be dropped on the upload item. The panel moves to <body> (position: fixed under ☰, like the dropdown panels),
- * so no card or sticky wrapper clips it.
+ * so no card or sticky wrapper clips it; its right edge lines up with the right edge of ☰ and it never leaves the window.
  */
 function setupActionsMenu(): void {
   const trigger = document.getElementById('actions-btn');
@@ -1737,7 +1738,7 @@ function setupActionsMenu(): void {
   const place = (): void => {
     const rect = trigger.getBoundingClientRect();
     const width = panel.offsetWidth;
-    const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8));
+    const left = Math.max(8, Math.min(rect.right - width, window.innerWidth - width - 8));
     panel.style.left = `${Math.round(left)}px`;
     panel.style.top = `${Math.round(rect.bottom + 6)}px`;
     panel.style.maxHeight = `${Math.max(160, Math.round(window.innerHeight - rect.bottom - 16))}px`;
