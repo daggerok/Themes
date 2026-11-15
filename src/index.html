@@ -60,21 +60,43 @@
 
           <!-- Search is view-scoped: each tab keeps its own query. The ✕ button
                clears only the active tab's filter (same glyph as the Use-column blacklist). -->
-          <div class="relative flex items-center w-full lg:w-96 shrink-0">
-            <input
-              type="text"
-              id="search-input"
-              placeholder="Search ETFs, fund names, holdings, tickers, CUSIPs, ISINs..."
-              disabled
-              class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg pl-4 pr-8 py-2 w-full focus:outline-hidden focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
-            />
-            <button
-              type="button"
-              id="search-clear-btn"
-              class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm leading-none focus:outline-hidden"
-              title="Clear search filter"
-              aria-label="Clear search filter"
-            >✕</button>
+          <!-- Actions menu (☰, owner 2026-11-14): the action buttons keep their ids and handlers, setupActionsMenu() in main.tsx opens and closes it -->
+          <div class="am-row w-full lg:w-auto shrink-0">
+            <div class="am-root">
+              <button type="button" id="actions-btn" class="am-trigger" aria-haspopup="menu" aria-expanded="false" aria-controls="actions-panel" aria-label="Actions" title="Actions: copy tickers, export, clear, blacklist">☰</button>
+              <div id="actions-panel" class="am-panel" role="menu" aria-label="Actions" hidden>
+                <button id="copy-btn" disabled class="am-item am-copy" role="menuitem" data-am-keep>Copy Tickers</button>
+                <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
+                <div id="dropzone" class="am-item am-upload" title="Upload SEC Form N-PORT-P primary_doc.xml (Themes ETF Trust holdings from EDGAR, CIK 0001976322 — the fallback the feed uses when themesetfs.com publishes no daily holdings CSV for a fund). Parsed in your browser; uploads live for this session only." role="menuitem">
+                  <input type="file" id="file-input" accept=".xml" class="hidden" />
+                  <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
+                </div>
+                <button id="export-csv-btn" disabled class="am-item am-csv" role="menuitem">Export .csv</button>
+                <button id="export-txt-btn" disabled class="am-item am-txt" role="menuitem">Export .txt</button>
+                <div class="am-sep" role="separator"></div>
+                <button id="reset-btn" disabled title="Choose what to reset to the first-visit view (the choice is remembered, the theme is kept)" class="am-item am-clear" role="menuitem">Clear</button>
+                <button id="blacklist-btn" class="am-item am-blacklist" title="Manage the blacklist of ETFs hidden from All ETFs (kept in browser localStorage)" aria-expanded="false" role="menuitem">Blacklist</button>
+              </div>
+            </div>
+            <div class="relative flex items-center lg:w-96">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Search ETFs, fund names, holdings, tickers, CUSIPs, ISINs..."
+                disabled
+                class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg pl-4 pr-8 py-2 w-full focus:outline-hidden focus:border-blue-500 text-sm placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              />
+              <button
+                type="button"
+                id="search-clear-btn"
+                class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition text-sm leading-none focus:outline-hidden"
+                title="Clear search filter"
+                aria-label="Clear search filter"
+              >✕</button>
+            </div>
           </div>
 
           <!-- ETF catalogue tabs: All ETFs + Themes ETFs categories. -->
@@ -82,30 +104,6 @@
             <button id="filters-btn" type="button" aria-pressed="true" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Show or hide the row of filter inputs under the column headers">Filters: <span id="filters-summary">on</span><span id="filters-badge" hidden class="ml-1.5 text-[0.7rem] leading-none font-semibold px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50"></span></button>
             <button id="clear-filters-btn" type="button" hidden class="bg-blue-50 dark:bg-blue-950/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-blue-100 dark:hover:bg-blue-900/50" title="Clear every column filter of the shown table">Clear filters</button>
             <button id="rank-btn" type="button" aria-pressed="false" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed" title="Sticky #: number the rows by their rank in the sorted table before the column filters, so filtered rows keep their rank (1, 4, 7...). Off: 1..N of the shown rows">Sticky #: <span id="rank-summary">off</span></button>
-
-          <!-- Actions intentionally match Amplify / iShares naming and placement -->
-          <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto lg:ml-auto justify-end shrink-0">
-
-            <button id="copy-btn" disabled class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-200 dark:hover:bg-slate-700 disabled:hover:bg-slate-100 dark:disabled:hover:bg-slate-800">Copy Tickers</button>
-
-            <!-- Integrated Drag & Drop Upload (same feature as daggerok/iShares, N-PORT flavor) -->
-            <div
-              id="dropzone"
-              class="flex items-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 hover:border-blue-500 bg-slate-50 dark:bg-slate-900/60 transition-all rounded-lg px-3.5 py-2 cursor-pointer text-sm text-slate-600 dark:text-slate-300"
-              title="Upload SEC Form N-PORT-P primary_doc.xml (Themes ETF Trust holdings from EDGAR, CIK 0001976322 — the fallback the feed uses when themesetfs.com publishes no daily holdings CSV for a fund). Parsed in your browser; uploads live for this session only."
-            >
-              <input type="file" id="file-input" accept=".xml" class="hidden" />
-              <svg class="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </svg>
-              <span id="dropzone-text" class="dz-label font-medium">Upload / Drop N-PORT XML</span>
-            </div>
-
-            <button id="export-csv-btn" disabled class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-600">Export .csv</button>
-            <button id="export-txt-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-600">Export .txt</button>
-            <button id="reset-btn" disabled title="Choose what to reset to the first-visit view (the choice is remembered, the theme is kept)" class="bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 px-3 py-2 rounded-lg text-sm font-medium transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-rose-200 dark:hover:bg-rose-800/60 disabled:hover:bg-rose-100 dark:disabled:hover:bg-rose-900/40">Clear</button>
-            <button id="blacklist-btn" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition active:scale-95 hover:bg-slate-200 dark:hover:bg-slate-700" title="Manage the blacklist of ETFs hidden from All ETFs (kept in browser localStorage)" aria-expanded="false">Blacklist</button>
-          </div>
 
         </div>
       </div>
