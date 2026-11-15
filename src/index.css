@@ -341,16 +341,27 @@
 .range52w-cell{background-image:linear-gradient(to right,rgb(59 130 246 / .7) 0 var(--range52w,0%),rgb(148 163 184 / .35) var(--range52w,0%) 100%);background-repeat:no-repeat;background-size:calc(100% - 2rem) 3px;background-position:1rem calc(100% - .3rem)}
 .range52w-cell.range52w-young{background-image:linear-gradient(to right,rgb(245 158 11 / .75) 0 var(--range52w,0%),rgb(148 163 184 / .35) var(--range52w,0%) 100%)}
 
-/* Actions menu (☰ at the left start of the toolbar, see setupActionsMenu in main.tsx): the action buttons as menu items, each with its old color as an accent bar */
+/* Actions menu (☰ at the right end of the toolbar, owner 2026-11-15, see setupActionsMenu in main.tsx): the action buttons as menu items, each with its old color as an accent bar.
+   .am-bar is the toolbar, .am-root (☰ and its panel) its last child, .am-row the search. From lg ☰ is pushed to the right end of its row; below lg it sits right of the search
+   on the first row: a column toolbar (flex-col, brands) becomes a two-column grid there, a wrapping row toolbar (hub, Stocks) puts the search and ☰ first by order */
 .am-row{display:flex;align-items:center;gap:.5rem;min-width:0}
-.am-row > .am-root{flex:none}
-.am-row > :not(.am-root){flex:1 1 auto;min-width:0}
+.am-bar > .am-root{flex:none}
+@media (min-width:64rem){.am-bar > .am-root{margin-left:auto}}
+@media (max-width:63.999rem){
+.am-bar.flex-col{display:grid;grid-template-columns:minmax(0,1fr) auto;justify-items:center;align-items:center;column-gap:.5rem}
+.am-bar.flex-col > *{grid-column:1 / -1}
+.am-bar.flex-col > .am-row{grid-column:1;grid-row:1;justify-self:stretch}
+.am-bar.flex-col > .am-root{grid-column:2;grid-row:1}
+.am-bar:not(.flex-col) > .am-row{order:-2;flex:1 1 calc(100% - 3.5rem)}
+.am-bar:not(.flex-col) > .am-root{order:-1}
+}
+.am-row > *{flex:1 1 auto;min-width:0}
 .am-trigger{display:inline-flex;align-items:center;justify-content:center;width:2.375rem;height:2.375rem;flex:none;border-radius:.5rem;border:1px solid #e2e8f0;background:#fff;color:#334155;font-size:1.125rem;line-height:1;cursor:pointer;transition:background-color .15s,border-color .15s,color .15s}
 .am-trigger:hover,.am-trigger[aria-expanded="true"]{background:#f1f5f9;border-color:#cbd5e1}
 .dark .am-trigger{background:#0f172a;border-color:#334155;color:#e2e8f0}
 .dark .am-trigger:hover,.dark .am-trigger[aria-expanded="true"]{background:#1e293b;border-color:#475569}
 .am-trigger:focus-visible,.am-item:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
-.am-panel{position:fixed;left:0;top:0;z-index:1000;display:flex;flex-direction:column;gap:.125rem;min-width:13rem;max-width:calc(100vw - 1rem);overflow:auto;padding:.375rem;background:#fff;border:1px solid #e2e8f0;border-radius:.75rem;box-shadow:0 12px 30px rgb(15 23 42 / .16),0 2px 6px rgb(15 23 42 / .06);opacity:0;transform:translateY(-4px) scale(.98);transform-origin:top left;transition:opacity .14s ease,transform .14s ease}
+.am-panel{position:fixed;left:0;top:0;z-index:1000;display:flex;flex-direction:column;gap:.125rem;min-width:13rem;max-width:calc(100vw - 1rem);overflow:auto;padding:.375rem;background:#fff;border:1px solid #e2e8f0;border-radius:.75rem;box-shadow:0 12px 30px rgb(15 23 42 / .16),0 2px 6px rgb(15 23 42 / .06);opacity:0;transform:translateY(-4px) scale(.98);transform-origin:top right;transition:opacity .14s ease,transform .14s ease}
 .am-panel[hidden]{display:none}
 .am-panel.is-open{opacity:1;transform:none}
 .dark .am-panel{background:#0f172a;border-color:#334155;box-shadow:0 12px 30px rgb(0 0 0 / .5),0 2px 6px rgb(0 0 0 / .3)}
