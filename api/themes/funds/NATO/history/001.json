@@ -9,6 +9,36 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "36.98",
+      "Close": "36.98",
+      "Date": "2026-11-13",
+      "Volume": "24600"
+    },
+    {
+      "Adj Close": "37.15",
+      "Close": "37.15",
+      "Date": "2026-11-12",
+      "Volume": "3000"
+    },
+    {
+      "Adj Close": "37.85",
+      "Close": "37.85",
+      "Date": "2026-11-11",
+      "Volume": "4600"
+    },
+    {
+      "Adj Close": "37.81",
+      "Close": "37.81",
+      "Date": "2026-11-10",
+      "Volume": "7300"
+    },
+    {
+      "Adj Close": "37.39",
+      "Close": "37.39",
+      "Date": "2026-11-09",
+      "Volume": "7200"
+    },
+    {
       "Adj Close": "35.81",
       "Close": "35.81",
       "Date": "2026-11-06",
@@ -3130,5 +3160,5 @@
     }
   ],
   "ticker": "NATO",
-  "totalRows": 520
+  "totalRows": 525
 }
