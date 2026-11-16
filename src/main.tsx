@@ -1809,8 +1809,6 @@ function setupActionsMenu(): void {
 }
 setupActionsMenu();
 
-init();
-
 // =========================================================================
 // 3. Theme & small helpers
 // =========================================================================
@@ -2350,7 +2348,7 @@ function renderTabs(): void {
   else {
     el.selectedTabsBar.classList.remove('hidden');
     el.selectedTabsBar.innerHTML = [...DETAIL_TABS.map(tab => tab.label), 'Watchlist'].map(label =>
-      `<button type="button" disabled title="Select an ETF with Use to open this tab" class="px-3.5 py-1.5 rounded-full text-xs border whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 opacity-50 cursor-not-allowed">${label}</button>`).join('');
+      `<button type="button" disabled title="Select an ETF with Use to open this tab" class="ui-chip">${label}</button>`).join('');
   }
 }
 
@@ -2363,12 +2361,12 @@ function renderTabButtons(container: any, tabs: TabInfo[], minTabs = 1): void {
   container.innerHTML = tabs.map(tab => {
     // The All ETFs pill is lit only while no asset class narrows the table
     const isActive = tab.id === state.activeTab && (tab.id !== 'All' || !categoryFilterActive());
-    const activeClasses = 'bg-blue-600 text-white font-medium border-blue-500 shadow-xs';
-    const inactiveClasses = 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700';
+    const activeClasses = 'is-current';
+    const inactiveClasses = '';
     if (tab.id === 'All') {
       return `
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs transition border whitespace-nowrap ${isActive ? activeClasses : inactiveClasses}">
-          <input type="checkbox" id="select-all-toggle" ${allSelected ? 'checked' : ''} class="w-3.5 h-3.5 accent-blue-600 cursor-pointer" title="Select / Deselect all ETFs" />
+        <div class="ui-chip ${isActive ? activeClasses : inactiveClasses}">
+          <input type="checkbox" id="select-all-toggle" ${allSelected ? 'checked' : ''} class="ui-check" title="Select / Deselect all ETFs" />
           <button data-tab="All" class="font-medium hover:underline focus:outline-hidden">
             ${escapeHtml(tab.label)} (${tab.count})
           </button>
@@ -2378,7 +2376,7 @@ function renderTabButtons(container: any, tabs: TabInfo[], minTabs = 1): void {
     return `
       <button
         data-tab="${escapeHtml(tab.id)}"
-        class="px-3.5 py-1.5 rounded-full text-xs transition border whitespace-nowrap ${isActive ? activeClasses : inactiveClasses}">
+        class="ui-chip ${isActive ? activeClasses : inactiveClasses}">
         ${escapeHtml(tab.label)}<span${container === el.selectedTabsBar ? ' class="lg:max-xl:hidden"' : ''}> (${tab.count})</span>
       </button>
     `;
@@ -2761,7 +2759,7 @@ function useHeader(): string {
   const allSelected = rows.length > 0 && rows.every(fund => state.selected.has(fund.ticker));
   return `<th class="catalog-sticky-col catalog-sticky-use py-3.5 px-4 w-20 text-center" title="${escapeHtml(getHeaderTooltip('Use'))}">
     <div class="inline-flex items-center justify-center gap-1">
-      <input type="checkbox" id="select-all-checkbox" ${allSelected ? 'checked' : ''} class="w-4 h-4 accent-blue-600 cursor-pointer" title="Select / Deselect all visible ETFs" />
+      <input type="checkbox" id="select-all-checkbox" ${allSelected ? 'checked' : ''} class="ui-check" title="Select / Deselect all visible ETFs" />
       <span>Use</span>
     </div>
   </th>`;
@@ -2842,7 +2840,7 @@ function renderFundsTable(): void {
           <td class="py-2.5 px-4 text-slate-400 dark:text-slate-500 text-xs text-center font-mono">${rowNumber(fund, index)}</td>
           <td class="catalog-sticky-col catalog-sticky-use py-2.5 px-4 text-center">
             <div class="inline-flex items-center justify-center gap-1.5">
-              <input data-checkbox="${escapeHtml(fund.ticker)}" type="checkbox" ${selected ? 'checked' : ''} class="w-4 h-4 accent-blue-600 cursor-pointer" aria-label="Use ${escapeHtml(fund.ticker)}" />
+              <input data-checkbox="${escapeHtml(fund.ticker)}" type="checkbox" ${selected ? 'checked' : ''} class="ui-check" aria-label="Use ${escapeHtml(fund.ticker)}" />
               <button data-blacklist="${escapeHtml(fund.ticker)}" class="w-4 h-4 rounded-sm text-slate-300 dark:text-slate-600 hover:text-rose-500 dark:hover:text-rose-400 leading-none transition" title="Blacklist ${escapeHtml(fund.ticker)} — hide it from All ETFs">✕</button>
             </div>
           </td>
@@ -3360,7 +3358,7 @@ function watchlistRowHtml(row: WatchlistRow, index: number): string {
         <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300 font-medium" title="${escapeHtml(row.name)}">${escapeHtml(row.name || '—')}</td>
         <td class="py-2.5 px-4 text-slate-700 dark:text-slate-300">
           <div class="flex flex-wrap gap-1 max-w-md">
-            ${row.funds.map((ticker: string) => `<a href="javascript:void(0)" data-activate-fund="${escapeHtml(ticker)}" title="Open ${escapeHtml(ticker)} detail tabs" class="font-mono text-xs bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800 rounded-full px-2 py-0.5 hover:underline">${escapeHtml(ticker)}</a>`).join('')}
+            ${row.funds.map((ticker: string) => `<a href="javascript:void(0)" data-activate-fund="${escapeHtml(ticker)}" title="Open ${escapeHtml(ticker)} detail tabs" class="ui-badge is-accent font-mono hover:underline">${escapeHtml(ticker)}</a>`).join('')}
           </div>
         </td>
         <td class="py-2.5 px-4 text-right font-mono text-slate-700 dark:text-slate-300">${row.fundCount}</td>
@@ -3931,21 +3929,23 @@ function clearSelectionAndSearch(): void {
   const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const backdrop = document.createElement('div');
   backdrop.id = 'clear-dialog';
-  backdrop.className = 'clear-backdrop';
+  backdrop.className = 'clear-backdrop ui-modal-backdrop';
   backdrop.innerHTML = `
-    <div class="clear-modal" role="dialog" aria-modal="true" aria-labelledby="clear-title">
-      <h2 id="clear-title" class="clear-title">Clear</h2>
-      <p class="clear-hint">Choose what to reset to the first-visit view. Your choice is remembered for the next time.</p>
+    <div class="clear-modal ui-modal ui-modal-sm" role="dialog" aria-modal="true" aria-labelledby="clear-title">
+      <div class="ui-modal-head"><h2 id="clear-title" class="ui-modal-title">Clear</h2></div>
+      <div class="ui-modal-body">
+      <p class="ui-hint">Choose what to reset to the first-visit view. Your choice is remembered for the next time.</p>
       <div class="clear-tools">
         <button type="button" class="dd-act" data-clear-all>All</button>
         <button type="button" class="dd-act" data-clear-none>None</button>
       </div>
       <div class="clear-list">
-        ${RESET_ITEMS.map(item => `<label class="clear-row"><input type="checkbox" data-clear-id="${item.id}" class="w-4 h-4 accent-blue-600" ${saved[item.id] === false ? '' : 'checked'} /><span>${escapeHtml(item.label)}</span></label>`).join('')}
+        ${RESET_ITEMS.map(item => `<label class="clear-row dd-opt"><input type="checkbox" data-clear-id="${item.id}" class="ui-check" ${saved[item.id] === false ? '' : 'checked'} /><span>${escapeHtml(item.label)}</span></label>`).join('')}
       </div>
-      <div class="clear-actions">
-        <button type="button" class="clear-btn" data-clear-cancel>Cancel<kbd>Esc</kbd></button>
-        <button type="button" class="clear-btn clear-btn-ok" data-clear-ok>OK<kbd>Enter</kbd></button>
+      </div>
+      <div class="ui-modal-foot">
+        <button type="button" class="ui-btn" data-clear-cancel>Cancel<kbd>Esc</kbd></button>
+        <button type="button" class="ui-btn is-danger-solid" data-clear-ok>OK<kbd>Enter</kbd></button>
       </div>
     </div>`;
   document.body.appendChild(backdrop);
@@ -4041,8 +4041,8 @@ function renderBlacklistPanel(): void {
   const tickers = [...state.blacklist].sort();
   tickers.forEach(ticker => {
     const chip = document.createElement('span');
-    chip.className = 'inline-flex items-center gap-1.5 bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-700/50 rounded-full pl-3 pr-1.5 py-1 text-xs font-medium';
-    chip.innerHTML = `${escapeHtml(ticker)}<button data-unblacklist="${escapeHtml(ticker)}" class="w-5 h-5 rounded-full hover:bg-rose-200 dark:hover:bg-rose-800 transition" title="Remove ${escapeHtml(ticker)} from blacklist">✕</button>`;
+    chip.className = 'ui-chip is-danger';
+    chip.innerHTML = `${escapeHtml(ticker)}<button data-unblacklist="${escapeHtml(ticker)}" class="ui-x" title="Remove ${escapeHtml(ticker)} from blacklist">✕</button>`;
     el.blacklistChips.appendChild(chip);
   });
   el.blacklistEmpty.classList.toggle('hidden', tickers.length > 0);
@@ -4739,3 +4739,7 @@ Object.defineProperty(window, 'hiddenColumns', { get: () => hiddenColumns, set: 
 document.querySelectorAll('a[data-feed-link]').forEach(link => {
   (link as HTMLAnchorElement).href = new URL(link.getAttribute('data-feed-link') || '', document.baseURI).href;
 });
+
+// keep init() the last statement: it reads top-level let/const bindings from all over this file, and started in the middle a reload
+// with a saved selection threw "Cannot access ... before initialization" (the catalog never loaded)
+init();
