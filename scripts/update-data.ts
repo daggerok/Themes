@@ -1695,12 +1695,19 @@ export async function main(env: Record<string, string | undefined> = process.env
   }
   for (const [ticker, entry] of updates) allEntries.set(ticker, entry);
   // the 52-week range and the swing metrics of every row from its published history pages (shared range-52w and swing blocks),
-  // the dividend metrics from one Yahoo daily chart per fund this run updated (shared dividends block)
-  const funds = await withDividends(API_ROOT, await withSwing(API_ROOT, await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS))), {
-    fetchChart: (url) => fetchJson(url, config, gate),
+  // the dividend and the benchmark metrics from one Yahoo daily chart per fund this run updated (shared dividends and
+  // benchmark blocks); the SPY and QQQ charts are read once per run before any fund chart
+  const chartFetch = (url: string) => fetchJson(url, config, gate);
+  const benchmarks = config.skipYahoo ? {} : await benchmarkLoad(chartFetch, (ticker, error) => outputNote(`[ bench    ] ${ticker}: ${error instanceof Error ? error.message : String(error)}; published ${ticker} benchmark metrics kept`));
+  const benchRows = benchmarkTap(chartFetch, benchmarks);
+  const funds = await withBenchmark(API_ROOT, await withDividends(API_ROOT, await withSwing(API_ROOT, await withRange52w(API_ROOT, markClosedFunds(Array.from(allEntries.values()).sort((left, right) => String(left.ticker).localeCompare(String(right.ticker))), CLOSED_FUNDS))), {
+    fetchChart: benchRows.fetchChart,
     tickers: config.skipYahoo ? [] : Array.from(updates.keys()),
     previous: Array.from(previousEntries.values()), concurrency: config.concurrency,
     onError: (ticker, error) => outputNote(`[ dividend ] ${ticker}: ${error instanceof Error ? error.message : String(error)}; published dividend metrics kept`),
+  }), {
+    rows: config.skipYahoo ? {} : benchRows.seen, previous: Array.from(previousEntries.values()),
+    onError: (ticker, error) => outputNote(`[ bench    ] ${ticker}: ${error instanceof Error ? error.message : String(error)}; published benchmark metrics kept`),
   });
   const counts = {
     funds: funds.length,
@@ -3254,7 +3261,7 @@ export type DividendEvent = { date: string; amount: number };
 /** asOf: last daily bar; firstDay: first daily bar; listed: meta.firstTradeDate (null only in tests, then no year is dropped) */
 export type DividendsChart = { asOf: string; firstDay: string; listed: string | null; events: DividendEvent[] };
 
-/** The six dividend keys of an index row's `metrics`, in key order */
+/** The eight dividend keys of an index row's `metrics`, in key order */
 export type DividendRow = {
   dividendRate: number | null; // sum of the amounts with ex-dates in the 365.25 days up to asOf, 4 decimals
   dividendGrowth: number | null; // last complete calendar year against the year before, percent
@@ -3262,6 +3269,8 @@ export type DividendRow = {
   dividendGrowth5y: number | null; // yearly rate over 5 years, percent
   dividendStreak: number | null; // complete calendar years in a row with a higher sum than the base year
   dividendCut10y: boolean | null; // a confirmed cut in the last 10 complete calendar years
+  paymentsPerYear: number | null; // events with ex-dates in the 365.25 days up to asOf (the dividendRate window)
+  payFrequency: string | null; // weekly, monthly, quarterly, semiannual, annual or irregular (dividendPayFrequency)
 };
 
 /** A drop smaller than this share of the base year is ordinary fluctuation, not a cut (Stocks: 0.1) */
@@ -3284,9 +3293,62 @@ export function dividendAnnualYears(): number {
   return 30;
 }
 
-/** The six dividend keys, all null: a catalog-only row and a fund that never paid carry this */
+/** The eight dividend keys, all null: a catalog-only row and a fund that never paid carry this */
 export function dividendsEmpty(): DividendRow {
-  return { dividendRate: null, dividendGrowth: null, dividendGrowth3y: null, dividendGrowth5y: null, dividendStreak: null, dividendCut10y: null };
+  return { dividendRate: null, dividendGrowth: null, dividendGrowth3y: null, dividendGrowth5y: null, dividendStreak: null, dividendCut10y: null, paymentsPerYear: null, payFrequency: null };
+}
+
+/** The first six keys: a row published before 2026-11-15 has only these, and still counts as published */
+function dividendCoreKeys(): string[] {
+  return ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
+}
+
+/** Calendar month index (year × 12 + month - 1) of an ISO date */
+function dividendMonthIndex(date: string): number {
+  return Number(date.slice(0, 4)) * 12 + Number(date.slice(5, 7)) - 1;
+}
+
+/**
+ * Payments in the dividendRate window (`date > asOf - 365.25 days`) and the payment frequency, first rule that matches:
+ * no event in the window -> null; 40 events or more -> weekly; 11 calendar months or more, or the last 4 events of the whole
+ * history in 4 consecutive calendar months with the newest in the window -> monthly; first bar less than 365 days before asOf
+ * -> null (too young to tell); 3 to 5 months and 6 events or fewer -> quarterly; 2 months -> semiannual; 1 month -> annual;
+ * else irregular. Months, not events, are counted: supplemental payments keep a monthly payer monthly, a December special
+ * keeps a quarterly payer quarterly. `events` sorted by date (dividendsFromChart order)
+ */
+export function dividendPayFrequency(events: DividendEvent[], asOf: string, firstDay: string): { paymentsPerYear: number | null; payFrequency: string | null } {
+  const list: DividendEvent[] = [];
+  const all = Array.isArray(events) ? events : [];
+  for (let i = 0; i < all.length; i += 1) {
+    const event = all[i];
+    if (event && typeof event.date === 'string' && typeof event.amount === 'number' && Number.isFinite(event.amount) && event.amount > 0) list.push(event);
+  }
+  const asOfMs = Date.parse(`${asOf}T00:00:00Z`);
+  const cutoff = new Date(asOfMs - 365.25 * 86400000).toISOString().slice(0, 10);
+  const seen: Record<string, boolean> = {};
+  let count = 0, months = 0;
+  for (let i = 0; i < list.length; i += 1) {
+    if (!(list[i].date > cutoff)) continue;
+    count += 1;
+    const month = list[i].date.slice(0, 7);
+    if (!seen[month]) { seen[month] = true; months += 1; }
+  }
+  if (!count) return { paymentsPerYear: null, payFrequency: null };
+  let frequency: string | null;
+  let lastFour = false;
+  if (list.length >= 4 && list[list.length - 1].date > cutoff) {
+    lastFour = true;
+    for (let i = list.length - 3; i < list.length; i += 1) if (dividendMonthIndex(list[i].date) - dividendMonthIndex(list[i - 1].date) !== 1) lastFour = false;
+  }
+  const firstMs = Date.parse(`${firstDay}T00:00:00Z`);
+  if (count >= 40) frequency = 'weekly';
+  else if (months >= 11 || lastFour) frequency = 'monthly';
+  else if (!Number.isFinite(firstMs) || asOfMs - firstMs < 365 * 86400000) frequency = null;
+  else if (months >= 3 && months <= 5 && count <= 6) frequency = 'quarterly';
+  else if (months === 2) frequency = 'semiannual';
+  else if (months === 1) frequency = 'annual';
+  else frequency = 'irregular';
+  return { paymentsPerYear: count, payFrequency: frequency };
 }
 
 function dividendRoundTo(value: number, digits: number): number | null {
@@ -3429,7 +3491,7 @@ export function dividendHistory(annual: Array<{ year: number; dps: number }>, as
   return { dividendStreak: streak, dividendCut10y: paidInWindow ? cut : null };
 }
 
-/** The six keys of one fund from its chart: no wall clock, so a rerun on the same answer gives the same values */
+/** The eight keys of one fund from its chart: no wall clock, so a rerun on the same answer gives the same values */
 export function dividendRow(chart: DividendsChart, tolerance?: number): DividendRow {
   const listedYear = chart.listed ? Number(chart.listed.slice(0, 4)) : null;
   const events = Array.isArray(chart.events) ? chart.events : [];
@@ -3448,10 +3510,12 @@ export function dividendRow(chart: DividendsChart, tolerance?: number): Dividend
     if (event && event.date > cutoff && typeof event.amount === 'number' && Number.isFinite(event.amount) && event.amount > 0) ttm += event.amount;
   }
   const history = dividendHistory(dividendAnnual(events, chart.asOf, listedYear), chart.asOf, tolerance);
+  const payments = dividendPayFrequency(events, chart.asOf, chart.firstDay);
   return {
     dividendRate: ttm > 0 ? dividendRoundTo(ttm, 4) : null,
     dividendGrowth: growth(1), dividendGrowth3y: growth(3), dividendGrowth5y: growth(5),
     dividendStreak: history.dividendStreak, dividendCut10y: history.dividendCut10y,
+    paymentsPerYear: payments.paymentsPerYear, payFrequency: payments.payFrequency,
   };
 }
 
@@ -3489,7 +3553,7 @@ export type DividendsOptions = {
 };
 
 /**
- * The index rows with the six dividend keys in every `metrics`, after the swing keys and before `returnsBasis` and
+ * The index rows with the eight dividend keys in every `metrics`, after the swing keys and before `returnsBasis` and
  * `performanceAsOf`. Wired once: `withDividends(feedRoot, await withSwing(...), options)`.
  * - Tap mode (`charts`): a fund with a complete chart gets fresh keys, an incomplete chart is reported and keeps the published keys
  * - Own-request mode (`fetchChart`): one swingChartUrl request per fund of `tickers`, funds without published keys first, within `budgetMs`
@@ -3503,13 +3567,15 @@ export async function withDividends<T>(feedRoot: URL | string, funds: T[], optio
   const keys = Object.keys(dividendsEmpty());
   const tickerOf = (row: unknown): string => (row && typeof row === 'object' && typeof (row as Record<string, unknown>).ticker === 'string' ? String((row as Record<string, unknown>).ticker) : '');
   const hasData = (row: Record<string, unknown>): boolean => !!row && typeof row === 'object' && !!row.metrics && typeof row.metrics === 'object' && typeof row.dataFile === 'string' && row.dataFile !== '';
+  const core = dividendCoreKeys();
+  // published = the six keys of 2026-11-14 present; paymentsPerYear and payFrequency are null until a fresh chart fills them
   const own = (row: unknown): DividendRow | null => {
     const metrics = row && typeof row === 'object' ? (row as Record<string, unknown>).metrics : null;
     if (!metrics || typeof metrics !== 'object') return null;
+    for (let k = 0; k < core.length; k += 1) if (!(core[k] in (metrics as Record<string, unknown>))) return null;
     const out = dividendsEmpty() as unknown as Record<string, unknown>;
     for (let k = 0; k < keys.length; k += 1) {
-      if (!(keys[k] in (metrics as Record<string, unknown>))) return null;
-      out[keys[k]] = (metrics as Record<string, unknown>)[keys[k]];
+      if (keys[k] in (metrics as Record<string, unknown>)) out[keys[k]] = (metrics as Record<string, unknown>)[keys[k]];
     }
     return out as unknown as DividendRow;
   };
@@ -3581,3 +3647,407 @@ export async function withDividends<T>(feedRoot: URL | string, funds: T[], optio
   return out;
 }
 // </dividends>
+
+// <benchmark> shared block of .claude/tools/etfs/etf-std/benchmark.block.ts, applied by apply-block.ts: never edit it in one repo
+// Fund against SPY and QQQ from the Yahoo daily chart the swing and dividends blocks already request (plan
+// .claude/docs/open-items/etf-benchmark-screeners-plan.md, section 3.1): `close` (split adjusted) for price metrics,
+// `adjclose` (dividend and split adjusted) for total-return metrics. Two benchmark requests per run, kept in memory.
+// No top-level consts (the block sits after `await main()`), no wall clock in any formula: a rerun on the same answers
+// gives the same values. Horizons start on the calendar date H years before the last bar (Feb 29 -> Feb 28); Stocks
+// `priceReturns` steps back H × 365.25 days, so the two pick the same bar unless a bar sits on the day in between.
+export type BenchSeries = { dates: string[]; close: number[]; adj: number[] };
+
+/** The 32 benchmark keys of an index row's `metrics`, in key order; a key left out means "keep the published value" */
+export type BenchmarkRow = Record<string, number | string | null>;
+
+/** { SPY, QQQ }: null for a benchmark whose chart failed this run */
+export type Benchmarks = Record<string, BenchSeries | null>;
+
+export function benchmarkTickers(): string[] {
+  return ['SPY', 'QQQ'];
+}
+
+/** 'SPY' -> 'Spy', 'QQQ' -> 'Qqq': the key suffix of a benchmark */
+export function benchmarkSuffix(ticker: string): string {
+  const t = String(ticker).toUpperCase();
+  return t.charAt(0) + t.slice(1).toLowerCase();
+}
+
+/** Horizons in years of perf, maxDrawdown and vs */
+function benchHorizons(): number[] {
+  return [1, 3, 5, 10];
+}
+
+/** The eleven keys of one benchmark, in key order */
+function benchKeysOf(ticker: string): string[] {
+  const b = benchmarkSuffix(ticker);
+  return [`vs${b}1y`, `vs${b}3y`, `vs${b}5y`, `vs${b}10y`, `beta1y${b}`, `corr1y${b}`, `upCapture3y${b}`, `downCapture3y${b}`, `relStrength3m${b}`, `stressReturn${b}`, `stressBasis${b}`];
+}
+
+/** The 32 keys in key order: perf, perfSi, maxDrawdown, the eleven of SPY, the eleven of QQQ, benchmarkAsOf */
+export function benchmarkKeys(): string[] {
+  const out: string[] = [];
+  const horizons = benchHorizons();
+  for (let i = 0; i < horizons.length; i += 1) out.push(`perf${horizons[i]}y`);
+  out.push('perfSi');
+  for (let i = 0; i < horizons.length; i += 1) out.push(`maxDrawdown${horizons[i]}y`);
+  const tickers = benchmarkTickers();
+  for (let i = 0; i < tickers.length; i += 1) {
+    const keys = benchKeysOf(tickers[i]);
+    for (let k = 0; k < keys.length; k += 1) out.push(keys[k]);
+  }
+  out.push('benchmarkAsOf');
+  return out;
+}
+
+/** 32 nulls: a catalog-only row and a fund without a chart carry this */
+export function benchmarkEmpty(): BenchmarkRow {
+  const out: BenchmarkRow = {};
+  const keys = benchmarkKeys();
+  for (let k = 0; k < keys.length; k += 1) out[keys[k]] = null;
+  return out;
+}
+
+/** 2 decimals, null for a non-finite value, never -0 */
+function benchRound(value: number): number | null {
+  if (!Number.isFinite(value)) return null;
+  const r = Math.round(value * 100) / 100;
+  return r === 0 ? 0 : r;
+}
+
+function benchPositive(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0;
+}
+
+function benchDayMs(iso: string): number {
+  return Date.parse(`${iso}T00:00:00Z`);
+}
+
+/** The calendar date `years` before an ISO date, Feb 29 -> Feb 28 */
+function benchYearsBack(iso: string, years: number): string {
+  const year = String(Number(iso.slice(0, 4)) - years);
+  const rest = iso.slice(4);
+  return `${'0000'.slice(year.length)}${year}${rest === '-02-29' ? '-02-28' : rest}`;
+}
+
+/** Index of the last date on or before `iso`, -1 when every date is after it */
+function benchOnOrBefore(dates: string[], iso: string): number {
+  let lo = 0, hi = dates.length - 1, found = -1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    if (dates[mid] <= iso) { found = mid; lo = mid + 1; } else hi = mid - 1;
+  }
+  return found;
+}
+
+/** start(H) on `dates` up to its last date: null when the series starts after the anchor or the bar is more than 7 days before it */
+function benchStart(dates: string[], years: number): number | null {
+  if (!dates.length) return null;
+  const anchor = benchYearsBack(dates[dates.length - 1], years);
+  if (dates[0] > anchor) return null;
+  const i = benchOnOrBefore(dates, anchor);
+  if (i < 0 || benchDayMs(anchor) - benchDayMs(dates[i]) > 7 * 86400000) return null;
+  return i;
+}
+
+/**
+ * The Yahoo daily chart answer (text or parsed JSON, swingChartUrl) as a close and adjusted-close series. Null (a failed
+ * source) under the rules of dividendsFromChart: no result, bars other than daily, no finite `meta.firstTradeDate`, first bar
+ * more than 31 days after it; and when `indicators.adjclose[0].adjclose` is missing or fewer than 2 bars have both closes
+ * finite and positive. The date of a bar is the UTC day of its timestamp; a repeated day keeps the later bar
+ */
+export function benchSeriesFromChart(payload: unknown): BenchSeries | null {
+  let json: unknown = payload;
+  if (typeof payload === 'string') {
+    try { json = JSON.parse(payload); } catch (_) { return null; }
+  }
+  const chart = json && typeof json === 'object' ? (json as { chart?: { result?: unknown } }).chart : undefined;
+  const results = chart && Array.isArray(chart.result) ? chart.result : null;
+  const result = results && results[0] && typeof results[0] === 'object' ? (results[0] as Record<string, unknown>) : null;
+  if (!result) return null;
+  const meta = result.meta && typeof result.meta === 'object' ? (result.meta as Record<string, unknown>) : {};
+  if (typeof meta.dataGranularity === 'string' && meta.dataGranularity !== '1d') return null;
+  const stamps = Array.isArray(result.timestamp) ? (result.timestamp as unknown[]) : [];
+  let first = Infinity;
+  for (let i = 0; i < stamps.length; i += 1) {
+    const stamp = stamps[i];
+    if (typeof stamp === 'number' && Number.isFinite(stamp) && stamp < first) first = stamp;
+  }
+  if (first === Infinity) return null;
+  const listed = meta.firstTradeDate;
+  if (typeof listed !== 'number' || !Number.isFinite(listed)) return null;
+  if (first - listed > 31 * 86400) return null;
+  const indicators = result.indicators && typeof result.indicators === 'object' ? (result.indicators as Record<string, unknown>) : {};
+  const quotes = Array.isArray(indicators.quote) ? (indicators.quote as unknown[]) : [];
+  const quote = quotes[0] && typeof quotes[0] === 'object' ? (quotes[0] as Record<string, unknown>) : {};
+  const adjusted = Array.isArray(indicators.adjclose) ? (indicators.adjclose as unknown[]) : [];
+  const adjBlock = adjusted[0] && typeof adjusted[0] === 'object' ? (adjusted[0] as Record<string, unknown>) : {};
+  if (!Array.isArray(adjBlock.adjclose)) return null;
+  const adjs = adjBlock.adjclose as unknown[];
+  const closes = Array.isArray(quote.close) ? (quote.close as unknown[]) : [];
+  const out: BenchSeries = { dates: [], close: [], adj: [] };
+  for (let i = 0; i < stamps.length; i += 1) {
+    const stamp = stamps[i], close = closes[i], adj = adjs[i];
+    if (typeof stamp !== 'number' || !Number.isFinite(stamp) || !benchPositive(close) || !benchPositive(adj)) continue;
+    const date = new Date(stamp * 1000).toISOString().slice(0, 10);
+    const n = out.dates.length;
+    if (n && out.dates[n - 1] === date) { out.close[n - 1] = close; out.adj[n - 1] = adj; continue; }
+    if (n && out.dates[n - 1] > date) continue; // out of order: never rewrite the past
+    out.dates.push(date); out.close.push(close); out.adj.push(adj);
+  }
+  return out.dates.length >= 2 ? out : null;
+}
+
+/** The dates present in both series, with both closes of each */
+function benchCommon(fund: BenchSeries, bench: BenchSeries): { dates: string[]; fc: number[]; fa: number[]; bc: number[]; ba: number[] } {
+  const at: Record<string, number> = {};
+  for (let i = 0; i < bench.dates.length; i += 1) at[bench.dates[i]] = i;
+  const out = { dates: [] as string[], fc: [] as number[], fa: [] as number[], bc: [] as number[], ba: [] as number[] };
+  for (let i = 0; i < fund.dates.length; i += 1) {
+    const k = at[fund.dates[i]];
+    if (k === undefined) continue;
+    out.dates.push(fund.dates[i]); out.fc.push(fund.close[i]); out.fa.push(fund.adj[i]); out.bc.push(bench.close[k]); out.ba.push(bench.adj[k]);
+  }
+  return out;
+}
+
+/**
+ * The benchmark's latest fall of 10% or more on its closes inside the last 5 years up to its last bar: the running peak
+ * starts as the highest close of the whole series up to the window start, an episode runs from a peak to the lowest close
+ * before the close gets back to that peak (or the series ends); the one with the latest trough wins. Null when none
+ */
+export function benchmarkStress(bench: BenchSeries): { peak: string; trough: string; fall: number } | null {
+  const c = bench.close, d = bench.dates;
+  if (d.length < 2) return null;
+  let from = benchOnOrBefore(d, benchYearsBack(d[d.length - 1], 5));
+  if (from < 0) from = 0;
+  let peak = 0;
+  for (let i = 0; i <= from; i += 1) if (c[i] >= c[peak]) peak = i;
+  let best: { p: number; t: number } | null = null, cur: { p: number; t: number } | null = null;
+  for (let i = from; i < d.length; i += 1) {
+    if (c[i] >= c[peak]) {
+      if (cur && c[cur.t] / c[cur.p] - 1 <= -0.1) best = cur;
+      peak = i; cur = null;
+      continue;
+    }
+    if (!cur || c[i] < c[cur.t]) cur = { p: peak, t: i };
+  }
+  if (cur && c[cur.t] / c[cur.p] - 1 <= -0.1) best = cur;
+  return best ? { peak: d[best.p], trough: d[best.t], fall: (c[best.t] / c[best.p] - 1) * 100 } : null;
+}
+
+/** pow(product of (1 + r), 1 / n) - 1 of the fund over the benchmark's, × 100; null below 6 months or a flat benchmark */
+function benchCapture(fund: number, bench: number, months: number): number | null {
+  if (months < 6) return null;
+  const b = Math.pow(bench, 1 / months) - 1;
+  return b === 0 ? null : benchRound(((Math.pow(fund, 1 / months) - 1) / b) * 100);
+}
+
+/** The eleven keys of one benchmark plus the asOf of the common series (empty object for a stale fund chart) */
+function benchAgainst(fund: BenchSeries, bench: BenchSeries, ticker: string): { values: BenchmarkRow; asOf: string | null } {
+  const keys = benchKeysOf(ticker);
+  const values: BenchmarkRow = {};
+  const fundEnd = fund.dates[fund.dates.length - 1], benchEnd = bench.dates[bench.dates.length - 1];
+  // a fund chart more than 7 days older than the benchmark's: stale, its keys keep the published values
+  if (benchDayMs(benchEnd) - benchDayMs(fundEnd) > 7 * 86400000) return { values, asOf: null };
+  for (let k = 0; k < keys.length; k += 1) values[keys[k]] = null;
+  const m = benchCommon(fund, bench);
+  const n = m.dates.length;
+  if (n < 2) return { values, asOf: n ? m.dates[n - 1] : null };
+  const e = n - 1;
+  const horizons = benchHorizons();
+  for (let h = 0; h < horizons.length; h += 1) {
+    const years = horizons[h];
+    const s = fund.dates[0] > benchYearsBack(m.dates[e], years) ? null : benchStart(m.dates, years);
+    if (s === null) continue;
+    const growth = (x: number[]): number => (Math.pow(x[e] / x[s], 1 / years) - 1) * 100;
+    values[keys[h]] = benchRound(growth(m.fa) - growth(m.ba));
+  }
+  // beta and correlation of daily log returns of adjclose over the last 252 returns
+  if (n >= 253) {
+    const x: number[] = [], y: number[] = [];
+    for (let i = n - 252; i < n; i += 1) { x.push(Math.log(m.ba[i] / m.ba[i - 1])); y.push(Math.log(m.fa[i] / m.fa[i - 1])); }
+    let mx = 0, my = 0;
+    for (let i = 0; i < x.length; i += 1) { mx += x[i]; my += y[i]; }
+    mx /= x.length; my /= y.length;
+    let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < x.length; i += 1) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) * (x[i] - mx); syy += (y[i] - my) * (y[i] - my); }
+    if (sxx > 0) {
+      values[keys[4]] = benchRound(sxy / sxx);
+      if (syy > 0) values[keys[5]] = benchRound(sxy / Math.sqrt(sxx * syy));
+    }
+  }
+  // up and down capture over the last 36 complete calendar months (month ends = last common bar of each month)
+  const lastMonth = m.dates[e].slice(0, 7);
+  const ends: number[] = [];
+  for (let i = 0; i < e; i += 1) {
+    if (m.dates[i].slice(0, 7) === lastMonth) break;
+    if (m.dates[i + 1].slice(0, 7) !== m.dates[i].slice(0, 7)) ends.push(i);
+  }
+  if (ends.length >= 37) {
+    const used = ends.slice(ends.length - 37);
+    let fu = 1, bu = 1, nu = 0, fd = 1, bd = 1, nd = 0;
+    for (let k = 1; k < used.length; k += 1) {
+      const fr = m.fa[used[k]] / m.fa[used[k - 1]], br = m.ba[used[k]] / m.ba[used[k - 1]];
+      if (br > 1) { fu *= fr; bu *= br; nu += 1; } else if (br < 1) { fd *= fr; bd *= br; nd += 1; }
+    }
+    values[keys[6]] = benchCapture(fu, bu, nu);
+    values[keys[7]] = benchCapture(fd, bd, nd);
+  }
+  // relative strength: 63-bar price change of the fund minus the benchmark's, on the common series
+  if (n >= 64) values[keys[8]] = benchRound((m.fc[e] / m.fc[e - 63] - m.bc[e] / m.bc[e - 63]) * 100);
+  // the fund in the benchmark's latest 10% fall: total return from the peak date to the trough date
+  const stress = benchmarkStress(bench);
+  if (stress) {
+    const p = benchOnOrBefore(fund.dates, stress.peak), t = benchOnOrBefore(fund.dates, stress.trough);
+    if (p >= 0 && t >= 0 && fund.dates[p] === stress.peak && fund.dates[t] === stress.trough) {
+      values[keys[9]] = benchRound((fund.adj[t] / fund.adj[p] - 1) * 100);
+      values[keys[10]] = `${String(ticker).toUpperCase()} ${Math.round(stress.fall)}% ${stress.peak} to ${stress.trough}`;
+    }
+  }
+  return { values, asOf: m.dates[e] };
+}
+
+/**
+ * The 32 keys of one fund: perf (price, `close`), perfSi, maxDrawdown (total return, `adj`), then per benchmark vs, beta,
+ * correlation, captures, relative strength and the stress pair, then benchmarkAsOf. `null`, never 0, where a rule says so;
+ * the keys of a benchmark that is null in `benchmarks` (failed chart) or of a stale fund chart are left out (keep published)
+ */
+export function benchmarkRow(fund: BenchSeries, benchmarks: Benchmarks): BenchmarkRow {
+  const all: BenchmarkRow = {};
+  const d = fund.dates, end = d.length - 1;
+  const horizons = benchHorizons();
+  for (let h = 0; h < horizons.length; h += 1) {
+    const s = end >= 0 ? benchStart(d, horizons[h]) : null;
+    all[`perf${horizons[h]}y`] = s === null ? null : benchRound((fund.close[end] / fund.close[s] - 1) * 100);
+    let dd: number | null = null;
+    if (s !== null) {
+      let peak = 0, low = 0;
+      for (let i = s; i <= end; i += 1) {
+        if (fund.adj[i] > peak) peak = fund.adj[i];
+        const fall = fund.adj[i] / peak - 1;
+        if (fall < low) low = fall;
+      }
+      dd = benchRound(low * 100);
+    }
+    all[`maxDrawdown${horizons[h]}y`] = dd;
+  }
+  all.perfSi = d.length >= 253 ? benchRound((fund.close[end] / fund.close[0] - 1) * 100) : null;
+  let asOf: string | null = null;
+  const tickers = benchmarkTickers();
+  for (let i = 0; i < tickers.length; i += 1) {
+    const bench = benchmarks ? benchmarks[tickers[i]] : null;
+    if (!bench || !bench.dates || bench.dates.length < 2 || end < 0) continue;
+    const against = benchAgainst(fund, bench, tickers[i]);
+    const keys = benchKeysOf(tickers[i]);
+    for (let k = 0; k < keys.length; k += 1) if (keys[k] in against.values) all[keys[k]] = against.values[keys[k]];
+    if (asOf === null && against.asOf) asOf = against.asOf;
+  }
+  all.benchmarkAsOf = asOf || (end >= 0 ? d[end] : null);
+  const out: BenchmarkRow = {};
+  const keys = benchmarkKeys();
+  for (let k = 0; k < keys.length; k += 1) if (keys[k] in all) out[keys[k]] = all[keys[k]];
+  return out;
+}
+
+/**
+ * The SPY and QQQ daily charts through the brand's own Yahoo fetch, once per run and before any fund chart. A failed or
+ * incomplete chart is null (its eleven keys keep the published values for every fund) and is reported once
+ */
+export async function benchmarkLoad(fetchChart: (url: string, ticker: string) => Promise<unknown>, onError?: (ticker: string, error: unknown) => void): Promise<Benchmarks> {
+  const out: Benchmarks = {};
+  const tickers = benchmarkTickers();
+  for (let i = 0; i < tickers.length; i += 1) {
+    const ticker = tickers[i];
+    try {
+      const series = benchSeriesFromChart(await fetchChart(swingChartUrl(ticker), ticker));
+      if (!series) throw new Error('Yahoo chart is not a complete daily history with adjusted closes');
+      out[ticker] = series;
+    } catch (error) {
+      out[ticker] = null;
+      if (onError) onError(ticker, error);
+    }
+  }
+  return out;
+}
+
+/**
+ * Wraps the fetch of the swing request (Yahoo-mode brands) or of the dividends request (history-mode brands): every answer
+ * also fills `seen[ticker]` with the fund's 32 values (null for an incomplete chart), the payload goes back untouched; only
+ * the values are kept, never the series; a rejected fetch stores nothing and rethrows
+ */
+export function benchmarkTap(fetchChart: (url: string, ticker: string) => Promise<unknown>, benchmarks: Benchmarks): { fetchChart: (url: string, ticker: string) => Promise<unknown>; seen: Record<string, BenchmarkRow | null> } {
+  const seen: Record<string, BenchmarkRow | null> = {};
+  return {
+    seen,
+    fetchChart: async (url: string, ticker: string): Promise<unknown> => {
+      const payload = await fetchChart(url, ticker);
+      const series = benchSeriesFromChart(payload);
+      seen[ticker] = series ? benchmarkRow(series, benchmarks) : null;
+      return payload;
+    },
+  };
+}
+
+export type BenchmarkOptions = {
+  /** `benchmarkTap(...).seen`; `{}` under SKIP_YAHOO */
+  rows?: Record<string, BenchmarkRow | null>;
+  /** The previously published index rows: a fund without fresh values keeps their benchmark keys */
+  previous?: unknown[] | null;
+  /** One call per fund whose chart was incomplete, for the brand's log */
+  onError?: (ticker: string, error: unknown) => void;
+};
+
+/**
+ * The index rows with the 32 benchmark keys in every `metrics`, after the dividend keys and before `returnsBasis` and
+ * `performanceAsOf`. Wired once: `withBenchmark(feedRoot, await withDividends(...), options)`.
+ * - A fund in `rows` with values gets them key by key (a key left out keeps the published value); in `rows` with null is
+ *   reported and keeps the published keys; absent keeps the published keys silently
+ * - Published keys: `previous` (by ticker) first, else the row's own, else null; a row without `dataFile` gets
+ *   benchmarkEmpty(); a row without a `metrics` object is left as it is
+ */
+export async function withBenchmark<T>(feedRoot: URL | string, funds: T[], options?: BenchmarkOptions): Promise<T[]> {
+  const opts: BenchmarkOptions = options || {};
+  const list = Array.isArray(funds) ? funds : [];
+  const keys = benchmarkKeys();
+  const tail = ['returnsBasis', 'performanceAsOf'];
+  const tickerOf = (row: unknown): string => (row && typeof row === 'object' && typeof (row as Record<string, unknown>).ticker === 'string' ? String((row as Record<string, unknown>).ticker) : '');
+  const metricsOf = (row: unknown): Record<string, unknown> | null => {
+    const metrics = row && typeof row === 'object' ? (row as Record<string, unknown>).metrics : null;
+    return metrics && typeof metrics === 'object' ? (metrics as Record<string, unknown>) : null;
+  };
+  const before: Record<string, unknown> = {};
+  const previous = Array.isArray(opts.previous) ? opts.previous : [];
+  for (let i = 0; i < previous.length; i += 1) if (tickerOf(previous[i])) before[tickerOf(previous[i])] = previous[i];
+  const rows = opts.rows && typeof opts.rows === 'object' ? opts.rows : {};
+  const out: T[] = [];
+  for (let i = 0; i < list.length; i += 1) {
+    const row = list[i] as unknown as Record<string, unknown>;
+    const old = metricsOf(row);
+    if (!old) { out.push(list[i]); continue; }
+    const values: Record<string, unknown> = benchmarkEmpty();
+    if (typeof row.dataFile === 'string' && row.dataFile !== '') {
+      const ticker = tickerOf(row);
+      const earlier = metricsOf(before[ticker]);
+      const published = earlier && keys.some((key) => key in earlier) ? earlier : old;
+      for (let k = 0; k < keys.length; k += 1) if (keys[k] in published) values[keys[k]] = published[keys[k]];
+      if (Object.prototype.hasOwnProperty.call(rows, ticker)) {
+        const fresh = rows[ticker];
+        if (fresh) {
+          for (let k = 0; k < keys.length; k += 1) if (fresh[keys[k]] !== undefined) values[keys[k]] = fresh[keys[k]];
+        } else if (opts.onError) {
+          opts.onError(ticker, new Error('Yahoo chart is not a complete daily history with adjusted closes'));
+        }
+      }
+    }
+    // the benchmark keys go in front of returnsBasis and performanceAsOf, which stay the last two keys (metrics contract)
+    const metrics: Record<string, unknown> = {};
+    const oldKeys = Object.keys(old);
+    for (let k = 0; k < oldKeys.length; k += 1) if (tail.indexOf(oldKeys[k]) < 0 && keys.indexOf(oldKeys[k]) < 0) metrics[oldKeys[k]] = old[oldKeys[k]];
+    for (let k = 0; k < keys.length; k += 1) metrics[keys[k]] = values[keys[k]];
+    for (let k = 0; k < tail.length; k += 1) if (tail[k] in old) metrics[tail[k]] = old[tail[k]];
+    out.push({ ...row, metrics } as unknown as T);
+  }
+  return out;
+}
+// </benchmark>

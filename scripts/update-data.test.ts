@@ -82,7 +82,11 @@ const NOW = new Date('2026-10-02T00:00:00Z');
 // the 52-week range keys every index row gets from its published history pages (shared range-52w block)
 const RANGE_KEYS = ['week52Low', 'week52High', 'range52w', 'range52wClose', 'range52wAsOf', 'range52wSince', 'range52wBasis'];
 // the nine swing keys after them, from the Close column of the same history pages (shared swing block)
-const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y'];
+const DIVIDEND_KEYS = ['dividendRate', 'dividendGrowth', 'dividendGrowth3y', 'dividendGrowth5y', 'dividendStreak', 'dividendCut10y', 'paymentsPerYear', 'payFrequency'];
+// the 32 benchmark keys against SPY and QQQ before the two tail keys (shared benchmark block)
+const BENCHMARK_KEYS = ['perf1y', 'perf3y', 'perf5y', 'perf10y', 'perfSi', 'maxDrawdown1y', 'maxDrawdown3y', 'maxDrawdown5y', 'maxDrawdown10y',
+  'vsSpy1y', 'vsSpy3y', 'vsSpy5y', 'vsSpy10y', 'beta1ySpy', 'corr1ySpy', 'upCapture3ySpy', 'downCapture3ySpy', 'relStrength3mSpy', 'stressReturnSpy', 'stressBasisSpy',
+  'vsQqq1y', 'vsQqq3y', 'vsQqq5y', 'vsQqq10y', 'beta1yQqq', 'corr1yQqq', 'upCapture3yQqq', 'downCapture3yQqq', 'relStrength3mQqq', 'stressReturnQqq', 'stressBasisQqq', 'benchmarkAsOf'];
 const SWING_KEYS = ['pctFrom52wHigh', 'athPrice', 'athDate', 'athBasis', 'pctFromAth', 'volatility1y', 'sigmaFromMean60d', 'high60d', 'low60d'];
 const daily = (days: number, step = 0.01): Array<{ date: string; close: number; adjClose: number; volume: number }> =>
   Array.from({ length: days }, (_, i) => {
@@ -432,7 +436,8 @@ const feed = (rows: Row[], extra?: (url: string) => Response | null) => (url: st
   const csvMatch = /Holdings-(\w+)\.csv/.exec(url);
   if (csvMatch) return rows.some((r) => r.t === csvMatch[1]) && csvMatch[1] !== 'NOHOLD' ? new Response(holdingsCsv) : new Response('gone', { status: 404 });
   const chartMatch = /chart\/(\w+)\?/.exec(url);
-  const row = rows.find((r) => r.t === chartMatch?.[1]);
+  // the benchmark block also reads SPY and QQQ once per run: the mock answers them with the first fund's bars
+  const row = rows.find((r) => r.t === chartMatch?.[1]) ?? (/^(SPY|QQQ)$/.test(chartMatch?.[1] ?? '') ? rows[0] : undefined);
   return row && row.days > 0 ? new Response(chartJson(row.days, row.flat, url.includes('includePrePost=false'))) : new Response('{}', { status: 404 });
 };
 
@@ -499,20 +504,22 @@ describe('pipeline', () => {
     for (const key of ['tr1y', 'tr3y', 'tr5y', 'tr10y', 'cagr10y']) expect(by.OLD.metrics[key]).not.toBeNull();
     expect(by.OLD.metrics.tr10y).not.toBe(by.OLD.metrics.tr5y);
     expect([by.NOHOLD.dataFile, by.OLD.dataFile]).toEqual([null, './funds/OLD/meta.json']);
-    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS].sort();
+    const keys = [...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS, ...BENCHMARK_KEYS].sort();
     for (const row of Object.values(by) as any[]) {
       expect(Object.keys(row.metrics).sort()).toEqual(keys);
       expect(row.metrics.returnsBasis).toBeTruthy();
       expect(Object.keys(row.metrics).slice(-2)).toEqual(['returnsBasis', 'performanceAsOf']);
-      expect(Object.keys(row.metrics).slice(-17, -8)).toEqual(SWING_KEYS);
-      expect(Object.keys(row.metrics).slice(-8, -2)).toEqual(DIVIDEND_KEYS);
+      expect(Object.keys(row.metrics).slice(-51, -42)).toEqual(SWING_KEYS);
+      expect(Object.keys(row.metrics).slice(-42, -34)).toEqual(DIVIDEND_KEYS);
+      expect(Object.keys(row.metrics).slice(-34, -2)).toEqual(BENCHMARK_KEYS);
     }
     // the dividends block: the mocked event of 0.25 on the last bar is the whole trailing sum, nothing else is known
     expect(by.OLD.metrics.dividendRate).toBe(0.25);
     for (const key of DIVIDEND_KEYS.slice(1, 4)) expect(by.OLD.metrics[key]).toBeNull();
     expect([by.OLD.metrics.dividendStreak, by.OLD.metrics.dividendCut10y]).toEqual([null, null]);
     const dividendRequests = box.calls.filter((call) => /chart\/\w+\?.*includePrePost=false/.test(call.url)).map((call) => /chart\/(\w+)\?/.exec(call.url)![1]).sort();
-    expect(dividendRequests).toEqual(['FLT', 'OLD', 'YNG']);
+    // one request per fund feeds swing, dividends and benchmark; SPY and QQQ are read once more as the benchmarks
+    expect(dividendRequests).toEqual(['FLT', 'OLD', 'QQQ', 'SPY', 'YNG']);
     expect([typeof by.OLD.metrics.athPrice, by.OLD.metrics.athBasis, typeof by.OLD.metrics.volatility1y]).toEqual(['number', expect.stringMatching(/^daily closes since \d{4}-\d{2}-\d{2}$/), 'number']);
     expect(box.logs.join('\n')).not.toContain('gmail.com');
   });
@@ -525,8 +532,8 @@ describe('pipeline', () => {
     const before = others();
     const seen = box.calls.length;
     expect(await box.run(feed(rows), { ...live, TICKERS: 'AAA' })).toBeNull();
-    // the dividend chart is requested for the updated fund only, never for an unselected one
-    expect(box.calls.slice(seen).filter((call) => /chart\/\w+\?.*includePrePost=false/.test(call.url)).map((call) => /chart\/(\w+)\?/.exec(call.url)![1])).toEqual(['AAA']);
+    // the dividend and benchmark chart is requested for the updated fund only, never for an unselected one (plus SPY and QQQ once)
+    expect(box.calls.slice(seen).filter((call) => /chart\/\w+\?.*includePrePost=false/.test(call.url)).map((call) => /chart\/(\w+)\?/.exec(call.url)![1])).toEqual(['SPY', 'QQQ', 'AAA']);
     expect(box.tickers()).toEqual(['AAA', 'BBB', 'CCC']);
     expect(others()).toBe(before);
     expect(await box.run(() => blocked(), { TICKERS: 'AAA' })).toBeNull();
@@ -595,7 +602,7 @@ describe('pipeline 2', () => {
     expect(meta.metrics.returnsBasis).toBe(RETURNS_BASIS);
     expect(meta.metrics.performanceAsOf).toBeNull();
     // the index row adds the 52-week range and the swing keys; every other metric is the retained meta's
-    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key) && !SWING_KEYS.includes(key) && !DIVIDEND_KEYS.includes(key)))).toEqual(meta.metrics);
+    expect(Object.fromEntries(Object.entries(box.json('index.json').funds[0].metrics).filter(([key]) => !RANGE_KEYS.includes(key) && !SWING_KEYS.includes(key) && !DIVIDEND_KEYS.includes(key) && !BENCHMARK_KEYS.includes(key)))).toEqual(meta.metrics);
     expect(box.touched().length).toBeGreaterThan(0);
   });
 
@@ -756,7 +763,7 @@ describe('pipeline 4', () => {
     const row = () => box.json('index.json').funds.find((fund: any) => fund.ticker === 'NEW');
     const catalogOnly = () => {
       expect(row()).toMatchObject({ dataFile: null, holdings: 0 });
-      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS].sort());
+      expect(Object.keys(row().metrics).sort()).toEqual([...Object.keys(emptyMetrics()), ...RANGE_KEYS, ...SWING_KEYS, ...DIVIDEND_KEYS, ...BENCHMARK_KEYS].sort());
       expect(row().metrics.returnsBasis).toBe(RETURNS_BASIS);
       expect(existsSync(path.join(box.api, 'funds/NEW'))).toBe(false);
       expect(box.logs.some((line) => /NEW\s+failed/.test(line))).toBe(true);
