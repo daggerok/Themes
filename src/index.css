@@ -478,7 +478,9 @@ textarea.ui-input{height:auto;padding:.5rem .75rem;line-height:1.4}
 }
 .am-row > *{flex:1 1 auto;min-width:0}
 .am-trigger{flex:none;white-space:nowrap}
-.am-trigger .am-burger{flex:none;color:var(--ui-muted)}
+/* ☰ is an icon-only square like in Stocks and the hub (owner 2026-11-17: "yes, roll out the square ☰ to all 29 brands") */
+.am-trigger.ui-icon{font-size:1.125rem}
+.am-trigger[aria-haspopup][aria-expanded="true"]{background:var(--ui-hover-2);border-color:var(--ui-line-2)}
 .am-panel{position:fixed;left:0;top:0;z-index:var(--ui-z-pop);display:flex;flex-direction:column;gap:.125rem;min-width:13rem;max-width:calc(100vw - 1rem);overflow:auto;overscroll-behavior:contain;padding:.375rem;opacity:0;transform:translateY(-4px) scale(.98);transform-origin:top right;transition:opacity .14s ease,transform .14s ease}
 .am-panel[hidden]{display:none}
 .am-panel.is-open{opacity:1;transform:none}
