@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Nov 16, 2026",
+  "asOfDate": "Nov 19, 2026",
   "aum": {
-    "asOfDate": "Nov 16, 2026",
-    "display": "$87.79M",
+    "asOfDate": "Nov 19, 2026",
+    "display": "$85.17M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 87793332
+    "value": 85167135
   },
-  "aumValue": 87793332,
+  "aumValue": 85167135,
   "category": "Thematic",
-  "closePrice": "$36.98",
-  "closePriceValue": 36.98,
+  "closePrice": "$36.12",
+  "closePriceValue": 36.12,
   "dataFile": "./funds/NATO/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-11-15T09:37:04Z",
+  "generatedAt": "2026-11-19T09:05:59Z",
   "history": {
-    "asOf": "2026-11-13",
-    "asOfDate": "Nov 13, 2026",
+    "asOf": "2026-11-18",
+    "asOfDate": "Nov 18, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/NATO",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 525
+    "totalRows": 528
   },
   "holdings": {
-    "asOf": "2026-11-16",
-    "asOfDate": "Nov 16, 2026",
+    "asOf": "2026-11-19",
+    "asOfDate": "Nov 19, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -56,8 +56,8 @@
     "totalRows": 92
   },
   "metrics": {
-    "ytd": -3.32,
-    "tr1y": -0.11,
+    "ytd": -6.38,
+    "tr1y": -0.94,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 0.46,
-    "dividendYieldText": "0.46%",
-    "distributionYield": 0.46,
-    "distributionYieldText": "0.46%",
-    "yield12M": 0.46,
-    "yield12MText": "0.46%",
+    "dividendYield": 0.47,
+    "dividendYieldText": "0.47%",
+    "distributionYield": 0.47,
+    "distributionYieldText": "0.47%",
+    "yield12M": 0.47,
+    "yield12MText": "0.47%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-13"
+    "performanceAsOf": "2026-11-18"
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Nov 16, 2026",
-    "display": "$37.04",
+    "asOfDate": "Nov 19, 2026",
+    "display": "$36.22",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 37.04
+    "value": 36.22
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 37.04,
+  "navValue": 36.22,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 13, 2026",
+      "asOfDate": "Nov 18, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -0.11,
+      "yr1": -0.94,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -3.32
+      "ytd": -6.38
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 16, 2026",
+    "asOfDate": "Nov 19, 2026",
     "display": "2,370,000",
     "value": 2370000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "NATO",
-  "totalNetAssets": 87793332
+  "totalNetAssets": 85167135
 }

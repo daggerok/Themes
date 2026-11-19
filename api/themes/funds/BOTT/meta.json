@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Nov 16, 2026",
+  "asOfDate": "Nov 19, 2026",
   "aum": {
-    "asOfDate": "Nov 16, 2026",
-    "display": "$58.80M",
+    "asOfDate": "Nov 19, 2026",
+    "display": "$55.38M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 58799070
+    "value": 55379940
   },
-  "aumValue": 58799070,
+  "aumValue": 55379940,
   "category": "Thematic",
-  "closePrice": "$35.62",
-  "closePriceValue": 35.62,
+  "closePrice": "$32.93",
+  "closePriceValue": 32.93,
   "dataFile": "./funds/BOTT/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-11-15T09:36:59Z",
+  "generatedAt": "2026-11-19T09:05:54Z",
   "history": {
-    "asOf": "2026-11-13",
-    "asOfDate": "Nov 13, 2026",
+    "asOf": "2026-11-18",
+    "asOfDate": "Nov 18, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 645
+    "totalRows": 648
   },
   "holdings": {
-    "asOf": "2026-11-16",
-    "asOfDate": "Nov 16, 2026",
+    "asOf": "2026-11-19",
+    "asOfDate": "Nov 19, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -56,8 +56,8 @@
     "totalRows": 41
   },
   "metrics": {
-    "ytd": -16.5,
-    "tr1y": -4.56,
+    "ytd": -21.47,
+    "tr1y": -7.25,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 0.17,
-    "dividendYieldText": "0.17%",
-    "distributionYield": 0.17,
-    "distributionYieldText": "0.17%",
-    "yield12M": 0.17,
-    "yield12MText": "0.17%",
+    "dividendYield": 0.18,
+    "dividendYieldText": "0.18%",
+    "distributionYield": 0.18,
+    "distributionYieldText": "0.18%",
+    "yield12M": 0.18,
+    "yield12MText": "0.18%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-13"
+    "performanceAsOf": "2026-11-18"
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Nov 16, 2026",
-    "display": "$35.64",
+    "asOfDate": "Nov 19, 2026",
+    "display": "$32.96",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 35.64
+    "value": 32.96
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 35.64,
+  "navValue": 32.96,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 13, 2026",
+      "asOfDate": "Nov 18, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -4.56,
+      "yr1": -7.25,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -16.5
+      "ytd": -21.47
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 16, 2026",
+    "asOfDate": "Nov 19, 2026",
     "display": "1,650,000",
     "value": 1650000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "BOTT",
-  "totalNetAssets": 58799070
+  "totalNetAssets": 55379940
 }

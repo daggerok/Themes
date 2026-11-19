@@ -9,6 +9,24 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "37.62",
+      "Close": "37.62",
+      "Date": "2026-11-18",
+      "Volume": "10500"
+    },
+    {
+      "Adj Close": "39.89",
+      "Close": "39.89",
+      "Date": "2026-11-17",
+      "Volume": "1200"
+    },
+    {
+      "Adj Close": "40.31",
+      "Close": "40.31",
+      "Date": "2026-11-16",
+      "Volume": "5600"
+    },
+    {
       "Adj Close": "42.54",
       "Close": "42.54",
       "Date": "2026-11-13",
@@ -3238,5 +3256,5 @@
     }
   ],
   "ticker": "COPA",
-  "totalRows": 538
+  "totalRows": 541
 }
