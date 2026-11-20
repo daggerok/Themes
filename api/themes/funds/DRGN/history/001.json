@@ -9,6 +9,18 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "23.94",
+      "Close": "23.94",
+      "Date": "2026-11-20",
+      "Volume": "12990"
+    },
+    {
+      "Adj Close": "25.25",
+      "Close": "25.25",
+      "Date": "2026-11-19",
+      "Volume": "2000"
+    },
+    {
       "Adj Close": "26.05",
       "Close": "26.05",
       "Date": "2026-11-18",
@@ -2056,5 +2068,5 @@
     }
   ],
   "ticker": "DRGN",
-  "totalRows": 341
+  "totalRows": 343
 }

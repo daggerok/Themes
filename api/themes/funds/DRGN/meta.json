@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Nov 19, 2026",
+  "asOfDate": "Nov 20, 2026",
   "aum": {
-    "asOfDate": "Nov 19, 2026",
-    "display": "$17.33M",
+    "asOfDate": "Nov 20, 2026",
+    "display": "$16.94M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 17332458
+    "value": 16941408
   },
-  "aumValue": 17332458,
+  "aumValue": 16941408,
   "category": "Thematic",
-  "closePrice": "$25.83",
-  "closePriceValue": 25.83,
+  "closePrice": "$25.25",
+  "closePriceValue": 25.25,
   "dataFile": "./funds/DRGN/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,21 +28,21 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/drgn",
-  "generatedAt": "2026-11-19T09:05:57Z",
+  "generatedAt": "2026-11-20T22:21:43Z",
   "history": {
-    "asOf": "2026-11-18",
-    "asOfDate": "Nov 18, 2026",
+    "asOf": "2026-11-20",
+    "asOfDate": "Nov 20, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 341
+    "totalRows": 343
   },
   "holdings": {
-    "asOf": "2026-11-19",
-    "asOfDate": "Nov 19, 2026",
+    "asOf": "2026-11-20",
+    "asOfDate": "Nov 20, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -52,8 +52,8 @@
     "totalRows": 26
   },
   "metrics": {
-    "ytd": -20.09,
-    "tr1y": -19.32,
+    "ytd": -26.56,
+    "tr1y": -23.9,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -61,38 +61,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 1.54,
-    "dividendYieldText": "1.54%",
-    "distributionYield": 1.54,
-    "distributionYieldText": "1.54%",
-    "yield12M": 1.54,
-    "yield12MText": "1.54%",
+    "dividendYield": 1.56,
+    "dividendYieldText": "1.56%",
+    "distributionYield": 1.56,
+    "distributionYieldText": "1.56%",
+    "yield12M": 1.56,
+    "yield12MText": "1.56%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-18"
+    "performanceAsOf": "2026-11-20"
   },
   "name": "China Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Nov 19, 2026",
-    "display": "$25.96",
+    "asOfDate": "Nov 20, 2026",
+    "display": "$25.67",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 25.96
+    "value": 25.67
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 25.96,
+  "navValue": 25.67,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 18, 2026",
+      "asOfDate": "Nov 20, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -19.32,
+      "yr1": -23.9,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -20.09
+      "ytd": -26.56
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 19, 2026",
+    "asOfDate": "Nov 20, 2026",
     "display": "660,000",
     "value": 660000
   },
@@ -127,5 +127,5 @@
   "ter": "0.39%",
   "terValue": 0.39,
   "ticker": "DRGN",
-  "totalNetAssets": 17332458
+  "totalNetAssets": 16941408
 }
