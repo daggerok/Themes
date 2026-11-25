@@ -23,106 +23,106 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "BMD4D03",
-      "Market Value": "$688256.68",
+      "Market Value": "$658959.70",
       "Name": "Kingsoft Cloud Holdings Ltd",
       "Shares Held": "1,645,521",
       "Ticker": "3896 HK",
-      "Weight": "3.71%"
+      "Weight": "3.72%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BSZM2Q6",
-      "Market Value": "$113453.79",
+      "Market Value": "$121444.41",
       "Name": "Datasection Inc",
       "Shares Held": "26,600",
       "Ticker": "3905 JP",
-      "Weight": "0.61%"
+      "Weight": "0.69%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BF1CV17",
-      "Market Value": "$729952.71",
+      "Market Value": "$653745.09",
       "Name": "PKSHA Technology Inc",
       "Shares Held": "39,900",
       "Ticker": "3993 JP",
-      "Weight": "3.93%"
+      "Weight": "3.69%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BMH40Q4",
-      "Market Value": "$286520.53",
+      "Market Value": "$288321.03",
       "Name": "Appier Group Inc",
       "Shares Held": "32,700",
       "Ticker": "4180 JP",
-      "Weight": "1.54%"
+      "Weight": "1.63%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BTG0Q42",
-      "Market Value": "$499560.06",
+      "Market Value": "$507437.78",
       "Name": "Shandong Extreme Vision Technology Co Ltd",
       "Shares Held": "53,300",
       "Ticker": "6636 HK",
-      "Weight": "2.69%"
+      "Weight": "2.87%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "BR0ZLQ6",
-      "Market Value": "$308908.95",
+      "Market Value": "$336126.41",
       "Name": "Unisound AI Technology Co Ltd",
       "Shares Held": "59,200",
       "Ticker": "9678 HK",
-      "Weight": "1.66%"
+      "Weight": "1.90%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "12468P104",
-      "Market Value": "$927173.92",
+      "Market Value": "$908704.32",
       "Name": "C3.ai Inc",
       "Shares Held": "92,348",
       "Ticker": "AI",
-      "Weight": "5.00%"
+      "Weight": "5.13%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "G037AX101",
-      "Market Value": "$770686.54",
+      "Market Value": "$581578.66",
       "Name": "Ambarella Inc",
       "Shares Held": "13,078",
       "Ticker": "AMBA",
-      "Weight": "4.15%"
+      "Weight": "3.28%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "007903107",
-      "Market Value": "$1126604.57",
+      "Market Value": "$951760.81",
       "Name": "Advanced Micro Devices Inc",
       "Shares Held": "2,303",
       "Ticker": "AMD",
-      "Weight": "6.07%"
+      "Weight": "5.37%"
     },
     {
       "Asset Category": "Consumer Cyclicals",
       "Identifier": "023135106",
-      "Market Value": "$593495.22",
+      "Market Value": "$581780.74",
       "Name": "Amazon.com Inc",
       "Shares Held": "2,306",
       "Ticker": "AMZN",
-      "Weight": "3.20%"
+      "Weight": "3.29%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "038169207",
-      "Market Value": "$225161.88",
+      "Market Value": "$196815.32",
       "Name": "Applied Digital Corp",
       "Shares Held": "16,106",
       "Ticker": "APLD",
-      "Weight": "1.21%"
+      "Weight": "1.11%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$64.94",
+      "Market Value": "$64.73",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "97.47",
       "Ticker": "AUD",
@@ -131,34 +131,34 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "11135F101",
-      "Market Value": "$849639.15",
+      "Market Value": "$737947.08",
       "Name": "Broadcom Inc",
       "Shares Held": "2,451",
       "Ticker": "AVGO",
-      "Weight": "4.58%"
+      "Weight": "4.17%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "08975B109",
-      "Market Value": "$608584.59",
+      "Market Value": "$541745.82",
       "Name": "BIGBEAR.AI HOLDINGS INC",
       "Shares Held": "351,783",
       "Ticker": "BBAI",
-      "Weight": "3.28%"
+      "Weight": "3.06%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "104932207",
-      "Market Value": "$16093.34",
+      "Market Value": "$41642.30",
       "Name": "Brand Engagement Network Inc",
       "Shares Held": "6,262",
       "Ticker": "BNAI",
-      "Weight": "0.09%"
+      "Weight": "0.24%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$1.71",
+      "Market Value": "$1.72",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "2.45",
       "Ticker": "CAD",
@@ -167,52 +167,43 @@
     {
       "Asset Category": "Health Care",
       "Identifier": "142152107",
-      "Market Value": "$631249.92",
+      "Market Value": "$631930.88",
       "Name": "Caris Life Sciences Inc",
       "Shares Held": "34,048",
       "Ticker": "CAI",
-      "Weight": "3.40%"
+      "Weight": "3.57%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "G25457105",
-      "Market Value": "$139663.36",
+      "Market Value": "$126261.56",
       "Name": "Credo Technology Group Holding Ltd",
       "Shares Held": "1,186",
       "Ticker": "CRDO",
-      "Weight": "0.75%"
+      "Weight": "0.71%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "156727109",
-      "Market Value": "$156524.72",
+      "Market Value": "$151338.66",
       "Name": "Cerence Inc",
       "Shares Held": "23,573",
       "Ticker": "CRNC",
-      "Weight": "0.84%"
+      "Weight": "0.85%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "21873S108",
-      "Market Value": "$340417.80",
+      "Market Value": "$322945.90",
       "Name": "CoreWeave Inc",
       "Shares Held": "7,580",
       "Ticker": "CRWV",
-      "Weight": "1.83%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "86633R609",
-      "Market Value": "$80464.64",
-      "Name": "Datavault AI Inc",
-      "Shares Held": "4,043,449",
-      "Ticker": "DVLT",
-      "Weight": "0.43%"
+      "Weight": "1.82%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$10.46",
+      "Market Value": "$10.45",
       "Name": "EURO",
       "Shares Held": "9.53",
       "Ticker": "EUR",
@@ -221,43 +212,43 @@
     {
       "Asset Category": "Money Market",
       "Identifier": "31846V328",
-      "Market Value": "$31524.45",
+      "Market Value": "$47588.47",
       "Name": "First American Treasury Obligations Fund 01/01/2040",
-      "Shares Held": "31,524.45",
+      "Shares Held": "47,588.47",
       "Ticker": "FXFXX",
-      "Weight": "0.17%"
+      "Weight": "0.27%"
     },
     {
       "Asset Category": "Communication Services",
       "Identifier": "02079K305",
-      "Market Value": "$868422.10",
+      "Market Value": "$895750.50",
       "Name": "Alphabet Inc",
-      "Shares Held": "3,185",
+      "Shares Held": "3,210",
       "Ticker": "GOOGL",
-      "Weight": "4.68%"
+      "Weight": "5.06%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "G4000K175",
-      "Market Value": "$292421.92",
+      "Market Value": "$397190.92",
       "Name": "Gorilla Technology Group Inc",
       "Shares Held": "46,564",
       "Ticker": "GRRR",
-      "Weight": "1.58%"
+      "Weight": "2.24%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "36241U106",
-      "Market Value": "$55491.88",
+      "Market Value": "$49863.70",
       "Name": "GSI Technology Inc",
       "Shares Held": "19,748",
       "Ticker": "GSIT",
-      "Weight": "0.30%"
+      "Weight": "0.28%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHHKD",
-      "Market Value": "$589.93",
+      "Market Value": "$590.00",
       "Name": "HONG KONG DOLLAR",
       "Shares Held": "4,626.22",
       "Ticker": "HKD",
@@ -266,79 +257,79 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "42824C109",
-      "Market Value": "$132239.43",
+      "Market Value": "$116832.33",
       "Name": "Hewlett Packard Enterprise Co",
       "Shares Held": "2,907",
       "Ticker": "HPE",
-      "Weight": "0.71%"
+      "Weight": "0.66%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "45675Y104",
-      "Market Value": "$1269520.70",
+      "Market Value": "$1334606.76",
       "Name": "Information Services Group Inc",
-      "Shares Held": "215,173",
+      "Shares Held": "218,073",
       "Ticker": "III",
-      "Weight": "6.84%"
+      "Weight": "7.54%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "60937P106",
-      "Market Value": "$22869.77",
+      "Market Value": "$23754.50",
       "Name": "MongoDB Inc",
       "Shares Held": "77",
       "Ticker": "MDB",
-      "Weight": "0.12%"
+      "Weight": "0.13%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "63947X101",
-      "Market Value": "$238923.94",
+      "Market Value": "$245065.05",
       "Name": "nCino Inc",
       "Shares Held": "11,587",
       "Ticker": "NCNO",
-      "Weight": "1.29%"
+      "Weight": "1.38%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "67066G104",
-      "Market Value": "$861865.92",
+      "Market Value": "$923578.72",
       "Name": "NVIDIA Corp",
-      "Shares Held": "5,904",
+      "Shares Held": "5,944",
       "Ticker": "NVDA",
-      "Weight": "4.64%"
+      "Weight": "5.22%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "68389X105",
-      "Market Value": "$656454.09",
+      "Market Value": "$650101.50",
       "Name": "Oracle Corp",
       "Shares Held": "5,937",
       "Ticker": "ORCL",
-      "Weight": "3.54%"
+      "Weight": "3.67%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "80359A205",
-      "Market Value": "$182250.21",
+      "Market Value": "$152659.77",
       "Name": "Palladyne AI Corp",
       "Shares Held": "67,251",
       "Ticker": "PDYN",
-      "Weight": "0.98%"
+      "Weight": "0.86%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "706915105",
-      "Market Value": "$631656.09",
+      "Market Value": "$558252.63",
       "Name": "Penguin Solutions Inc",
       "Shares Held": "14,859",
       "Ticker": "PENG",
-      "Weight": "3.40%"
+      "Weight": "3.15%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "M7S64L123",
-      "Market Value": "$46798.62",
+      "Market Value": "$44910.03",
       "Name": "Pagaya Technologies Ltd",
       "Shares Held": "3,201",
       "Ticker": "PGY",
@@ -347,94 +338,94 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "69608A108",
-      "Market Value": "$886733.60",
+      "Market Value": "$930008.60",
       "Name": "Palantir Technologies Inc",
       "Shares Held": "5,770",
       "Ticker": "PLTR",
-      "Weight": "4.78%"
+      "Weight": "5.25%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "74837P405",
-      "Market Value": "$647613.30",
+      "Market Value": "$547241.52",
       "Name": "QuickLogic Corp",
       "Shares Held": "66,252",
       "Ticker": "QUIK",
-      "Weight": "3.49%"
+      "Weight": "3.09%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "781154109",
-      "Market Value": "$418029.44",
+      "Market Value": "$403688.87",
       "Name": "Rubrik Inc",
       "Shares Held": "3,649",
       "Ticker": "RBRK",
-      "Weight": "2.25%"
+      "Weight": "2.28%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "G75398100",
-      "Market Value": "$191027.24",
+      "Market Value": "$177628.65",
       "Name": "Rezolve AI PLC",
       "Shares Held": "205,185",
       "Ticker": "RZLV",
-      "Weight": "1.03%"
+      "Weight": "1.00%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "833445109",
-      "Market Value": "$1000229.16",
+      "Market Value": "$1016045.32",
       "Name": "Snowflake Inc",
-      "Shares Held": "3,724",
+      "Shares Held": "3,748",
       "Ticker": "SNOW",
-      "Weight": "5.39%"
+      "Weight": "5.74%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "836100107",
-      "Market Value": "$166027.14",
+      "Market Value": "$149766.75",
       "Name": "SoundHound AI Inc",
       "Shares Held": "57,054",
       "Ticker": "SOUN",
-      "Weight": "0.89%"
+      "Weight": "0.85%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "78642D101",
-      "Market Value": "$510521.76",
+      "Market Value": "$441641.84",
       "Name": "Safe Pro Group Inc",
       "Shares Held": "202,588",
       "Ticker": "SPAI",
-      "Weight": "2.75%"
+      "Weight": "2.49%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "92347M100",
-      "Market Value": "$235557.24",
+      "Market Value": "$159238.67",
       "Name": "Veritone Inc",
       "Shares Held": "616,965",
       "Ticker": "VERI",
-      "Weight": "1.27%"
+      "Weight": "0.90%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "G96115103",
-      "Market Value": "$118131.30",
+      "Market Value": "$104001.87",
       "Name": "Whitefiber Inc",
       "Shares Held": "15,442",
       "Ticker": "WYFI",
-      "Weight": "0.64%"
+      "Weight": "0.59%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$-1064.20",
+      "Market Value": "$-1708.03",
       "Name": "Cash & Other",
-      "Shares Held": "-1,064.2",
+      "Shares Held": "-1,708.03",
       "Ticker": "Cash&Other",
       "Weight": "-0.01%"
     }
   ],
   "ticker": "WISE",
-  "totalRows": 47
+  "totalRows": 46
 }

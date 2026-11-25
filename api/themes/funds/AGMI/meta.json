@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Nov 20, 2026",
+  "asOfDate": "Nov 25, 2026",
   "aum": {
-    "asOfDate": "Nov 20, 2026",
-    "display": "$7.15M",
+    "asOfDate": "Nov 25, 2026",
+    "display": "$6.96M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 7151438
+    "value": 6959050
   },
-  "aumValue": 7151438,
+  "aumValue": 6959050,
   "category": "Commodities",
-  "closePrice": "$51.02",
-  "closePriceValue": 51.02,
+  "closePrice": "$51.41",
+  "closePriceValue": 51.41,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,21 +32,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-11-20T22:21:39Z",
+  "generatedAt": "2026-11-25T05:46:09Z",
   "history": {
-    "asOf": "2026-11-20",
-    "asOfDate": "Nov 20, 2026",
+    "asOf": "2026-11-24",
+    "asOfDate": "Nov 24, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 641
+    "totalRows": 643
   },
   "holdings": {
-    "asOf": "2026-11-20",
-    "asOfDate": "Nov 20, 2026",
+    "asOf": "2026-11-25",
+    "asOfDate": "Nov 25, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -56,8 +56,8 @@
     "totalRows": 56
   },
   "metrics": {
-    "ytd": -25.27,
-    "tr1y": 0.75,
+    "ytd": -23.01,
+    "tr1y": -3.28,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -65,38 +65,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 5.62,
-    "dividendYieldText": "5.62%",
-    "distributionYield": 5.62,
-    "distributionYieldText": "5.62%",
-    "yield12M": 5.62,
-    "yield12MText": "5.62%",
+    "dividendYield": 5.6,
+    "dividendYieldText": "5.60%",
+    "distributionYield": 5.6,
+    "distributionYieldText": "5.60%",
+    "yield12M": 5.6,
+    "yield12MText": "5.60%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-20"
+    "performanceAsOf": "2026-11-24"
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Nov 20, 2026",
-    "display": "$51.08",
+    "asOfDate": "Nov 25, 2026",
+    "display": "$51.28",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 51.08
+    "value": 51.28
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 51.08,
+  "navValue": 51.28,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 20, 2026",
+      "asOfDate": "Nov 24, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 0.75,
+      "yr1": -3.28,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -25.27
+      "ytd": -23.01
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 20, 2026",
+    "asOfDate": "Nov 25, 2026",
     "display": "140,000",
     "value": 140000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AGMI",
-  "totalNetAssets": 7151438
+  "totalNetAssets": 6959050
 }

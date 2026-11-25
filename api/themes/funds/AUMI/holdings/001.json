@@ -14,16 +14,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "B1H5082",
-      "Market Value": "$414057.72",
+      "Market Value": "$411294.65",
       "Name": "Zhaojin Mining Industry Co Ltd",
       "Shares Held": "220,587",
       "Ticker": "1818 HK",
-      "Weight": "2.35%"
+      "Weight": "2.36%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BS5YX69",
-      "Market Value": "$263110.20",
+      "Market Value": "$259369.05",
       "Name": "Allied Gold Corp",
       "Shares Held": "14,137",
       "Ticker": "AAUC CN",
@@ -32,7 +32,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "2009823",
-      "Market Value": "$867287.11",
+      "Market Value": "$857274.57",
       "Name": "Agnico Eagle Mines Ltd",
       "Shares Held": "5,477",
       "Ticker": "AEM CN",
@@ -41,34 +41,34 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BZ3DNP6",
-      "Market Value": "$806797.83",
+      "Market Value": "$790018.27",
       "Name": "Alamos Gold Inc",
       "Shares Held": "31,047",
       "Ticker": "AGI CN",
-      "Weight": "4.58%"
+      "Weight": "4.54%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BQKRCQ2",
-      "Market Value": "$342281.88",
+      "Market Value": "$330585.25",
       "Name": "Aris Mining Corp",
       "Shares Held": "26,818",
       "Ticker": "ARIS CN",
-      "Weight": "1.94%"
+      "Weight": "1.90%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "G0378L100",
-      "Market Value": "$761739.06",
+      "Market Value": "$754516.44",
       "Name": "Anglogold Ashanti Plc",
       "Shares Held": "9,894",
       "Ticker": "AU",
-      "Weight": "4.32%"
+      "Weight": "4.33%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$5061.59",
+      "Market Value": "$5045.66",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "7,597.15",
       "Ticker": "AUD",
@@ -77,16 +77,16 @@
     {
       "Asset Category": "Materials",
       "Identifier": "B29VFC4",
-      "Market Value": "$738467.36",
+      "Market Value": "$732892.78",
       "Name": "B2Gold Corp",
       "Shares Held": "170,049",
       "Ticker": "BTO CN",
-      "Weight": "4.19%"
+      "Weight": "4.21%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$1224.58",
+      "Market Value": "$1231.14",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "1,756.78",
       "Ticker": "CAD",
@@ -95,7 +95,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BDD98W2",
-      "Market Value": "$425999.91",
+      "Market Value": "$421149.25",
       "Name": "Capricorn Metals Ltd",
       "Shares Held": "52,843",
       "Ticker": "CMM AU",
@@ -104,7 +104,7 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BPCR7W4",
-      "Market Value": "$708423.95",
+      "Market Value": "$699799.40",
       "Name": "DPM Metals Inc",
       "Shares Held": "23,635",
       "Ticker": "DPM CN",
@@ -113,29 +113,29 @@
     {
       "Asset Category": "Materials",
       "Identifier": "BN7KJJ5",
-      "Market Value": "$782389.63",
+      "Market Value": "$759253.51",
       "Name": "Endeavour Mining PLC",
       "Shares Held": "18,224",
       "Ticker": "EDV CN",
-      "Weight": "4.44%"
+      "Weight": "4.36%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "6107381",
-      "Market Value": "$284144.78",
+      "Market Value": "$286050.11",
       "Name": "Emerald Resources NL",
       "Shares Held": "70,261",
       "Ticker": "EMR AU",
-      "Weight": "1.61%"
+      "Weight": "1.64%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BKLNP13",
-      "Market Value": "$768103.18",
+      "Market Value": "$756625.69",
       "Name": "Equinox Gold Corp",
       "Shares Held": "86,493",
       "Ticker": "EQX CN",
-      "Weight": "4.36%"
+      "Weight": "4.35%"
     },
     {
       "Asset Category": "Money Market",
@@ -149,7 +149,7 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$40.12",
+      "Market Value": "$40.17",
       "Name": "BRITISH POUNDS",
       "Shares Held": "30.63",
       "Ticker": "GBP",
@@ -158,29 +158,29 @@
     {
       "Asset Category": "Materials",
       "Identifier": "38059T106",
-      "Market Value": "$823768.64",
+      "Market Value": "$835856.96",
       "Name": "Gold Fields Ltd",
       "Shares Held": "25,184",
       "Ticker": "GFI",
-      "Weight": "4.67%"
+      "Weight": "4.80%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "B23G0X1",
-      "Market Value": "$568741.59",
+      "Market Value": "$559635.65",
       "Name": "Genesis Minerals Ltd",
       "Shares Held": "137,685",
       "Ticker": "GMD AU",
-      "Weight": "3.23%"
+      "Weight": "3.21%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BSWW128",
-      "Market Value": "$631542.87",
+      "Market Value": "$639744.77",
       "Name": "G Mining Ventures Corp",
       "Shares Held": "22,908",
       "Ticker": "GMIN CN",
-      "Weight": "3.58%"
+      "Weight": "3.67%"
     },
     {
       "Asset Category": "—",
@@ -194,137 +194,137 @@
     {
       "Asset Category": "Materials",
       "Identifier": "2446646",
-      "Market Value": "$830516.92",
+      "Market Value": "$831144.52",
       "Name": "IAMGOLD Corp",
       "Shares Held": "54,579",
       "Ticker": "IMG CN",
-      "Weight": "4.71%"
+      "Weight": "4.77%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "B03Z841",
-      "Market Value": "$661468.95",
+      "Market Value": "$645500.60",
       "Name": "Kinross Gold Corp",
       "Shares Held": "36,164",
       "Ticker": "K CN",
-      "Weight": "3.75%"
+      "Weight": "3.71%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BYZ2CB3",
-      "Market Value": "$501650.08",
+      "Market Value": "$490448.29",
       "Name": "K92 Mining Inc",
       "Shares Held": "31,971",
       "Ticker": "KNT CN",
-      "Weight": "2.84%"
+      "Weight": "2.82%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BTKSSY6",
-      "Market Value": "$812294.05",
+      "Market Value": "$797320.41",
       "Name": "Lundin Gold Inc",
       "Shares Held": "13,324",
       "Ticker": "LUG CN",
-      "Weight": "4.61%"
+      "Weight": "4.58%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "6717456",
-      "Market Value": "$1028836.06",
+      "Market Value": "$1005804.98",
       "Name": "Northern Star Resources Ltd",
       "Shares Held": "67,729",
       "Ticker": "NST AU",
-      "Weight": "5.83%"
+      "Weight": "5.78%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BQXQY26",
-      "Market Value": "$716985.26",
+      "Market Value": "$710685.48",
       "Name": "OceanaGold Corp",
       "Shares Held": "30,155",
       "Ticker": "OGC CN",
-      "Weight": "4.07%"
+      "Weight": "4.08%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "0430049",
-      "Market Value": "$366329.97",
+      "Market Value": "$349578.52",
       "Name": "Pan African Resources PLC",
       "Shares Held": "281,624",
       "Ticker": "PAF LN",
-      "Weight": "2.08%"
+      "Weight": "2.01%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "B02FBC1",
-      "Market Value": "$701153.81",
+      "Market Value": "$701299.88",
       "Name": "Perseus Mining Ltd",
       "Shares Held": "177,170",
       "Ticker": "PRU AU",
-      "Weight": "3.98%"
+      "Weight": "4.03%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "6586872",
-      "Market Value": "$537406.75",
+      "Market Value": "$537358.24",
       "Name": "Ramelius Resources Ltd",
       "Shares Held": "247,428",
       "Ticker": "RMS AU",
-      "Weight": "3.05%"
+      "Weight": "3.09%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "6476542",
-      "Market Value": "$404132.80",
+      "Market Value": "$396190.68",
       "Name": "Regis Resources Ltd",
       "Shares Held": "100,427",
       "Ticker": "RRL AU",
-      "Weight": "2.29%"
+      "Weight": "2.28%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "C0N63X7",
-      "Market Value": "$539576.21",
+      "Market Value": "$542818.40",
       "Name": "TOREX GOLD RESOURCES INC",
       "Shares Held": "12,467",
       "Ticker": "TXG CN",
-      "Weight": "3.06%"
+      "Weight": "3.12%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BSML1B4",
-      "Market Value": "$501122.14",
+      "Market Value": "$468541.47",
       "Name": "Vault Minerals Ltd",
       "Shares Held": "136,155",
       "Ticker": "VAU AU",
-      "Weight": "2.84%"
+      "Weight": "2.69%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "B0Y90N5",
-      "Market Value": "$334935.56",
+      "Market Value": "$329125.34",
       "Name": "Wesdome Gold Mines Ltd",
       "Shares Held": "19,733",
       "Ticker": "WDO CN",
-      "Weight": "1.90%"
+      "Weight": "1.89%"
     },
     {
       "Asset Category": "Materials",
       "Identifier": "BYVQ673",
-      "Market Value": "$433388.57",
+      "Market Value": "$432024.23",
       "Name": "Westgold Resources Ltd",
       "Shares Held": "126,064",
       "Ticker": "WGX AU",
-      "Weight": "2.46%"
+      "Weight": "2.48%"
     },
     {
       "Asset Category": "Money Market",
       "Identifier": "Cash&Other",
-      "Market Value": "$2110.08",
+      "Market Value": "$3149.14",
       "Name": "Cash & Other",
-      "Shares Held": "2,110.08",
+      "Shares Held": "3,149.14",
       "Ticker": "Cash&Other",
-      "Weight": "0.01%"
+      "Weight": "0.02%"
     }
   ],
   "ticker": "AUMI",

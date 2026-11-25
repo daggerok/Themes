@@ -1,15 +1,15 @@
 {
-  "asOfDate": "Nov 20, 2026",
+  "asOfDate": "Nov 25, 2026",
   "aum": {
-    "asOfDate": "Nov 20, 2026",
-    "display": "$18.56M",
+    "asOfDate": "Nov 25, 2026",
+    "display": "$17.71M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 18556848
+    "value": 17709192
   },
-  "aumValue": 18556848,
+  "aumValue": 17709192,
   "category": "Thematic",
-  "closePrice": "$25.70",
-  "closePriceValue": 25.7,
+  "closePrice": "$25.68",
+  "closePriceValue": 25.68,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,32 +28,32 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-11-20T22:21:48Z",
+  "generatedAt": "2026-11-25T05:46:19Z",
   "history": {
-    "asOf": "2026-11-20",
-    "asOfDate": "Nov 20, 2026",
+    "asOf": "2026-11-24",
+    "asOfDate": "Nov 24, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 741
+    "totalRows": 743
   },
   "holdings": {
-    "asOf": "2026-11-20",
-    "asOfDate": "Nov 20, 2026",
+    "asOf": "2026-11-25",
+    "asOfDate": "Nov 25, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
     ],
     "source": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
     "sourceKind": "official Themes ETFs daily holdings CSV",
-    "totalRows": 47
+    "totalRows": 46
   },
   "metrics": {
-    "ytd": -39.83,
-    "tr1y": -36.52,
+    "ytd": -36.67,
+    "tr1y": -36.41,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -61,38 +61,38 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 6.25,
-    "dividendYieldText": "6.25%",
-    "distributionYield": 6.25,
-    "distributionYieldText": "6.25%",
-    "yield12M": 6.25,
-    "yield12MText": "6.25%",
+    "dividendYield": 6.28,
+    "dividendYieldText": "6.28%",
+    "distributionYield": 6.28,
+    "distributionYieldText": "6.28%",
+    "yield12M": 6.28,
+    "yield12MText": "6.28%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-20"
+    "performanceAsOf": "2026-11-24"
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Nov 20, 2026",
-    "display": "$25.77",
+    "asOfDate": "Nov 25, 2026",
+    "display": "$25.64",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 25.77
+    "value": 25.64
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 25.77,
+  "navValue": 25.64,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 20, 2026",
+      "asOfDate": "Nov 24, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -36.52,
+      "yr1": -36.41,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -39.83
+      "ytd": -36.67
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 20, 2026",
+    "asOfDate": "Nov 25, 2026",
     "display": "720,000",
     "value": 720000
   },
@@ -127,5 +127,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "WISE",
-  "totalNetAssets": 18556848
+  "totalNetAssets": 17709192
 }
