@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 25, 2026",
     "display": "$16.43M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 16429380
   },
   "aumValue": 16429380,
@@ -28,17 +28,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/drgn",
-  "generatedAt": "2026-11-25T05:46:14Z",
+  "generatedAt": "2026-11-25T23:15:20Z",
   "history": {
-    "asOf": "2026-11-24",
-    "asOfDate": "Nov 24, 2026",
+    "asOf": "2026-11-25",
+    "asOfDate": "Nov 25, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 345
+    "totalRows": 346
   },
   "holdings": {
     "asOf": "2026-11-25",
@@ -52,8 +52,8 @@
     "totalRows": 26
   },
   "metrics": {
-    "ytd": -23.77,
-    "tr1y": -23.14,
+    "ytd": -24.85,
+    "tr1y": -24.22,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -71,7 +71,7 @@
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-24"
+    "performanceAsOf": "2026-11-25"
   },
   "name": "China Generative Artificial Intelligence ETF",
   "nav": {
@@ -85,14 +85,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 24, 2026",
+      "asOfDate": "Nov 25, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -23.14,
+      "yr1": -24.22,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -23.77
+      "ytd": -24.85
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -117,11 +117,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-DRGN.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-China-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.39%",
