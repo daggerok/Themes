@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BD5CLB9",
       "Market Value": "$644878.20",
       "Name": "IEIT Systems Co Ltd",
@@ -21,7 +21,7 @@
       "Weight": "3.93%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BD5CNN5",
       "Market Value": "$1022636.49",
       "Name": "Iflytek Co Ltd",
@@ -30,7 +30,7 @@
       "Weight": "6.22%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BD5CNJ1",
       "Market Value": "$979257.41",
       "Name": "Zhejiang Dahua Technology Co Ltd",
@@ -39,7 +39,7 @@
       "Weight": "5.96%"
     },
     {
-      "Asset Category": "Communication Services",
+      "Asset Category": "—",
       "Identifier": "BLC90T0",
       "Market Value": "$662778.84",
       "Name": "Kuaishou Technology",
@@ -48,7 +48,7 @@
       "Weight": "4.03%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BPK3C96",
       "Market Value": "$802229.61",
       "Name": "SenseTime Group Inc",
@@ -57,7 +57,7 @@
       "Weight": "4.88%"
     },
     {
-      "Asset Category": "Health Care",
+      "Asset Category": "—",
       "Identifier": "BMXLWD0",
       "Market Value": "$121588.37",
       "Name": "Yidu Tech Inc",
@@ -66,7 +66,7 @@
       "Weight": "0.74%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BNG5JM4",
       "Market Value": "$404079.56",
       "Name": "RoboSense Technology Co Ltd",
@@ -75,7 +75,7 @@
       "Weight": "2.46%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BD5C9B5",
       "Market Value": "$654776.99",
       "Name": "TRS Information Technology Corp Ltd",
@@ -84,7 +84,7 @@
       "Weight": "3.99%"
     },
     {
-      "Asset Category": "Communication Services",
+      "Asset Category": "—",
       "Identifier": "B27WRM3",
       "Market Value": "$946897.67",
       "Name": "Kingsoft Corp Ltd",
@@ -93,7 +93,7 @@
       "Weight": "5.76%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BG20N99",
       "Market Value": "$944018.13",
       "Name": "Foxconn Industrial Internet Co Ltd",
@@ -102,7 +102,7 @@
       "Weight": "5.75%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BDF57C1",
       "Market Value": "$942609.03",
       "Name": "360 Security Technology Inc",
@@ -111,7 +111,7 @@
       "Weight": "5.74%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BRJ9ZR8",
       "Market Value": "$510984.63",
       "Name": "Phancy Group Co Ltd",
@@ -120,7 +120,7 @@
       "Weight": "3.11%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BK71F77",
       "Market Value": "$1041054.08",
       "Name": "Montage Technology Co Ltd",
@@ -129,7 +129,7 @@
       "Weight": "6.34%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BQZDHW6",
       "Market Value": "$980816.56",
       "Name": "Hygon Information Technology Co Ltd",
@@ -138,7 +138,7 @@
       "Weight": "5.97%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BK71F22",
       "Market Value": "$569759.40",
       "Name": "Arcsoft Corp Ltd",
@@ -147,7 +147,7 @@
       "Weight": "3.47%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BNHPMD5",
       "Market Value": "$1326217.07",
       "Name": "Cambricon Technologies Corp Ltd",
@@ -156,7 +156,7 @@
       "Weight": "8.07%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "BPXYTJ5",
       "Market Value": "$583154.23",
       "Name": "Yuanjie Semiconductor Technology Co Ltd",
@@ -165,7 +165,7 @@
       "Weight": "3.55%"
     },
     {
-      "Asset Category": "Communication Services",
+      "Asset Category": "—",
       "Identifier": "B0J2D41",
       "Market Value": "$922345.86",
       "Name": "Baidu Inc",
@@ -183,7 +183,7 @@
       "Weight": "0.07%"
     },
     {
-      "Asset Category": "Consumer Cyclicals",
+      "Asset Category": "—",
       "Identifier": "G29201103",
       "Market Value": "$55283.08",
       "Name": "ECARX Holdings Inc",
@@ -210,7 +210,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "49639K101",
       "Market Value": "$638990.37",
       "Name": "Kingsoft Cloud Holdings Ltd",
@@ -219,7 +219,7 @@
       "Weight": "3.89%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "90114C107",
       "Market Value": "$180523.00",
       "Name": "Tuya Inc",
@@ -228,7 +228,7 @@
       "Weight": "1.10%"
     },
     {
-      "Asset Category": "Information Technology",
+      "Asset Category": "—",
       "Identifier": "98421U108",
       "Market Value": "$1370058.94",
       "Name": "Xiaomi Corp",
