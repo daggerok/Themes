@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$15.96M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 15962496
   },
   "aumValue": 15962496,
@@ -28,7 +28,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/drgn",
-  "generatedAt": "2026-11-26T21:54:17Z",
+  "generatedAt": "2026-11-26T23:14:43Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -117,11 +117,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/DRGN",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-DRGN.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-China-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.39%",
