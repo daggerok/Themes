@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$7.18M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 7178066
   },
   "aumValue": 7178066,
   "category": "Commodities",
-  "closePrice": "$51.41",
-  "closePriceValue": 51.41,
+  "closePrice": "$49.81",
+  "closePriceValue": 49.81,
   "dataFile": "./funds/AGMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-11-26T09:38:10Z",
+  "generatedAt": "2026-11-26T21:54:12Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -65,12 +65,12 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 5.6,
-    "dividendYieldText": "5.60%",
-    "distributionYield": 5.6,
-    "distributionYieldText": "5.60%",
-    "yield12M": 5.6,
-    "yield12MText": "5.60%",
+    "dividendYield": 5.77,
+    "dividendYieldText": "5.77%",
+    "distributionYield": 5.77,
+    "distributionYieldText": "5.77%",
+    "yield12M": 5.77,
+    "yield12MText": "5.77%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
@@ -80,12 +80,12 @@
   "name": "Silver Miners ETF",
   "nav": {
     "asOfDate": "Nov 27, 2026",
-    "display": "$51.28",
+    "display": "$49.71",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 51.28
+    "value": 49.71
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 51.28,
+  "navValue": 49.71,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
@@ -121,15 +121,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AGMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AGMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Silver-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

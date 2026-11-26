@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "B60LZR6",
       "Market Value": "$1263472.68",
       "Name": "Agricultural Bank of China Ltd",
@@ -21,7 +21,7 @@
       "Weight": "4.14%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "B0B8Z29",
       "Market Value": "$1321159.48",
       "Name": "Bank of Communications Co Ltd",
@@ -30,7 +30,7 @@
       "Weight": "4.33%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "B154564",
       "Market Value": "$1257379.92",
       "Name": "Bank of China Ltd",
@@ -39,7 +39,7 @@
       "Weight": "4.12%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "B0LMTQ3",
       "Market Value": "$1291875.24",
       "Name": "China Construction Bank Corp",
@@ -48,7 +48,7 @@
       "Weight": "4.24%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "7262610",
       "Market Value": "$956779.48",
       "Name": "Credit Agricole SA",
@@ -57,7 +57,7 @@
       "Weight": "3.14%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "060505104",
       "Market Value": "$1013709.36",
       "Name": "Bank of America Corp",
@@ -66,7 +66,7 @@
       "Weight": "3.33%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "06738E204",
       "Market Value": "$1015882.70",
       "Name": "Barclays PLC",
@@ -75,7 +75,7 @@
       "Weight": "3.33%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "05565A202",
       "Market Value": "$1034626.10",
       "Name": "BNP Paribas SA",
@@ -84,7 +84,7 @@
       "Weight": "3.39%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "064058100",
       "Market Value": "$1168303.24",
       "Name": "Bank of New York Mellon Corp/The",
@@ -93,7 +93,7 @@
       "Weight": "3.83%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "172967424",
       "Market Value": "$1031642.99",
       "Name": "Citigroup Inc",
@@ -102,7 +102,7 @@
       "Weight": "3.38%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "D18190898",
       "Market Value": "$1041673.98",
       "Name": "Deutsche Bank AG",
@@ -129,7 +129,7 @@
       "Weight": "0.14%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "5966516",
       "Market Value": "$963422.49",
       "Name": "Societe Generale SA",
@@ -138,7 +138,7 @@
       "Weight": "3.16%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "38141G104",
       "Market Value": "$1037333.85",
       "Name": "Goldman Sachs Group Inc/The",
@@ -156,7 +156,7 @@
       "Weight": "0.11%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "404280406",
       "Market Value": "$987692.13",
       "Name": "HSBC Holdings PLC",
@@ -165,7 +165,7 @@
       "Weight": "3.24%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "455807107",
       "Market Value": "$1247335.90",
       "Name": "Industrial & Commercial Bank of China Ltd",
@@ -174,7 +174,7 @@
       "Weight": "4.09%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "456837103",
       "Market Value": "$996081.82",
       "Name": "ING Groep NV",
@@ -183,7 +183,7 @@
       "Weight": "3.27%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "46625H100",
       "Market Value": "$1099404.54",
       "Name": "JPMORGAN CHASE & CO.",
@@ -192,7 +192,7 @@
       "Weight": "3.61%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "60687Y109",
       "Market Value": "$1035871.20",
       "Name": "Mizuho Financial Group Inc",
@@ -201,7 +201,7 @@
       "Weight": "3.40%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "617446448",
       "Market Value": "$1002786.75",
       "Name": "Morgan Stanley",
@@ -210,7 +210,7 @@
       "Weight": "3.29%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "606822104",
       "Market Value": "$1020112.68",
       "Name": "Mitsubishi UFJ Financial Group Inc",
@@ -219,7 +219,7 @@
       "Weight": "3.35%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "780087102",
       "Market Value": "$1134625.80",
       "Name": "Royal Bank of Canada",
@@ -228,7 +228,7 @@
       "Weight": "3.72%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "05964H105",
       "Market Value": "$951198.82",
       "Name": "Banco Santander SA",
@@ -237,7 +237,7 @@
       "Weight": "3.12%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "853254100",
       "Market Value": "$997049.54",
       "Name": "Standard Chartered PLC",
@@ -246,7 +246,7 @@
       "Weight": "3.27%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "86562M209",
       "Market Value": "$1039004.46",
       "Name": "Sumitomo Mitsui Financial Group Inc",
@@ -255,7 +255,7 @@
       "Weight": "3.41%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "857477103",
       "Market Value": "$1072962.66",
       "Name": "State Street Corp",
@@ -264,7 +264,7 @@
       "Weight": "3.52%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "891160509",
       "Market Value": "$1163617.56",
       "Name": "Toronto-Dominion Bank/The",
@@ -273,7 +273,7 @@
       "Weight": "3.82%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "H42097107",
       "Market Value": "$1088782.80",
       "Name": "UBS Group AG",
@@ -282,7 +282,7 @@
       "Weight": "3.57%"
     },
     {
-      "Asset Category": "Financials",
+      "Asset Category": "—",
       "Identifier": "949746101",
       "Market Value": "$1124013.78",
       "Name": "Wells Fargo & Co",

@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B1H5082",
       "Market Value": "$403512.80",
       "Name": "Zhaojin Mining Industry Co Ltd",
@@ -21,7 +21,7 @@
       "Weight": "2.28%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BS5YX69",
       "Market Value": "$271289.53",
       "Name": "Allied Gold Corp",
@@ -30,7 +30,7 @@
       "Weight": "1.53%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2009823",
       "Market Value": "$883766.30",
       "Name": "Agnico Eagle Mines Ltd",
@@ -39,7 +39,7 @@
       "Weight": "4.99%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BZ3DNP6",
       "Market Value": "$816238.64",
       "Name": "Alamos Gold Inc",
@@ -48,7 +48,7 @@
       "Weight": "4.61%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BQKRCQ2",
       "Market Value": "$345545.60",
       "Name": "Aris Mining Corp",
@@ -57,7 +57,7 @@
       "Weight": "1.95%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "G0378L100",
       "Market Value": "$764113.62",
       "Name": "Anglogold Ashanti Plc",
@@ -75,7 +75,7 @@
       "Weight": "0.03%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B29VFC4",
       "Market Value": "$759868.51",
       "Name": "B2Gold Corp",
@@ -93,7 +93,7 @@
       "Weight": "0.01%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BDD98W2",
       "Market Value": "$403510.02",
       "Name": "Capricorn Metals Ltd",
@@ -102,7 +102,7 @@
       "Weight": "2.28%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BPCR7W4",
       "Market Value": "$729981.46",
       "Name": "DPM Metals Inc",
@@ -111,7 +111,7 @@
       "Weight": "4.12%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BN7KJJ5",
       "Market Value": "$789721.63",
       "Name": "Endeavour Mining PLC",
@@ -120,7 +120,7 @@
       "Weight": "4.46%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6107381",
       "Market Value": "$278037.29",
       "Name": "Emerald Resources NL",
@@ -129,7 +129,7 @@
       "Weight": "1.57%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BKLNP13",
       "Market Value": "$785165.69",
       "Name": "Equinox Gold Corp",
@@ -156,7 +156,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "38059T106",
       "Market Value": "$857767.04",
       "Name": "Gold Fields Ltd",
@@ -165,7 +165,7 @@
       "Weight": "4.84%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B23G0X1",
       "Market Value": "$544847.98",
       "Name": "Genesis Minerals Ltd",
@@ -174,7 +174,7 @@
       "Weight": "3.08%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BSWW128",
       "Market Value": "$680122.81",
       "Name": "G Mining Ventures Corp",
@@ -192,7 +192,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2446646",
       "Market Value": "$874155.05",
       "Name": "IAMGOLD Corp",
@@ -201,7 +201,7 @@
       "Weight": "4.93%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B03Z841",
       "Market Value": "$666758.24",
       "Name": "Kinross Gold Corp",
@@ -210,7 +210,7 @@
       "Weight": "3.76%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BYZ2CB3",
       "Market Value": "$506883.38",
       "Name": "K92 Mining Inc",
@@ -219,7 +219,7 @@
       "Weight": "2.86%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BTKSSY6",
       "Market Value": "$828759.27",
       "Name": "Lundin Gold Inc",
@@ -228,7 +228,7 @@
       "Weight": "4.68%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6717456",
       "Market Value": "$991710.16",
       "Name": "Northern Star Resources Ltd",
@@ -237,7 +237,7 @@
       "Weight": "5.60%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BQXQY26",
       "Market Value": "$745466.49",
       "Name": "OceanaGold Corp",
@@ -246,7 +246,7 @@
       "Weight": "4.21%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "0430049",
       "Market Value": "$341213.51",
       "Name": "Pan African Resources PLC",
@@ -255,7 +255,7 @@
       "Weight": "1.93%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B02FBC1",
       "Market Value": "$684657.11",
       "Name": "Perseus Mining Ltd",
@@ -264,7 +264,7 @@
       "Weight": "3.86%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6586872",
       "Market Value": "$518263.12",
       "Name": "Ramelius Resources Ltd",
@@ -273,7 +273,7 @@
       "Weight": "2.93%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6476542",
       "Market Value": "$378771.36",
       "Name": "Regis Resources Ltd",
@@ -282,7 +282,7 @@
       "Weight": "2.14%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "C0N63X7",
       "Market Value": "$565601.13",
       "Name": "TOREX GOLD RESOURCES INC",
@@ -291,7 +291,7 @@
       "Weight": "3.19%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BSML1B4",
       "Market Value": "$457297.56",
       "Name": "Vault Minerals Ltd",
@@ -300,7 +300,7 @@
       "Weight": "2.58%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B0Y90N5",
       "Market Value": "$342989.41",
       "Name": "Wesdome Gold Mines Ltd",
@@ -309,7 +309,7 @@
       "Weight": "1.94%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BYVQ673",
       "Market Value": "$414464.31",
       "Name": "Westgold Resources Ltd",

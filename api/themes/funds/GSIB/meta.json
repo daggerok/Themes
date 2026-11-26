@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$30.49M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 30485070
   },
   "aumValue": 30485070,
   "category": "Thematic",
-  "closePrice": "$57.93",
-  "closePriceValue": 57.93,
+  "closePrice": "$57.82",
+  "closePriceValue": 57.82,
   "dataFile": "./funds/GSIB/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-11-26T09:38:16Z",
+  "generatedAt": "2026-11-26T21:54:18Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -80,12 +80,12 @@
   "name": "Global Systemically Important Banks ETF",
   "nav": {
     "asOfDate": "Nov 27, 2026",
-    "display": "$57.85",
+    "display": "$57.77",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 57.85
+    "value": 57.77
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 57.85,
+  "navValue": 57.77,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
@@ -121,15 +121,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-GSIB.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Global-Systemically-Important-Banks-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

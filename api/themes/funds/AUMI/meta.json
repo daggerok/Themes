@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$17.72M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 17715198
   },
   "aumValue": 17715198,
   "category": "Commodities",
-  "closePrice": "$76.84",
-  "closePriceValue": 76.84,
+  "closePrice": "$75.14",
+  "closePriceValue": 75.14,
   "dataFile": "./funds/AUMI/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/aumi",
-  "generatedAt": "2026-11-26T09:38:06Z",
+  "generatedAt": "2026-11-26T21:54:13Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -65,12 +65,12 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 1.05,
-    "dividendYieldText": "1.05%",
-    "distributionYield": 1.05,
-    "distributionYieldText": "1.05%",
-    "yield12M": 1.05,
-    "yield12MText": "1.05%",
+    "dividendYield": 1.06,
+    "dividendYieldText": "1.06%",
+    "distributionYield": 1.06,
+    "distributionYieldText": "1.06%",
+    "yield12M": 1.06,
+    "yield12MText": "1.06%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
@@ -80,12 +80,12 @@
   "name": "Gold Miners ETF",
   "nav": {
     "asOfDate": "Nov 27, 2026",
-    "display": "$76.41",
+    "display": "$75.70",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 76.41
+    "value": 75.7
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 76.41,
+  "navValue": 75.7,
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
@@ -121,15 +121,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/AUMI",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-AUMI.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Gold-Miners-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: HTTP 403; proxy: HTTP 422"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

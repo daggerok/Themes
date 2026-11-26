@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BD5CLW0",
       "Market Value": "$77845.49",
       "Name": "Shenzhen Zhongjin Lingnan Nonfemet Co Ltd",
@@ -21,7 +21,7 @@
       "Weight": "0.92%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6728793",
       "Market Value": "$179272.28",
       "Name": "MMG Ltd",
@@ -30,7 +30,7 @@
       "Weight": "2.11%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B890GY2",
       "Market Value": "$197635.52",
       "Name": "China Nonferrous Mining Corp Ltd",
@@ -39,7 +39,7 @@
       "Weight": "2.32%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6641027",
       "Market Value": "$134611.40",
       "Name": "Nittetsu Mining Co Ltd",
@@ -48,7 +48,7 @@
       "Weight": "1.58%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BNNVRL0",
       "Market Value": "$63985.49",
       "Name": "29Metals Ltd",
@@ -57,7 +57,7 @@
       "Weight": "0.75%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BLC7SM3",
       "Market Value": "$138881.21",
       "Name": "Ganzhou Teng Yuan Cobalt New Material Co Ltd",
@@ -66,7 +66,7 @@
       "Weight": "1.63%"
     },
     {
-      "Asset Category": "Industrials",
+      "Asset Category": "—",
       "Identifier": "BS28YD8",
       "Market Value": "$164532.29",
       "Name": "Guangdong Feinan Resources Recycling Co Ltd",
@@ -75,7 +75,7 @@
       "Weight": "1.93%"
     },
     {
-      "Asset Category": "Industrials",
+      "Asset Category": "—",
       "Identifier": "BN4P5J5",
       "Market Value": "$213052.02",
       "Name": "Jiujiang Defu Technology Co Ltd",
@@ -84,7 +84,7 @@
       "Weight": "2.51%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6597089",
       "Market Value": "$84102.37",
       "Name": "Mitsubishi Materials Corp",
@@ -93,7 +93,7 @@
       "Weight": "0.99%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BP3R4R7",
       "Market Value": "$198263.87",
       "Name": "Jiangxi Copper Co Ltd",
@@ -102,7 +102,7 @@
       "Weight": "2.33%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BTK05J6",
       "Market Value": "$385545.18",
       "Name": "Anglo American PLC",
@@ -111,7 +111,7 @@
       "Weight": "4.53%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BZ8W0K2",
       "Market Value": "$117756.36",
       "Name": "Aeris Resources Ltd",
@@ -120,7 +120,7 @@
       "Weight": "1.38%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2122355",
       "Market Value": "$81568.10",
       "Name": "Altius Minerals Corp",
@@ -129,7 +129,7 @@
       "Weight": "0.96%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "0045614",
       "Market Value": "$260243.43",
       "Name": "Antofagasta PLC",
@@ -138,7 +138,7 @@
       "Weight": "3.06%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2474261",
       "Market Value": "$70294.96",
       "Name": "Avino Silver & Gold Mines Ltd",
@@ -147,7 +147,7 @@
       "Weight": "0.83%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BYZTVM8",
       "Market Value": "$233762.55",
       "Name": "ATALAYA MINING COPPER SA",
@@ -165,7 +165,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6144690",
       "Market Value": "$439666.48",
       "Name": "BHP Group Ltd",
@@ -174,7 +174,7 @@
       "Weight": "5.17%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BPYTZ57",
       "Market Value": "$158175.00",
       "Name": "Boliden AB",
@@ -183,7 +183,7 @@
       "Weight": "1.86%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "204448104",
       "Market Value": "$94652.85",
       "Name": "Cia de Minas Buenaventura SAA",
@@ -201,7 +201,7 @@
       "Weight": "-0.01%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B67KBV2",
       "Market Value": "$122637.32",
       "Name": "Central Asia Metals PLC",
@@ -210,7 +210,7 @@
       "Weight": "1.44%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2750488",
       "Market Value": "$86438.57",
       "Name": "China Gold International Resources Corp Ltd",
@@ -219,7 +219,7 @@
       "Weight": "1.02%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B0ZGW28",
       "Market Value": "$75978.70",
       "Name": "Chalice Mining Ltd",
@@ -228,7 +228,7 @@
       "Weight": "0.89%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BN79Z49",
       "Market Value": "$71512.54",
       "Name": "Collective Mining Ltd",
@@ -246,7 +246,7 @@
       "Weight": "0.01%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BMY5XY9",
       "Market Value": "$199976.86",
       "Name": "Capstone Copper Corp",
@@ -255,7 +255,7 @@
       "Weight": "2.35%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BF02Z72",
       "Market Value": "$194861.07",
       "Name": "ERO Copper Corp",
@@ -273,7 +273,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "35671D857",
       "Market Value": "$765099.45",
       "Name": "Freeport-McMoRan Inc",
@@ -282,7 +282,7 @@
       "Weight": "9.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2347608",
       "Market Value": "$280828.56",
       "Name": "First Quantum Minerals Ltd",
@@ -309,7 +309,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B4T3BW6",
       "Market Value": "$480866.92",
       "Name": "Glencore PLC",
@@ -318,7 +318,7 @@
       "Weight": "5.65%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BYZGY64",
       "Market Value": "$30222.44",
       "Name": "GoldMining Inc",
@@ -327,7 +327,7 @@
       "Weight": "0.36%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "B05BDX1",
       "Market Value": "$163440.24",
       "Name": "Hudbay Minerals Inc",
@@ -336,7 +336,7 @@
       "Weight": "1.92%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BNRNW06",
       "Market Value": "$57287.94",
       "Name": "Hot Chili Ltd",
@@ -354,7 +354,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "46578C108",
       "Market Value": "$105799.68",
       "Name": "Ivanhoe Electric Inc / US",
@@ -363,7 +363,7 @@
       "Weight": "1.24%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2878937",
       "Market Value": "$77953.18",
       "Name": "Imperial Metals Corp",
@@ -372,7 +372,7 @@
       "Weight": "0.92%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BD73C40",
       "Market Value": "$186222.60",
       "Name": "Ivanhoe Mines Ltd",
@@ -381,7 +381,7 @@
       "Weight": "2.19%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "3185216",
       "Market Value": "$19928.42",
       "Name": "Jubilee Metals Group PLC",
@@ -399,7 +399,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BQZCG48",
       "Market Value": "$37354.68",
       "Name": "Kantra Copper Ltd",
@@ -408,7 +408,7 @@
       "Weight": "0.44%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2866857",
       "Market Value": "$308539.46",
       "Name": "Lundin Mining Corp",
@@ -417,7 +417,7 @@
       "Weight": "3.63%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BRCDGF2",
       "Market Value": "$113838.92",
       "Name": "LunR Royalties Corp",
@@ -426,7 +426,7 @@
       "Weight": "1.34%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "5485527",
       "Market Value": "$163398.38",
       "Name": "Aurubis AG",
@@ -435,7 +435,7 @@
       "Weight": "1.92%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BXQ75J9",
       "Market Value": "$165948.55",
       "Name": "NGEx Minerals Ltd",
@@ -444,7 +444,7 @@
       "Weight": "1.95%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BTJWZX7",
       "Market Value": "$27905.34",
       "Name": "Power Metallic Mines Inc",
@@ -453,7 +453,7 @@
       "Weight": "0.33%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "84265V105",
       "Market Value": "$299644.89",
       "Name": "Southern Copper Corp",
@@ -471,7 +471,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "6739739",
       "Market Value": "$210722.85",
       "Name": "Sandfire Resources Ltd",
@@ -480,7 +480,7 @@
       "Weight": "2.48%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BMQ5701",
       "Market Value": "$153645.01",
       "Name": "Solaris Resources Inc",
@@ -489,7 +489,7 @@
       "Weight": "1.81%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "2879327",
       "Market Value": "$349385.87",
       "Name": "Teck Resources Ltd",
@@ -498,7 +498,7 @@
       "Weight": "4.11%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BRSCTT8",
       "Market Value": "$234180.77",
       "Name": "Trekor Metals Ltd",
@@ -507,7 +507,7 @@
       "Weight": "2.75%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BTZRRJ6",
       "Market Value": "$79672.47",
       "Name": "Talon Metals Corp",
@@ -516,7 +516,7 @@
       "Weight": "0.94%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "90291W108",
       "Market Value": "$35951.67",
       "Name": "US Goldmining Inc",
@@ -525,7 +525,7 @@
       "Weight": "0.42%"
     },
     {
-      "Asset Category": "Materials",
+      "Asset Category": "—",
       "Identifier": "BN10LP1",
       "Market Value": "$56131.14",
       "Name": "WA1 Resources Ltd",

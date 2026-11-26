@@ -10,8 +10,8 @@
       "aum": "$7.18M",
       "aumValue": 7178066,
       "category": "Commodities",
-      "closePrice": "$51.41",
-      "closePriceValue": 51.41,
+      "closePrice": "$49.81",
+      "closePriceValue": 49.81,
       "dataFile": "./funds/AGMI/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -35,12 +35,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 5.6,
-        "dividendYieldText": "5.60%",
-        "distributionYield": 5.6,
-        "distributionYieldText": "5.60%",
-        "yield12M": 5.6,
-        "yield12MText": "5.60%",
+        "dividendYield": 5.77,
+        "dividendYieldText": "5.77%",
+        "distributionYield": 5.77,
+        "distributionYieldText": "5.77%",
+        "yield12M": 5.77,
+        "yield12MText": "5.77%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -104,9 +104,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Silver Miners ETF",
-      "nav": "$51.28",
+      "nav": "$49.71",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 51.28,
+      "navValue": 49.71,
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
@@ -139,8 +139,8 @@
       "aum": "$17.72M",
       "aumValue": 17715198,
       "category": "Commodities",
-      "closePrice": "$76.84",
-      "closePriceValue": 76.84,
+      "closePrice": "$75.14",
+      "closePriceValue": 75.14,
       "dataFile": "./funds/AUMI/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -164,12 +164,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 1.05,
-        "dividendYieldText": "1.05%",
-        "distributionYield": 1.05,
-        "distributionYieldText": "1.05%",
-        "yield12M": 1.05,
-        "yield12MText": "1.05%",
+        "dividendYield": 1.06,
+        "dividendYieldText": "1.06%",
+        "distributionYield": 1.06,
+        "distributionYieldText": "1.06%",
+        "yield12M": 1.06,
+        "yield12MText": "1.06%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -233,9 +233,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Gold Miners ETF",
-      "nav": "$76.41",
+      "nav": "$75.70",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 76.41,
+      "navValue": 75.7,
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
@@ -268,8 +268,8 @@
       "aum": "$54.81M",
       "aumValue": 54809535,
       "category": "Thematic",
-      "closePrice": "$33.64",
-      "closePriceValue": 33.64,
+      "closePrice": "$33.89",
+      "closePriceValue": 33.89,
       "dataFile": "./funds/BOTT/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -362,9 +362,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Humanoid Robotics ETF",
-      "nav": "$32.73",
+      "nav": "$34.25",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 32.73,
+      "navValue": 34.25,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -397,8 +397,8 @@
       "aum": "$1.84M",
       "aumValue": 1835316,
       "category": "Thematic",
-      "closePrice": "$30.86",
-      "closePriceValue": 30.86,
+      "closePrice": "$30.84",
+      "closePriceValue": 30.84,
       "dataFile": "./funds/CLOD/meta.json",
       "distributionFrequency": "00 - None",
       "distributions": {
@@ -491,9 +491,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Cloud Computing ETF",
-      "nav": "$30.85",
+      "nav": "$30.84",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 30.85,
+      "navValue": 30.84,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -526,8 +526,8 @@
       "aum": "$8.50M",
       "aumValue": 8504592,
       "category": "Commodities",
-      "closePrice": "$36.94",
-      "closePriceValue": 36.94,
+      "closePrice": "$35.30",
+      "closePriceValue": 35.3,
       "dataFile": "./funds/COPA/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -551,12 +551,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 5.01,
-        "dividendYieldText": "5.01%",
-        "distributionYield": 5.01,
-        "distributionYieldText": "5.01%",
-        "yield12M": 5.01,
-        "yield12MText": "5.01%",
+        "dividendYield": 5.2,
+        "dividendYieldText": "5.20%",
+        "distributionYield": 5.2,
+        "distributionYieldText": "5.20%",
+        "yield12M": 5.2,
+        "yield12MText": "5.20%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -620,9 +620,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Copper Miners ETF",
-      "nav": "$36.70",
+      "nav": "$35.41",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 36.7,
+      "navValue": 35.41,
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
@@ -655,8 +655,8 @@
       "aum": "$15.96M",
       "aumValue": 15962496,
       "category": "Thematic",
-      "closePrice": "$25.08",
-      "closePriceValue": 25.08,
+      "closePrice": "$24.85",
+      "closePriceValue": 24.85,
       "dataFile": "./funds/DRGN/meta.json",
       "distributionFrequency": "00 - None",
       "distributions": {
@@ -749,9 +749,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "China Generative Artificial Intelligence ETF",
-      "nav": "$24.87",
+      "nav": "$24.89",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 24.87,
+      "navValue": 24.89,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -784,8 +784,8 @@
       "aum": "$30.49M",
       "aumValue": 30485070,
       "category": "Thematic",
-      "closePrice": "$57.93",
-      "closePriceValue": 57.93,
+      "closePrice": "$57.82",
+      "closePriceValue": 57.82,
       "dataFile": "./funds/GSIB/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -878,9 +878,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Global Systemically Important Banks ETF",
-      "nav": "$57.85",
+      "nav": "$57.77",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 57.85,
+      "navValue": 57.77,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -913,8 +913,8 @@
       "aum": "$83.15M",
       "aumValue": 83146995,
       "category": "Thematic",
-      "closePrice": "$35.32",
-      "closePriceValue": 35.32,
+      "closePrice": "$35.29",
+      "closePriceValue": 35.29,
       "dataFile": "./funds/NATO/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -1007,9 +1007,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Transatlantic Defense ETF",
-      "nav": "$35.40",
+      "nav": "$35.34",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 35.4,
+      "navValue": 35.34,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -1042,8 +1042,8 @@
       "aum": "$8.11M",
       "aumValue": 8108082,
       "category": "Thematic",
-      "closePrice": "$44.89",
-      "closePriceValue": 44.89,
+      "closePrice": "$44.55",
+      "closePriceValue": 44.55,
       "dataFile": "./funds/SPAM/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -1067,12 +1067,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 0.33,
-        "dividendYieldText": "0.33%",
-        "distributionYield": 0.33,
-        "distributionYieldText": "0.33%",
-        "yield12M": 0.33,
-        "yield12MText": "0.33%",
+        "dividendYield": 0.34,
+        "dividendYieldText": "0.34%",
+        "distributionYield": 0.34,
+        "distributionYieldText": "0.34%",
+        "yield12M": 0.34,
+        "yield12MText": "0.34%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -1136,9 +1136,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Cybersecurity ETF",
-      "nav": "$44.89",
+      "nav": "$44.50",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 44.89,
+      "navValue": 44.5,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -1171,8 +1171,8 @@
       "aum": "$19.08M",
       "aumValue": 19079480,
       "category": "Commodities",
-      "closePrice": "$27.86",
-      "closePriceValue": 27.86,
+      "closePrice": "$27.39",
+      "closePriceValue": 27.39,
       "dataFile": "./funds/URAN/meta.json",
       "distributionFrequency": "12 - Annually",
       "distributions": {
@@ -1196,12 +1196,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 3.81,
-        "dividendYieldText": "3.81%",
-        "distributionYield": 3.81,
-        "distributionYieldText": "3.81%",
-        "yield12M": 3.81,
-        "yield12MText": "3.81%",
+        "dividendYield": 3.86,
+        "dividendYieldText": "3.86%",
+        "distributionYield": 3.86,
+        "distributionYieldText": "3.86%",
+        "yield12M": 3.86,
+        "yield12MText": "3.86%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -1265,9 +1265,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Uranium & Nuclear ETF",
-      "nav": "$27.79",
+      "nav": "$27.43",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 27.79,
+      "navValue": 27.43,
       "providerCategory": "Commodities",
       "returns": {
         "monthEnd": {
@@ -1300,8 +1300,8 @@
       "aum": "$17.52M",
       "aumValue": 17519112,
       "category": "Thematic",
-      "closePrice": "$25.68",
-      "closePriceValue": 25.68,
+      "closePrice": "$24.68",
+      "closePriceValue": 24.68,
       "dataFile": "./funds/WISE/meta.json",
       "distributionFrequency": "00 - None",
       "distributions": {
@@ -1325,12 +1325,12 @@
         "cagr5y": null,
         "cagr10y": null,
         "siAnn": null,
-        "dividendYield": 6.28,
-        "dividendYieldText": "6.28%",
-        "distributionYield": 6.28,
-        "distributionYieldText": "6.28%",
-        "yield12M": 6.28,
-        "yield12MText": "6.28%",
+        "dividendYield": 6.54,
+        "dividendYieldText": "6.54%",
+        "distributionYield": 6.54,
+        "distributionYieldText": "6.54%",
+        "yield12M": 6.54,
+        "yield12MText": "6.54%",
         "dividendYieldBasis": "computed-trailing-12m",
         "secYield": null,
         "secYieldText": "—",
@@ -1394,9 +1394,9 @@
         "performanceAsOf": "2026-11-25"
       },
       "name": "Generative Artificial Intelligence ETF",
-      "nav": "$25.64",
+      "nav": "$24.60",
       "navKind": "official Themes ETFs catalog NAV",
-      "navValue": 25.64,
+      "navValue": 24.6,
       "providerCategory": "Thematic",
       "returns": {
         "monthEnd": {
@@ -1425,7 +1425,7 @@
       "ticker": "WISE"
     }
   ],
-  "generatedAt": "2026-11-26T06:01:45Z",
+  "generatedAt": "2026-11-26T21:54:28Z",
   "source": {
     "catalog": "https://themesetfs.com/etfs",
     "catalogNote": "Server-rendered catalog exposing window.productsData.",
