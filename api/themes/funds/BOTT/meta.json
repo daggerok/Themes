@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$54.81M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 54809535
   },
   "aumValue": 54809535,
@@ -32,17 +32,17 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-11-27T09:43:32Z",
+  "generatedAt": "2026-11-27T22:53:53Z",
   "history": {
-    "asOf": "2026-11-25",
-    "asOfDate": "Nov 25, 2026",
+    "asOf": "2026-11-27",
+    "asOfDate": "Nov 27, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 653
+    "totalRows": 654
   },
   "holdings": {
     "asOf": "2026-11-27",
@@ -56,8 +56,8 @@
     "totalRows": 41
   },
   "metrics": {
-    "ytd": -21.85,
-    "tr1y": -8.08,
+    "ytd": -15.26,
+    "tr1y": -0.33,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -75,7 +75,7 @@
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-25"
+    "performanceAsOf": "2026-11-27"
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
@@ -89,14 +89,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 25, 2026",
+      "asOfDate": "Nov 27, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -8.08,
+      "yr1": -0.33,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -21.85
+      "ytd": -15.26
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/BOTT",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-BOTT.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Humanoid-Robotics-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

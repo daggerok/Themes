@@ -9,6 +9,12 @@
   "pageSize": 1000,
   "rows": [
     {
+      "Adj Close": "25.34",
+      "Close": "25.34",
+      "Date": "2026-11-27",
+      "Volume": "520"
+    },
+    {
       "Adj Close": "24.43",
       "Close": "24.43",
       "Date": "2026-11-25",
@@ -4474,5 +4480,5 @@
     }
   ],
   "ticker": "WISE",
-  "totalRows": 744
+  "totalRows": 745
 }

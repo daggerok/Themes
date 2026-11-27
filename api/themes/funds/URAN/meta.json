@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$19.08M",
-    "source": "official Themes ETFs daily holdings CSV",
+    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "value": 19079480
   },
   "aumValue": 19079480,
@@ -32,17 +32,17 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/uran",
-  "generatedAt": "2026-11-27T09:43:39Z",
+  "generatedAt": "2026-11-27T22:54:05Z",
   "history": {
-    "asOf": "2026-11-25",
-    "asOfDate": "Nov 25, 2026",
+    "asOf": "2026-11-27",
+    "asOfDate": "Nov 27, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 546
+    "totalRows": 547
   },
   "holdings": {
     "asOf": "2026-11-27",
@@ -56,8 +56,8 @@
     "totalRows": 57
   },
   "metrics": {
-    "ytd": -34.46,
-    "tr1y": -34.82,
+    "ytd": -31.9,
+    "tr1y": -32.28,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -75,7 +75,7 @@
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-25"
+    "performanceAsOf": "2026-11-27"
   },
   "name": "Uranium & Nuclear ETF",
   "nav": {
@@ -89,14 +89,14 @@
   "providerCategory": "Commodities",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 25, 2026",
+      "asOfDate": "Nov 27, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -34.82,
+      "yr1": -32.28,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -34.46
+      "ytd": -31.9
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -121,11 +121,15 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/URAN",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-URAN.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV",
+    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Uranium-Nuclear-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
+    "retained": {
+      "holdings": true,
+      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
+    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
