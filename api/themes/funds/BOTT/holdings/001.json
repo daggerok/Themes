@@ -12,7 +12,7 @@
   "pageSize": 250,
   "rows": [
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BFCCQJ9",
       "Market Value": "$1577115.29",
       "Name": "Estun Automation Co Ltd",
@@ -21,7 +21,7 @@
       "Weight": "2.88%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "6421876",
       "Market Value": "$2542944.23",
       "Name": "Yujin Robot Co Ltd",
@@ -30,7 +30,7 @@
       "Weight": "4.64%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B1GHDM4",
       "Market Value": "$2696699.20",
       "Name": "Hyulim ROBOT Co Ltd",
@@ -39,7 +39,7 @@
       "Weight": "4.92%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BGSN8C0",
       "Market Value": "$1057347.44",
       "Name": "T-Robotics Co Ltd",
@@ -48,7 +48,7 @@
       "Weight": "1.93%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "BYZFWD4",
       "Market Value": "$1667553.07",
       "Name": "Cymechs Inc/Korea",
@@ -57,7 +57,7 @@
       "Weight": "3.04%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMFSQL5",
       "Market Value": "$2964290.95",
       "Name": "KNR Systems Inc",
@@ -66,7 +66,7 @@
       "Weight": "5.41%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BM9Q3J2",
       "Market Value": "$3665622.07",
       "Name": "Rainbow Robotics",
@@ -75,7 +75,7 @@
       "Weight": "6.69%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BD5C8Z2",
       "Market Value": "$2291199.90",
       "Name": "CSG Smart Science&Technology Co Ltd",
@@ -84,7 +84,7 @@
       "Weight": "4.18%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BHQPSL4",
       "Market Value": "$312306.23",
       "Name": "Guangdong Topstar Technology Co Ltd",
@@ -93,7 +93,7 @@
       "Weight": "0.57%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BPJGTG2",
       "Market Value": "$165447.47",
       "Name": "Yuil Robotics Co Ltd",
@@ -102,7 +102,7 @@
       "Weight": "0.30%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "BFY2824",
       "Market Value": "$1179351.86",
       "Name": "Kudan Inc",
@@ -111,7 +111,7 @@
       "Weight": "2.15%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "BT8R5C2",
       "Market Value": "$446228.81",
       "Name": "Clobot Co Ltd",
@@ -120,7 +120,7 @@
       "Weight": "0.81%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMC9804",
       "Market Value": "$1974497.51",
       "Name": "CMES Robotics Inc",
@@ -129,7 +129,7 @@
       "Weight": "3.60%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "BDFWW61",
       "Market Value": "$2988309.91",
       "Name": "Ecovacs Robotics Co Ltd",
@@ -138,7 +138,7 @@
       "Weight": "5.45%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BFYX634",
       "Market Value": "$3082691.71",
       "Name": "Yijiahe Technology Co Ltd",
@@ -147,7 +147,7 @@
       "Weight": "5.62%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMVB2T8",
       "Market Value": "$1687349.12",
       "Name": "Shanghai Kelai Mechatronics Engineering Co Ltd",
@@ -156,7 +156,7 @@
       "Weight": "3.08%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "B1GZ9S6",
       "Market Value": "$681695.71",
       "Name": "Hirata Corp",
@@ -165,7 +165,7 @@
       "Weight": "1.24%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "6687571",
       "Market Value": "$855743.13",
       "Name": "Nabtesco Corp",
@@ -174,7 +174,7 @@
       "Weight": "1.56%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "BVN4D40",
       "Market Value": "$1746569.65",
       "Name": "OneRobotics Shenzhen Co Ltd",
@@ -183,7 +183,7 @@
       "Weight": "3.19%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMGJQ17",
       "Market Value": "$2774049.88",
       "Name": "Leader Harmonious Drive Systems Co Ltd",
@@ -192,7 +192,7 @@
       "Weight": "5.06%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BPDWRG2",
       "Market Value": "$2734929.08",
       "Name": "EFORT Intelligent Robot Co Ltd",
@@ -201,7 +201,7 @@
       "Weight": "4.99%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BPDWRH3",
       "Market Value": "$600183.96",
       "Name": "Ningbo PIA Automation Holding Corp",
@@ -210,7 +210,7 @@
       "Weight": "1.10%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BR4VSK3",
       "Market Value": "$2340877.79",
       "Name": "UBTech Robotics Corp Ltd",
@@ -300,7 +300,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "BMZ0WL3",
       "Market Value": "$1955400.99",
       "Name": "MDA Space Ltd",
@@ -309,7 +309,7 @@
       "Weight": "3.57%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "67066G104",
       "Market Value": "$1967475.40",
       "Name": "NVIDIA Corp",
@@ -318,7 +318,7 @@
       "Weight": "3.59%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "80359A205",
       "Market Value": "$1502032.50",
       "Name": "Palladyne AI Corp",
@@ -327,7 +327,7 @@
       "Weight": "2.74%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Industrials",
       "Identifier": "765504105",
       "Market Value": "$1117778.98",
       "Name": "Richtech Robotics Inc",
@@ -345,7 +345,7 @@
       "Weight": "0.00%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "81758H106",
       "Market Value": "$1208980.31",
       "Name": "Serve Robotics Inc",
@@ -354,7 +354,7 @@
       "Weight": "2.21%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Information Technology",
       "Identifier": "880770102",
       "Market Value": "$1559514.65",
       "Name": "Teradyne Inc",
@@ -363,7 +363,7 @@
       "Weight": "2.85%"
     },
     {
-      "Asset Category": "—",
+      "Asset Category": "Consumer Cyclicals",
       "Identifier": "88160R101",
       "Market Value": "$3155542.14",
       "Name": "Tesla Inc",

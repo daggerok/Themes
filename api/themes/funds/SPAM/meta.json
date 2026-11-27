@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$8.11M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 8108082
   },
   "aumValue": 8108082,
   "category": "Thematic",
-  "closePrice": "$44.55",
-  "closePriceValue": 44.55,
+  "closePrice": "$45.14",
+  "closePriceValue": 45.14,
   "dataFile": "./funds/SPAM/meta.json",
   "distributionFrequency": "12 - Annually",
   "distributions": {
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-11-26T23:14:48Z",
+  "generatedAt": "2026-11-27T09:43:38Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -65,12 +65,12 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 0.34,
-    "dividendYieldText": "0.34%",
-    "distributionYield": 0.34,
-    "distributionYieldText": "0.34%",
-    "yield12M": 0.34,
-    "yield12MText": "0.34%",
+    "dividendYield": 0.33,
+    "dividendYieldText": "0.33%",
+    "distributionYield": 0.33,
+    "distributionYieldText": "0.33%",
+    "yield12M": 0.33,
+    "yield12MText": "0.33%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
@@ -80,12 +80,12 @@
   "name": "Cybersecurity ETF",
   "nav": {
     "asOfDate": "Nov 27, 2026",
-    "display": "$44.50",
+    "display": "$45.04",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 44.5
+    "value": 45.04
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 44.5,
+  "navValue": 45.04,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
@@ -121,15 +121,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/SPAM",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-SPAM.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Cybersecurity-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

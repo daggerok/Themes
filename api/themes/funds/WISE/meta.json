@@ -3,13 +3,13 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$17.52M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 17519112
   },
   "aumValue": 17519112,
   "category": "Thematic",
-  "closePrice": "$24.68",
-  "closePriceValue": 24.68,
+  "closePrice": "$24.43",
+  "closePriceValue": 24.43,
   "dataFile": "./funds/WISE/meta.json",
   "distributionFrequency": "00 - None",
   "distributions": {
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-11-26T23:14:57Z",
+  "generatedAt": "2026-11-27T09:43:40Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -61,12 +61,12 @@
     "cagr5y": null,
     "cagr10y": null,
     "siAnn": null,
-    "dividendYield": 6.54,
-    "dividendYieldText": "6.54%",
-    "distributionYield": 6.54,
-    "distributionYieldText": "6.54%",
-    "yield12M": 6.54,
-    "yield12MText": "6.54%",
+    "dividendYield": 6.62,
+    "dividendYieldText": "6.62%",
+    "distributionYield": 6.62,
+    "distributionYieldText": "6.62%",
+    "yield12M": 6.62,
+    "yield12MText": "6.62%",
     "dividendYieldBasis": "computed-trailing-12m",
     "secYield": null,
     "secYieldText": "—",
@@ -76,12 +76,12 @@
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
     "asOfDate": "Nov 27, 2026",
-    "display": "$24.60",
+    "display": "$24.33",
     "kind": "official Themes ETFs catalog NAV",
-    "value": 24.6
+    "value": 24.33
   },
   "navKind": "official Themes ETFs catalog NAV",
-  "navValue": 24.6,
+  "navValue": 24.33,
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
@@ -117,15 +117,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/WISE",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-WISE.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Generative-Artificial-Intelligence-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
