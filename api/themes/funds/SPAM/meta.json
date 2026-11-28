@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$8.11M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$8.38M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 8108082
+    "value": 8381448
   },
-  "aumValue": 8108082,
+  "aumValue": 8381448,
   "category": "Thematic",
   "closePrice": "$45.14",
   "closePriceValue": 45.14,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/spam",
-  "generatedAt": "2026-11-28T00:26:08Z",
+  "generatedAt": "2026-11-28T03:33:14Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 745
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Cybersecurity ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$45.04",
     "kind": "official Themes ETFs catalog NAV",
     "value": 45.04
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "180,000",
     "value": 180000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "SPAM",
-  "totalNetAssets": 8108082
+  "totalNetAssets": 8381448
 }

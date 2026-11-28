@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$83.15M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$85.67M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 83146995
+    "value": 85665725
   },
-  "aumValue": 83146995,
+  "aumValue": 85665725,
   "category": "Thematic",
   "closePrice": "$35.51",
   "closePriceValue": 35.51,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/nato",
-  "generatedAt": "2026-11-28T00:26:07Z",
+  "generatedAt": "2026-11-28T03:33:13Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 534
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Transatlantic Defense ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$35.38",
     "kind": "official Themes ETFs catalog NAV",
     "value": 35.38
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "2,350,000",
     "value": 2350000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "NATO",
-  "totalNetAssets": 83146995
+  "totalNetAssets": 85665725
 }

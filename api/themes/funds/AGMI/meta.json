@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$7.18M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$7.73M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 7178066
+    "value": 7726810
   },
-  "aumValue": 7178066,
+  "aumValue": 7726810,
   "category": "Commodities",
   "closePrice": "$51.88",
   "closePriceValue": 51.88,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/agmi",
-  "generatedAt": "2026-11-28T00:26:00Z",
+  "generatedAt": "2026-11-28T03:33:06Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 645
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Silver Miners ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$51.27",
     "kind": "official Themes ETFs catalog NAV",
     "value": 51.27
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "140,000",
     "value": 140000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "AGMI",
-  "totalNetAssets": 7178066
+  "totalNetAssets": 7726810
 }

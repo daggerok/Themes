@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$1.84M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$1.88M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 1835316
+    "value": 1883364
   },
-  "aumValue": 1835316,
+  "aumValue": 1883364,
   "category": "Thematic",
   "closePrice": "$30.64",
   "closePriceValue": 30.64,
@@ -28,21 +28,21 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/clod",
-  "generatedAt": "2026-11-28T00:26:03Z",
+  "generatedAt": "2026-11-28T03:33:09Z",
   "history": {
-    "asOf": "2026-11-25",
-    "asOfDate": "Nov 25, 2026",
+    "asOf": "2026-11-27",
+    "asOfDate": "Nov 27, 2026",
     "pageSize": 1000,
     "pages": [
       "./history/001.json"
     ],
     "source": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
     "sourceKind": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
-    "totalRows": 739
+    "totalRows": 740
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -52,8 +52,8 @@
     "totalRows": 57
   },
   "metrics": {
-    "ytd": -5.84,
-    "tr1y": -5.52,
+    "ytd": -3.69,
+    "tr1y": -3.36,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -71,11 +71,11 @@
     "secYield": null,
     "secYieldText": "—",
     "returnsBasis": "derived from Yahoo Finance adjusted market-price closes (estimate, not official Themes ETFs NAV total returns)",
-    "performanceAsOf": "2026-11-25"
+    "performanceAsOf": "2026-11-27"
   },
   "name": "Cloud Computing ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$30.59",
     "kind": "official Themes ETFs catalog NAV",
     "value": 30.59
@@ -85,14 +85,14 @@
   "providerCategory": "Thematic",
   "returns": {
     "monthEnd": {
-      "asOfDate": "Nov 25, 2026",
+      "asOfDate": "Nov 27, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -5.52,
+      "yr1": -3.36,
       "yr10": null,
       "yr3": null,
       "yr5": null,
-      "ytd": -5.84
+      "ytd": -3.69
     },
     "quarterEnd": {
       "asOfDate": null,
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "60,000",
     "value": 60000
   },
@@ -127,5 +127,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "CLOD",
-  "totalNetAssets": 1835316
+  "totalNetAssets": 1883364
 }

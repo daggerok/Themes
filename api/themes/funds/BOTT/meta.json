@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$54.81M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$59.49M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 54809535
+    "value": 59494380
   },
-  "aumValue": 54809535,
+  "aumValue": 59494380,
   "category": "Thematic",
   "closePrice": "$33.34",
   "closePriceValue": 33.34,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/bott",
-  "generatedAt": "2026-11-28T00:26:02Z",
+  "generatedAt": "2026-11-28T03:33:08Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -45,8 +45,8 @@
     "totalRows": 654
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -79,7 +79,7 @@
   },
   "name": "Humanoid Robotics ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$33.22",
     "kind": "official Themes ETFs catalog NAV",
     "value": 33.22
@@ -110,7 +110,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "1,650,000",
     "value": 1650000
   },
@@ -131,5 +131,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "BOTT",
-  "totalNetAssets": 54809535
+  "totalNetAssets": 59494380
 }

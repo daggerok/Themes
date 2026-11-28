@@ -13,161 +13,8 @@
   "rows": [
     {
       "Asset Category": "Information Technology",
-      "Identifier": "BFYDWS1",
-      "Market Value": "$160183.29",
-      "Name": "Netcompany Group A/S",
-      "Shares Held": "2,980",
-      "Ticker": "NETC DC",
-      "Weight": "1.98%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "64119N608",
-      "Market Value": "$440226.00",
-      "Name": "Netskope Inc",
-      "Shares Held": "16,650",
-      "Ticker": "NTSK",
-      "Weight": "5.43%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "679295105",
-      "Market Value": "$339982.45",
-      "Name": "Okta Inc",
-      "Shares Held": "1,685",
-      "Ticker": "OKTA",
-      "Weight": "4.19%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "68287N100",
-      "Market Value": "$69936.10",
-      "Name": "OneSpan Inc",
-      "Shares Held": "2,990",
-      "Ticker": "OSPN",
-      "Weight": "0.86%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "697435105",
-      "Market Value": "$322662.84",
-      "Name": "Palo Alto Networks Inc",
-      "Shares Held": "906",
-      "Ticker": "PANW",
-      "Weight": "3.98%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "74758T303",
-      "Market Value": "$370372.68",
-      "Name": "Qualys Inc",
-      "Shares Held": "1,886",
-      "Ticker": "QLYS",
-      "Weight": "4.57%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "781154109",
-      "Market Value": "$320886.84",
-      "Name": "Rubrik Inc",
-      "Shares Held": "2,972",
-      "Ticker": "RBRK",
-      "Weight": "3.96%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "M81873107",
-      "Market Value": "$110253.68",
-      "Name": "Radware Ltd",
-      "Shares Held": "3,044",
-      "Ticker": "RDWR",
-      "Weight": "1.36%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "753422104",
-      "Market Value": "$91947.96",
-      "Name": "Rapid7 Inc",
-      "Shares Held": "5,772",
-      "Ticker": "RPD",
-      "Weight": "1.13%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "81730H109",
-      "Market Value": "$350051.79",
-      "Name": "SentinelOne Inc",
-      "Shares Held": "14,531",
-      "Ticker": "S",
-      "Weight": "4.32%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "78781J109",
-      "Market Value": "$110896.63",
-      "Name": "SailPoint Inc",
-      "Shares Held": "4,849",
-      "Ticker": "SAIL",
-      "Weight": "1.37%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "88025T102",
-      "Market Value": "$431545.10",
-      "Name": "Tenable Holdings Inc",
-      "Shares Held": "9,443",
-      "Ticker": "TENB",
-      "Weight": "5.32%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "922280102",
-      "Market Value": "$371193.62",
-      "Name": "Varonis Systems Inc",
-      "Shares Held": "7,511",
-      "Ticker": "VRNS",
-      "Weight": "4.58%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "18467V109",
-      "Market Value": "$451843.42",
-      "Name": "Clear Secure Inc",
-      "Shares Held": "8,309",
-      "Ticker": "YOU",
-      "Weight": "5.57%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "5808845",
-      "Market Value": "$27555.87",
-      "Name": "Secunet Security Networks AG",
-      "Shares Held": "136",
-      "Ticker": "YSN GR",
-      "Weight": "0.34%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "98980G102",
-      "Market Value": "$397079.20",
-      "Name": "Zscaler Inc",
-      "Shares Held": "1,720",
-      "Ticker": "ZS",
-      "Weight": "4.90%"
-    },
-    {
-      "Asset Category": "Money Market",
-      "Identifier": "Cash&Other",
-      "Market Value": "$-1274.99",
-      "Name": "Cash & Other",
-      "Shares Held": "-1,274.99",
-      "Ticker": "Cash&Other",
-      "Weight": "-0.02%"
-    },
-    {
-      "Asset Category": "Information Technology",
       "Identifier": "6222217",
-      "Market Value": "$28195.18",
+      "Market Value": "$29636.67",
       "Name": "SUNeVision Holdings Ltd",
       "Shares Held": "54,982",
       "Ticker": "1686 HK",
@@ -176,61 +23,61 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "6543587",
-      "Market Value": "$39792.75",
+      "Market Value": "$39996.24",
       "Name": "Digital Arts Inc",
       "Shares Held": "1,100",
       "Ticker": "2326 JP",
-      "Weight": "0.49%"
+      "Weight": "0.48%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "6125286",
-      "Market Value": "$407049.77",
+      "Market Value": "$404604.58",
       "Name": "Trend Micro Inc/Japan",
       "Shares Held": "8,500",
       "Ticker": "4704 JP",
-      "Weight": "5.02%"
+      "Weight": "4.83%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "00971T101",
-      "Market Value": "$311639.90",
+      "Market Value": "$318529.30",
       "Name": "Akamai Technologies Inc",
       "Shares Held": "3,515",
       "Ticker": "AKAM",
-      "Weight": "3.84%"
+      "Weight": "3.80%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "011642105",
-      "Market Value": "$271481.63",
+      "Market Value": "$277645.13",
       "Name": "Alarm.com Holdings Inc",
       "Shares Held": "4,109",
       "Ticker": "ALRM",
-      "Weight": "3.35%"
+      "Weight": "3.31%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "04206A101",
-      "Market Value": "$112416.11",
+      "Market Value": "$115094.81",
       "Name": "Arlo Technologies Inc",
       "Shares Held": "8,929",
       "Ticker": "ARLO",
-      "Weight": "1.39%"
+      "Weight": "1.37%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "002121101",
-      "Market Value": "$189367.90",
+      "Market Value": "$197161.82",
       "Name": "A10 Networks Inc",
       "Shares Held": "6,089",
       "Ticker": "ATEN",
-      "Weight": "2.34%"
+      "Weight": "2.35%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHAUD",
-      "Market Value": "$-103.62",
+      "Market Value": "$-103.90",
       "Name": "AUSTRALIAN DOLLAR",
       "Shares Held": "-156.32",
       "Ticker": "AUD",
@@ -239,34 +86,34 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "09228F103",
-      "Market Value": "$356711.00",
+      "Market Value": "$379792.30",
       "Name": "BlackBerry Ltd",
       "Shares Held": "41,966",
       "Ticker": "BB",
-      "Weight": "4.40%"
+      "Weight": "4.53%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "055869101",
-      "Market Value": "$9578.97",
+      "Market Value": "$11683.76",
       "Name": "BTQ Technologies Corp",
       "Shares Held": "8,591",
       "Ticker": "BTQ",
-      "Weight": "0.12%"
+      "Weight": "0.14%"
     },
     {
       "Asset Category": "Industrials",
       "Identifier": "127190304",
-      "Market Value": "$391296.48",
+      "Market Value": "$398994.24",
       "Name": "CACI International Inc",
       "Shares Held": "632",
       "Ticker": "CACI",
-      "Weight": "4.83%"
+      "Weight": "4.76%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHCAD",
-      "Market Value": "$-663.69",
+      "Market Value": "$-662.03",
       "Name": "CANADIAN DOLLAR",
       "Shares Held": "-943.13",
       "Ticker": "CAD",
@@ -275,25 +122,25 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "M22465104",
-      "Market Value": "$461831.40",
+      "Market Value": "$475367.40",
       "Name": "Check Point Software Technologies Ltd",
       "Shares Held": "2,820",
       "Ticker": "CHKP",
-      "Weight": "5.70%"
+      "Weight": "5.67%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "22788C105",
-      "Market Value": "$290089.80",
+      "Market Value": "$301039.20",
       "Name": "Crowdstrike Holdings Inc",
       "Shares Held": "1,386",
       "Ticker": "CRWD",
-      "Weight": "3.58%"
+      "Weight": "3.59%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "22946R101",
-      "Market Value": "$81393.69",
+      "Market Value": "$83959.42",
       "Name": "Csquare Inc",
       "Shares Held": "5,459",
       "Ticker": "CSQR",
@@ -302,7 +149,7 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHDKK",
-      "Market Value": "$476.82",
+      "Market Value": "$475.13",
       "Name": "DANISH KRONE",
       "Shares Held": "3,246.67",
       "Ticker": "DKK",
@@ -311,7 +158,7 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "266042407",
-      "Market Value": "$7209.00",
+      "Market Value": "$7409.25",
       "Name": "Duos Technologies Group Inc",
       "Shares Held": "2,670",
       "Ticker": "DUOT",
@@ -320,7 +167,7 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHEUR",
-      "Market Value": "$427.04",
+      "Market Value": "$425.52",
       "Name": "EURO",
       "Shares Held": "389.07",
       "Ticker": "EUR",
@@ -329,25 +176,25 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "315616102",
-      "Market Value": "$249201.30",
+      "Market Value": "$253767.96",
       "Name": "F5 Inc",
       "Shares Held": "786",
       "Ticker": "FFIV",
-      "Weight": "3.07%"
+      "Weight": "3.03%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "31188V100",
-      "Market Value": "$209530.88",
+      "Market Value": "$220047.36",
       "Name": "Fastly Inc",
       "Shares Held": "13,312",
       "Ticker": "FSLY",
-      "Weight": "2.58%"
+      "Weight": "2.63%"
     },
     {
       "Asset Category": "Information Technology",
       "Identifier": "34959E109",
-      "Market Value": "$261822.40",
+      "Market Value": "$270591.20",
       "Name": "Fortinet Inc",
       "Shares Held": "1,940",
       "Ticker": "FTNT",
@@ -365,16 +212,16 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "0687061",
-      "Market Value": "$34112.89",
+      "Market Value": "$36749.44",
       "Name": "GB Group PLC",
       "Shares Held": "19,758",
       "Ticker": "GBG LN",
-      "Weight": "0.42%"
+      "Weight": "0.44%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHGBP",
-      "Market Value": "$444.36",
+      "Market Value": "$443.64",
       "Name": "BRITISH POUNDS",
       "Shares Held": "338.7",
       "Ticker": "GBP",
@@ -383,16 +230,16 @@
     {
       "Asset Category": "Information Technology",
       "Identifier": "G4000K175",
-      "Market Value": "$19421.60",
+      "Market Value": "$19245.04",
       "Name": "Gorilla Technology Group Inc",
       "Shares Held": "2,207",
       "Ticker": "GRRR",
-      "Weight": "0.24%"
+      "Weight": "0.23%"
     },
     {
       "Asset Category": "—",
       "Identifier": "CASHHKD",
-      "Market Value": "$1013.03",
+      "Market Value": "$1014.36",
       "Name": "HONG KONG DOLLAR",
       "Shares Held": "7,941.35",
       "Ticker": "HKD",
@@ -401,7 +248,7 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHILS",
-      "Market Value": "$26.19",
+      "Market Value": "$26.42",
       "Name": "ISRAELI NEW SHEKEL",
       "Shares Held": "87.86",
       "Ticker": "ILS",
@@ -410,11 +257,164 @@
     {
       "Asset Category": "—",
       "Identifier": "CASHJPY",
-      "Market Value": "$2821.59",
+      "Market Value": "$2816.46",
       "Name": "JAPANESE YEN",
       "Shares Held": "449,267",
       "Ticker": "JPY",
       "Weight": "0.03%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "BFYDWS1",
+      "Market Value": "$162840.82",
+      "Name": "Netcompany Group A/S",
+      "Shares Held": "2,980",
+      "Ticker": "NETC DC",
+      "Weight": "1.94%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "64119N608",
+      "Market Value": "$474525.00",
+      "Name": "Netskope Inc",
+      "Shares Held": "16,650",
+      "Ticker": "NTSK",
+      "Weight": "5.66%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "679295105",
+      "Market Value": "$349570.10",
+      "Name": "Okta Inc",
+      "Shares Held": "1,685",
+      "Ticker": "OKTA",
+      "Weight": "4.17%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "68287N100",
+      "Market Value": "$72268.30",
+      "Name": "OneSpan Inc",
+      "Shares Held": "2,990",
+      "Ticker": "OSPN",
+      "Weight": "0.86%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "697435105",
+      "Market Value": "$332284.56",
+      "Name": "Palo Alto Networks Inc",
+      "Shares Held": "906",
+      "Ticker": "PANW",
+      "Weight": "3.96%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "74758T303",
+      "Market Value": "$389138.38",
+      "Name": "Qualys Inc",
+      "Shares Held": "1,886",
+      "Ticker": "QLYS",
+      "Weight": "4.64%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "781154109",
+      "Market Value": "$335509.08",
+      "Name": "Rubrik Inc",
+      "Shares Held": "2,972",
+      "Ticker": "RBRK",
+      "Weight": "4.00%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "M81873107",
+      "Market Value": "$113358.56",
+      "Name": "Radware Ltd",
+      "Shares Held": "3,044",
+      "Ticker": "RDWR",
+      "Weight": "1.35%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "753422104",
+      "Market Value": "$98528.04",
+      "Name": "Rapid7 Inc",
+      "Shares Held": "5,772",
+      "Ticker": "RPD",
+      "Weight": "1.18%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "81730H109",
+      "Market Value": "$367488.99",
+      "Name": "SentinelOne Inc",
+      "Shares Held": "14,531",
+      "Ticker": "S",
+      "Weight": "4.38%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "78781J109",
+      "Market Value": "$114048.48",
+      "Name": "SailPoint Inc",
+      "Shares Held": "4,849",
+      "Ticker": "SAIL",
+      "Weight": "1.36%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "88025T102",
+      "Market Value": "$445804.03",
+      "Name": "Tenable Holdings Inc",
+      "Shares Held": "9,443",
+      "Ticker": "TENB",
+      "Weight": "5.32%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "922280102",
+      "Market Value": "$372545.60",
+      "Name": "Varonis Systems Inc",
+      "Shares Held": "7,511",
+      "Ticker": "VRNS",
+      "Weight": "4.44%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "18467V109",
+      "Market Value": "$462894.39",
+      "Name": "Clear Secure Inc",
+      "Shares Held": "8,309",
+      "Ticker": "YOU",
+      "Weight": "5.52%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "5808845",
+      "Market Value": "$28320.63",
+      "Name": "Secunet Security Networks AG",
+      "Shares Held": "136",
+      "Ticker": "YSN GR",
+      "Weight": "0.34%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "98980G102",
+      "Market Value": "$411922.80",
+      "Name": "Zscaler Inc",
+      "Shares Held": "1,720",
+      "Ticker": "ZS",
+      "Weight": "4.91%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "Cash&Other",
+      "Market Value": "$-1354.07",
+      "Name": "Cash & Other",
+      "Shares Held": "-1,354.07",
+      "Ticker": "Cash&Other",
+      "Weight": "-0.02%"
     }
   ],
   "ticker": "SPAM",

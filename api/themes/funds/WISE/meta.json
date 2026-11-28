@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$17.52M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$18.26M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 17519112
+    "value": 18255096
   },
-  "aumValue": 17519112,
+  "aumValue": 18255096,
   "category": "Thematic",
   "closePrice": "$24.43",
   "closePriceValue": 24.43,
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/wise",
-  "generatedAt": "2026-11-28T00:26:10Z",
+  "generatedAt": "2026-11-28T03:33:16Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -41,8 +41,8 @@
     "totalRows": 745
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -75,7 +75,7 @@
   },
   "name": "Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$24.33",
     "kind": "official Themes ETFs catalog NAV",
     "value": 24.33
@@ -106,7 +106,7 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "720,000",
     "value": 720000
   },
@@ -127,5 +127,5 @@
   "ter": "0.35%",
   "terValue": 0.35,
   "ticker": "WISE",
-  "totalNetAssets": 17519112
+  "totalNetAssets": 18255096
 }

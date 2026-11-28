@@ -1,12 +1,12 @@
 {
-  "asOfDate": "Nov 27, 2026",
+  "asOfDate": "Nov 30, 2026",
   "aum": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "$15.96M",
+    "asOfDate": "Nov 30, 2026",
+    "display": "$16.18M",
     "source": "official Themes ETFs daily holdings CSV",
-    "value": 15962496
+    "value": 16183361
   },
-  "aumValue": 15962496,
+  "aumValue": 16183361,
   "category": "Thematic",
   "closePrice": "$24.50",
   "closePriceValue": 24.5,
@@ -28,7 +28,7 @@
   },
   "exchange": "Cboe US",
   "fundPage": "https://themesetfs.com/etfs/drgn",
-  "generatedAt": "2026-11-28T00:26:05Z",
+  "generatedAt": "2026-11-28T03:33:11Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -41,8 +41,8 @@
     "totalRows": 347
   },
   "holdings": {
-    "asOf": "2026-11-27",
-    "asOfDate": "Nov 27, 2026",
+    "asOf": "2026-11-30",
+    "asOfDate": "Nov 30, 2026",
     "pageSize": 250,
     "pages": [
       "./holdings/001.json"
@@ -75,7 +75,7 @@
   },
   "name": "China Generative Artificial Intelligence ETF",
   "nav": {
-    "asOfDate": "Nov 27, 2026",
+    "asOfDate": "Nov 30, 2026",
     "display": "$24.19",
     "kind": "official Themes ETFs catalog NAV",
     "value": 24.19
@@ -106,9 +106,9 @@
     }
   },
   "sharesOutstanding": {
-    "asOfDate": "Nov 27, 2026",
-    "display": "660,000",
-    "value": 660000
+    "asOfDate": "Nov 30, 2026",
+    "display": "610,000",
+    "value": 610000
   },
   "source": {
     "catalog": "https://themesetfs.com/etfs",
@@ -127,5 +127,5 @@
   "ter": "0.39%",
   "terValue": 0.39,
   "ticker": "DRGN",
-  "totalNetAssets": 15962496
+  "totalNetAssets": 16183361
 }
