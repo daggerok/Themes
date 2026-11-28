@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$1.84M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 1835316
   },
   "aumValue": 1835316,
@@ -28,7 +28,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/clod",
-  "generatedAt": "2026-11-27T22:53:56Z",
+  "generatedAt": "2026-11-28T00:26:03Z",
   "history": {
     "asOf": "2026-11-25",
     "asOfDate": "Nov 25, 2026",
@@ -53,7 +53,7 @@
   },
   "metrics": {
     "ytd": -5.84,
-    "tr1y": -4.64,
+    "tr1y": -5.52,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -88,7 +88,7 @@
       "asOfDate": "Nov 25, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": -4.64,
+      "yr1": -5.52,
       "yr10": null,
       "yr3": null,
       "yr5": null,
@@ -117,15 +117,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/CLOD",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-CLOD.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Cloud-Computing-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",

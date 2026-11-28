@@ -13,6 +13,159 @@
   "rows": [
     {
       "Asset Category": "Information Technology",
+      "Identifier": "BFYDWS1",
+      "Market Value": "$160183.29",
+      "Name": "Netcompany Group A/S",
+      "Shares Held": "2,980",
+      "Ticker": "NETC DC",
+      "Weight": "1.98%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "64119N608",
+      "Market Value": "$440226.00",
+      "Name": "Netskope Inc",
+      "Shares Held": "16,650",
+      "Ticker": "NTSK",
+      "Weight": "5.43%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "679295105",
+      "Market Value": "$339982.45",
+      "Name": "Okta Inc",
+      "Shares Held": "1,685",
+      "Ticker": "OKTA",
+      "Weight": "4.19%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "68287N100",
+      "Market Value": "$69936.10",
+      "Name": "OneSpan Inc",
+      "Shares Held": "2,990",
+      "Ticker": "OSPN",
+      "Weight": "0.86%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "697435105",
+      "Market Value": "$322662.84",
+      "Name": "Palo Alto Networks Inc",
+      "Shares Held": "906",
+      "Ticker": "PANW",
+      "Weight": "3.98%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "74758T303",
+      "Market Value": "$370372.68",
+      "Name": "Qualys Inc",
+      "Shares Held": "1,886",
+      "Ticker": "QLYS",
+      "Weight": "4.57%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "781154109",
+      "Market Value": "$320886.84",
+      "Name": "Rubrik Inc",
+      "Shares Held": "2,972",
+      "Ticker": "RBRK",
+      "Weight": "3.96%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "M81873107",
+      "Market Value": "$110253.68",
+      "Name": "Radware Ltd",
+      "Shares Held": "3,044",
+      "Ticker": "RDWR",
+      "Weight": "1.36%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "753422104",
+      "Market Value": "$91947.96",
+      "Name": "Rapid7 Inc",
+      "Shares Held": "5,772",
+      "Ticker": "RPD",
+      "Weight": "1.13%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "81730H109",
+      "Market Value": "$350051.79",
+      "Name": "SentinelOne Inc",
+      "Shares Held": "14,531",
+      "Ticker": "S",
+      "Weight": "4.32%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "78781J109",
+      "Market Value": "$110896.63",
+      "Name": "SailPoint Inc",
+      "Shares Held": "4,849",
+      "Ticker": "SAIL",
+      "Weight": "1.37%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "88025T102",
+      "Market Value": "$431545.10",
+      "Name": "Tenable Holdings Inc",
+      "Shares Held": "9,443",
+      "Ticker": "TENB",
+      "Weight": "5.32%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "922280102",
+      "Market Value": "$371193.62",
+      "Name": "Varonis Systems Inc",
+      "Shares Held": "7,511",
+      "Ticker": "VRNS",
+      "Weight": "4.58%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "18467V109",
+      "Market Value": "$451843.42",
+      "Name": "Clear Secure Inc",
+      "Shares Held": "8,309",
+      "Ticker": "YOU",
+      "Weight": "5.57%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "5808845",
+      "Market Value": "$27555.87",
+      "Name": "Secunet Security Networks AG",
+      "Shares Held": "136",
+      "Ticker": "YSN GR",
+      "Weight": "0.34%"
+    },
+    {
+      "Asset Category": "Information Technology",
+      "Identifier": "98980G102",
+      "Market Value": "$397079.20",
+      "Name": "Zscaler Inc",
+      "Shares Held": "1,720",
+      "Ticker": "ZS",
+      "Weight": "4.90%"
+    },
+    {
+      "Asset Category": "Money Market",
+      "Identifier": "Cash&Other",
+      "Market Value": "$-1274.99",
+      "Name": "Cash & Other",
+      "Shares Held": "-1,274.99",
+      "Ticker": "Cash&Other",
+      "Weight": "-0.02%"
+    },
+    {
+      "Asset Category": "Information Technology",
       "Identifier": "6222217",
       "Market Value": "$28195.18",
       "Name": "SUNeVision Holdings Ltd",
@@ -262,159 +415,6 @@
       "Shares Held": "449,267",
       "Ticker": "JPY",
       "Weight": "0.03%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "BFYDWS1",
-      "Market Value": "$160183.29",
-      "Name": "Netcompany Group A/S",
-      "Shares Held": "2,980",
-      "Ticker": "NETC DC",
-      "Weight": "1.98%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "64119N608",
-      "Market Value": "$440226.00",
-      "Name": "Netskope Inc",
-      "Shares Held": "16,650",
-      "Ticker": "NTSK",
-      "Weight": "5.43%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "679295105",
-      "Market Value": "$339982.45",
-      "Name": "Okta Inc",
-      "Shares Held": "1,685",
-      "Ticker": "OKTA",
-      "Weight": "4.19%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "68287N100",
-      "Market Value": "$69936.10",
-      "Name": "OneSpan Inc",
-      "Shares Held": "2,990",
-      "Ticker": "OSPN",
-      "Weight": "0.86%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "697435105",
-      "Market Value": "$322662.84",
-      "Name": "Palo Alto Networks Inc",
-      "Shares Held": "906",
-      "Ticker": "PANW",
-      "Weight": "3.98%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "74758T303",
-      "Market Value": "$370372.68",
-      "Name": "Qualys Inc",
-      "Shares Held": "1,886",
-      "Ticker": "QLYS",
-      "Weight": "4.57%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "781154109",
-      "Market Value": "$320886.84",
-      "Name": "Rubrik Inc",
-      "Shares Held": "2,972",
-      "Ticker": "RBRK",
-      "Weight": "3.96%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "M81873107",
-      "Market Value": "$110253.68",
-      "Name": "Radware Ltd",
-      "Shares Held": "3,044",
-      "Ticker": "RDWR",
-      "Weight": "1.36%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "753422104",
-      "Market Value": "$91947.96",
-      "Name": "Rapid7 Inc",
-      "Shares Held": "5,772",
-      "Ticker": "RPD",
-      "Weight": "1.13%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "81730H109",
-      "Market Value": "$350051.79",
-      "Name": "SentinelOne Inc",
-      "Shares Held": "14,531",
-      "Ticker": "S",
-      "Weight": "4.32%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "78781J109",
-      "Market Value": "$110896.63",
-      "Name": "SailPoint Inc",
-      "Shares Held": "4,849",
-      "Ticker": "SAIL",
-      "Weight": "1.37%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "88025T102",
-      "Market Value": "$431545.10",
-      "Name": "Tenable Holdings Inc",
-      "Shares Held": "9,443",
-      "Ticker": "TENB",
-      "Weight": "5.32%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "922280102",
-      "Market Value": "$371193.62",
-      "Name": "Varonis Systems Inc",
-      "Shares Held": "7,511",
-      "Ticker": "VRNS",
-      "Weight": "4.58%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "18467V109",
-      "Market Value": "$451843.42",
-      "Name": "Clear Secure Inc",
-      "Shares Held": "8,309",
-      "Ticker": "YOU",
-      "Weight": "5.57%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "5808845",
-      "Market Value": "$27555.87",
-      "Name": "Secunet Security Networks AG",
-      "Shares Held": "136",
-      "Ticker": "YSN GR",
-      "Weight": "0.34%"
-    },
-    {
-      "Asset Category": "Information Technology",
-      "Identifier": "98980G102",
-      "Market Value": "$397079.20",
-      "Name": "Zscaler Inc",
-      "Shares Held": "1,720",
-      "Ticker": "ZS",
-      "Weight": "4.90%"
-    },
-    {
-      "Asset Category": "Money Market",
-      "Identifier": "Cash&Other",
-      "Market Value": "$-1274.99",
-      "Name": "Cash & Other",
-      "Shares Held": "-1,274.99",
-      "Ticker": "Cash&Other",
-      "Weight": "-0.02%"
     }
   ],
   "ticker": "SPAM",

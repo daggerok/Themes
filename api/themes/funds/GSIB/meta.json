@@ -3,7 +3,7 @@
   "aum": {
     "asOfDate": "Nov 27, 2026",
     "display": "$30.49M",
-    "source": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "source": "official Themes ETFs daily holdings CSV",
     "value": 30485070
   },
   "aumValue": 30485070,
@@ -32,7 +32,7 @@
   },
   "exchange": "NasdaqGM",
   "fundPage": "https://themesetfs.com/etfs/gsib",
-  "generatedAt": "2026-11-27T22:53:58Z",
+  "generatedAt": "2026-11-28T00:26:06Z",
   "history": {
     "asOf": "2026-11-27",
     "asOfDate": "Nov 27, 2026",
@@ -57,7 +57,7 @@
   },
   "metrics": {
     "ytd": 11.04,
-    "tr1y": 19.28,
+    "tr1y": 18.26,
     "tr3y": null,
     "tr5y": null,
     "tr10y": null,
@@ -92,7 +92,7 @@
       "asOfDate": "Nov 27, 2026",
       "sinceInception": null,
       "sinceInceptionCumulative": null,
-      "yr1": 19.28,
+      "yr1": 18.26,
       "yr10": null,
       "yr3": null,
       "yr5": null,
@@ -121,15 +121,11 @@
     "historySource": "Yahoo Finance public chart API (daily Close / Adj Close / Volume)",
     "historyUrl": "https://query1.finance.yahoo.com/v8/finance/chart/GSIB",
     "holdingsDownload": "https://themesetfs.com/storage/holdings/Holdings-GSIB.csv",
-    "holdingsSource": "official Themes ETFs daily holdings CSV (retained: official source unavailable in the latest run)",
+    "holdingsSource": "official Themes ETFs daily holdings CSV",
     "nportDoc": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001976322&type=NPORT-P&dateb=&owner=include&count=40",
     "prospectus": "https://themesetfs.com/documents/SummaryProspectus/Summary-Prospectus-Themes-Global-Systemically-Important-Banks-ETF.pdf",
     "provider": "Themes Management Company LLC (Themes ETFs)",
     "registrant": "Themes ETF Trust, CIK 0001976322",
-    "retained": {
-      "holdings": true,
-      "reason": "official holdings unavailable: direct request skipped (official site denies this network); proxy skipped (it cannot render CSV downloads)"
-    },
     "site": "https://themesetfs.com"
   },
   "ter": "0.35%",
